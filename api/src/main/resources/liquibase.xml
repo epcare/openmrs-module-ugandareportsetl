@@ -35,5 +35,61 @@
         <addForeignKeyConstraint constraintName="ugandareportsetl_item_owner_fk" baseTableName="ugandareportsetl_item" baseColumnNames="owner"  referencedTableName="users"
                                  referencedColumnNames="user_id" />
     </changeSet> -->
- 
+
+    <!-- Migrate from old tasks in ugandaemr-reports module -->
+    <changeSet id="ugandareportsetl-2025-07-17-00-migrate" author="slubwama">
+        <comment>Remove old SetupMambaTask and MambaTask from ugandaemr-reports module - migrated to ugandareportsetl</comment>
+        <delete tableName="scheduler_task_config">
+            <where>schedulable_class IN ( 'org.openmrs.module.ugandaemrreports.tasks.SetupMambaTask', 'org.openmrs.module.ugandaemrreports.tasks.MambaTask')</where>
+        </delete>
+    </changeSet>
+
+    <!-- Setup Mamba ETL Task - One-time setup of ETL infrastructure -->
+    <changeSet id="ugandareportsetl-2025-07-17-01" author="slubwama">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM scheduler_task_config
+                WHERE schedulable_class = 'org.openmrs.module.ugandareportsetl.tasks.SetupMambaETLTask'
+            </sqlCheck>
+        </preConditions>
+        <comment>Setup Mamba ETL infrastructure (properties, tables, procedures)</comment>
+        <insert tableName="scheduler_task_config">
+            <column name="name" value="Setup Mamba ETL" />
+            <column name="description" value="Setup Mamba ETL infrastructure - properties, tables, and stored procedures" />
+            <column name="schedulable_class" value="org.openmrs.module.ugandareportsetl.tasks.SetupMambaETLTask" />
+            <column name="start_time_pattern" value="MM/dd/yyyy HH:mm:ss" />
+            <column name="start_time" valueDate="2025-07-17T00:00:00" />
+            <column name="repeat_interval" value="0" />
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP" />
+            <column name="created_by" value="1" />
+            <column name="start_on_startup" value="0"/>
+            <column name="started" value="0"/>
+            <column name="uuid" value="a1b2c3d4-e5f6-4a5b-8c5d-6e7f8g9h0i1j" />
+        </insert>
+    </changeSet>
+
+    <!-- Run Analytics Task - Recurring ETL data processing -->
+    <changeSet id="ugandareportsetl-2025-07-17-02" author="slubwama">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM scheduler_task_config
+                WHERE schedulable_class = 'org.openmrs.module.ugandareportsetl.tasks.RunAnalyticsTask'
+            </sqlCheck>
+        </preConditions>
+        <comment>Run Analytics ETL - recurring data flattening task</comment>
+        <insert tableName="scheduler_task_config">
+            <column name="name" value="Run Analytics ETL" />
+            <column name="description" value="Execute ETL flattening script for analytics processing" />
+            <column name="schedulable_class" value="org.openmrs.module.ugandareportsetl.tasks.RunAnalyticsTask" />
+            <column name="start_time_pattern" value="MM/dd/yyyy HH:mm:ss" />
+            <column name="start_time" valueDate="2025-07-17T01:00:00" />
+            <column name="repeat_interval" value="3600000" />
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP" />
+            <column name="created_by" value="1" />
+            <column name="start_on_startup" value="0"/>
+            <column name="started" value="0"/>
+            <column name="uuid" value="b2c3d4e5-f6g7-5b6c-9d6e-7f8g9h0i1j2k" />
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

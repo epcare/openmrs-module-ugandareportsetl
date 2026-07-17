@@ -12,13 +12,19 @@ package org.openmrs.module.ugandareportsetl.tasks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.mambacore.api.FlattenDatabaseService;
 import org.openmrs.module.ugandareportsetl.api.UgandaReportsETLService;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
 /**
  * Task to setup and configure Mamba ETL infrastructure for Uganda Reports ETL module. This task: 1.
  * Adds necessary MambaETL properties to openmrs-runtime.properties 2. Sets up the Mamba ETL
- * infrastructure (tables, procedures) 3. Executes the initial flattening script
+ * infrastructure (tables, procedures) Note: This task may fail if the Mamba ETL SQL scripts have
+ * dependency issues. The scripts at
+ * /Users/lubwamasamuel/openmrs/stambrose/configuration/mambaetl/epcare/ should be reviewed for
+ * proper procedure creation order. Common issues: - Procedures called before they are defined -
+ * Missing procedure definitions (e.g., sp_fact_encounter_diagnosis) - SQL syntax errors in compound
+ * statements
  */
 public class SetupMambaETLTask extends AbstractTask {
 	
@@ -37,13 +43,21 @@ public class SetupMambaETLTask extends AbstractTask {
 			
 			// Step 2: Setup Mamba ETL infrastructure
 			log.info("Setting up Mamba ETL infrastructure...");
-			service.setupMambaETL();
+			try {
+				FlattenDatabaseService flattenDatabaseService = Context.getService(FlattenDatabaseService.class);
+				flattenDatabaseService.setupEtl();
+				log.info("Mamba ETL infrastructure setup completed successfully");
+			}
+			catch (Exception e) {
+				log.error("Mamba ETL setup failed - this may be due to SQL script dependency issues", e);
+				log.error("Please check the SQL scripts at: /Users/lubwamasamuel/openmrs/stambrose/configuration/mambaetl/epcare/");
+				log.error("Common fixes:");
+				log.error("1. Ensure sp_fact_encounter_diagnosis procedure exists");
+				log.error("2. Reorder procedures so called procedures are defined before callers");
+				log.error("3. Run SQL scripts manually to identify specific syntax errors");
+				throw e;
+			}
 			
-			// Step 3: Execute initial flattening script
-			log.info("Executing initial ETL flattening script...");
-			service.executeFlatteningScript();
-			
-			log.info("Mamba ETL Setup Task completed successfully");
 		}
 		catch (Exception e) {
 			log.error("Error executing Mamba ETL Setup Task", e);
