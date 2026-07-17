@@ -1,0 +1,173 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.openmrs.maven.parents</groupId>
+        <artifactId>maven-parent-openmrs-module</artifactId>
+        <version>1.1.1</version>
+    </parent>
+
+	<groupId>org.openmrs.module</groupId>
+	<artifactId>ugandareportsetl</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Uganda Reports ETL</name>
+	<description>The distribution with the reports ETL processes towards reports</description>
+
+	<url>https://wiki.openmrs.org/x/FQ4z</url>
+
+	<scm>
+		<connection>scm:git:git@github.com:epcare/openmrs-module-ugandareportsetl.git</connection>
+		<developerConnection>scm:git:git@github.com:epcare/openmrs-module-ugandareportsetl.git</developerConnection>
+		<url>https://github.com/epcare/openmrs-module-ugandareportsetl</url>
+	</scm>
+
+	<modules>
+		<module>api</module>
+		<module>omod</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<name>Hexam Creation Consult</name>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>Hexam Creation Consult</name>
+	</organization>
+
+	<repositories>
+		<repository>
+			<id>openmrs-repo</id>
+			<name>OpenMRS Nexus Repository</name>
+			<url>https://mavenrepo.openmrs.org/public</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<layout>default</layout>
+			<url>https://repo1.maven.org/maven2</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>openmrs-repo</id>
+			<name>OpenMRS Nexus Repository</name>
+			<url>https://mavenrepo.openmrs.org/public</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Spotless plugin -->
+				<plugin>
+					<groupId>com.diffplug.spotless</groupId>
+					<artifactId>spotless-maven-plugin</artifactId>
+					<version>2.27.2</version>
+					<configuration>
+						<java>
+							<licenseHeader>
+								<file>${project.basedir}/license-header.txt</file>
+							</licenseHeader>
+							<eclipse>
+								<file>${project.basedir}/OpenMRSFormatter.xml</file>
+							</eclipse>
+							<removeUnusedImports/>
+							<importOrder>
+								<order>javax,java</order>
+							</importOrder>
+						</java>
+						<formats>
+							<format>
+								<includes>
+									<include>**/*.xml</include>
+								</includes>
+								<licenseHeader>
+									<file>${project.basedir}/license-header.txt</file>
+									<delimiter>^(?!&lt;?xml)</delimiter>
+								</licenseHeader>
+							</format>
+						</formats>
+					</configuration>
+					<executions>
+						<execution>
+							<id>spotless-apply</id>
+							<phase>validate</phase>
+							<goals>
+								<goal>apply</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- Maven Dependency Plugin for unpacking mamba-core-api -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.2.0</version>
+					<executions>
+						<execution>
+							<id>unpack-scripts</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>unpack</goal>
+							</goals>
+							<configuration>
+								<artifactItems>
+									<artifactItem>
+										<groupId>org.openmrs.module</groupId>
+										<artifactId>mamba-core-api</artifactId>
+										<outputDirectory>${project.build.directory}/mamba-etl</outputDirectory>
+										<includes>_core/**</includes>
+									</artifactItem>
+								</artifactItems>
+							</configuration>
+						</execution>
+							<execution>
+								<id>Expand resources</id>
+								<goals>
+									<goal>unpack</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>${project.groupId}</groupId>
+											<artifactId>${project.parent.artifactId}-api</artifactId>
+											<version>${project.version}</version>
+											<includes>**/*.xml,**/*.properties</includes>
+											<outputDirectory>${project.build.directory}/classes</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+    <properties>
+        <openmrsPlatformVersion>2.8.7</openmrsPlatformVersion>
+        <mambaETLCoreVersion>2.0.1-SNAPSHOT</mambaETLCoreVersion>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Mamba Core for ETL processing -->
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>mamba-core-api</artifactId>
+				<version>${mambaETLCoreVersion}</version>
+				<type>jar</type>
+			</dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

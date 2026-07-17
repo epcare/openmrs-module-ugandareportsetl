@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+
+	<!-- Base Module Properties -->
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>org.openmrs.module.ugandareportsetl</package>
+	<author>Hexam Creation Consult</author>
+	<description>
+			UgandaReportsETL Module - ETL processes for Uganda EMR reports following mamba-etl pattern
+	</description>
+
+	<activator>org.openmrs.module.ugandareportsetl.UgandaReportsETLActivator</activator>
+
+	<!-- <updateURL>https://modules.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
+	<!-- /Base Module Properties -->
+
+	<require_version>${openmrsPlatformVersion}</require_version>
+
+	<!-- Extensions -->
+	<extension>
+	</extension>
+
+	<require_modules>
+	</require_modules>
+
+	<!-- Required Global Properties for ETL -->
+	<globalProperty>
+		<property>ugandareportsetl.mamba.flatten.last.successful.run.date</property>
+		<defaultValue></defaultValue>
+		<description>The last successful run date for mamba flatten ETL process</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.enabled</property>
+		<defaultValue>true</defaultValue>
+		<description>Enable/disable ETL processing</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.interval.seconds</property>
+		<defaultValue>3600</defaultValue>
+		<description>ETL processing interval in seconds (default: 3600 = 1 hour)</description>
+	</globalProperty>
+
+
+	<!-- Base Module Properties -->
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>org.openmrs.module.ugandareportsetl</package>
+	<author>Hexam Creation Consult</author>
+	<description>
+		UgandaReportsETL Module - ETL processes for Uganda EMR reports following mamba-etl pattern
+	</description>
+
+	<activator>org.openmrs.module.ugandareportsetl.UgandaReportsETLActivator</activator>
+
+	<!-- <updateURL>https://modules.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
+	<!-- /Base Module Properties -->
+
+	<require_version>2.0.5 - 2.*</require_version>
+
+	<!-- Extensions -->
+	<extension>
+
+	</extension>
+
+	<require_modules>
+		<require_module>org.openmrs.module.reportingcompatibility</require_module>
+		<require_module>org.openmrs.module.legacyui</require_module>
+	</require_modules>
+
+	<!-- Required Global Properties for ETL -->
+	<globalProperty>
+		<property>ugandareportsetl.mamba.flatten.last.successful.run.date</property>
+		<defaultValue></defaultValue>
+		<description>The last successful run date for mamba flatten ETL process</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.enabled</property>
+		<defaultValue>true</defaultValue>
+		<description>Enable/disable ETL processing</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.interval.seconds</property>
+		<defaultValue>3600</defaultValue>
+		<description>ETL processing interval in seconds (default: 3600 = 1 hour)</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.incremental.mode</property>
+		<defaultValue>1</defaultValue>
+		<description>ETL incremental mode: 0=full rebuild, 1=incremental updates</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.database.name</property>
+		<defaultValue></defaultValue>
+		<description>ETL database name (leave empty to use OpenMRS database)</description>
+	</globalProperty>
+
+	<!-- Internationalization -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+
+
+	<globalProperty>
+		<property>ugandareportsetl.etl.database.name</property>
+		<defaultValue></defaultValue>
+		<description>ETL database name (leave empty to use OpenMRS database)</description>
+	</globalProperty>
+
+	<!-- Internationalization -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+
+</module>
