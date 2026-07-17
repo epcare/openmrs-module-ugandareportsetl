@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_encounter_hts_card
+CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hts_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT NULL,

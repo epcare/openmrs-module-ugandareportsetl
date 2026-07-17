@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_patients_latest_nutrition_support
+CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_support
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,

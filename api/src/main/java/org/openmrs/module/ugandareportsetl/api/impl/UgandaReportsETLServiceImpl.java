@@ -20,6 +20,7 @@ import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.mambacore.api.FlattenDatabaseService;
+import org.openmrs.module.ugandareportsetl.api.ETLProgressInfo;
 import org.openmrs.module.ugandareportsetl.api.UgandaReportsETLService;
 import org.openmrs.module.ugandareportsetl.api.dao.UgandaReportsETLDao;
 import org.openmrs.util.OpenmrsUtil;
@@ -166,13 +167,43 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 	@Override
 	public void executeFlatteningScript() throws APIException {
 		try {
-			log.info("Executing Mamba ETL flattening script...");
+			log.info("=== Starting Mamba ETL Flattening Script ===");
+			log.info("Timestamp: " + new java.util.Date());
+			log.info("Processing Mode: Incremental ETL (existing tables will be preserved and updated)");
+			
+			// Log that we're about to execute the stored procedure
+			log.info("Executing stored procedure: sp_mamba_data_processing_etl(1)");
+			log.info("This process will:");
+			log.info("  1. Drop existing fact tables");
+			log.info("  2. Recreate fact tables");
+			log.info("  3. Process OPD attendance data");
+			log.info("  4. Process diagnosis data");
+			log.info("  5. Process transfer data");
+			log.info("  6. Process non-suppressed data");
+			log.info("  7. Process HIV ART card data");
+			log.info("  8. Process IIT data");
+			log.info("  9. Process HTS data");
+			log.info(" 10. Process ANC data");
+			
+			long startTime = System.currentTimeMillis();
 			
 			dao.executeFlatteningScript();
 			
-			log.info("Mamba ETL flattening script completed successfully");
+			long duration = System.currentTimeMillis() - startTime;
+			log.info("=== Mamba ETL Flattening Script Completed Successfully ===");
+			log.info("Total Duration: " + (duration / 1000) + " seconds");
+			log.info("Completion Time: " + new java.util.Date());
+			
 		}
 		catch (Exception e) {
+			log.error("=== Error Executing Mamba ETL Flattening Script ===");
+			log.error("Error occurred during stored procedure execution");
+			log.error("Possible causes:");
+			log.error("  - Stored procedure does not exist");
+			log.error("  - Database connection issues");
+			log.error("  - SQL syntax errors in stored procedures");
+			log.error("  - Insufficient database permissions");
+			log.error("Please check the Mamba ETL setup and stored procedures");
 			log.error("Error executing Mamba ETL flattening script", e);
 			throw new APIException("Error executing Mamba ETL flattening script", e);
 		}
@@ -186,5 +217,109 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 		        || properties.getProperty(key).trim().isEmpty()) {
 			properties.setProperty(key, value);
 		}
+	}
+	
+	@Override
+	public ETLProgressInfo getETLProgress() throws APIException {
+		try {
+			log.info("Fetching ETL progress information...");
+			
+			// Query the Mamba ETL schedule table for the most recent execution
+			String sql = "SELECT id, start_time, end_time, next_schedule, "
+			        + "execution_duration_seconds, missed_schedule_by_seconds, "
+			        + "completion_status, transaction_status, success_or_error_message " + "FROM _mamba_etl_schedule "
+			        + "ORDER BY id DESC " + "LIMIT 1";
+			
+			ETLProgressInfo progress = dao.getETLProgress(sql);
+			
+			// Enhance with current stage information
+			if (progress != null && progress.isRunning()) {
+				progress.setCurrentStage(determineCurrentStage(progress));
+				progress.setProgressPercentage(calculateProgress(progress));
+			}
+			
+			return progress;
+		}
+		catch (Exception e) {
+			log.error("Error fetching ETL progress", e);
+			throw new APIException("Error fetching ETL progress", e);
+		}
+	}
+	
+	@Override
+	public java.util.List<ETLProgressInfo> getRecentETLExecutions(int limit) throws APIException {
+		try {
+			log.info("Fetching recent ETL executions (limit: " + limit + ")...");
+			
+			String sql = "SELECT id, start_time, end_time, next_schedule, "
+			        + "execution_duration_seconds, missed_schedule_by_seconds, "
+			        + "completion_status, transaction_status, success_or_error_message " + "FROM _mamba_etl_schedule "
+			        + "ORDER BY id DESC " + "LIMIT " + limit;
+			
+			return dao.getRecentETLExecutions(sql);
+		}
+		catch (Exception e) {
+			log.error("Error fetching recent ETL executions", e);
+			throw new APIException("Error fetching recent ETL executions", e);
+		}
+	}
+	
+	@Override
+	public boolean isETLRunning() {
+		try {
+			ETLProgressInfo progress = getETLProgress();
+			return progress != null && progress.isRunning();
+		}
+		catch (Exception e) {
+			log.error("Error checking if ETL is running", e);
+			return false;
+		}
+	}
+	
+	/**
+	 * Determines the current stage of ETL processing based on execution time and status
+	 */
+	private String determineCurrentStage(ETLProgressInfo progress) {
+		long elapsedSeconds = progress.getExecutionDurationSeconds() != null ? progress.getExecutionDurationSeconds() : 0;
+		
+		// Estimated durations for each stage (in seconds)
+		// These can be adjusted based on actual performance
+		if (elapsedSeconds < 30) {
+			return "Initializing ETL process";
+		} else if (elapsedSeconds < 60) {
+			return "Dropping existing fact tables";
+		} else if (elapsedSeconds < 180) {
+			return "Processing OPD attendance data";
+		} else if (elapsedSeconds < 240) {
+			return "Processing diagnosis data";
+		} else if (elapsedSeconds < 300) {
+			return "Processing transfer data";
+		} else if (elapsedSeconds < 360) {
+			return "Processing non-suppressed data";
+		} else if (elapsedSeconds < 480) {
+			return "Processing HIV ART card data";
+		} else if (elapsedSeconds < 600) {
+			return "Processing IIT data";
+		} else if (elapsedSeconds < 720) {
+			return "Processing HTS data";
+		} else if (elapsedSeconds < 840) {
+			return "Processing ANC data";
+		} else {
+			return "Finalizing ETL process";
+		}
+	}
+	
+	/**
+	 * Calculates estimated progress percentage based on elapsed time
+	 */
+	private double calculateProgress(ETLProgressInfo progress) {
+		long elapsedSeconds = progress.getExecutionDurationSeconds() != null ? progress.getExecutionDurationSeconds() : 0;
+		
+		// Estimated total time for complete ETL process (in seconds)
+		// This should be adjusted based on actual performance data
+		long estimatedTotalSeconds = 900; // 15 minutes
+		
+		double progressPercent = Math.min(100.0, (elapsedSeconds * 100.0) / estimatedTotalSeconds);
+		return Math.round(progressPercent * 100) / 100.0; // Round to 2 decimal places
 	}
 }

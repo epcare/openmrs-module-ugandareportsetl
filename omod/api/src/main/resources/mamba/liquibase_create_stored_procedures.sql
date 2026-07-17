@@ -51,7 +51,6 @@ USE analysis_db;
 
 DROP FUNCTION IF EXISTS fn_mamba_calculate_agegroup;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_calculate_agegroup(age INT) RETURNS VARCHAR(15)
@@ -78,9 +77,8 @@ BEGIN
 
  RETURN agegroup;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -90,7 +88,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_get_obs_value_column;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_get_obs_value_column(conceptDatatype VARCHAR(20)) RETURNS VARCHAR(20)
@@ -121,9 +118,8 @@ BEGIN
  END IF;
 
  RETURN (obsValueColumn);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -133,7 +129,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_age_calculator;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_age_calculator(birthdate DATE, deathDate DATE) RETURNS INTEGER
@@ -166,9 +161,8 @@ BEGIN
 
  RETURN age;
  END IF;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -178,7 +172,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_get_datatype_for_concept;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_get_datatype_for_concept(conceptDatatype VARCHAR(20)) RETURNS VARCHAR(20)
@@ -212,9 +205,8 @@ BEGIN
  END IF;
 
  RETURN mysqlDatatype;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -224,7 +216,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_generate_json_from_mamba_flat_table_config;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_generate_json_from_mamba_flat_table_config(
@@ -250,9 +241,8 @@ BEGIN
 
  RETURN report_array;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -261,7 +251,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_array_length;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_array_length(array_string TEXT) RETURNS INT
@@ -284,9 +273,8 @@ BEGIN
  END WHILE;
 
 RETURN length;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -295,7 +283,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_get_array_item_by_index;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_get_array_item_by_index(array_string TEXT, item_index INT) RETURNS TEXT
@@ -336,9 +323,8 @@ BEGIN
  SET result = SUBSTRING(array_string, elem_start + 1, elem_end - elem_start - 1);
 
  RETURN result;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -347,7 +333,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_array_length;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_array_length(json_array TEXT) RETURNS INT
@@ -377,9 +362,8 @@ BEGIN
  END WHILE;
 
 RETURN array_length;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -388,7 +372,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_extract;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_extract(json TEXT, key_name VARCHAR(255)) RETURNS VARCHAR(255)
@@ -421,9 +404,8 @@ BEGIN
  END CASE;
 
 RETURN SUBSTRING(json, start_index, end_index - start_index);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -432,7 +414,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_extract_array;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_extract_array(json TEXT, key_name VARCHAR(255)) RETURNS TEXT
@@ -476,9 +457,8 @@ DECLARE array_text TEXT;
 SET array_text = SUBSTRING(json, start_index, end_index - start_index);
 
 RETURN array_text;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -487,7 +467,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_extract_object;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_extract_object(json_string TEXT, key_name VARCHAR(255)) RETURNS TEXT
@@ -534,9 +513,8 @@ BEGIN
  END IF;
 
 RETURN result;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -546,7 +524,6 @@ DELIMITER ;
 
 
 DROP FUNCTION IF EXISTS fn_mamba_json_keys_array;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_keys_array(json_object TEXT) RETURNS TEXT
@@ -605,9 +582,8 @@ BEGIN
  END IF;
 
  RETURN my_keys;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -616,7 +592,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_length;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_length(json_array TEXT) RETURNS INT
@@ -635,9 +610,8 @@ BEGIN
  END WHILE;
 
 RETURN element_count;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -646,7 +620,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_object_at_index;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_object_at_index(json_array TEXT, index_pos INT) RETURNS TEXT
@@ -690,9 +663,8 @@ BEGIN
  SET obj_text = SUBSTRING(json_array, obj_start, obj_end - obj_start + 1);
 
 RETURN obj_text;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -701,7 +673,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_json_value_by_key;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_json_value_by_key(json TEXT, key_name VARCHAR(255)) RETURNS VARCHAR(255)
@@ -757,9 +728,8 @@ BEGIN
 
  -- Return the extracted value without leading or trailing quotes
 RETURN TRIM(BOTH '"' FROM extracted_value);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -768,7 +738,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_remove_all_whitespace;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_remove_all_whitespace(input_string TEXT) RETURNS TEXT
@@ -786,9 +755,8 @@ BEGIN
  -- SET cleaned_string = REPLACE(cleaned_string, CHAR(160), ''); -- Non-breaking space
 
 RETURN TRIM(cleaned_string);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -797,7 +765,6 @@ DELIMITER ;
 --
 
 DROP FUNCTION IF EXISTS fn_mamba_remove_quotes;
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_remove_quotes(original TEXT) RETURNS TEXT
@@ -809,9 +776,8 @@ BEGIN
  SET without_quotes = REPLACE(REPLACE(original, '"', ''), '''', '');
 
 RETURN fn_mamba_remove_all_whitespace(without_quotes);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -821,7 +787,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_remove_special_characters;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_remove_special_characters(input_text VARCHAR(255))
@@ -876,9 +841,8 @@ BEGIN
 
  -- Trim any leading or trailing spaces
  RETURN TRIM(result);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -888,7 +852,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_collapse_spaces;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_collapse_spaces(input_text TEXT)
@@ -919,9 +882,8 @@ BEGIN
  
  RETURN TRIM(result);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -931,7 +893,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_xf_system_drop_all_stored_functions_in_schema;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_xf_system_drop_all_stored_functions_in_schema(
@@ -940,9 +901,8 @@ CREATE PROCEDURE sp_xf_system_drop_all_stored_functions_in_schema(
 BEGIN
  DELETE FROM `mysql`.`proc` WHERE `type` = 'FUNCTION' AND `db` = database_name; -- works in mysql before v.8
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -952,7 +912,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_xf_system_drop_all_stored_procedures_in_schema;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_xf_system_drop_all_stored_procedures_in_schema(
@@ -962,9 +921,8 @@ BEGIN
 
  DELETE FROM `mysql`.`proc` WHERE `type` = 'PROCEDURE' AND `db` = database_name; -- works in mysql before v.8
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -974,7 +932,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_xf_system_drop_all_objects_in_schema;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_xf_system_drop_all_objects_in_schema(
@@ -987,9 +944,8 @@ BEGIN
  CALL sp_mamba_system_drop_all_tables(database_name);
  # CALL sp_xf_system_drop_all_views_in_schema (database_name);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -999,7 +955,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_system_drop_all_tables;
 
-DELIMITER //
 
 -- CREATE PROCEDURE sp_mamba_system_drop_all_tables(IN database_name CHAR(255))
 ~
@@ -1040,9 +995,8 @@ BEGIN
 
  END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1052,7 +1006,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_scheduler_wrapper;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_scheduler_wrapper()
@@ -1081,9 +1034,8 @@ BEGIN
 
  CALL sp_mamba_data_processing_etl(incremental_mode_cascaded);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1093,7 +1045,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_schedule_table_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_schedule_table_create()
@@ -1118,9 +1069,8 @@ BEGIN
 );
 
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1130,7 +1080,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_schedule;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_schedule()
@@ -1212,9 +1161,8 @@ BEGIN
 
  END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1224,7 +1172,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_schedule_trim_log_event;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_schedule_trim_log_event()
@@ -1241,9 +1188,8 @@ BEGIN
 ) AS recent_records
 );
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1253,7 +1199,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_un_stuck_scheduler;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_un_stuck_scheduler()
@@ -1309,9 +1254,8 @@ SET end_time                 = incremental_start_time,
 WHERE id = last_schedule_record_id;
 END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1321,7 +1265,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_setup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_setup(
@@ -1350,9 +1293,8 @@ BEGIN
  -- create ETL schedule log table
  CALL sp_mamba_etl_schedule_table_create();
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1362,7 +1304,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_table_create(
@@ -1397,9 +1338,8 @@ BEGIN
  DEALLOCATE PREPARE createtb;
  END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1410,7 +1350,6 @@ DELIMITER ;
 -- Flatten all Encounters given in Config folder
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_create_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_table_create_all()
@@ -1439,9 +1378,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1451,7 +1389,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_table_insert(
@@ -1545,9 +1482,8 @@ BEGIN
 );
  END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1558,7 +1494,6 @@ DELIMITER ;
 -- Flatten all Encounters given in Config folder
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_insert_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_table_insert_all()
@@ -1587,9 +1522,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1599,7 +1533,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_question_concepts_insert;
 
-DELIMITER //
 
 -- SP inserts all concepts that are questions or have a concept_id value in the Obs table
 -- whether their values/answers are coded or non-coded
@@ -1648,9 +1581,8 @@ BEGIN
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1660,7 +1592,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_answer_concepts_insert;
 
-DELIMITER //
 
 -- Create a stored procedure to insert answer concepts into a flat table
 -- These are concepts that are answers to other question concepts. e.g. multichoice answers in a select or dropdown or radio answers
@@ -1723,9 +1654,8 @@ BEGIN
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1735,7 +1665,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_incremental_create_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_incremental_create_all()
@@ -1767,9 +1696,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1779,7 +1707,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_incremental_insert_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_incremental_insert_all()
@@ -1810,9 +1737,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1822,7 +1748,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_incremental_update_encounter;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_incremental_update_encounter()
@@ -1855,9 +1780,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1867,7 +1791,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_incremental_update_encounter;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_incremental_update_encounter()
@@ -1900,9 +1823,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1912,7 +1834,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `sp_mamba_flat_encounter_obs_group_table_create`;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE `sp_mamba_flat_encounter_obs_group_table_create`(
@@ -1970,9 +1891,8 @@ DEALLOCATE PREPARE deletetb;
 DEALLOCATE PREPARE createtb;
 END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -1983,7 +1903,6 @@ DELIMITER ;
 -- Flatten all Encounters given in Config folder
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_obs_group_table_create_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_obs_group_table_create_all()
@@ -2036,9 +1955,8 @@ BEGIN
  END REPEAT;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2048,7 +1966,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_obs_group_table_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_obs_group_table_insert(
@@ -2170,9 +2087,8 @@ EXECUTE inserttbl;
 DEALLOCATE PREPARE inserttbl;
 END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2183,7 +2099,6 @@ DELIMITER ;
 -- Flatten all Encounters given in Config folder
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_obs_group_table_insert_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_encounter_obs_group_table_insert_all()
@@ -2236,9 +2151,8 @@ BEGIN
  END REPEAT;
  CLOSE cursor_flat_tables;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2248,7 +2162,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `sp_mamba_multiselect_values_update`;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE `sp_mamba_multiselect_values_update`(
@@ -2291,9 +2204,8 @@ BEGIN
  UNTIL @end_loop = 1
  END REPEAT;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2303,7 +2215,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_load_agegroup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_load_agegroup()
@@ -2315,9 +2226,8 @@ BEGIN
  VALUES (age, fn_mamba_calculate_agegroup(age), IF(age < 15, '<15', '15+'));
  SET age = age + 1;
  END WHILE;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2327,7 +2237,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_write_automated_json_config;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_write_automated_json_config()
@@ -2363,9 +2272,8 @@ BEGIN
 
  CALL sp_mamba_extract_report_metadata(@report_data, 'mamba_concept_metadata');
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2375,7 +2283,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_locale_insert_helper;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_locale_insert_helper(
@@ -2390,9 +2297,8 @@ BEGIN
  EXECUTE inserttbl;
  DEALLOCATE PREPARE inserttbl;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2402,7 +2308,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_extract_report_column_names;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_extract_report_column_names()
@@ -2442,9 +2347,8 @@ BEGIN
  END LOOP;
 
  CLOSE cur;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2454,7 +2358,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_extract_report_definition_metadata;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_extract_report_definition_metadata(
@@ -2559,9 +2462,8 @@ BEGIN
 
  END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2571,7 +2473,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_generate_report_wrapper;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_generate_report_wrapper(IN generate_columns_flag TINYINT(1),
@@ -2630,9 +2531,8 @@ BEGIN
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2642,7 +2542,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_generate_report_size_sp_wrapper;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_generate_report_size_sp_wrapper(
@@ -2696,9 +2595,8 @@ BEGIN
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2708,7 +2606,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_get_report_column_names;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_get_report_column_names(IN report_identifier VARCHAR(255))
@@ -2724,9 +2621,8 @@ BEGIN
  FROM INFORMATION_SCHEMA.COLUMNS
  WHERE TABLE_NAME = @table_name;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2739,7 +2635,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_reset_incremental_update_flag;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_reset_incremental_update_flag(
@@ -2755,9 +2650,8 @@ BEGIN
  EXECUTE updatetb;
  DEALLOCATE PREPARE updatetb;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -2767,7 +2661,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_reset_incremental_update_flag_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_reset_incremental_update_flag_all()
@@ -2820,9 +2713,8 @@ CALL sp_mamba_reset_incremental_update_flag('mamba_dim_orders');
 CALL sp_mamba_reset_incremental_update_flag('mamba_z_encounter_obs');
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -2831,7 +2723,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata()
@@ -2866,9 +2757,8 @@ CALL sp_mamba_concept_metadata_update();
 CALL sp_mamba_concept_metadata_cleanup();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -2877,7 +2767,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_create()
@@ -2932,9 +2821,8 @@ CREATE TABLE mamba_concept_metadata
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -2943,7 +2831,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_insert()
@@ -2978,9 +2865,8 @@ CALL sp_mamba_concept_metadata_insert_helper(@is_incremental, 'mamba_concept_met
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -2989,7 +2875,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_insert_helper;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_insert_helper(
@@ -3096,9 +2981,8 @@ BEGIN
  END LOOP;
 
  CLOSE cur;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -3108,7 +2992,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_update()
@@ -3192,9 +3075,8 @@ SET md.row_num = num
 WHERE md.id > 0;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3203,7 +3085,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_cleanup()
@@ -3238,9 +3119,8 @@ WHERE concept_uuid = 'AUTO-GENERATE'
  AND column_label = 'AUTO-GENERATE';
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3249,7 +3129,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_missing_columns_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_missing_columns_insert()
@@ -3321,9 +3200,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_encounters;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -3333,7 +3211,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_incremental()
@@ -3367,9 +3244,8 @@ CALL sp_mamba_concept_metadata_incremental_update();
 CALL sp_mamba_concept_metadata_incremental_cleanup();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3378,7 +3254,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_incremental_insert()
@@ -3413,9 +3288,8 @@ CALL sp_mamba_concept_metadata_insert_helper(@is_incremental, 'mamba_concept_met
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3424,7 +3298,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_incremental_update()
@@ -3501,9 +3374,8 @@ SET md.row_num = num
 WHERE md.incremental_record = 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3512,7 +3384,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_incremental_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_incremental_cleanup()
@@ -3549,9 +3420,8 @@ WHERE incremental_record = 1
  AND column_label = 'AUTO-GENERATE';
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3560,7 +3430,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_concept_metadata_missing_columns_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_concept_metadata_missing_columns_incremental_insert()
@@ -3635,9 +3504,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_encounters;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -3647,7 +3515,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_create()
@@ -3694,9 +3561,8 @@ CREATE TABLE mamba_flat_table_config
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -3710,7 +3576,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_insert_helper_manual;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_insert_helper_manual(
@@ -3759,9 +3624,8 @@ BEGIN
 
  END WHILE;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -3772,7 +3636,6 @@ DELIMITER ;
 -- Flatten all Encounters given in Config folder
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_insert_helper_auto;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_insert_helper_auto()
@@ -3860,9 +3723,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_encounter_type_name;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -3872,7 +3734,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_insert()
@@ -4430,9 +4291,8 @@ CALL sp_mamba_flat_table_config_insert_helper_manual(@report_data); -- insert ma
 CALL sp_mamba_flat_table_config_insert_helper_auto(); -- insert automatically generated config JSON data from db
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -4441,7 +4301,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_update()
@@ -4475,9 +4334,8 @@ SET table_json_data_hash = MD5(TRIM(table_json_data))
 WHERE id > 0;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -4486,7 +4344,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config()
@@ -4519,9 +4376,8 @@ CALL sp_mamba_flat_table_config_insert();
 CALL sp_mamba_flat_table_config_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -4530,7 +4386,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_create()
@@ -4577,9 +4432,8 @@ CREATE TABLE IF NOT EXISTS mamba_flat_table_config_incremental
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -4593,7 +4447,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_insert_helper_manual;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_insert_helper_manual(
@@ -4642,9 +4495,8 @@ BEGIN
 
  END WHILE;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -4655,7 +4507,6 @@ DELIMITER ;
 -- Flatten all Encounters given in Config folder
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_insert_helper_auto;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_insert_helper_auto()
@@ -4743,9 +4594,8 @@ BEGIN
  END LOOP computations_loop;
  CLOSE cursor_encounter_type_name;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -4755,7 +4605,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_insert()
@@ -5313,9 +5162,8 @@ CALL sp_mamba_flat_table_config_incremental_insert_helper_manual(@report_data); 
 CALL sp_mamba_flat_table_config_incremental_insert_helper_auto(); -- insert automatically generated config JSON data from db
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5324,7 +5172,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_update()
@@ -5390,9 +5237,8 @@ FROM mamba_flat_table_config
 WHERE encounter_type_id NOT IN (SELECT tci.encounter_type_id FROM mamba_flat_table_config_incremental tci);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5401,7 +5247,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_truncate;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_truncate()
@@ -5430,9 +5275,8 @@ END;
 -- $BEGIN
 CALL sp_mamba_truncate_table('mamba_flat_table_config_incremental');
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5441,7 +5285,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental()
@@ -5475,9 +5318,8 @@ CALL sp_mamba_flat_table_config_incremental_insert();
 CALL sp_mamba_flat_table_config_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5486,7 +5328,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group()
@@ -5519,9 +5360,8 @@ CALL sp_mamba_obs_group_insert();
 CALL sp_mamba_obs_group_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5530,7 +5370,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group_create()
@@ -5573,9 +5412,8 @@ CREATE TABLE mamba_obs_group
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5584,7 +5422,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group_insert()
@@ -5652,9 +5489,8 @@ DROP TEMPORARY TABLE IF EXISTS mamba_temp_obs_group_ids;
  SET mamba_offset = mamba_offset + batch_size;
 
 END WHILE;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -5664,7 +5500,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group_update()
@@ -5692,9 +5527,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5703,7 +5537,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_error_log_drop;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_error_log_drop()
@@ -5734,9 +5567,8 @@ END;
 DROP TABLE IF EXISTS _mamba_etl_error_log;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5745,7 +5577,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_error_log_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_error_log_create()
@@ -5785,9 +5616,8 @@ CREATE TABLE _mamba_etl_error_log
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5796,7 +5626,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_error_log_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_error_log_insert(
@@ -5809,9 +5638,8 @@ BEGIN
  INSERT INTO _mamba_etl_error_log (procedure_name, error_message, error_code, sql_state)
  VALUES (procedure_name, error_message, error_code, sql_state);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -5821,7 +5649,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_error_log;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_error_log()
@@ -5853,9 +5680,8 @@ CALL sp_mamba_etl_error_log_drop();
 CALL sp_mamba_etl_error_log_create();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5864,7 +5690,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_user_settings_drop;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_user_settings_drop()
@@ -5895,9 +5720,8 @@ END;
 DROP TABLE IF EXISTS _mamba_etl_user_settings;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5906,7 +5730,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_user_settings_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_user_settings_create()
@@ -5950,9 +5773,8 @@ CREATE TABLE _mamba_etl_user_settings
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -5961,7 +5783,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_user_settings_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_user_settings_insert(
@@ -5983,9 +5804,8 @@ BEGIN
  EXECUTE inserttbl;
  DEALLOCATE PREPARE inserttbl;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -5995,7 +5815,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_user_settings;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_user_settings(
@@ -6020,9 +5839,8 @@ BEGIN
  incremental_mode_switch,
  automatic_flattening_mode_switch,
  etl_interval_seconds);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6032,7 +5850,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_all_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_all_create()
@@ -6085,9 +5902,8 @@ CREATE TABLE IF NOT EXISTS mamba_etl_incremental_columns_index_all
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6096,7 +5912,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_all_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_all_insert(
@@ -6163,9 +5978,8 @@ BEGIN
  PREPARE stmt FROM @insert_sql;
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6175,7 +5989,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_all_truncate;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_all_truncate()
@@ -6207,9 +6020,8 @@ TRUNCATE TABLE mamba_etl_incremental_columns_index_all;
 -- CALL sp_mamba_truncate_table('mamba_etl_incremental_columns_index_all');
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6218,7 +6030,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_all;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_all(
@@ -6230,9 +6041,8 @@ BEGIN
  CALL sp_mamba_etl_incremental_columns_index_all_truncate();
  CALL sp_mamba_etl_incremental_columns_index_all_insert(target_table_name);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6242,7 +6052,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_new_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_new_create()
@@ -6279,9 +6088,8 @@ CREATE TEMPORARY TABLE IF NOT EXISTS mamba_etl_incremental_columns_index_new
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6290,7 +6098,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_new_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_new_insert(
@@ -6329,9 +6136,8 @@ BEGIN
  SET @inc_start_time = incremental_start_time;
  EXECUTE stmt USING @inc_start_time;
  DEALLOCATE PREPARE stmt;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6341,7 +6147,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_new_truncate;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_new_truncate()
@@ -6372,9 +6177,8 @@ END;
 TRUNCATE TABLE mamba_etl_incremental_columns_index_new;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6383,7 +6187,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_new;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_new(
@@ -6395,9 +6198,8 @@ BEGIN
  CALL sp_mamba_etl_incremental_columns_index_new_truncate();
  CALL sp_mamba_etl_incremental_columns_index_new_insert(mamba_table_name);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6407,7 +6209,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_modified_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_modified_create()
@@ -6443,9 +6244,8 @@ CREATE TEMPORARY TABLE IF NOT EXISTS mamba_etl_incremental_columns_index_modifie
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6454,7 +6254,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_modified_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_modified_insert(
@@ -6494,9 +6293,8 @@ BEGIN
  SET @incremental_start_time = incremental_start_time;
  EXECUTE stmt USING @incremental_start_time, @incremental_start_time, @incremental_start_time;
  DEALLOCATE PREPARE stmt;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6506,7 +6304,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_modified_truncate;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_modified_truncate()
@@ -6537,9 +6334,8 @@ END;
 TRUNCATE TABLE mamba_etl_incremental_columns_index_modified;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6548,7 +6344,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index_modified;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index_modified(
@@ -6560,9 +6355,8 @@ BEGIN
  CALL sp_mamba_etl_incremental_columns_index_modified_truncate();
  CALL sp_mamba_etl_incremental_columns_index_modified_insert(mamba_table_name);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6572,7 +6366,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_etl_incremental_columns_index;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_etl_incremental_columns_index(
@@ -6585,9 +6378,8 @@ BEGIN
  CALL sp_mamba_etl_incremental_columns_index_new(mamba_table_name);
  CALL sp_mamba_etl_incremental_columns_index_modified(mamba_table_name);
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6597,7 +6389,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_table_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_table_insert(
@@ -6679,9 +6470,8 @@ BEGIN
  PREPARE stmt FROM @insert_sql;
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6691,7 +6481,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_truncate_table;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_truncate_table(
@@ -6710,9 +6499,8 @@ BEGIN
 
  END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6722,7 +6510,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_drop_table;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_drop_table(
@@ -6735,9 +6522,8 @@ BEGIN
  EXECUTE stmt;
  DEALLOCATE PREPARE stmt;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -6747,7 +6533,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location_create()
@@ -6817,9 +6602,8 @@ CREATE TABLE mamba_dim_location
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6828,7 +6612,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location_insert()
@@ -6859,9 +6642,8 @@ END;
 CALL sp_mamba_dim_table_insert('location', 'mamba_dim_location', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6870,7 +6652,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location_update()
@@ -6898,9 +6679,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6909,7 +6689,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location()
@@ -6942,9 +6721,8 @@ CALL sp_mamba_dim_location_insert();
 CALL sp_mamba_dim_location_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6953,7 +6731,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location_incremental()
@@ -6986,9 +6763,8 @@ CALL sp_mamba_dim_location_incremental_insert();
 CALL sp_mamba_dim_location_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -6997,7 +6773,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location_incremental_insert()
@@ -7029,9 +6804,8 @@ END;
 CALL sp_mamba_dim_table_insert('location', 'mamba_dim_location', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7040,7 +6814,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_location_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_location_incremental_update()
@@ -7109,9 +6882,8 @@ SET mdl.name = l.name,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7120,7 +6892,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type_create()
@@ -7169,9 +6940,8 @@ CREATE TABLE mamba_dim_patient_identifier_type
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7180,7 +6950,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type_insert()
@@ -7211,9 +6980,8 @@ END;
 CALL sp_mamba_dim_table_insert('patient_identifier_type', 'mamba_dim_patient_identifier_type', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7222,7 +6990,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type_update()
@@ -7250,9 +7017,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7261,7 +7027,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type()
@@ -7294,9 +7059,8 @@ CALL sp_mamba_dim_patient_identifier_type_insert();
 CALL sp_mamba_dim_patient_identifier_type_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7305,7 +7069,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type_incremental()
@@ -7338,9 +7101,8 @@ CALL sp_mamba_dim_patient_identifier_type_incremental_insert();
 CALL sp_mamba_dim_patient_identifier_type_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7349,7 +7111,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type_incremental_insert()
@@ -7381,9 +7142,8 @@ END;
 CALL sp_mamba_dim_table_insert('patient_identifier_type', 'mamba_dim_patient_identifier_type', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7392,7 +7152,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_type_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_type_incremental_update()
@@ -7440,9 +7199,8 @@ SET mdpit.name = pit.name,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7451,7 +7209,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_datatype_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_datatype_create()
@@ -7499,9 +7256,8 @@ CREATE TABLE mamba_dim_concept_datatype
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7510,7 +7266,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_datatype_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_datatype_insert()
@@ -7541,9 +7296,8 @@ END;
 CALL sp_mamba_dim_table_insert('concept_datatype', 'mamba_dim_concept_datatype', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7552,7 +7306,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_datatype;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_datatype()
@@ -7584,9 +7337,8 @@ CALL sp_mamba_dim_concept_datatype_create();
 CALL sp_mamba_dim_concept_datatype_insert();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7595,7 +7347,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_datatype_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_datatype_incremental_insert()
@@ -7627,9 +7378,8 @@ END;
 CALL sp_mamba_dim_table_insert('concept_datatype', 'mamba_dim_concept_datatype', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7638,7 +7388,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_datatype_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_datatype_incremental_update()
@@ -7684,9 +7433,8 @@ SET mcd.name = cd.name,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7695,7 +7443,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_datatype_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_datatype_incremental()
@@ -7728,9 +7475,8 @@ CALL sp_mamba_dim_concept_datatype_incremental_insert();
 CALL sp_mamba_dim_concept_datatype_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7739,7 +7485,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_create()
@@ -7793,9 +7538,8 @@ CREATE TABLE mamba_dim_concept
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7804,7 +7548,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_insert()
@@ -7835,9 +7578,8 @@ END;
 CALL sp_mamba_dim_table_insert('concept', 'mamba_dim_concept', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7846,7 +7588,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_update()
@@ -7947,9 +7688,8 @@ WHERE c.concept_id > 0;
 DROP TEMPORARY TABLE IF EXISTS mamba_temp_computed_concept_name;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -7958,7 +7698,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_cleanup()
@@ -8029,9 +7768,8 @@ BEGIN
 
  DROP TEMPORARY TABLE IF EXISTS mamba_dim_concept_temp;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -8041,7 +7779,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept()
@@ -8075,9 +7812,8 @@ CALL sp_mamba_dim_concept_update();
 CALL sp_mamba_dim_concept_cleanup();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8086,7 +7822,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_incremental_insert()
@@ -8118,9 +7853,8 @@ END;
 CALL sp_mamba_dim_table_insert('concept', 'mamba_dim_concept', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8129,7 +7863,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_incremental_update()
@@ -8219,9 +7952,8 @@ WHERE c.incremental_record = 1;
 DROP TEMPORARY TABLE IF EXISTS mamba_temp_computed_concept_name;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8230,7 +7962,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_incremental_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_incremental_cleanup()
@@ -8302,9 +8033,8 @@ BEGIN
 
  DROP TEMPORARY TABLE mamba_dim_concept_temp;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -8314,7 +8044,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_incremental()
@@ -8348,9 +8077,8 @@ CALL sp_mamba_dim_concept_incremental_update();
 CALL sp_mamba_dim_concept_incremental_cleanup();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8359,7 +8087,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_answer_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_answer_create()
@@ -8402,9 +8129,8 @@ CREATE TABLE mamba_dim_concept_answer
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8413,7 +8139,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_answer_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_answer_insert()
@@ -8444,9 +8169,8 @@ END;
 CALL sp_mamba_dim_table_insert('concept_answer', 'mamba_dim_concept_answer', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8455,7 +8179,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_answer;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_answer()
@@ -8487,9 +8210,8 @@ CALL sp_mamba_dim_concept_answer_create();
 CALL sp_mamba_dim_concept_answer_insert();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8498,7 +8220,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_answer_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_answer_incremental_insert()
@@ -8530,9 +8251,8 @@ END;
 CALL sp_mamba_dim_table_insert('concept_answer', 'mamba_dim_concept_answer', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8541,7 +8261,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_answer_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_answer_incremental_update()
@@ -8569,9 +8288,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8580,7 +8298,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_answer_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_answer_incremental()
@@ -8613,9 +8330,8 @@ CALL sp_mamba_dim_concept_answer_incremental_insert();
 CALL sp_mamba_dim_concept_answer_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8624,7 +8340,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_create()
@@ -8678,9 +8393,8 @@ CREATE TABLE mamba_dim_concept_name
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8689,7 +8403,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_insert()
@@ -8750,9 +8463,8 @@ WHERE cn.locale IN (SELECT DISTINCT concepts_locale FROM _mamba_etl_user_setting
 -- Use locale preferred or Fully specified name
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8761,7 +8473,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_update()
@@ -8789,9 +8500,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8800,7 +8510,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name()
@@ -8833,9 +8542,8 @@ CALL sp_mamba_dim_concept_name_insert();
 CALL sp_mamba_dim_concept_name_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8844,7 +8552,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_incremental_insert()
@@ -8909,9 +8616,8 @@ WHERE cn.locale IN (SELECT DISTINCT concepts_locale FROM _mamba_etl_user_setting
  AND cn.voided = 0;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8920,7 +8626,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_incremental_update()
@@ -8969,9 +8674,8 @@ SET cn.concept_id = cnm.concept_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -8980,7 +8684,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_incremental_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_incremental_cleanup()
@@ -9018,9 +8721,8 @@ WHERE voided <> 0
  OR locale NOT IN (SELECT DISTINCT concepts_locale FROM _mamba_etl_user_settings);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9029,7 +8731,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_concept_name_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_concept_name_incremental()
@@ -9063,9 +8764,8 @@ CALL sp_mamba_dim_concept_name_incremental_update();
 CALL sp_mamba_dim_concept_name_incremental_cleanup();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9074,7 +8774,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_create()
@@ -9127,9 +8826,8 @@ CREATE TABLE mamba_dim_encounter_type
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9138,7 +8836,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_insert()
@@ -9169,9 +8866,8 @@ END;
 CALL sp_mamba_dim_table_insert('encounter_type', 'mamba_dim_encounter_type', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9180,7 +8876,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_update()
@@ -9215,9 +8910,8 @@ SET et.auto_flat_table_name = LOWER(LEFT(
 WHERE et.encounter_type_id > 0;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9226,7 +8920,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_cleanup()
@@ -9297,9 +8990,8 @@ BEGIN
 
  DROP TEMPORARY TABLE mamba_dim_encounter_type_temp;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -9309,7 +9001,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type()
@@ -9343,9 +9034,8 @@ CALL sp_mamba_dim_encounter_type_update();
 CALL sp_mamba_dim_encounter_type_cleanup();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9354,7 +9044,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_incremental_insert()
@@ -9385,9 +9074,8 @@ END;
 CALL sp_mamba_dim_table_insert('encounter_type', 'mamba_dim_encounter_type', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9396,7 +9084,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_incremental_update()
@@ -9450,9 +9137,8 @@ SET et.auto_flat_table_name = LOWER(LEFT(
 WHERE et.incremental_record = 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9461,7 +9147,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_incremental_cleanup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_incremental_cleanup()
@@ -9533,9 +9218,8 @@ BEGIN
 
  DROP TEMPORARY TABLE mamba_dim_encounter_type_temp;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -9545,7 +9229,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_type_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_type_incremental()
@@ -9578,9 +9261,8 @@ CALL sp_mamba_dim_encounter_type_incremental_insert();
 CALL sp_mamba_dim_encounter_type_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9589,7 +9271,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_create()
@@ -9648,9 +9329,8 @@ CREATE TABLE mamba_dim_encounter
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9659,7 +9339,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_insert()
@@ -9723,9 +9402,8 @@ WHERE et.uuid
  FROM mamba_concept_metadata md);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9734,7 +9412,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_update()
@@ -9762,9 +9439,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9773,7 +9449,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter()
@@ -9806,9 +9481,8 @@ CALL sp_mamba_dim_encounter_insert();
 CALL sp_mamba_dim_encounter_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9817,7 +9491,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_incremental_insert()
@@ -9883,9 +9556,8 @@ FROM openmrs.encounter e
  ON e.encounter_type = et.encounter_type_id;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9894,7 +9566,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_incremental_update()
@@ -9948,9 +9619,8 @@ SET e.encounter_id = enc.encounter_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -9959,7 +9629,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_encounter_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_encounter_incremental()
@@ -9992,9 +9661,8 @@ CALL sp_mamba_dim_encounter_incremental_insert();
 CALL sp_mamba_dim_encounter_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10003,7 +9671,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_report_definition_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_report_definition_create()
@@ -10068,9 +9735,8 @@ CREATE INDEX mamba_dim_report_definition_parameter_position_index
  ON mamba_dim_report_definition_parameters (parameter_position);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10079,7 +9745,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_report_definition_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_report_definition_insert()
@@ -10111,9 +9776,8 @@ SET @report_definition_json = '{
 }';
 CALL sp_mamba_extract_report_definition_metadata(@report_definition_json, 'mamba_dim_report_definition');
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10122,7 +9786,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_report_definition_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_report_definition_update()
@@ -10150,9 +9813,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10161,7 +9823,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_report_definition;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_report_definition()
@@ -10194,9 +9855,8 @@ CALL sp_mamba_dim_report_definition_insert();
 CALL sp_mamba_dim_report_definition_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10205,7 +9865,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_create()
@@ -10261,9 +9920,8 @@ CREATE TABLE mamba_dim_person
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10272,7 +9930,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_insert()
@@ -10303,9 +9960,8 @@ END;
 CALL sp_mamba_dim_table_insert('person', 'mamba_dim_person', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10314,7 +9970,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_update()
@@ -10354,9 +10009,8 @@ WHERE pn.preferred = 1
  AND pn.voided = 0;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10365,7 +10019,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person()
@@ -10397,9 +10050,8 @@ CALL sp_mamba_dim_person_create();
 CALL sp_mamba_dim_person_insert();
 CALL sp_mamba_dim_person_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10408,7 +10060,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_incremental_insert()
@@ -10439,9 +10090,8 @@ END;
 CALL sp_mamba_dim_table_insert('person', 'mamba_dim_person', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10450,7 +10100,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_incremental_update()
@@ -10514,9 +10163,8 @@ WHERE psn.incremental_record = 1
  AND pn.voided = 0;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10525,7 +10173,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_incremental()
@@ -10558,9 +10205,8 @@ CALL sp_mamba_dim_person_incremental_insert();
 CALL sp_mamba_dim_person_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10569,7 +10215,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_create()
@@ -10621,9 +10266,8 @@ CREATE TABLE mamba_dim_person_attribute
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10632,7 +10276,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_insert()
@@ -10663,9 +10306,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_attribute', 'mamba_dim_person_attribute', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10674,7 +10316,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_update()
@@ -10702,9 +10343,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10713,7 +10353,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute()
@@ -10746,9 +10385,8 @@ CALL sp_mamba_dim_person_attribute_insert();
 CALL sp_mamba_dim_person_attribute_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10757,7 +10395,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_incremental_insert()
@@ -10788,9 +10425,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_attribute', 'mamba_dim_person_attribute', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10799,7 +10435,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_incremental_update()
@@ -10848,9 +10483,8 @@ SET mpa.person_attribute_id = pa.person_attribute_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10859,7 +10493,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_incremental()
@@ -10892,9 +10525,8 @@ CALL sp_mamba_dim_person_attribute_incremental_insert();
 CALL sp_mamba_dim_person_attribute_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10903,7 +10535,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type_create()
@@ -10954,9 +10585,8 @@ CREATE TABLE mamba_dim_person_attribute_type
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -10965,7 +10595,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type_insert()
@@ -10996,9 +10625,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_attribute_type', 'mamba_dim_person_attribute_type', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11007,7 +10635,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type_update()
@@ -11035,9 +10662,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11046,7 +10672,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type()
@@ -11079,9 +10704,8 @@ CALL sp_mamba_dim_person_attribute_type_insert();
 CALL sp_mamba_dim_person_attribute_type_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11090,7 +10714,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type_incremental_insert()
@@ -11122,9 +10745,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_attribute_type', 'mamba_dim_person_attribute_type', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11133,7 +10755,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type_incremental_update()
@@ -11182,9 +10803,8 @@ SET mpat.name = pat.name,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11193,7 +10813,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_attribute_type_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_attribute_type_incremental()
@@ -11226,9 +10845,8 @@ CALL sp_mamba_dim_person_attribute_type_incremental_insert();
 CALL sp_mamba_dim_person_attribute_type_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11237,7 +10855,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_create()
@@ -11294,9 +10911,8 @@ CREATE TABLE mamba_dim_patient_identifier
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11305,7 +10921,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_insert()
@@ -11336,9 +10951,8 @@ END;
 CALL sp_mamba_dim_table_insert('patient_identifier', 'mamba_dim_patient_identifier', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11347,7 +10961,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_update()
@@ -11375,9 +10988,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11386,7 +10998,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier()
@@ -11419,9 +11030,8 @@ CALL sp_mamba_dim_patient_identifier_insert();
 CALL sp_mamba_dim_patient_identifier_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11430,7 +11040,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_incremental_insert()
@@ -11462,9 +11071,8 @@ END;
 CALL sp_mamba_dim_table_insert('patient_identifier', 'mamba_dim_patient_identifier', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11473,7 +11081,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_incremental_update()
@@ -11525,9 +11132,8 @@ SET mpi.patient_id = pi.patient_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11536,7 +11142,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_patient_identifier_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_patient_identifier_incremental()
@@ -11569,9 +11174,8 @@ CALL sp_mamba_dim_patient_identifier_incremental_insert();
 CALL sp_mamba_dim_patient_identifier_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11580,7 +11184,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_name_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_name_create()
@@ -11637,9 +11240,8 @@ CREATE TABLE mamba_dim_person_name
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11648,7 +11250,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_name_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_name_insert()
@@ -11679,9 +11280,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_name', 'mamba_dim_person_name', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11690,7 +11290,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_name;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_name()
@@ -11722,9 +11321,8 @@ CALL sp_mamba_dim_person_name_create();
 CALL sp_mamba_dim_person_name_insert();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11733,7 +11331,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_name_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_name_incremental_insert()
@@ -11764,9 +11361,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_name', 'mamba_dim_person_name', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11775,7 +11371,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_name_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_name_incremental_update()
@@ -11831,9 +11426,8 @@ SET dpn.person_name_id = pn.person_name_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11842,7 +11436,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_name_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_name_incremental()
@@ -11875,9 +11468,8 @@ CALL sp_mamba_dim_person_name_incremental_insert();
 CALL sp_mamba_dim_person_name_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11886,7 +11478,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_address_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_address_create()
@@ -11956,9 +11547,8 @@ CREATE TABLE mamba_dim_person_address
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -11967,7 +11557,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_address_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_address_insert()
@@ -11998,9 +11587,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_address', 'mamba_dim_person_address', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12009,7 +11597,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_address;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_address()
@@ -12041,9 +11628,8 @@ CALL sp_mamba_dim_person_address_create();
 CALL sp_mamba_dim_person_address_insert();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12052,7 +11638,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_address_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_address_incremental_insert()
@@ -12084,9 +11669,8 @@ END;
 CALL sp_mamba_dim_table_insert('person_address', 'mamba_dim_person_address', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12095,7 +11679,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_address_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_address_incremental_update()
@@ -12164,9 +11747,8 @@ SET mpa.person_id = pa.person_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12175,7 +11757,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_person_address_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_person_address_incremental()
@@ -12208,9 +11789,8 @@ CALL sp_mamba_dim_person_address_incremental_insert();
 CALL sp_mamba_dim_person_address_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12219,7 +11799,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user_create()
@@ -12272,9 +11851,8 @@ CREATE TABLE mamba_dim_users
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12283,7 +11861,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user_insert()
@@ -12314,9 +11891,8 @@ END;
 CALL sp_mamba_dim_table_insert('users', 'mamba_dim_users', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12325,7 +11901,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user_update()
@@ -12354,9 +11929,8 @@ END;
 -- $BEGIN
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12365,7 +11939,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user()
@@ -12396,9 +11969,8 @@ END;
  CALL sp_mamba_dim_user_insert();
  CALL sp_mamba_dim_user_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12407,7 +11979,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user_incremental_insert()
@@ -12439,9 +12010,8 @@ END;
 CALL sp_mamba_dim_table_insert('users', 'mamba_dim_users', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12450,7 +12020,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user_incremental_update()
@@ -12501,9 +12070,8 @@ SET u.system_id = us.system_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12512,7 +12080,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_user_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_user_incremental()
@@ -12543,9 +12110,8 @@ CALL sp_mamba_etl_incremental_columns_index('users', 'mamba_dim_users');
 CALL sp_mamba_dim_user_incremental_insert();
 CALL sp_mamba_dim_user_incremental_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12554,7 +12120,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship_create()
@@ -12608,9 +12173,8 @@ CREATE TABLE mamba_dim_relationship
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12619,7 +12183,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship_insert()
@@ -12650,9 +12213,8 @@ END;
 CALL sp_mamba_dim_table_insert('relationship', 'mamba_dim_relationship', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12661,7 +12223,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship_update()
@@ -12689,9 +12250,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12700,7 +12260,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship()
@@ -12733,9 +12292,8 @@ CALL sp_mamba_dim_relationship_insert();
 CALL sp_mamba_dim_relationship_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12744,7 +12302,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship_incremental_insert()
@@ -12775,9 +12332,8 @@ END;
 CALL sp_mamba_dim_table_insert('relationship', 'mamba_dim_relationship', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12786,7 +12342,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship_incremental_update()
@@ -12839,9 +12394,8 @@ WHERE im.incremental_table_pkey > 1;
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12850,7 +12404,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_relationship_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_relationship_incremental()
@@ -12883,9 +12436,8 @@ CALL sp_mamba_dim_relationship_incremental_insert();
 CALL sp_mamba_dim_relationship_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12894,7 +12446,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders_create()
@@ -12966,9 +12517,8 @@ CREATE TABLE mamba_dim_orders
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -12977,7 +12527,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders_insert()
@@ -13008,9 +12557,8 @@ END;
 CALL sp_mamba_dim_table_insert('orders', 'mamba_dim_orders', FALSE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13019,7 +12567,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders_update()
@@ -13047,9 +12594,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13058,7 +12604,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders()
@@ -13091,9 +12636,8 @@ CALL sp_mamba_dim_orders_insert();
 CALL sp_mamba_dim_orders_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13102,7 +12646,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders_incremental_insert()
@@ -13133,9 +12676,8 @@ END;
 CALL sp_mamba_dim_table_insert('orders', 'mamba_dim_orders', TRUE);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13144,7 +12686,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders_incremental_update()
@@ -13213,9 +12754,8 @@ SET do.order_id = o.order_id,
 WHERE im.incremental_table_pkey > 1;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13224,7 +12764,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_orders_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_orders_incremental()
@@ -13257,9 +12796,8 @@ CALL sp_mamba_dim_orders_incremental_insert();
 CALL sp_mamba_dim_orders_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13268,7 +12806,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_agegroup_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_agegroup_create()
@@ -13309,9 +12846,8 @@ CREATE TABLE mamba_dim_agegroup
 );
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13320,7 +12856,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_agegroup_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_agegroup_insert()
@@ -13349,9 +12884,8 @@ END;
 -- $BEGIN
 CALL sp_mamba_load_agegroup();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13360,7 +12894,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_agegroup_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_agegroup_update()
@@ -13411,9 +12944,8 @@ SET datim_age_val =
 WHERE a.datim_agegroup IS NOT NULL;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13422,7 +12954,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_agegroup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_agegroup()
@@ -13453,9 +12984,8 @@ END;
 CALL sp_mamba_dim_agegroup_create();
 CALL sp_mamba_dim_agegroup_insert();
 CALL sp_mamba_dim_agegroup_update();
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13464,7 +12994,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_create()
@@ -13545,9 +13074,8 @@ CREATE TABLE mamba_z_encounter_obs
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13556,7 +13084,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_insert()
@@ -13673,9 +13200,8 @@ BEGIN
 
  DROP TEMPORARY TABLE IF EXISTS mamba_temp_obs_data;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -13685,7 +13211,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_update()
@@ -13744,9 +13269,8 @@ BEGIN
 
  DROP TEMPORARY TABLE IF EXISTS mamba_temp_value_coded_values;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -13756,7 +13280,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs()
@@ -13789,9 +13312,8 @@ CALL sp_mamba_z_encounter_obs_insert();
 CALL sp_mamba_z_encounter_obs_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13800,7 +13322,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_incremental_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_incremental_insert()
@@ -13892,9 +13413,8 @@ FROM openmrs.obs o
  FROM mamba_concept_metadata) md ON o.concept_id = md.concept_id
 WHERE o.encounter_id IS NOT NULL;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -13903,7 +13423,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_incremental_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_incremental_update()
@@ -13989,9 +13508,8 @@ WHERE z.incremental_record = 1
  WHERE c.datatype = 'Boolean');
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14000,7 +13518,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_incremental;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_incremental()
@@ -14033,9 +13550,8 @@ CALL sp_mamba_z_encounter_obs_incremental_insert();
 CALL sp_mamba_z_encounter_obs_incremental_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14044,7 +13560,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_data_processing_drop_and_flatten;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_data_processing_drop_and_flatten()
@@ -14107,9 +13622,8 @@ BEGIN
 
  CALL sp_mamba_flat_encounter_obs_group_table_insert_all;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -14119,7 +13633,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_data_processing_increment_and_flatten;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_data_processing_increment_and_flatten()
@@ -14178,9 +13691,8 @@ BEGIN
 
  CALL sp_mamba_reset_incremental_update_flag_all;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -14190,7 +13702,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_covid;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_covid()
@@ -14220,9 +13731,8 @@ END;
 CALL sp_dim_client_covid;
 CALL sp_fact_encounter_covid;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14231,7 +13741,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_hiv_art()
@@ -14261,9 +13770,8 @@ END;
 -- CALL sp_dim_client_hiv_hts;
 CALL sp_fact_encounter_hiv_art;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14272,7 +13780,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art_card;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_hiv_art_card()
@@ -14340,9 +13847,8 @@ CALL sp_fact_eid_patients;
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14351,7 +13857,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_non_suppressed;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_non_suppressed()
@@ -14382,9 +13887,8 @@ CALL sp_fact_encounter_non_suppressed_card;
 CALL sp_fact_encounter_non_suppressed_obs_group;
 CALL sp_fact_encounter_non_suppressed_repeat_vl;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14393,7 +13897,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_IIT;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_IIT()
@@ -14427,9 +13930,8 @@ CALL sp_fact_patient_interruption_details;
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14438,7 +13940,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_hts()
@@ -14468,9 +13969,8 @@ END;
 CALL sp_fact_encounter_hts_card;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14479,7 +13979,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_anc;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_anc()
@@ -14509,9 +14008,8 @@ END;
 CALL sp_fact_encounter_anc_card;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14520,7 +14018,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_opd_attendance;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_opd_attendance()
@@ -14550,9 +14047,8 @@ END;
 CALL sp_fact_attended_visit;
 CALL sp_fact_reattendance_monthly;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14561,7 +14057,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_transfers;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_transfers()
@@ -14592,9 +14087,8 @@ END;
 CALL sp_fact_transfer_in;
 CALL sp_fact_transfer_out;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14603,7 +14097,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_diagnosis()
@@ -14634,335 +14127,8 @@ CALL sp_fact_encounter_diagnosis_create();
 CALL sp_fact_encounter_diagnosis_insert();
 CALL sp_fact_encounter_diagnosis_update();
 -- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
--- sp_fact_encounter_diagnosis_create
---
-
-DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_create;
-
-DELIMITER //
-
-~
-CREATE PROCEDURE sp_fact_encounter_diagnosis_create()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_diagnosis_create', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_fact_encounter_diagnosis_create', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
 END;
 
--- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_diagnosis
-(
-    id INT AUTO_INCREMENT,
-    diagnosis_id INT NOT NULL,
-    encounter_id INT NOT NULL,
-    patient_id INT NOT NULL,
-    condition_id INT NULL,
-    certainty VARCHAR(255) NOT NULL,
-    dx_rank INT NOT NULL,
-    diagnosis_coded INT NULL,
-    diagnosis_non_coded VARCHAR(255) NULL,
-    diagnosis_coded_name INT NULL,
-    coded_diagnosis_name VARCHAR(255) NULL,
-    diagnosis_display VARCHAR(255) NULL,
-    diagnosis_name_locale VARCHAR(50) NULL,
-    diagnosis_name_type VARCHAR(50) NULL,
-    uuid CHAR(38) NOT NULL,
-    creator INT NOT NULL,
-    date_created DATETIME NOT NULL,
-    changed_by INT NULL,
-    date_changed DATETIME NULL,
-    voided TINYINT(1) NOT NULL,
-    voided_by INT NULL,
-    date_voided DATETIME NULL,
-    void_reason VARCHAR(255) NULL,
-    form_namespace_and_path VARCHAR(255) NULL,
-    PRIMARY KEY (id),
-    UNIQUE KEY uq_mf_enc_dx_diagnosis_id (diagnosis_id)
-);
--- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
--- sp_fact_encounter_diagnosis_insert
---
-
-DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_insert;
-
-DELIMITER //
-
-~
-CREATE PROCEDURE sp_fact_encounter_diagnosis_insert()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_diagnosis_insert', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_fact_encounter_diagnosis_insert', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-INSERT INTO mamba_fact_encounter_diagnosis
-(
-    diagnosis_id,
-    encounter_id,
-    patient_id,
-    condition_id,
-    certainty,
-    dx_rank,
-    diagnosis_coded,
-    diagnosis_non_coded,
-    diagnosis_coded_name,
-    coded_diagnosis_name,
-    diagnosis_display,
-    diagnosis_name_locale,
-    diagnosis_name_type,
-    uuid,
-    creator,
-    date_created,
-    changed_by,
-    date_changed,
-    voided,
-    voided_by,
-    date_voided,
-    void_reason,
-    form_namespace_and_path
-)
-SELECT
-    ed.diagnosis_id,
-    ed.encounter_id,
-    ed.patient_id,
-    ed.condition_id,
-    ed.certainty,
-    ed.dx_rank,
-    ed.diagnosis_coded,
-    ed.diagnosis_non_coded,
-    ed.diagnosis_coded_name,
-
-    COALESCE(cn_by_id.name, cn_pref.name, cn_any.name) AS coded_diagnosis_name,
-    COALESCE(ed.diagnosis_non_coded, cn_by_id.name, cn_pref.name, cn_any.name) AS diagnosis_display,
-
-    COALESCE(cn_by_id.locale, cn_pref.locale, cn_any.locale) AS diagnosis_name_locale,
-    COALESCE(cn_by_id.concept_name_type, cn_pref.concept_name_type, cn_any.concept_name_type) AS diagnosis_name_type,
-
-    ed.uuid,
-    ed.creator,
-    ed.date_created,
-    ed.changed_by,
-    ed.date_changed,
-    ed.voided,
-    ed.voided_by,
-    ed.date_voided,
-    ed.void_reason,
-    ed.form_namespace_and_path
-FROM conceptreview.encounter_diagnosis ed
-
-LEFT JOIN conceptreview.concept_name cn_by_id
-       ON cn_by_id.concept_name_id = ed.diagnosis_coded_name
-      AND cn_by_id.voided = 0
-
-LEFT JOIN (
-    SELECT concept_id, name, locale, concept_name_type
-    FROM conceptreview.concept_name
-    WHERE voided = 0
-      AND locale = 'en'
-      AND locale_preferred = 1
-) cn_pref
-       ON cn_pref.concept_id = ed.diagnosis_coded
-
-LEFT JOIN (
-    SELECT cn1.concept_id, cn1.name, cn1.locale, cn1.concept_name_type
-    FROM conceptreview.concept_name cn1
-    JOIN (
-        SELECT concept_id, MIN(concept_name_id) AS min_id
-        FROM conceptreview.concept_name
-        WHERE voided = 0
-          AND locale = 'en'
-        GROUP BY concept_id
-    ) m
-      ON m.concept_id = cn1.concept_id
-     AND m.min_id = cn1.concept_name_id
-) cn_any
-       ON cn_any.concept_id = ed.diagnosis_coded
-
-ON DUPLICATE KEY UPDATE
-    encounter_id = VALUES(encounter_id),
-    patient_id = VALUES(patient_id),
-    condition_id = VALUES(condition_id),
-    certainty = VALUES(certainty),
-    dx_rank = VALUES(dx_rank),
-    diagnosis_coded = VALUES(diagnosis_coded),
-    diagnosis_non_coded = VALUES(diagnosis_non_coded),
-    diagnosis_coded_name = VALUES(diagnosis_coded_name),
-    coded_diagnosis_name = VALUES(coded_diagnosis_name),
-    diagnosis_display = VALUES(diagnosis_display),
-    diagnosis_name_locale = VALUES(diagnosis_name_locale),
-    diagnosis_name_type = VALUES(diagnosis_name_type),
-    uuid = VALUES(uuid),
-    creator = VALUES(creator),
-    date_created = VALUES(date_created),
-    changed_by = VALUES(changed_by),
-    date_changed = VALUES(date_changed),
-    voided = VALUES(voided),
-    voided_by = VALUES(voided_by),
-    date_voided = VALUES(date_voided),
-    void_reason = VALUES(void_reason),
-    form_namespace_and_path = VALUES(form_namespace_and_path);
--- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
--- sp_fact_encounter_diagnosis_update
---
-
-DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_update;
-
-DELIMITER //
-
-~
-CREATE PROCEDURE sp_fact_encounter_diagnosis_update()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_diagnosis_update', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_fact_encounter_diagnosis_update', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-/*
-  Update existing fact rows when the source encounter_diagnosis row changes (including voiding),
-  and refresh the resolved concept name.
-*/
-
-UPDATE mamba_fact_encounter_diagnosis f
-JOIN conceptreview.encounter_diagnosis ed
-  ON ed.diagnosis_id = f.diagnosis_id
-
-LEFT JOIN conceptreview.concept_name cn_by_id
-       ON cn_by_id.concept_name_id = ed.diagnosis_coded_name
-      AND cn_by_id.voided = 0
-
-LEFT JOIN (
-    SELECT concept_id, name, locale, concept_name_type
-    FROM conceptreview.concept_name
-    WHERE voided = 0
-      AND locale = 'en'
-      AND locale_preferred = 1
-) cn_pref
-       ON cn_pref.concept_id = ed.diagnosis_coded
-
-LEFT JOIN (
-    SELECT cn1.concept_id, cn1.name, cn1.locale, cn1.concept_name_type
-    FROM conceptreview.concept_name cn1
-    JOIN (
-        SELECT concept_id, MIN(concept_name_id) AS min_id
-        FROM conceptreview.concept_name
-        WHERE voided = 0
-          AND locale = 'en'
-        GROUP BY concept_id
-    ) m
-      ON m.concept_id = cn1.concept_id
-     AND m.min_id = cn1.concept_name_id
-) cn_any
-       ON cn_any.concept_id = ed.diagnosis_coded
-
-SET
-    f.encounter_id = ed.encounter_id,
-    f.patient_id = ed.patient_id,
-    f.condition_id = ed.condition_id,
-    f.certainty = ed.certainty,
-    f.dx_rank = ed.dx_rank,
-    f.diagnosis_coded = ed.diagnosis_coded,
-    f.diagnosis_non_coded = ed.diagnosis_non_coded,
-    f.diagnosis_coded_name = ed.diagnosis_coded_name,
-
-    f.coded_diagnosis_name = COALESCE(cn_by_id.name, cn_pref.name, cn_any.name),
-    f.diagnosis_display = COALESCE(ed.diagnosis_non_coded, cn_by_id.name, cn_pref.name, cn_any.name),
-
-    f.diagnosis_name_locale = COALESCE(cn_by_id.locale, cn_pref.locale, cn_any.locale),
-    f.diagnosis_name_type = COALESCE(cn_by_id.concept_name_type, cn_pref.concept_name_type, cn_any.concept_name_type),
-
-    f.uuid = ed.uuid,
-    f.creator = ed.creator,
-    f.date_created = ed.date_created,
-    f.changed_by = ed.changed_by,
-    f.date_changed = ed.date_changed,
-
-    f.voided = ed.voided,
-    f.voided_by = ed.voided_by,
-    f.date_voided = ed.date_voided,
-    f.void_reason = ed.void_reason,
-
-    f.form_namespace_and_path = ed.form_namespace_and_path
-WHERE
-    (
-        (ed.date_changed IS NOT NULL AND (f.date_changed IS NULL OR ed.date_changed > f.date_changed))
-        OR ed.voided <> f.voided
-        OR ( (ed.diagnosis_coded IS NULL) <> (f.diagnosis_coded IS NULL) )
-        OR (ed.diagnosis_coded <> f.diagnosis_coded)
-        OR ( (ed.diagnosis_non_coded IS NULL) <> (f.diagnosis_non_coded IS NULL) )
-        OR (ed.diagnosis_non_coded <> f.diagnosis_non_coded)
-    );
--- $END
-END //
-
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -14971,7 +14137,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_z_encounter_obs_insert()
@@ -15088,9 +14253,8 @@ BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS mamba_temp_obs_data;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -15100,7 +14264,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group()
@@ -15133,9 +14296,8 @@ CALL sp_mamba_obs_group_insert();
 CALL sp_mamba_obs_group_update();
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15144,7 +14306,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group_create()
@@ -15172,7 +14333,7 @@ END;
 
 -- $BEGIN
 
-CREATE TABLE IF NOT EXISTS mamba_obs_group
+CREATE TABLE mamba_obs_group
 (
     id                     INT          NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     obs_id                 INT          NOT NULL,
@@ -15184,9 +14345,10 @@ CREATE TABLE IF NOT EXISTS mamba_obs_group
     INDEX mamba_idx_obs_group_concept_name (obs_group_concept_name)
 )
     CHARSET = UTF8MB4;
-END //
 
-DELIMITER ;
+-- $END
+END;
+
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15195,7 +14357,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group_insert()
@@ -15224,9 +14385,8 @@ END;
 -- $BEGIN
 CALL sp_fact_encounter_non_suppressed_card_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15235,7 +14395,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_obs_group_update()
@@ -15263,9 +14422,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15274,7 +14432,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_system_drop_fact_tables;
 
-DELIMITER //
 
 -- CREATE PROCEDURE sp_mamba_system_drop_all_tables(IN database_name CHAR(255) CHARACTER SET UTF8MB4)
 ~
@@ -15315,9 +14472,8 @@ BEGIN
 
     END IF;
 
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -15325,7 +14481,6 @@ DELIMITER ;
 -- sp_mamba_data_processing_etl
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_mamba_data_processing_etl;
 
@@ -15344,9 +14499,8 @@ BEGIN
     CALL sp_data_processing_derived_hts();
     CALL sp_data_processing_derived_anc();
 
-END //
+END;
 
-DELIMITER ;
 
 
     -- $END
@@ -15359,7 +14513,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_no_of_interruptions_in_treatment_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_no_of_interruptions_in_treatment_create()
@@ -15386,7 +14539,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_no_of_interruptions
+CREATE TABLE mamba_fact_patients_no_of_interruptions
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -15403,9 +14556,8 @@ CREATE INDEX
     mamba_fact_patients_no_of_interruptions_encounter_date_index ON mamba_fact_patients_no_of_interruptions (encounter_date);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15414,7 +14566,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_no_of_interruptions_in_treatment_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_no_of_interruptions_in_treatment_insert()
@@ -15463,9 +14614,8 @@ FROM
 ORDER BY
     client_id, encounter_date;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15474,7 +14624,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_no_of_interruptions_in_treatment;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_no_of_interruptions_in_treatment()
@@ -15505,16 +14654,14 @@ CALL sp_fact_no_of_interruptions_in_treatment_create();
 CALL sp_fact_no_of_interruptions_in_treatment_insert();
 CALL sp_fact_no_of_interruptions_in_treatment_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_no_of_interruptions_in_treatment_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_no_of_interruptions_in_treatment_query;
 ~
@@ -15522,9 +14669,8 @@ CREATE PROCEDURE sp_fact_no_of_interruptions_in_treatment_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_no_of_interruptions;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -15534,7 +14680,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_no_of_interruptions_in_treatment_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_no_of_interruptions_in_treatment_update()
@@ -15562,9 +14707,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15573,7 +14717,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_interruption_details;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_patient_interruption_details()
@@ -15604,9 +14747,8 @@ CALL sp_fact_patient_interruption_details_create();
 CALL sp_fact_patient_interruption_details_insert();
 CALL sp_fact_patient_interruption_details_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15615,7 +14757,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_interruption_details_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_patient_interruption_details_create()
@@ -15642,7 +14783,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_interruptions_details
+CREATE TABLE mamba_fact_patients_interruptions_details
 (
     id                               INT AUTO_INCREMENT,
     client_id                        INT          NOT NULL,
@@ -15671,9 +14812,8 @@ CREATE INDEX
     mamba_fact_patients_interruptions_details_case_id_index ON mamba_fact_patients_interruptions_details (case_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15682,7 +14822,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_interruption_details_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_patient_interruption_details_insert()
@@ -15760,16 +14899,14 @@ FROM mamba_dim_person
                                      m.encounter_date = subquery.max_encounter_date) long_interruptions
                    ON a.client_id = long_interruptions.client_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_patient_interruption_details_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patients_interruptions_details_query;
 ~
@@ -15777,9 +14914,8 @@ CREATE PROCEDURE sp_fact_patients_interruptions_details_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_interruptions_details;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -15789,7 +14925,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_interruption_details_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_patient_interruption_details_update()
@@ -15817,9 +14952,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15828,7 +14962,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_IIT;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_IIT()
@@ -15862,9 +14995,8 @@ CALL sp_fact_patient_interruption_details;
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15873,7 +15005,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_dim_agegroup_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_dim_agegroup_create()
@@ -15900,7 +15031,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_dim_agegroup
+CREATE TABLE mamba_dim_agegroup
 (
     id              INT         NOT NULL AUTO_INCREMENT,
     age             INT         NULL,
@@ -15918,16 +15049,72 @@ CREATE TABLE IF NOT EXISTS mamba_dim_agegroup
 )
     CHARSET = UTF8MB4;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_mamba_dim_age_group_create
 --
 
+DROP PROCEDURE IF EXISTS sp_mamba_dim_age_group_create;
 
+
+~
+CREATE PROCEDURE sp_mamba_dim_age_group_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_mamba_dim_age_group_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_mamba_dim_age_group_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CREATE TABLE IF NOT EXISTS mamba_dim_age_category (
+                                        age_category_id   INT AUTO_INCREMENT PRIMARY KEY,
+                                        code              VARCHAR(50)  NOT NULL UNIQUE,
+                                        name              VARCHAR(100) NOT NULL,
+                                        description       TEXT,
+                                        version           VARCHAR(20)  DEFAULT 'v1',
+                                        effective_from    DATE NULL,
+                                        effective_to      DATE NULL,
+                                        is_active         TINYINT(1)   NOT NULL DEFAULT 1,
+                                        created_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+) CHARSET = UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS mamba_dim_age_group (
+                                     age_group_id     INT AUTO_INCREMENT PRIMARY KEY,
+                                     age_category_id  INT NOT NULL,
+                                     code             VARCHAR(50),
+                                     label            VARCHAR(100) NOT NULL,
+                                     min_age_days     INT NOT NULL,
+                                     max_age_days     INT NOT NULL,
+                                     sort_order       INT NOT NULL,
+                                     is_active        TINYINT(1)   NOT NULL DEFAULT 1,
+                                     created_at       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                                     CONSTRAINT fk_mamba_age_category
+                                         FOREIGN KEY (age_category_id)
+                                             REFERENCES mamba_dim_age_category (age_category_id)
+) CHARSET = UTF8MB4;
+
+-- $END
+END;
 
 
         
@@ -15937,7 +15124,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_anc_card()
@@ -15968,9 +15154,8 @@ CALL sp_fact_encounter_anc_card_create();
 CALL sp_fact_encounter_anc_card_insert();
 CALL sp_fact_encounter_anc_card_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -15979,7 +15164,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_anc_card_create()
@@ -16006,7 +15190,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_anc_card
+CREATE TABLE mamba_fact_encounter_anc_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT NULL,
@@ -16080,9 +15264,8 @@ CREATE INDEX
 CREATE INDEX
     mamba_fact_encounter_anc_card_encounter_date_index ON mamba_fact_encounter_anc_card (encounter_date);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16091,7 +15274,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_anc_card_insert()
@@ -16238,9 +15420,8 @@ SELECT a.encounter_id,
 FROM mamba_flat_encounter_anc_register a
          left join mamba_flat_encounter_anc_register_1 b on a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16257,7 +15438,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_anc_card_update()
@@ -16285,9 +15465,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16296,7 +15475,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_anc;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_anc()
@@ -16326,9 +15504,8 @@ END;
 CALL sp_fact_encounter_anc_card;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16337,7 +15514,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_create()
@@ -16364,7 +15540,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_card
+CREATE TABLE mamba_fact_encounter_hiv_art_card
 (
     id                                   INT AUTO_INCREMENT,
     encounter_id                         INT NULL,
@@ -16559,9 +15735,8 @@ CREATE INDEX
 CREATE INDEX
     mamba_fact_encounter_hiv_art_client_id_index ON mamba_fact_encounter_hiv_art_card (client_id);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16570,7 +15745,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_insert()
@@ -16844,9 +16018,8 @@ SELECT encounter_id,
        next_return_date_at_facility
 FROM mamba_flat_encounter_art_card as fu;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16855,7 +16028,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_update()
@@ -16883,9 +16055,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -16894,7 +16065,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art()
@@ -16925,16 +16095,14 @@ CALL sp_fact_encounter_hiv_art_create();
 CALL sp_fact_encounter_hiv_art_insert();
 CALL sp_fact_encounter_hiv_art_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_hiv_art_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_query;
 ~
@@ -16957,9 +16125,8 @@ BEGIN
      INNER JOIN mamba_dim_person p on client_id= p.external_person_id inner join patient_identifier pi on client_id =pi.patient_id
     WHERE hivart.return_date >= START_DATE
       AND hivart.return_date <= END_DATE AND pi.identifier_type=4;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -16969,7 +16136,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_hiv_art()
@@ -16999,9 +16165,8 @@ END;
 -- CALL sp_dim_client_hiv_hts;
 CALL sp_fact_encounter_hiv_art;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17010,7 +16175,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_card_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_card_create()
@@ -17037,7 +16201,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_card
+CREATE TABLE mamba_fact_encounter_hiv_art_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT          NULL,
@@ -17153,9 +16317,8 @@ CREATE INDEX
 CREATE INDEX
     mamba_fact_encounter_hiv_art_card_encounter_date_index ON mamba_fact_encounter_hiv_art_card (encounter_date);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17164,7 +16327,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_card_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_card_insert()
@@ -17383,9 +16545,8 @@ SELECT a.encounter_id,
        clinical_notes
 FROM mamba_flat_encounter_art_card a inner join mamba_flat_encounter_art_card_1 b on a.encounter_id=b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17394,7 +16555,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_card_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_card_update()
@@ -17422,9 +16582,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17433,7 +16592,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_card;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_card()
@@ -17464,16 +16622,14 @@ CALL sp_fact_encounter_hiv_art_card_create();
 CALL sp_fact_encounter_hiv_art_card_insert();
 CALL sp_fact_encounter_hiv_art_card_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_hiv_art_card_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_card_query;
 ~
@@ -17483,9 +16639,8 @@ BEGIN
     SELECT *
     FROM mamba_fact_encounter_hiv_art_card hiv_card WHERE hiv_card.encounter_date >= START_DATE
       AND hiv_card.encounter_date <= END_DATE ;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -17495,7 +16650,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_summary_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_summary_create()
@@ -17522,7 +16676,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_summary
+CREATE TABLE mamba_fact_encounter_hiv_art_summary
 (
     id                                          INT AUTO_INCREMENT,
     encounter_id                                INT NULL,
@@ -17615,9 +16769,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17626,7 +16779,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_summary_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_summary_insert()
@@ -17805,9 +16957,8 @@ SELECT a.encounter_id,
        other_relationship_to_index_client
 FROM mamba_flat_encounter_art_summary_card a left join mamba_flat_encounter_art_summary_card_1 b on a.encounter_id = b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17816,7 +16967,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_summary_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_summary_update()
@@ -17844,9 +16994,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -17855,7 +17004,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_summary;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_summary()
@@ -17886,16 +17034,14 @@ CALL sp_fact_encounter_hiv_art_summary_create();
 CALL sp_fact_encounter_hiv_art_summary_insert();
 CALL sp_fact_encounter_hiv_art_summary_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_hiv_art_summary_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_summary_query;
 ~
@@ -17905,9 +17051,8 @@ BEGIN
     SELECT *
     FROM mamba_fact_encounter_hiv_art_summary hiv_sum WHERE hiv_sum.encounter_date >= START_DATE
       AND hiv_sum.encounter_date <= END_DATE ;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -17917,7 +17062,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_health_education_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_health_education_create()
@@ -17944,7 +17088,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_health_education
+CREATE TABLE mamba_fact_encounter_hiv_art_health_education
 (
     id                          INT AUTO_INCREMENT,
     encounter_id                INT NULL,
@@ -17989,9 +17133,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18000,7 +17143,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_health_education_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_health_education_insert()
@@ -18089,9 +17231,8 @@ SELECT encounter_id,
 
 FROM mamba_flat_encounter_art_health_education;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18100,7 +17241,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_health_education_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_health_education_update()
@@ -18128,9 +17268,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18139,7 +17278,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_health_education;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hiv_art_health_education()
@@ -18170,16 +17308,14 @@ CALL sp_fact_encounter_hiv_art_health_education_create();
 CALL sp_fact_encounter_hiv_art_health_education_insert();
 CALL sp_fact_encounter_hiv_art_health_education_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_hiv_art_health_education_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_art_health_education_query;
 ~
@@ -18189,9 +17325,8 @@ BEGIN
     SELECT *
     FROM mamba_fact_encounter_hiv_art_health_education hiv_health WHERE hiv_health.encounter_date >= START_DATE
       AND hiv_health.encounter_date<= END_DATE ;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -18201,7 +17336,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_current_arv_regimen_start_date;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_current_arv_regimen_start_date()
@@ -18232,9 +17366,8 @@ CALL sp_fact_current_arv_regimen_start_date_create();
 CALL sp_fact_current_arv_regimen_start_date_insert();
 CALL sp_fact_current_arv_regimen_start_date_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18243,7 +17376,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_current_arv_regimen_start_date_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_current_arv_regimen_start_date_create()
@@ -18270,7 +17402,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_current_arv_regimen_start_date
+CREATE TABLE mamba_fact_current_arv_regimen_start_date
 (
     id                                    INT AUTO_INCREMENT,
     client_id                             INT NULL,
@@ -18283,9 +17415,8 @@ CREATE INDEX
     mamba_fact_current_arv_regimen_start_date_client_id_index ON mamba_fact_current_arv_regimen_start_date (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18294,7 +17425,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_current_arv_regimen_start_date_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_current_arv_regimen_start_date_insert()
@@ -18331,16 +17461,14 @@ from mamba_fact_encounter_hiv_art_card mfehac
 where mfehac.current_arv_regimen = B.current_regimen
 GROUP BY B.client_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_current_arv_regimen_start_date_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_current_arv_start_date_query;
 ~
@@ -18348,9 +17476,8 @@ CREATE PROCEDURE sp_fact_current_arv_start_date_query()
 BEGIN
     SELECT *
     FROM mamba_fact_current_arv_regimen_start_date;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -18360,7 +17487,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_current_arv_regimen_start_date_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_current_arv_regimen_start_date_update()
@@ -18388,9 +17514,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18399,7 +17524,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_adherence_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_adherence_patients()
@@ -18430,9 +17554,8 @@ CALL sp_fact_latest_adherence_patients_create();
 CALL sp_fact_latest_adherence_patients_insert();
 CALL sp_fact_latest_adherence_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18441,7 +17564,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_adherence_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_adherence_patients_create()
@@ -18468,7 +17590,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_adherence
+CREATE TABLE mamba_fact_patients_latest_adherence
 (
     id        INT AUTO_INCREMENT,
     client_id INT NOT NULL,
@@ -18481,9 +17603,8 @@ CREATE INDEX
     mamba_fact_patients_latest_adherence_client_id_index ON mamba_fact_patients_latest_adherence (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18492,7 +17613,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_adherence_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_adherence_patients_insert()
@@ -18529,16 +17649,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       WHERE adherence_assessment_code IS NOT NULL
       GROUP BY client_id) a ON b.encounter_id = a.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_adherence_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_adherence_query;
 ~
@@ -18546,9 +17664,8 @@ CREATE PROCEDURE sp_fact_patient_latest_adherence_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_adherence;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -18558,7 +17675,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_adherence_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_adherence_patients_update()
@@ -18586,9 +17702,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18597,7 +17712,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_advanced_disease_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_advanced_disease_patients()
@@ -18628,9 +17742,8 @@ CALL sp_fact_latest_advanced_disease_patients_create();
 CALL sp_fact_latest_advanced_disease_patients_insert();
 CALL sp_fact_latest_advanced_disease_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18639,7 +17752,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_advanced_disease_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_advanced_disease_patients_create()
@@ -18666,7 +17778,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_advanced_disease
+CREATE TABLE mamba_fact_patients_latest_advanced_disease
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -18680,9 +17792,8 @@ CREATE INDEX
     mamba_fact_patients_latest_advanced_disease_client_id_index ON mamba_fact_patients_latest_advanced_disease (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18691,7 +17802,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_advanced_disease_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_advanced_disease_patients_insert()
@@ -18730,16 +17840,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_advanced_disease_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_advanced_disease_query;
 ~
@@ -18747,9 +17855,8 @@ CREATE PROCEDURE sp_fact_patient_latest_advanced_disease_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_advanced_disease;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -18759,7 +17866,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_advanced_disease_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_advanced_disease_patients_update()
@@ -18787,9 +17893,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18798,7 +17903,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_arv_days_dispensed_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_arv_days_dispensed_patients()
@@ -18829,9 +17933,8 @@ CALL sp_fact_latest_arv_days_dispensed_patients_create();
 CALL sp_fact_latest_arv_days_dispensed_patients_insert();
 CALL sp_fact_latest_arv_days_dispensed_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18840,7 +17943,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_arv_days_dispensed_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_arv_days_dispensed_patients_create()
@@ -18867,7 +17969,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_days_dispensed
+CREATE TABLE mamba_fact_patients_latest_arv_days_dispensed
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -18881,9 +17983,8 @@ CREATE INDEX
     mamba_fact_patients_latest_arv_days_dispensed_client_id_index ON mamba_fact_patients_latest_arv_days_dispensed (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18892,7 +17993,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_arv_days_dispensed_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_arv_days_dispensed_patients_insert()
@@ -18930,16 +18030,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       WHERE arv_regimen_days_dispensed IS NOT NULL
       GROUP BY client_id) a ON a.encounter_id = b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_arv_days_dispensed_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_arv_days_dispensed_query;
 ~
@@ -18947,9 +18045,8 @@ CREATE PROCEDURE sp_fact_patient_latest_arv_days_dispensed_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_arv_days_dispensed;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -18959,7 +18056,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_arv_days_dispensed_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_arv_days_dispensed_patients_update()
@@ -18987,9 +18083,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -18998,7 +18093,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_current_regimen_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_current_regimen_patients()
@@ -19029,9 +18123,8 @@ CALL sp_fact_latest_current_regimen_patients_create();
 CALL sp_fact_latest_current_regimen_patients_insert();
 CALL sp_fact_latest_current_regimen_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19040,7 +18133,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_current_regimen_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_current_regimen_patients_create()
@@ -19067,7 +18159,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_current_regimen
+CREATE TABLE mamba_fact_patients_latest_current_regimen
 (
     id              INT AUTO_INCREMENT,
     client_id       INT NOT NULL,
@@ -19080,9 +18172,8 @@ CREATE INDEX
     mamba_fact_patients_latest_current_regimen_client_id_index ON mamba_fact_patients_latest_current_regimen (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19091,7 +18182,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_current_regimen_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_current_regimen_patients_insert()
@@ -19128,16 +18218,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       WHERE current_arv_regimen IS NOT NULL
       GROUP BY client_id) a ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_current_regimen_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_current_regimen_query;
 ~
@@ -19145,9 +18233,8 @@ CREATE PROCEDURE sp_fact_patient_latest_current_regimen_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_current_regimen;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -19157,7 +18244,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_current_regimen_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_current_regimen_patients_update()
@@ -19185,9 +18271,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19196,7 +18281,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_family_planning_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_family_planning_patients()
@@ -19227,9 +18311,8 @@ CALL sp_fact_latest_family_planning_patients_create();
 CALL sp_fact_latest_family_planning_patients_insert();
 CALL sp_fact_latest_family_planning_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19238,7 +18321,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_family_planning_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_family_planning_patients_create()
@@ -19265,7 +18347,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_family_planning
+CREATE TABLE mamba_fact_patients_latest_family_planning
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -19279,9 +18361,8 @@ CREATE INDEX
     mamba_fact_patients_latest_family_planning_client_id_index ON mamba_fact_patients_latest_family_planning (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19290,7 +18371,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_family_planning_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_family_planning_patients_insert()
@@ -19331,16 +18411,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_family_planning_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_family_planning_query;
 ~
@@ -19348,9 +18426,8 @@ CREATE PROCEDURE sp_fact_patient_latest_family_planning_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_family_planning;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -19360,7 +18437,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_family_planning_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_family_planning_patients_update()
@@ -19388,9 +18464,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19399,7 +18474,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_hepatitis_b_test_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_hepatitis_b_test_patients()
@@ -19430,9 +18504,8 @@ CALL sp_fact_latest_hepatitis_b_test_patients_create();
 CALL sp_fact_latest_hepatitis_b_test_patients_insert();
 CALL sp_fact_latest_hepatitis_b_test_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19441,7 +18514,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_hepatitis_b_test_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_hepatitis_b_test_patients_create()
@@ -19468,7 +18540,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_hepatitis_b_test
+CREATE TABLE mamba_fact_patients_latest_hepatitis_b_test
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -19482,9 +18554,8 @@ CREATE INDEX
     mamba_fact_patients_latest_hepatitis_b_test_client_id_index ON mamba_fact_patients_latest_hepatitis_b_test (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19493,7 +18564,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_hepatitis_b_test_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_hepatitis_b_test_patients_insert()
@@ -19532,16 +18602,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_hepatitis_b_test_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_hepatitis_b_test_query;
 ~
@@ -19549,9 +18617,8 @@ CREATE PROCEDURE sp_fact_patient_latest_hepatitis_b_test_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_hepatitis_b_test;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -19561,7 +18628,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_hepatitis_b_test_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_hepatitis_b_test_patients_update()
@@ -19589,9 +18655,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19600,7 +18665,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_patients()
@@ -19631,9 +18695,8 @@ CALL sp_fact_latest_viral_load_patients_create();
 CALL sp_fact_latest_viral_load_patients_insert();
 CALL sp_fact_latest_viral_load_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19642,7 +18705,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_patients_create()
@@ -19669,7 +18731,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_viral_load
+CREATE TABLE mamba_fact_patients_latest_viral_load
 (
     id        INT AUTO_INCREMENT,
     client_id INT NOT NULL,
@@ -19685,9 +18747,8 @@ CREATE INDEX
     mamba_fact_patients_latest_viral_load_client_id_index ON mamba_fact_patients_latest_viral_load (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19696,7 +18757,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_patients_insert()
@@ -19736,16 +18796,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       WHERE hiv_viral_load IS NOT NULL
       GROUP BY client_id) a ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_viral_load_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_viral_load_query;
 ~
@@ -19753,9 +18811,8 @@ CREATE PROCEDURE sp_fact_patient_latest_viral_load_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_viral_load;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -19765,7 +18822,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_patients_update()
@@ -19793,9 +18849,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19804,7 +18859,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_decision_outcome_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_decision_outcome_patients()
@@ -19835,9 +18889,8 @@ CALL sp_fact_latest_iac_decision_outcome_patients_create();
 CALL sp_fact_latest_iac_decision_outcome_patients_insert();
 CALL sp_fact_latest_iac_decision_outcome_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19846,7 +18899,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_decision_outcome_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_decision_outcome_patients_create()
@@ -19873,7 +18925,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_decision_outcome
+CREATE TABLE mamba_fact_patients_latest_iac_decision_outcome
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -19886,9 +18938,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_decision_outcome
 CREATE INDEX
     mamba_fact_patients_latest_iac_decision_outcome_client_id_index ON mamba_fact_patients_latest_iac_decision_outcome (client_id);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -19897,7 +18948,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_decision_outcome_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_decision_outcome_patients_insert()
@@ -19946,16 +18996,14 @@ WHERE o.concept_id = 163166
   AND obs_datetime <= CURRENT_DATE()
 GROUP BY o.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_iac_decision_outcome_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_iac_decision_outcome_query;
 ~
@@ -19963,9 +19011,8 @@ CREATE PROCEDURE sp_fact_patient_latest_iac_decision_outcome_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_iac_decision_outcome;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -19975,7 +19022,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_decision_outcome_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_decision_outcome_patients_update()
@@ -20003,9 +19049,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20014,7 +19059,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_sessions_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_sessions_patients()
@@ -20045,9 +19089,8 @@ CALL sp_fact_latest_iac_sessions_patients_create();
 CALL sp_fact_latest_iac_sessions_patients_insert();
 CALL sp_fact_latest_iac_sessions_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20056,7 +19099,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_sessions_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_sessions_patients_create()
@@ -20083,7 +19125,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_sessions
+CREATE TABLE mamba_fact_patients_latest_iac_sessions
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -20097,9 +19139,8 @@ CREATE INDEX
     mamba_fact_patients_latest_iac_sessions_client_id_index ON mamba_fact_patients_latest_iac_sessions (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20108,7 +19149,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_sessions_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_sessions_patients_insert()
@@ -20152,16 +19192,14 @@ WHERE concept_id = 163154
   AND obs_datetime BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR) AND CURRENT_DATE()
 GROUP BY obs.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_iac_sessions_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_arv_days_dispensed_query;
 ~
@@ -20169,9 +19207,8 @@ CREATE PROCEDURE sp_fact_patient_latest_arv_days_dispensed_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_arv_days_dispensed;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -20181,7 +19218,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_iac_sessions_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_iac_sessions_patients_update()
@@ -20209,9 +19245,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20220,7 +19255,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_patients()
@@ -20251,9 +19285,8 @@ CALL sp_fact_latest_index_tested_children_patients_create();
 CALL sp_fact_latest_index_tested_children_patients_insert();
 CALL sp_fact_latest_index_tested_children_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20262,7 +19295,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_patients_create()
@@ -20289,7 +19321,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_children
+CREATE TABLE mamba_fact_patients_latest_index_tested_children
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -20302,9 +19334,8 @@ CREATE INDEX
     mamba_fact_patients_tested_children_client_id_index ON mamba_fact_patients_latest_index_tested_children (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20313,7 +19344,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_patients_insert()
@@ -20364,16 +19394,14 @@ FROM (SELECT family.person_id, obs_group_id
 ON relationship_child.obs_group_id = age.obs_group_id
 GROUP BY age.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_index_tested_children_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_index_tested_children_query;
 ~
@@ -20381,9 +19409,8 @@ CREATE PROCEDURE sp_fact_patient_latest_index_tested_children_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_index_tested_children;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -20393,7 +19420,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_patients_update()
@@ -20421,9 +19447,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20432,7 +19457,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_status_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_status_patients()
@@ -20463,9 +19487,8 @@ CALL sp_fact_latest_index_tested_children_status_patients_create();
 CALL sp_fact_latest_index_tested_children_status_patients_insert();
 CALL sp_fact_latest_index_tested_children_status_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20474,7 +19497,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_status_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_status_patients_create()
@@ -20501,7 +19523,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_children_status
+CREATE TABLE mamba_fact_patients_latest_index_tested_children_status
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -20514,9 +19536,8 @@ CREATE INDEX
     mamba_patients_latest_children_status_client_id_index ON mamba_fact_patients_latest_index_tested_children_status (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20525,7 +19546,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_status_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_status_patients_insert()
@@ -20584,16 +19604,14 @@ ON relationship_child.obs_group_id = age.obs_group_id
     WHERE concept_id = 165275) status ON status.obs_group_id = age.obs_group_id
 GROUP BY age.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_index_tested_children_status_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_index_tested_children_status_query;
 ~
@@ -20601,9 +19619,8 @@ CREATE PROCEDURE sp_fact_patient_latest_index_tested_children_status_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_index_tested_children_status;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -20613,7 +19630,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_children_status_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_children_status_patients_update()
@@ -20641,9 +19657,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20652,7 +19667,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_patients()
@@ -20683,9 +19697,8 @@ CALL sp_fact_latest_index_tested_partners_patients_create();
 CALL sp_fact_latest_index_tested_partners_patients_insert();
 CALL sp_fact_latest_index_tested_partners_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20694,7 +19707,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_patients_create()
@@ -20721,7 +19733,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_partners
+CREATE TABLE mamba_fact_patients_latest_index_tested_partners
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -20734,9 +19746,8 @@ CREATE INDEX
     mamba_fact_patients_latest_partners_client_id_index ON mamba_fact_patients_latest_index_tested_partners (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20745,7 +19756,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_patients_insert()
@@ -20777,16 +19787,14 @@ INSERT INTO mamba_fact_patients_latest_index_tested_partners(client_id,
 Select person_id, count(*) as no from obs  WHERE concept_id = 164352
                                              AND value_coded IN (90288, 165274) AND voided=0 GROUP BY person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_index_tested_partners_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_index_tested_partners_query;
 ~
@@ -20794,9 +19802,8 @@ CREATE PROCEDURE sp_fact_patient_latest_index_tested_partners_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_index_tested_partners;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -20806,7 +19813,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_patients_update()
@@ -20834,9 +19840,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20845,7 +19850,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_status_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_status_patients()
@@ -20876,9 +19880,8 @@ CALL sp_fact_latest_index_tested_partners_status_patients_create();
 CALL sp_fact_latest_index_tested_partners_status_patients_insert();
 CALL sp_fact_latest_index_tested_partners_status_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20887,7 +19890,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_status_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_status_patients_create()
@@ -20914,7 +19916,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_partners_status
+CREATE TABLE mamba_fact_patients_latest_index_tested_partners_status
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -20927,9 +19929,8 @@ CREATE INDEX
     mamba_patients_latest_partners_status_client_id_index ON mamba_fact_patients_latest_index_tested_partners_status (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -20938,7 +19939,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_status_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_status_patients_insert()
@@ -20988,16 +19988,14 @@ FROM (SELECT family.person_id, obs_group_id
 ON status.obs_group_id = relationship_spouse.obs_group_id
 GROUP BY status.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_index_tested_partners_status_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_index_tested_partners_status_query;
 ~
@@ -21005,9 +20003,8 @@ CREATE PROCEDURE sp_fact_patient_latest_index_tested_partners_status_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_index_tested_partners_status;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -21017,7 +20014,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_index_tested_partners_status_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_index_tested_partners_status_patients_update()
@@ -21045,9 +20041,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21056,7 +20051,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_assesment_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_assesment_patients()
@@ -21087,9 +20081,8 @@ CALL sp_fact_latest_nutrition_assesment_patients_create();
 CALL sp_fact_latest_nutrition_assesment_patients_insert();
 CALL sp_fact_latest_nutrition_assesment_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21098,7 +20091,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_assesment_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_assesment_patients_create()
@@ -21125,7 +20117,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_assesment
+CREATE TABLE mamba_fact_patients_latest_nutrition_assesment
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -21139,9 +20131,8 @@ CREATE INDEX
     mamba_fact_patients_latest_nutrition_assesment_client_id_index ON mamba_fact_patients_latest_nutrition_assesment (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21150,7 +20141,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_assesment_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_assesment_patients_insert()
@@ -21189,16 +20179,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_nutrition_assesment_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_nutrition_assesment_query;
 ~
@@ -21206,9 +20194,8 @@ CREATE PROCEDURE sp_fact_patient_latest_nutrition_assesment_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_nutrition_assesment;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -21218,7 +20205,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_assesment_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_assesment_patients_update()
@@ -21246,9 +20232,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21257,7 +20242,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_support_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_support_patients()
@@ -21288,9 +20272,8 @@ CALL sp_fact_latest_nutrition_support_patients_create();
 CALL sp_fact_latest_nutrition_support_patients_insert();
 CALL sp_fact_latest_nutrition_support_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21299,7 +20282,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_support_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_support_patients_create()
@@ -21326,7 +20308,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_support
+CREATE TABLE mamba_fact_patients_latest_nutrition_support
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -21340,9 +20322,8 @@ CREATE INDEX
     mamba_fact_patients_latest_nutrition_support_client_id_index ON mamba_fact_patients_latest_nutrition_support (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21351,7 +20332,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_support_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_support_patients_insert()
@@ -21390,16 +20370,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_nutrition_support_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_nutrition_support_query;
 ~
@@ -21407,9 +20385,8 @@ CREATE PROCEDURE sp_fact_patient_latest_nutrition_support_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_nutrition_support;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -21419,7 +20396,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_nutrition_support_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_nutrition_support_patients_update()
@@ -21447,9 +20423,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21458,7 +20433,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_line_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_regimen_line_patients()
@@ -21489,9 +20463,8 @@ CALL sp_fact_latest_regimen_line_patients_create();
 CALL sp_fact_latest_regimen_line_patients_insert();
 CALL sp_fact_latest_regimen_line_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21500,7 +20473,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_line_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_regimen_line_patients_create()
@@ -21527,7 +20499,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_regimen_line
+CREATE TABLE mamba_fact_patients_latest_regimen_line
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -21540,9 +20512,8 @@ CREATE INDEX
     mamba_fact_patients_latest_regimen_line_client_id_index ON mamba_fact_patients_latest_regimen_line (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21551,7 +20522,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_line_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_regimen_line_patients_insert()
@@ -21592,16 +20562,14 @@ FROM patient_state
                        program_workflow.concept_id = 166214 AND
                        patient_state.end_date IS NULL;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_regimen_line_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_regimen_line_query;
 ~
@@ -21609,9 +20577,8 @@ CREATE PROCEDURE sp_fact_patient_latest_regimen_line_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_regimen_line;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -21621,7 +20588,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_line_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_regimen_line_patients_update()
@@ -21649,9 +20615,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21660,7 +20625,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_return_date_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_return_date_patients()
@@ -21691,9 +20655,8 @@ CALL sp_fact_latest_return_date_patients_create();
 CALL sp_fact_latest_return_date_patients_insert();
 CALL sp_fact_latest_return_date_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21702,7 +20665,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_return_date_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_return_date_patients_create()
@@ -21729,7 +20691,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_return_date
+CREATE TABLE mamba_fact_patients_latest_return_date
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -21742,9 +20704,8 @@ CREATE INDEX
     mamba_fact_patients_latest_return_date_client_id_index ON mamba_fact_patients_latest_return_date (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21753,7 +20714,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_return_date_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_return_date_patients_insert()
@@ -21791,16 +20751,14 @@ FROM mamba_fact_encounter_hiv_art_card b
     GROUP BY client_id
 ) a ON b.encounter_id = a.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_return_date_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_return_date_query;
 ~
@@ -21808,9 +20766,8 @@ CREATE PROCEDURE sp_fact_patient_latest_return_date_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_return_date;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -21820,7 +20777,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_return_date_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_return_date_patients_update()
@@ -21848,9 +20804,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21859,7 +20814,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tb_status_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tb_status_patients()
@@ -21890,9 +20844,8 @@ CALL sp_fact_latest_tb_status_patients_create();
 CALL sp_fact_latest_tb_status_patients_insert();
 CALL sp_fact_latest_tb_status_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21901,7 +20854,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tb_status_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tb_status_patients_create()
@@ -21928,7 +20880,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_tb_status
+CREATE TABLE mamba_fact_patients_latest_tb_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -21942,9 +20894,8 @@ CREATE INDEX
     mamba_fact_patients_latest_tb_status_client_id_index ON mamba_fact_patients_latest_tb_status (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -21953,7 +20904,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tb_status_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tb_status_patients_insert()
@@ -21992,16 +20942,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_tb_status_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_tb_status_query;
 ~
@@ -22009,9 +20957,8 @@ CREATE PROCEDURE sp_fact_patient_latest_tb_status_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_tb_status;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -22021,7 +20968,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tb_status_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tb_status_patients_update()
@@ -22049,9 +20995,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22060,7 +21005,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tpt_status_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tpt_status_patients()
@@ -22091,9 +21035,8 @@ CALL sp_fact_latest_tpt_status_patients_create();
 CALL sp_fact_latest_tpt_status_patients_insert();
 CALL sp_fact_latest_tpt_status_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22102,7 +21045,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tpt_status_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tpt_status_patients_create()
@@ -22129,7 +21071,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_tpt_status
+CREATE TABLE mamba_fact_patients_latest_tpt_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -22143,9 +21085,8 @@ CREATE INDEX
     mamba_fact_patients_latest_tpt_status_client_id_index ON mamba_fact_patients_latest_tpt_status (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22154,7 +21095,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tpt_status_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tpt_status_patients_insert()
@@ -22193,16 +21133,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_tpt_status_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_tpt_status_query;
 ~
@@ -22210,9 +21148,8 @@ CREATE PROCEDURE sp_fact_patient_latest_tpt_status_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_tpt_status;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -22222,7 +21159,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_tpt_status_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_tpt_status_patients_update()
@@ -22250,9 +21186,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22261,7 +21196,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_ordered_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_ordered_patients()
@@ -22292,9 +21226,8 @@ CALL sp_fact_latest_viral_load_ordered_patients_create();
 CALL sp_fact_latest_viral_load_ordered_patients_insert();
 CALL sp_fact_latest_viral_load_ordered_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22303,7 +21236,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_ordered_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_ordered_patients_create()
@@ -22330,7 +21262,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_viral_load_ordered
+CREATE TABLE mamba_fact_patients_latest_viral_load_ordered
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -22344,9 +21276,8 @@ CREATE INDEX
     mamba_fact_patients_latest_viral_load_ordered_client_id_index ON mamba_fact_patients_latest_viral_load_ordered (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22355,7 +21286,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_ordered_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_ordered_patients_insert()
@@ -22394,16 +21324,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON  a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_viral_load_ordered_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_viral_load_ordered_query;
 ~
@@ -22411,9 +21339,8 @@ CREATE PROCEDURE sp_fact_patient_latest_viral_load_ordered_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_viral_load_ordered;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -22423,7 +21350,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_viral_load_ordered_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_viral_load_ordered_patients_update()
@@ -22451,9 +21377,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22462,7 +21387,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_vl_after_iac_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_vl_after_iac_patients()
@@ -22493,9 +21417,8 @@ CALL sp_fact_latest_vl_after_iac_patients_create();
 CALL sp_fact_latest_vl_after_iac_patients_insert();
 CALL sp_fact_latest_vl_after_iac_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22504,7 +21427,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_vl_after_iac_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_vl_after_iac_patients_create()
@@ -22531,7 +21453,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_vl_after_iac
+CREATE TABLE mamba_fact_patients_latest_vl_after_iac
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -22545,9 +21467,8 @@ CREATE INDEX
     mamba_fact_patients_latest_vl_after_iac_client_id_index ON mamba_fact_patients_latest_vl_after_iac (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22556,7 +21477,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_vl_after_iac_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_vl_after_iac_patients_insert()
@@ -22603,16 +21523,14 @@ WHERE o.concept_id = 856
   AND obs_datetime <= CURRENT_DATE()
 GROUP BY o.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_vl_after_iac_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_vl_after_iac_query;
 ~
@@ -22620,9 +21538,8 @@ CREATE PROCEDURE sp_fact_patient_latest_vl_after_iac_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_vl_after_iac;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -22632,7 +21549,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_vl_after_iac_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_vl_after_iac_patients_update()
@@ -22660,9 +21576,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22671,7 +21586,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_who_stage_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_who_stage_patients()
@@ -22702,9 +21616,8 @@ CALL sp_fact_latest_who_stage_patients_create();
 CALL sp_fact_latest_who_stage_patients_insert();
 CALL sp_fact_latest_who_stage_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22713,7 +21626,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_who_stage_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_who_stage_patients_create()
@@ -22740,7 +21652,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_who_stage
+CREATE TABLE mamba_fact_patients_latest_who_stage
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -22754,9 +21666,8 @@ CREATE INDEX
     mamba_fact_patients_latest_who_stage_client_id_index ON mamba_fact_patients_latest_who_stage (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22765,7 +21676,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_who_stage_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_who_stage_patients_insert()
@@ -22804,16 +21714,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_who_stage_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_who_stage_query;
 ~
@@ -22821,9 +21729,8 @@ CREATE PROCEDURE sp_fact_patient_latest_who_stage_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_who_stage;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -22833,7 +21740,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_who_stage_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_who_stage_patients_update()
@@ -22861,9 +21767,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22872,7 +21777,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_marital_status_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_marital_status_patients()
@@ -22903,9 +21807,8 @@ CALL sp_fact_marital_status_patients_create();
 CALL sp_fact_marital_status_patients_insert();
 CALL sp_fact_marital_status_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22914,7 +21817,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_marital_status_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_marital_status_patients_create()
@@ -22941,7 +21843,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_marital_status
+CREATE TABLE mamba_fact_patients_marital_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -22954,9 +21856,8 @@ CREATE INDEX
     mamba_fact_patients_marital_status_client_id_index ON mamba_fact_patients_marital_status (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -22965,7 +21866,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_marital_status_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_marital_status_patients_insert()
@@ -23004,16 +21904,14 @@ WHERE pat.uuid = '8d871f2a-c2cc-11de-8d13-0010c6dffd0f'
   AND mdcn.locale = 'en'
   AND mdcn.concept_name_type = 'FULLY_SPECIFIED';
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_marital_status_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_marital_status_query;
 ~
@@ -23021,9 +21919,8 @@ CREATE PROCEDURE sp_fact_patient_marital_status_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_marital_status;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -23033,7 +21930,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_marital_status_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_marital_status_patients_update()
@@ -23061,9 +21957,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23072,7 +21967,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_nationality_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_nationality_patients()
@@ -23103,9 +21997,8 @@ CALL sp_fact_nationality_patients_create();
 CALL sp_fact_nationality_patients_insert();
 CALL sp_fact_nationality_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23114,7 +22007,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_nationality_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_nationality_patients_create()
@@ -23141,7 +22033,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_nationality
+CREATE TABLE mamba_fact_patients_nationality
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
@@ -23154,9 +22046,8 @@ CREATE INDEX
     mamba_fact_patients_nationality_client_id_index ON mamba_fact_patients_nationality (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23165,7 +22056,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_nationality_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_nationality_patients_insert()
@@ -23204,16 +22094,14 @@ WHERE pat.uuid = 'dec484be-1c43-416a-9ad0-18bd9ef28929'
   AND mdcn.locale = 'en'
   AND mdcn.concept_name_type = 'FULLY_SPECIFIED';
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_nationality_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_nationality_query;
 ~
@@ -23221,9 +22109,8 @@ CREATE PROCEDURE sp_fact_patient_nationality_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_nationality;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -23233,7 +22120,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_nationality_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_nationality_patients_update()
@@ -23261,9 +22147,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23272,7 +22157,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_patient_demographics_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_patient_demographics_patients()
@@ -23303,9 +22187,8 @@ CALL sp_fact_latest_patient_demographics_patients_create();
 CALL sp_fact_latest_patient_demographics_patients_insert();
 CALL sp_fact_latest_patient_demographics_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23314,7 +22197,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_patient_demographics_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_patient_demographics_patients_create()
@@ -23341,7 +22223,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_patient_demographics
+CREATE TABLE mamba_fact_patients_latest_patient_demographics
 (
     id         INT AUTO_INCREMENT,
     patient_id INT NOT NULL,
@@ -23357,9 +22239,8 @@ CREATE INDEX
     mamba_fact_patients_latest_patient_demos_patient_id_index ON mamba_fact_patients_latest_patient_demographics (patient_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23368,7 +22249,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_patient_demographics_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_patient_demographics_patients_insert()
@@ -23407,16 +22287,14 @@ SELECT person_id,
        dead
 from mamba_dim_person where voided=0;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_patient_demographics_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_patient_demographics_query;
 ~
@@ -23424,9 +22302,8 @@ CREATE PROCEDURE sp_fact_patient_latest_patient_demographics_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_patient_demographics;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -23436,7 +22313,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_patient_demographics_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_patient_demographics_patients_update()
@@ -23464,9 +22340,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23475,7 +22350,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_art_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_art_patients()
@@ -23506,9 +22380,8 @@ CALL sp_fact_art_patients_create();
 CALL sp_fact_art_patients_insert();
 CALL sp_fact_art_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23517,7 +22390,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_art_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_art_patients_create()
@@ -23544,7 +22416,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_art_patients
+CREATE TABLE mamba_fact_art_patients
 (
     id        INT AUTO_INCREMENT,
     client_id INT NULL,
@@ -23562,9 +22434,8 @@ CREATE INDEX
     mamba_fact_art_patients_client_id_index ON mamba_fact_art_patients (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23573,7 +22444,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_art_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_art_patients_insert()
@@ -23611,16 +22481,14 @@ FROM (SELECT DISTINCT client_id from mamba_fact_encounter_hiv_art_card) e
          INNER JOIN mamba_fact_patients_latest_patient_demographics mdp ON e.client_id = mdp.patient_id
 LEFT JOIN mamba_dim_agegroup mda on mda.age = mdp.age;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_art_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_art_patients_query;
 ~
@@ -23628,9 +22496,8 @@ CREATE PROCEDURE sp_fact_art_patients_query()
 BEGIN
     SELECT *
     FROM mamba_fact_art_patients ;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -23640,7 +22507,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_art_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_art_patients_update()
@@ -23668,9 +22534,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23679,7 +22544,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_calhiv_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_calhiv_patients()
@@ -23710,9 +22574,8 @@ CALL sp_fact_calhiv_patients_create();
 CALL sp_fact_calhiv_patients_insert();
 CALL sp_fact_calhiv_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23721,7 +22584,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_calhiv_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_calhiv_patients_create()
@@ -23748,7 +22610,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_audit_tool_art_patients
+CREATE TABLE mamba_fact_audit_tool_art_patients
 (
     id                                     INT AUTO_INCREMENT,
     client_id                              INT NOT NULL,
@@ -23818,9 +22680,8 @@ CREATE INDEX
     mamba_fact_audit_tool_art_patients_client_id_index ON mamba_fact_audit_tool_art_patients (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -23829,7 +22690,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_calhiv_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_calhiv_patients_insert()
@@ -24202,16 +23062,14 @@ FROM mamba_fact_art_patients cohort
                    ON mfto_cd4.client_id = cohort.client_id
 WHERE mfto.client_id IS NULL;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_calhiv_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_audit_tool_art_query;
 ~
@@ -24219,9 +23077,8 @@ CREATE PROCEDURE sp_fact_audit_tool_art_query(IN id_list VARCHAR(255))
 BEGIN
     SELECT *
     FROM mamba_fact_audit_tool_art_patients audit_tool where client_id in (id_list);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -24231,7 +23088,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_calhiv_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_calhiv_patients_update()
@@ -24259,9 +23115,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24270,7 +23125,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_active_in_care;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_active_in_care()
@@ -24301,9 +23155,8 @@ CALL sp_fact_active_in_care_create();
 CALL sp_fact_active_in_care_insert();
 CALL sp_fact_active_in_care_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24312,7 +23165,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_active_in_care_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_active_in_care_create()
@@ -24339,7 +23191,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_active_in_care
+CREATE TABLE mamba_fact_active_in_care
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
@@ -24359,9 +23211,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24370,7 +23221,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_active_in_care_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_active_in_care_insert()
@@ -24416,16 +23266,14 @@ FROM mamba_fact_encounter_hiv_art_card b
      ON a.encounter_id = b.encounter_id
          JOIN person p ON b.client_id = p.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_active_in_care_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_active_in_care_query;
 ~
@@ -24433,9 +23281,8 @@ CREATE PROCEDURE sp_fact_active_in_care_query(IN DAYS_LOST INT)
 BEGIN
     SELECT *
     FROM mamba_fact_active_in_care WHERE days_left_to_be_lost >= DAYS_LOST;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -24445,7 +23292,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_active_in_care_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_active_in_care_update()
@@ -24473,9 +23319,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24484,7 +23329,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_pregnancy_status_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_pregnancy_status_patients()
@@ -24515,9 +23359,8 @@ CALL sp_fact_latest_pregnancy_status_patients_create();
 CALL sp_fact_latest_pregnancy_status_patients_insert();
 CALL sp_fact_latest_pregnancy_status_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24526,7 +23369,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_pregnancy_status_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_pregnancy_status_patients_create()
@@ -24553,7 +23395,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_pregnancy_status
+CREATE TABLE mamba_fact_patients_latest_pregnancy_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
@@ -24567,9 +23409,8 @@ CREATE INDEX
     mamba_fact_patients_latest_pregnancy_status_client_id_index ON mamba_fact_patients_latest_pregnancy_status (client_id);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24578,7 +23419,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_pregnancy_status_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_pregnancy_status_patients_insert()
@@ -24619,16 +23459,14 @@ FROM mamba_fact_encounter_hiv_art_card b
       GROUP BY client_id) a
      ON a.encounter_id = b.encounter_id ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_pregnancy_status_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_patient_latest_pregnancy_status_query;
 ~
@@ -24636,9 +23474,8 @@ CREATE PROCEDURE sp_fact_patient_latest_pregnancy_status_query()
 BEGIN
     SELECT *
     FROM mamba_fact_patients_latest_pregnancy_status;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -24648,7 +23485,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_latest_pregnancy_status_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_latest_pregnancy_status_patients_update()
@@ -24676,9 +23512,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24687,7 +23522,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_eid_patients;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_eid_patients()
@@ -24718,9 +23552,8 @@ CALL sp_fact_eid_patients_create();
 CALL sp_fact_eid_patients_insert();
 CALL sp_fact_eid_patients_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24729,7 +23562,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_eid_patients_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_eid_patients_create()
@@ -24756,7 +23588,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_eid_patients
+CREATE TABLE mamba_fact_eid_patients
 (
     id        INT AUTO_INCREMENT,
     client_id INT  NULL,
@@ -24802,9 +23634,8 @@ CREATE INDEX
     mamba_fact_eid_patients_baby_id_index ON mamba_fact_eid_patients (BABY);
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -24813,7 +23644,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_eid_patients_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_eid_patients_insert()
@@ -25257,16 +24087,14 @@ ON babies = nvp.person_id
     AND obs.voided = 0
     GROUP BY person_id) stopped_bf ON babies = stopped_bf.person_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_eid_patients_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_eid_patients_query;
 ~
@@ -25274,9 +24102,8 @@ CREATE PROCEDURE sp_fact_eid_patients_query()
 BEGIN
     SELECT *
     FROM mamba_fact_eid_patients;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -25286,7 +24113,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_eid_patients_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_eid_patients_update()
@@ -25314,9 +24140,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25325,7 +24150,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_medication_orders_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_medication_orders_create()
@@ -25352,7 +24176,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_medication_orders
+CREATE TABLE mamba_fact_medication_orders
 (
     id        INT AUTO_INCREMENT,
     client_id INT NULL,
@@ -25380,9 +24204,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25391,7 +24214,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_medication_orders_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_medication_orders_insert()
@@ -25459,9 +24281,8 @@ WHERE ot.uuid = '131168f4-15f5-102d-96e4-000c29c2a5d7'
   AND o.voided = 0
 ;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25470,7 +24291,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_medication_orders_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_medication_orders_update()
@@ -25510,9 +24330,8 @@ UPDATE mamba_fact_medication_orders mo
     ) best_names ON best_names.concept_id = mo.drug_concept_id
 SET mo.drug = best_names.name;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25521,7 +24340,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_medication_orders;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_medication_orders()
@@ -25552,9 +24370,8 @@ CALL sp_fact_medication_orders_create();
 CALL sp_fact_medication_orders_insert();
 CALL sp_fact_medication_orders_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25571,7 +24388,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders()
@@ -25602,9 +24418,8 @@ CALL sp_fact_test_orders_create();
 CALL sp_fact_test_orders_insert();
 CALL sp_fact_test_orders_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25613,7 +24428,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_create()
@@ -25640,7 +24454,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_test_orders
+CREATE TABLE mamba_fact_test_orders
 (
     id        INT AUTO_INCREMENT,
     client_id INT NULL,
@@ -25665,9 +24479,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25676,7 +24489,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_insert()
@@ -25735,9 +24547,8 @@ FROM orders o
 WHERE ot.uuid = '52a447d3-a64a-11e3-9aeb-50e549534c5e'
   and o.voided = 0;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25754,7 +24565,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_update()
@@ -25783,9 +24593,8 @@ END;
 -- $BEGIN
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25794,7 +24603,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_results;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_results()
@@ -25825,9 +24633,8 @@ CALL sp_fact_test_orders_results_create();
 CALL sp_fact_test_orders_results_insert();
 CALL sp_fact_test_orders_results_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25836,7 +24643,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_results_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_results_create()
@@ -25863,7 +24669,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_test_orders_results
+CREATE TABLE mamba_fact_test_orders_results
 (
     id        INT AUTO_INCREMENT,
     test_orders_id INT NOT NULL,
@@ -25887,9 +24693,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -25898,7 +24703,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_results_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_results_insert()
@@ -26004,9 +24808,8 @@ FROM (SELECT mfto.id,
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26023,7 +24826,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_test_orders_results_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_test_orders_results_update()
@@ -26052,9 +24854,8 @@ END;
 -- $BEGIN
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26063,7 +24864,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art_card;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_hiv_art_card()
@@ -26131,9 +24931,8 @@ CALL sp_fact_eid_patients;
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26142,7 +24941,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_dim_client_covid_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_dim_client_covid_create()
@@ -26169,7 +24967,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS dim_client_covid
+CREATE TABLE dim_client_covid
 (
     id            INT auto_increment,
     client_id     INT           NULL,
@@ -26182,9 +24980,8 @@ CREATE TABLE IF NOT EXISTS dim_client_covid
     PRIMARY KEY (id)
 );
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26193,7 +24990,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_dim_client_covid_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_dim_client_covid_insert()
@@ -26238,9 +25034,8 @@ FROM dim_client c
          INNER JOIN flat_encounter_covid cd
                     ON c.client_id = cd.client_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26249,7 +25044,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_dim_client_covid_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_dim_client_covid_update()
@@ -26277,9 +25071,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26288,7 +25081,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_dim_client_covid;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_dim_client_covid()
@@ -26319,9 +25111,8 @@ CALL sp_dim_client_covid_create();
 CALL sp_dim_client_covid_insert();
 CALL sp_dim_client_covid_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26330,7 +25121,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_covid_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_covid_create()
@@ -26426,9 +25216,8 @@ CREATE TABLE IF NOT EXISTS fact_encounter_covid
     date_died                         DATE          NULL
 );
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26437,7 +25226,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_covid_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_covid_insert()
@@ -26599,9 +25387,8 @@ SELECT encounter_id,
        cast(date_died AS DATE)           date_died
 FROM flat_encounter_covid;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26610,7 +25397,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_covid_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_covid_update()
@@ -26638,9 +25424,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26649,7 +25434,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_covid;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_covid()
@@ -26680,9 +25464,8 @@ CALL sp_fact_encounter_covid_create();
 CALL sp_fact_encounter_covid_insert();
 CALL sp_fact_encounter_covid_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26691,7 +25474,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_covid;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_covid()
@@ -26721,9 +25503,8 @@ END;
 CALL sp_dim_client_covid;
 CALL sp_fact_encounter_covid;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -26732,7 +25513,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_calculate_moh_age_group;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_calculate_moh_age_group(age INT) RETURNS VARCHAR(15)
@@ -26766,9 +25546,8 @@ BEGIN
     END IF;
 
     RETURN (agegroup);
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -26778,7 +25557,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_calculate_moh_2024_age_group;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_calculate_moh_2024_age_group(age INT) RETURNS VARCHAR(15)
@@ -26806,10 +25584,9 @@ BEGIN
     END IF;
 
     RETURN (agegroup);
-END //
+END;
 
 
-DELIMITER ;
 
 
         
@@ -26819,7 +25596,6 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS fn_mamba_calculate_moh_anc_age_group;
 
-DELIMITER //
 
 ~
 CREATE FUNCTION fn_mamba_calculate_moh_anc_age_group(age INT) RETURNS VARCHAR(15)
@@ -26839,10 +25615,9 @@ BEGIN
     END IF;
 
     RETURN (agegroup);
-END //
+END;
 
 
-DELIMITER ;
 
 
         
@@ -26852,7 +25627,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_mamba_load_agegroup;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_load_agegroup()
@@ -26864,9 +25638,8 @@ BEGIN
             VALUES (age, fn_mamba_calculate_agegroup(age), IF(age < 15, '<15', '15+'),fn_mamba_calculate_moh_age_group(age),fn_mamba_calculate_moh_2024_age_group(age),fn_mamba_calculate_moh_anc_age_group(age));
             SET age = age + 1;
         END WHILE;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -26875,7 +25648,6 @@ DELIMITER ;
 --
 
 DROP PROCEDURE IF EXISTS sp_mamba_seed_age_group;
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_mamba_seed_age_group()
@@ -27137,7 +25909,6 @@ BEGIN
 
 END//
 
-DELIMITER ;
 
 
         
@@ -27147,7 +25918,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hts_card()
@@ -27178,9 +25948,8 @@ CALL sp_fact_encounter_hts_card_create();
 CALL sp_fact_encounter_hts_card_insert();
 CALL sp_fact_encounter_hts_card_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27189,7 +25958,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hts_card_create()
@@ -27216,7 +25984,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hts_card
+CREATE TABLE mamba_fact_encounter_hts_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT NULL,
@@ -27292,9 +26060,8 @@ CREATE INDEX
 CREATE INDEX
     mamba_fact_encounter_hts_card_encounter_date_index ON mamba_fact_encounter_hts_card (encounter_date);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27303,7 +26070,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hts_card_insert()
@@ -27431,9 +26197,8 @@ SELECT a.encounter_id,
 
 FROM mamba_flat_encounter_hts_card a left join mamba_flat_encounter_hts_card_1 b on a.encounter_id = b.encounter_id;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27450,7 +26215,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_hts_card_update()
@@ -27478,9 +26242,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27489,7 +26252,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_hts()
@@ -27519,9 +26281,8 @@ END;
 CALL sp_fact_encounter_hts_card;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27530,7 +26291,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_card_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_card_create()
@@ -27557,7 +26317,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_non_suppressed_card
+CREATE TABLE mamba_fact_encounter_non_suppressed_card
 (
     id                                     INT AUTO_INCREMENT,
     encounter_id                           INT NULL,
@@ -27604,9 +26364,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_non_suppressed_card
 ) CHARSET = UTF8;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27615,7 +26374,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_card_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_card_insert()
@@ -27709,9 +26467,8 @@ SELECT encounter_id,
 
 FROM mamba_flat_encounter_non_suppressed;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27720,7 +26477,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_card_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_card_update()
@@ -27748,16 +26504,14 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_non_suppressed_card_query
 --
 
-DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_card_query;
 ~
@@ -27767,9 +26521,8 @@ BEGIN
     SELECT *
     FROM mamba_fact_encounter_non_suppressed_card non_suppressed WHERE non_suppressed.encounter_date >= START_DATE
       AND non_suppressed.encounter_date <= END_DATE ;
-END //
+END;
 
-DELIMITER ;
 
 
         
@@ -27779,7 +26532,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_card;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_card()
@@ -27810,9 +26562,8 @@ CALL sp_fact_encounter_non_suppressed_card_create();
 CALL sp_fact_encounter_non_suppressed_card_insert();
 CALL sp_fact_encounter_non_suppressed_card_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27821,7 +26572,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_obs_group_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_obs_group_create()
@@ -27848,7 +26598,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_obs_group
+CREATE TABLE mamba_fact_non_suppressed_obs_group
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
@@ -27870,9 +26620,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27881,7 +26630,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_obs_group_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_obs_group_insert()
@@ -27937,9 +26685,8 @@ WHERE
 GROUP BY
     og.obs_id, og.encounter_id, og.person_id, og.obs_datetime;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27948,7 +26695,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_obs_group_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_obs_group_update()
@@ -27976,9 +26722,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -27995,7 +26740,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_obs_group;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_obs_group()
@@ -28026,9 +26770,8 @@ CALL sp_fact_encounter_non_suppressed_obs_group_create();
 CALL sp_fact_encounter_non_suppressed_obs_group_insert();
 CALL sp_fact_encounter_non_suppressed_obs_group_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28037,7 +26780,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_repeat_vl;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_repeat_vl()
@@ -28068,9 +26810,8 @@ CALL sp_fact_encounter_non_suppressed_repeat_vl_create();
 CALL sp_fact_encounter_non_suppressed_repeat_vl_insert();
 CALL sp_fact_encounter_non_suppressed_repeat_vl_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28079,7 +26820,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_repeat_vl_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_repeat_vl_create()
@@ -28106,7 +26846,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_repeat_vl
+CREATE TABLE mamba_fact_non_suppressed_repeat_vl
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
@@ -28135,9 +26875,8 @@ CREATE INDEX
 
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28146,7 +26885,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_repeat_vl_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_repeat_vl_insert()
@@ -28213,9 +26951,8 @@ WHERE
 GROUP BY
     og.obs_id, og.encounter_id, og.person_id, og.obs_datetime;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28232,7 +26969,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_encounter_non_suppressed_repeat_vl_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_encounter_non_suppressed_repeat_vl_update()
@@ -28260,9 +26996,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28271,7 +27006,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_non_suppressed;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_non_suppressed()
@@ -28302,9 +27036,8 @@ CALL sp_fact_encounter_non_suppressed_card;
 CALL sp_fact_encounter_non_suppressed_obs_group;
 CALL sp_fact_encounter_non_suppressed_repeat_vl;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28313,7 +27046,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_attended_visit;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_attended_visit()
@@ -28344,9 +27076,8 @@ CALL sp_fact_attended_visit_create();
 CALL sp_fact_attended_visit_insert();
 CALL sp_fact_attended_visit_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28355,7 +27086,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_attended_visit_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_attended_visit_create()
@@ -28397,9 +27127,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_attended_visit
     UNIQUE KEY uq_mf_attended_visit_visit_id (visit_id)
 );
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28408,7 +27137,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_attended_visit_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_attended_visit_insert()
@@ -28478,9 +27206,8 @@ GROUP BY
 ON DUPLICATE KEY UPDATE
   client_id = VALUES(client_id);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28489,7 +27216,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_attended_visit_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_attended_visit_update()
@@ -28517,9 +27243,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28528,7 +27253,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_reattendance_monthly;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_reattendance_monthly()
@@ -28559,9 +27283,8 @@ CALL sp_fact_reattendance_monthly_create();
 CALL sp_fact_reattendance_monthly_insert();
 CALL sp_fact_reattendance_monthly_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28570,7 +27293,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_reattendance_monthly_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_reattendance_monthly_create()
@@ -28608,9 +27330,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_reattendance_monthly
     UNIQUE KEY uq_mf_reattendance_month (client_id, report_month)
 );
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28619,7 +27340,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_reattendance_monthly_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_reattendance_monthly_insert()
@@ -28664,9 +27384,8 @@ HAVING COUNT(DISTINCT av.visit_id) > 1
 ON DUPLICATE KEY UPDATE
   attended_visit_count = VALUES(attended_visit_count);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28675,7 +27394,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_reattendance_monthly_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_reattendance_monthly_update()
@@ -28703,9 +27421,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28714,7 +27431,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_opd_attendance;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_opd_attendance()
@@ -28744,9 +27460,8 @@ END;
 CALL sp_fact_attended_visit;
 CALL sp_fact_reattendance_monthly;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28755,7 +27470,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_in;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_in()
@@ -28786,9 +27500,8 @@ CALL sp_fact_transfer_in_create();
 CALL sp_fact_transfer_in_insert();
 CALL sp_fact_transfer_in_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28797,7 +27510,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_in_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_in_create()
@@ -28838,9 +27550,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_in
 CREATE INDEX
     mamba_fact_transfer_in_client_id_index ON mamba_fact_transfer_in (client_id);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28849,7 +27560,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_in_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_in_insert()
@@ -28884,9 +27594,8 @@ INSERT INTO mamba_fact_transfer_in (
 SELECT person_id, obs_datetime, value_datetime from obs where concept_id=99160 and voided =0 ;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28895,7 +27604,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_in_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_in_update()
@@ -28923,9 +27631,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28934,7 +27641,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_out;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_out()
@@ -28965,9 +27671,8 @@ CALL sp_fact_transfer_out_create();
 CALL sp_fact_transfer_out_insert();
 CALL sp_fact_transfer_out_update();
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -28976,7 +27681,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_out_create;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_out_create()
@@ -29017,9 +27721,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_out
 CREATE INDEX
     mamba_fact_transfer_out_client_id_index ON mamba_fact_transfer_out (client_id);
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -29028,7 +27731,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_out_insert;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_out_insert()
@@ -29063,9 +27765,8 @@ INSERT INTO mamba_fact_transfer_out (
 SELECT person_id, obs_datetime, value_datetime from obs where concept_id=99165 and voided =0 ;
 
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -29074,7 +27775,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_fact_transfer_out_update;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_fact_transfer_out_update()
@@ -29102,9 +27802,8 @@ END;
 
 -- $BEGIN
 -- $END
-END //
+END;
 
-DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -29113,7 +27812,6 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_transfers;
 
-DELIMITER //
 
 ~
 CREATE PROCEDURE sp_data_processing_derived_transfers()
@@ -29144,9 +27842,8 @@ END;
 CALL sp_fact_transfer_in;
 CALL sp_fact_transfer_out;
 -- $END
-END //
+END;
 
-DELIMITER ;
 
 
 -- ---------------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_dim_agegroup
+CREATE TABLE IF NOT EXISTS mamba_dim_agegroup
 (
     id              INT         NOT NULL AUTO_INCREMENT,
     age             INT         NULL,

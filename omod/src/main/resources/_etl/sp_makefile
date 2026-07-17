@@ -16,6 +16,9 @@ derived/anc/sp_data_processing_derived_anc.sql
 derived/opd_attendance/sp_data_processing_derived_opd_attendance.sql
 derived/transfers/sp_data_processing_derived_transfers.sql
 derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis.sql
+derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis_create.sql
+derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis_insert.sql
+derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis_update.sql
 
 
 derived/z_obs/sp_mamba_z_encounter_obs_insert.sql

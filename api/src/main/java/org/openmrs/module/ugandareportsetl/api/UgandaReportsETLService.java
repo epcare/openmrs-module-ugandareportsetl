@@ -52,4 +52,28 @@ public interface UgandaReportsETLService extends OpenmrsService {
 	 */
 	void executeFlatteningScript() throws APIException;
 	
+	/**
+	 * Get the current ETL progress information including status, duration, and stage
+	 * 
+	 * @return ETLProgressInfo containing current progress details
+	 * @throws APIException
+	 */
+	ETLProgressInfo getETLProgress() throws APIException;
+	
+	/**
+	 * Get the most recent ETL execution log (last N executions)
+	 * 
+	 * @param limit number of recent executions to return
+	 * @return List of recent ETL executions
+	 * @throws APIException
+	 */
+	java.util.List<ETLProgressInfo> getRecentETLExecutions(int limit) throws APIException;
+	
+	/**
+	 * Check if ETL is currently running
+	 * 
+	 * @return true if ETL is currently running, false otherwise
+	 */
+	boolean isETLRunning();
+	
 }

@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_encounter_hiv_art_summary
+CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_summary
 (
     id                                          INT AUTO_INCREMENT,
     encounter_id                                INT NULL,

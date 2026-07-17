@@ -16,6 +16,7 @@ package org.openmrs.module.ugandareportsetl.api.dao;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
+import org.openmrs.module.ugandareportsetl.api.ETLProgressInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,5 +35,49 @@ public class UgandaReportsETLDao {
 	 */
 	public void executeFlatteningScript() {
 		getSession().createSQLQuery("CALL sp_mamba_data_processing_etl(1)").executeUpdate();
+	}
+	
+	/**
+	 * Get current ETL progress information
+	 */
+	public ETLProgressInfo getETLProgress(String sql) {
+		Object result = getSession().createSQLQuery(sql).uniqueResult();
+		if (result == null) {
+			return null;
+		}
+		
+		Object[] row = (Object[]) result;
+		return mapRowToProgressInfo(row);
+	}
+	
+	/**
+	 * Get recent ETL executions
+	 */
+	@SuppressWarnings("unchecked")
+	public java.util.List<ETLProgressInfo> getRecentETLExecutions(String sql) {
+		java.util.List<Object[]> results = getSession().createSQLQuery(sql).list();
+		java.util.List<ETLProgressInfo> progressList = new java.util.ArrayList<>();
+
+		for (Object[] row : results) {
+			progressList.add(mapRowToProgressInfo(row));
+		}
+
+		return progressList;
+	}
+	
+	/**
+	 * Map a database row to ETLProgressInfo
+	 */
+	private ETLProgressInfo mapRowToProgressInfo(Object[] row) {
+		return new ETLProgressInfo((Integer) row[0], // id
+		        (java.util.Date) row[1], // start_time
+		        (java.util.Date) row[2], // end_time
+		        (java.util.Date) row[3], // next_schedule
+		        (Long) row[4], // execution_duration_seconds
+		        (Long) row[5], // missed_schedule_by_seconds
+		        (String) row[6], // completion_status
+		        (String) row[7], // transaction_status
+		        (String) row[8] // success_or_error_message
+		);
 	}
 }

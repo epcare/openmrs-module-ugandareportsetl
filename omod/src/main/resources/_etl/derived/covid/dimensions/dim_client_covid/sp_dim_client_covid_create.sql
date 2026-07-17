@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE dim_client_covid
+CREATE TABLE IF NOT EXISTS dim_client_covid
 (
     id            INT auto_increment,
     client_id     INT           NULL,

@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_patients_nationality
+CREATE TABLE IF NOT EXISTS mamba_fact_patients_nationality
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,

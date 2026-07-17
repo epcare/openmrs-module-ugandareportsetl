@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_current_arv_regimen_start_date
+CREATE TABLE IF NOT EXISTS mamba_fact_current_arv_regimen_start_date
 (
     id                                    INT AUTO_INCREMENT,
     client_id                             INT NULL,

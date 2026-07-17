@@ -38,9 +38,6 @@ public class UgandaReportsETLActivator extends BaseModuleActivator {
 		log.info("UgandaReportsETL module started - initializing...");
 		
 		try {
-			// Register the ETL setup task
-			registerSetupMambaETLTask();
-			
 			// Configure ETL properties
 			Context.getService(UgandaReportsETLService.class).addMambaetlProperties();
 			
@@ -63,42 +60,6 @@ public class UgandaReportsETLActivator extends BaseModuleActivator {
 			log.error("Error shutting down ETL thread", e);
 		}
 		log.info("UgandaReportsETL module stopped");
-	}
-	
-	/**
-	 * Register the SetupMambaETLTask as a scheduled task. This task can be run manually from the
-	 * scheduler UI or triggered programmatically.
-	 */
-	private void registerSetupMambaETLTask() {
-		try {
-			Context.addProxyPrivilege("Manage Scheduler");
-			
-			TaskDefinition taskDef = Context.getSchedulerService().getTaskByName("Setup MambaETL Task");
-			if (taskDef == null) {
-				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.MINUTE, 5);
-				
-				taskDef = new TaskDefinition();
-				taskDef.setTaskClass(SetupMambaETLTask.class.getCanonicalName());
-				taskDef.setStartOnStartup(false); // Don't auto-start - requires manual trigger
-				taskDef.setStarted(false);
-				taskDef.setStartTime(cal.getTime());
-				taskDef.setUuid(UUID.randomUUID().toString());
-				taskDef.setName("Setup MambaETL Task");
-				taskDef.setDescription("Setup Mamba ETL infrastructure - Configure properties and create database objects");
-				taskDef.setRepeatInterval(0L); // One-time task
-				Context.getSchedulerService().scheduleTask(taskDef);
-				log.info("Setup MambaETL Task has been successfully registered");
-			} else {
-				log.info("Setup MambaETL Task already registered");
-			}
-		}
-		catch (SchedulerException ex) {
-			log.error("Unable to register Setup MambaETL Task", ex);
-		}
-		finally {
-			Context.removeProxyPrivilege("Manage Scheduler");
-		}
 	}
 	
 }

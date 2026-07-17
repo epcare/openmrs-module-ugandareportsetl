@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_non_suppressed_obs_group
+CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_obs_group
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,

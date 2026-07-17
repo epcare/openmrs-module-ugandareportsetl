@@ -66,9 +66,7 @@ BEGIN
                           SELECT v_cat_id,'D0_28','0-28d',0,28,1,1
                           UNION ALL SELECT v_cat_id,'D29_4Y','29d-4y',29,1824,2,1
                           UNION ALL SELECT v_cat_id,'Y5_9','5-9',1825,3649,3,1
-                          /* 10–19 => 3650 .. 7299 (i.e. (20*365)-1) */
                           UNION ALL SELECT v_cat_id,'Y10_19','10-19',3650,7299,4,1
-                          /* 20+ => 7300 .. 30000 */
                           UNION ALL SELECT v_cat_id,'Y20P','20+',7300,30000,5,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (

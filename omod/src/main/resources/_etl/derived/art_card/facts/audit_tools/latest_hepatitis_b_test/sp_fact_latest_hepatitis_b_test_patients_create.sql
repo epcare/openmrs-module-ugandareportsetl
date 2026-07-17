@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_patients_latest_hepatitis_b_test
+CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_hepatitis_b_test
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,

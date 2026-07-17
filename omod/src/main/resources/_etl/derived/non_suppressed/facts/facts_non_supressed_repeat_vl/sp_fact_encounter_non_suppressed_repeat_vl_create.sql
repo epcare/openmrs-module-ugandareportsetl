@@ -1,5 +1,5 @@
 -- $BEGIN
-CREATE TABLE mamba_fact_non_suppressed_repeat_vl
+CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_repeat_vl
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
