@@ -12,7 +12,10 @@ BEGIN
     CALL sp_data_processing_derived_transfers();
     CALL sp_data_processing_derived_non_suppressed();
     CALL sp_data_processing_derived_hiv_art_card();
+    CALL sp_data_processing_arv_orders();
     CALL sp_data_processing_derived_IIT();
+    CALL sp_data_processing_derived_regimen_change();
+    CALL sp_data_processing_derived_vl_request();
     CALL sp_data_processing_derived_hts();
     CALL sp_data_processing_derived_anc();
 

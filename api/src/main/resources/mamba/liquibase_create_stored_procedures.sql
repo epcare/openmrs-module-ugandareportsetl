@@ -4073,7 +4073,10 @@ SET @report_data = '{"flat_report_metadata":[{
     "covidVaccStatus": "50032cf9-d5e6-4b8d-8d7d-32906d6a1115",
     "covid_vaccination_date": "1410AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "reasons_for_next_appointment": "160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "client_represented": "51409d82-b2c0-11ed-afa1-0242ac120002",
+    "treatment_interruptions": "2bb2e360-263c-4167-8c68-87dab66dc0f6",
+    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6"
   }
 },{
   "report_name": "ART_Health_Education_card",
@@ -4097,6 +4100,10 @@ SET @report_data = '{"flat_report_metadata":[{
     "other_linkages": "609193dc-ea2a-4746-9074-675661c025d0",
     "other_phdp_components": "ccaba007-ea6c-4dae-a3b0-07118ddf5008",
     "gender_based_violance": "23a37400-f855-405b-9268-cb2d25b97f54",
+    "disclosure": "5140502a-b2c0-11ed-afa1-0242ac120002",
+    "disclosure_status": "2edfe7ae-b20a-4ef0-b450-751028026c8f",
+    "relationship": "dce138f8-30ab-102d-86b0-7a5022ba4115",
+    "other_relative": "dcc37f5c-30ab-102d-86b0-7a5022ba4115",
     "ovc_no": "caffcc16-5a4d-4adc-a113-9a819c9b2c52",
     "patient_categorization": "cc183c11-0f94-4992-807c-84f33095ce37",
     "dsdm_models": "1e755463-df07-4f18-bc67-9e5527bc252f",
@@ -4163,6 +4170,7 @@ SET @report_data = '{"flat_report_metadata":[{
     "lost_to_followup": "dcb23465-30ab-102d-86b0-7a5022ba4115",
     "currently_in_school": "dcc3a7e9-30ab-102d-86b0-7a5022ba4115",
     "pmtct": "dcd7e8e5-30ab-102d-86b0-7a5022ba4115",
+    "pmtct_set": "8512daeb-4fce-495e-8efb-a4d923262259",
     "entry_point_into_hiv_care": "dcdfe3ce-30ab-102d-86b0-7a5022ba4115",
     "name_of_location_transferred_from": "dcdffef2-30ab-102d-86b0-7a5022ba4115",
     "date_lost_to_followup": "dce00b87-30ab-102d-86b0-7a5022ba4115",
@@ -4174,14 +4182,17 @@ SET @report_data = '{"flat_report_metadata":[{
     "treatment_supporter_telephone_number": "dce17480-30ab-102d-86b0-7a5022ba4115",
     "transfered_out_to_another_facility": "dd27a783-30ab-102d-86b0-7a5022ba4115",
     "prior_art": "902e30a1-2d10-4e92-8f77-784b6677109a",
+    "pep_set": "331f1521-14ac-4f06-b064-d1d6e928d47e",
     "post_exposure_prophylaxis": "966db6f2-a9f2-4e47-bba2-051467c77c17",
     "prior_art_not_transfer": "240edc6a-5c70-46ce-86cf-1732bc21e95c",
+    "art_not_transfer_in_set": "c26525eb-6fdb-43ef-bee4-cb5d839756ee",
     "baseline_regimen": "c3332e8d-2548-4ad6-931d-6855692694a3",
     "transfer_in_regimen": "9a9314ed-0756-45d0-b37c-ace720ca439c",
     "baseline_weight": "900b8fd9-2039-4efc-897b-9b8ce37396f5",
     "baseline_stage": "39243cef-b375-44b1-9e79-cbf21bd10878",
     "baseline_cd4": "c17bd9df-23e6-4e65-ba42-eb6d9250ca3f",
     "baseline_pregnancy": "b253be65-0155-4b43-ad15-88bc797322c9",
+    "baseline_emtct": "f838147d-277d-421a-9c6f-202aa30e799c",
     "name_of_family_member": "e96d0880-e80e-4088-9787-bb2623fd46af",
     "age_of_family_member": "4049d989-b99e-440d-8f70-c222aa9fe45c",
     "hiv_test": "ddcd8aad-9085-4a88-a411-f19521be4785",
@@ -4198,6 +4209,7 @@ SET @report_data = '{"flat_report_metadata":[{
     "baseline_regimen_other": "cc3d64df-61a5-4c5a-a755-6e95d6ef3295",
     "transfer_in_regimen_other": "a5bfc18e-c6db-4d5d-81f5-18d61b1355a8",
     "hep_b_prior_art": "4937ae55-afed-48b0-abb5-aad1152d9d4c",
+    "hepb_set": "17a0c852-ae9c-42c4-b18d-7aac96d5cb3d",
     "hep_b_prior_art_regimen_start_date": "ce1d514c-142b-4b93-aea2-6d24b7cc9614",
     "baseline_lactating": "ab7bb4db-1a54-4225-b71c-d8e138b471e9",
     "age_unit": "33b18e88-0eb9-48f0-8023-2e90caad4469",
@@ -4294,6 +4306,22 @@ SET @report_data = '{"flat_report_metadata":[{
     "received_prevention_services": "737dc257-643c-485a-974d-caf8b698e084",
     "test_name": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
     "test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+},{
+  "report_name": "ART_Regimen_Change",
+  "flat_table_name": "mamba_flat_encounter_regimen_change",
+  "encounter_type_uuid": "c11774c1-3b4a-4bdb-a847-6060895e006d",
+  "concepts_locale": "en",
+  "table_columns": {
+    "current_regimen": "107bef04-bf05-4f41-9260-b167c1108f7e",
+    "current_regimen_line": "80148344-ce80-42f7-9d4a-8c1935efe76e",
+    "regimen_change_type": "ca5a71aa-05f9-42a0-bf0d-65bcfd08036b",
+    "new_regimen": "dd2b0b4d-30ab-102d-86b0-7a5022ba4115",
+    "new_regimen_other": "97c48198-3cf7-4892-a3e6-d61fb1125882",
+    "new_regimen_line": "164515AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "reason_for_regimen_substitution": "dce0c977-30ab-102d-86b0-7a5022ba4115",
+    "reason_for_regimen_switch": "dce0cd97-30ab-102d-86b0-7a5022ba4115",
+    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   }
 },{
   "report_name": "TB_Enrollment",
@@ -4423,6 +4451,30 @@ SET @report_data = '{"flat_report_metadata":[{
     "reason_for_miss_classification": "881b4254-21be-4372-aa96-42453c941230",
     "action_taken_for_miss_classification": "6e936468-7c40-43fa-a515-137b53ed58d6",
     "tb_treatment_comments": "6965a8c4-7be5-47ee-a872-e158bd9545b1"
+  }
+},{
+  "report_name": "Viral_Load_Request",
+  "flat_table_name": "mamba_flat_encounter_vl_request",
+  "encounter_type_uuid": "cbf01392-ca29-11e9-a32f-2a2ae2dbcce4",
+  "concepts_locale": "en",
+  "table_columns": {
+    "indication_for_vl_testing": "59f36196-3ebe-4fea-be92-6fc9551c3a11",
+    "sample_collection_date": "0b434cfa-b11c-4d14-aaa2-9aed6ca2da88",
+    "art_start_date": "ab505422-26d9-41f1-a079-c3d222000440",
+    "current_who_clinical_stage": "dcdff274-30ab-102d-86b0-7a5022ba4115",
+    "current_regimen_line": "80148344-ce80-42f7-9d4a-8c1935efe76e",
+    "current_regimen": "dd2b0b4d-30ab-102d-86b0-7a5022ba4115",
+    "other_current_regimen": "97c48198-3cf7-4892-a3e6-d61fb1125882",
+    "pregnant_mother": "dcda5179-30ab-102d-86b0-7a5022ba4115",
+    "anc_number": "c7231d96-34d8-4bf7-a509-c810f75e3329",
+    "pnc_number": "ef1f4c7a-2b90-4412-83bb-87ae8094ce4c",
+    "breastfeeding_mother": "9e5ac0a8-6041-4feb-8c07-fe522ef5f9ab",
+    "has_active_tb": "8c54d11f-e3f7-4146-b1e2-1667034c61b4",
+    "tb_treatment_phase": "159792AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "arv_adherence": "dce03b2f-30ab-102d-86b0-7a5022ba4115",
+    "dsdm_models": "1e755463-df07-4f18-bc67-9e5527bc252f",
+    "viral_load_qualitative": "dca12261-30ab-102d-86b0-7a5022ba4115",
+    "viral_load_quantitative": "dc8d83e3-30ab-102d-86b0-7a5022ba4115"
   }
 }]}';
 
@@ -4956,7 +5008,10 @@ SET @report_data = '{"flat_report_metadata":[{
     "covidVaccStatus": "50032cf9-d5e6-4b8d-8d7d-32906d6a1115",
     "covid_vaccination_date": "1410AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "reasons_for_next_appointment": "160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "client_represented": "51409d82-b2c0-11ed-afa1-0242ac120002",
+    "treatment_interruptions": "2bb2e360-263c-4167-8c68-87dab66dc0f6",
+    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6"
   }
 },{
   "report_name": "ART_Health_Education_card",
@@ -4980,6 +5035,10 @@ SET @report_data = '{"flat_report_metadata":[{
     "other_linkages": "609193dc-ea2a-4746-9074-675661c025d0",
     "other_phdp_components": "ccaba007-ea6c-4dae-a3b0-07118ddf5008",
     "gender_based_violance": "23a37400-f855-405b-9268-cb2d25b97f54",
+    "disclosure": "5140502a-b2c0-11ed-afa1-0242ac120002",
+    "disclosure_status": "2edfe7ae-b20a-4ef0-b450-751028026c8f",
+    "relationship": "dce138f8-30ab-102d-86b0-7a5022ba4115",
+    "other_relative": "dcc37f5c-30ab-102d-86b0-7a5022ba4115",
     "ovc_no": "caffcc16-5a4d-4adc-a113-9a819c9b2c52",
     "patient_categorization": "cc183c11-0f94-4992-807c-84f33095ce37",
     "dsdm_models": "1e755463-df07-4f18-bc67-9e5527bc252f",
@@ -5046,6 +5105,7 @@ SET @report_data = '{"flat_report_metadata":[{
     "lost_to_followup": "dcb23465-30ab-102d-86b0-7a5022ba4115",
     "currently_in_school": "dcc3a7e9-30ab-102d-86b0-7a5022ba4115",
     "pmtct": "dcd7e8e5-30ab-102d-86b0-7a5022ba4115",
+    "pmtct_set": "8512daeb-4fce-495e-8efb-a4d923262259",
     "entry_point_into_hiv_care": "dcdfe3ce-30ab-102d-86b0-7a5022ba4115",
     "name_of_location_transferred_from": "dcdffef2-30ab-102d-86b0-7a5022ba4115",
     "date_lost_to_followup": "dce00b87-30ab-102d-86b0-7a5022ba4115",
@@ -5057,14 +5117,17 @@ SET @report_data = '{"flat_report_metadata":[{
     "treatment_supporter_telephone_number": "dce17480-30ab-102d-86b0-7a5022ba4115",
     "transfered_out_to_another_facility": "dd27a783-30ab-102d-86b0-7a5022ba4115",
     "prior_art": "902e30a1-2d10-4e92-8f77-784b6677109a",
+    "pep_set": "331f1521-14ac-4f06-b064-d1d6e928d47e",
     "post_exposure_prophylaxis": "966db6f2-a9f2-4e47-bba2-051467c77c17",
     "prior_art_not_transfer": "240edc6a-5c70-46ce-86cf-1732bc21e95c",
+    "art_not_transfer_in_set": "c26525eb-6fdb-43ef-bee4-cb5d839756ee",
     "baseline_regimen": "c3332e8d-2548-4ad6-931d-6855692694a3",
     "transfer_in_regimen": "9a9314ed-0756-45d0-b37c-ace720ca439c",
     "baseline_weight": "900b8fd9-2039-4efc-897b-9b8ce37396f5",
     "baseline_stage": "39243cef-b375-44b1-9e79-cbf21bd10878",
     "baseline_cd4": "c17bd9df-23e6-4e65-ba42-eb6d9250ca3f",
     "baseline_pregnancy": "b253be65-0155-4b43-ad15-88bc797322c9",
+    "baseline_emtct": "f838147d-277d-421a-9c6f-202aa30e799c",
     "name_of_family_member": "e96d0880-e80e-4088-9787-bb2623fd46af",
     "age_of_family_member": "4049d989-b99e-440d-8f70-c222aa9fe45c",
     "hiv_test": "ddcd8aad-9085-4a88-a411-f19521be4785",
@@ -5081,6 +5144,7 @@ SET @report_data = '{"flat_report_metadata":[{
     "baseline_regimen_other": "cc3d64df-61a5-4c5a-a755-6e95d6ef3295",
     "transfer_in_regimen_other": "a5bfc18e-c6db-4d5d-81f5-18d61b1355a8",
     "hep_b_prior_art": "4937ae55-afed-48b0-abb5-aad1152d9d4c",
+    "hepb_set": "17a0c852-ae9c-42c4-b18d-7aac96d5cb3d",
     "hep_b_prior_art_regimen_start_date": "ce1d514c-142b-4b93-aea2-6d24b7cc9614",
     "baseline_lactating": "ab7bb4db-1a54-4225-b71c-d8e138b471e9",
     "age_unit": "33b18e88-0eb9-48f0-8023-2e90caad4469",
@@ -5177,6 +5241,22 @@ SET @report_data = '{"flat_report_metadata":[{
     "received_prevention_services": "737dc257-643c-485a-974d-caf8b698e084",
     "test_name": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
     "test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+},{
+  "report_name": "ART_Regimen_Change",
+  "flat_table_name": "mamba_flat_encounter_regimen_change",
+  "encounter_type_uuid": "c11774c1-3b4a-4bdb-a847-6060895e006d",
+  "concepts_locale": "en",
+  "table_columns": {
+    "current_regimen": "107bef04-bf05-4f41-9260-b167c1108f7e",
+    "current_regimen_line": "80148344-ce80-42f7-9d4a-8c1935efe76e",
+    "regimen_change_type": "ca5a71aa-05f9-42a0-bf0d-65bcfd08036b",
+    "new_regimen": "dd2b0b4d-30ab-102d-86b0-7a5022ba4115",
+    "new_regimen_other": "97c48198-3cf7-4892-a3e6-d61fb1125882",
+    "new_regimen_line": "164515AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "reason_for_regimen_substitution": "dce0c977-30ab-102d-86b0-7a5022ba4115",
+    "reason_for_regimen_switch": "dce0cd97-30ab-102d-86b0-7a5022ba4115",
+    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   }
 },{
   "report_name": "TB_Enrollment",
@@ -5306,6 +5386,30 @@ SET @report_data = '{"flat_report_metadata":[{
     "reason_for_miss_classification": "881b4254-21be-4372-aa96-42453c941230",
     "action_taken_for_miss_classification": "6e936468-7c40-43fa-a515-137b53ed58d6",
     "tb_treatment_comments": "6965a8c4-7be5-47ee-a872-e158bd9545b1"
+  }
+},{
+  "report_name": "Viral_Load_Request",
+  "flat_table_name": "mamba_flat_encounter_vl_request",
+  "encounter_type_uuid": "cbf01392-ca29-11e9-a32f-2a2ae2dbcce4",
+  "concepts_locale": "en",
+  "table_columns": {
+    "indication_for_vl_testing": "59f36196-3ebe-4fea-be92-6fc9551c3a11",
+    "sample_collection_date": "0b434cfa-b11c-4d14-aaa2-9aed6ca2da88",
+    "art_start_date": "ab505422-26d9-41f1-a079-c3d222000440",
+    "current_who_clinical_stage": "dcdff274-30ab-102d-86b0-7a5022ba4115",
+    "current_regimen_line": "80148344-ce80-42f7-9d4a-8c1935efe76e",
+    "current_regimen": "dd2b0b4d-30ab-102d-86b0-7a5022ba4115",
+    "other_current_regimen": "97c48198-3cf7-4892-a3e6-d61fb1125882",
+    "pregnant_mother": "dcda5179-30ab-102d-86b0-7a5022ba4115",
+    "anc_number": "c7231d96-34d8-4bf7-a509-c810f75e3329",
+    "pnc_number": "ef1f4c7a-2b90-4412-83bb-87ae8094ce4c",
+    "breastfeeding_mother": "9e5ac0a8-6041-4feb-8c07-fe522ef5f9ab",
+    "has_active_tb": "8c54d11f-e3f7-4146-b1e2-1667034c61b4",
+    "tb_treatment_phase": "159792AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "arv_adherence": "dce03b2f-30ab-102d-86b0-7a5022ba4115",
+    "dsdm_models": "1e755463-df07-4f18-bc67-9e5527bc252f",
+    "viral_load_qualitative": "dca12261-30ab-102d-86b0-7a5022ba4115",
+    "viral_load_quantitative": "dc8d83e3-30ab-102d-86b0-7a5022ba4115"
   }
 }]}';
 
@@ -14515,6 +14619,86 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_regimen_change
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_regimen_change;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_data_processing_derived_regimen_change()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_regimen_change', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_regimen_change', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_regimen_change;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_vl_request
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_request;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_data_processing_derived_vl_request()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_vl_request', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_vl_request', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_vl_request;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_data_processing_derived_opd_attendance
 --
 
@@ -14966,6 +15150,56 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_arv_orders
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_arv_orders;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_data_processing_arv_orders()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_arv_orders', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_arv_orders', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ARV Orders ETL - Track ARV regimen prescriptions from orders table
+-- This ETL identifies patients on ART by checking for ARV regimen drug orders
+
+-- Create and populate ARV Orders fact table
+CALL sp_fact_arv_orders_create();
+CALL sp_fact_arv_orders_insert();
+
+-- Create and populate latest ARV order summary table
+CALL sp_fact_patients_latest_arv_order_create();
+CALL sp_fact_patients_latest_arv_order_insert();
+
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_mamba_z_encounter_obs_insert
 --
 
@@ -15340,7 +15574,10 @@ BEGIN
     CALL sp_data_processing_derived_transfers();
     CALL sp_data_processing_derived_non_suppressed();
     CALL sp_data_processing_derived_hiv_art_card();
+    CALL sp_data_processing_arv_orders();
     CALL sp_data_processing_derived_IIT();
+    CALL sp_data_processing_derived_regimen_change();
+    CALL sp_data_processing_derived_vl_request();
     CALL sp_data_processing_derived_hts();
     CALL sp_data_processing_derived_anc();
 
@@ -26137,6 +26374,498 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_fact_arv_orders_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_arv_orders_create;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_arv_orders_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_arv_orders_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_arv_orders_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Create ARV Orders Fact Table
+DROP TABLE IF EXISTS mamba_fact_arv_orders;
+
+CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT NOT NULL COMMENT 'Patient ID',
+    order_id INT NOT NULL UNIQUE COMMENT 'Order ID from orders table',
+    encounter_id INT COMMENT 'Encounter ID when order was placed',
+    regimen_concept_id INT NOT NULL COMMENT 'Concept ID of the ARV regimen prescribed',
+    regimen VARCHAR(255) COMMENT 'Regimen name from concept',
+    drug_inventory_id INT COMMENT 'Drug inventory ID from drug_order',
+    drug_name VARCHAR(255) COMMENT 'Drug name from drug table',
+    date_activated DATETIME COMMENT 'When the order was activated (coverage start)',
+    date_stopped DATETIME COMMENT 'When the order was stopped',
+    auto_expire_date DATETIME COMMENT 'When the prescription expires (system calc)',
+    coverage_start_date DATE COMMENT 'When drug coverage starts',
+    coverage_end_date DATE COMMENT 'When drug coverage ends (date_activated + duration)',
+    days_on_drugs INT COMMENT 'Calculated days of drug coverage',
+    dose DOUBLE COMMENT 'Dose amount',
+    dose_units VARCHAR(100) COMMENT 'Dose units',
+    quantity DOUBLE COMMENT 'Quantity dispensed',
+    quantity_units VARCHAR(100) COMMENT 'Quantity units',
+    duration INT COMMENT 'Duration as entered',
+    duration_units VARCHAR(100) COMMENT 'Duration units (Days, Weeks, Months, Years)',
+    duration_units_concept_id INT COMMENT 'Duration units concept ID',
+    frequency VARCHAR(100) COMMENT 'Dosing frequency',
+    route VARCHAR(100) COMMENT 'Administration route',
+    order_number VARCHAR(50) COMMENT 'Order number',
+    order_action VARCHAR(50) COMMENT 'NEW, REVISE, DISCONTINUE',
+    urgency VARCHAR(50) COMMENT 'ROUTINE, STAT',
+    voided TINYINT DEFAULT 0 COMMENT 'Whether order is voided',
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_client_id (client_id),
+    INDEX idx_date_activated (date_activated),
+    INDEX idx_coverage_period (coverage_start_date, coverage_end_date),
+    INDEX idx_regimen_concept_id (regimen_concept_id),
+    INDEX idx_active_orders (client_id, coverage_start_date, coverage_end_date, voided)
+) COMMENT='HIV/AIDS ARV regimen orders with drug coverage periods';
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_arv_orders_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_arv_orders_insert;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_arv_orders_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_arv_orders_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_arv_orders_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Insert ARV Orders with coverage period calculations
+-- Filter by ARV regimen concepts (answers to concept 90315 - CURRENT ARV REGIMEN)
+
+SET @arv_concepts = '630,794,90002,99001,99002,99003,99004,99005,99006,99007,99008,99009,99010,99011,99012,99013,99014,99015,99016,99017,99018,99019,99039,99040,99041,99042,99043,99044,99045,99046,99047,99048,99143,99144,99277,99282,99283,99284,99285,99286,99884,99885,99887,99888,163017,164976,164977,164978,164979,165780,165794,175325,175329';
+
+INSERT INTO mamba_fact_arv_orders (
+    client_id, order_id, encounter_id,
+    regimen_concept_id, regimen,
+    drug_inventory_id, drug_name,
+    date_activated, date_stopped, auto_expire_date,
+    coverage_start_date, coverage_end_date, days_on_drugs,
+    dose, dose_units, quantity, quantity_units,
+    duration, duration_units, duration_units_concept_id,
+    frequency, route,
+    order_number, order_action, urgency, voided
+)
+SELECT DISTINCT
+    o.patient_id as client_id,
+    o.order_id,
+    o.encounter_id,
+    o.concept_id as regimen_concept_id,
+    (SELECT name FROM concept_name WHERE concept_id = o.concept_id AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as regimen,
+    do.drug_inventory_id,
+    d.name as drug_name,
+    o.date_activated,
+    o.date_stopped,
+    o.auto_expire_date,
+    DATE(o.date_activated) as coverage_start_date,
+    CASE
+        WHEN do.duration IS NOT NULL AND do.duration_units IS NOT NULL THEN
+            DATE_ADD(DATE(o.date_activated), INTERVAL fn_duration_to_days(do.duration, do.duration_units) DAY)
+        WHEN o.auto_expire_date IS NOT NULL THEN
+            DATE(o.auto_expire_date)
+        ELSE
+            DATE_ADD(DATE(o.date_activated), INTERVAL 30 DAY)
+    END as coverage_end_date,
+    CASE
+        WHEN do.duration IS NOT NULL AND do.duration_units IS NOT NULL THEN
+            fn_duration_to_days(do.duration, do.duration_units)
+        WHEN o.auto_expire_date IS NOT NULL THEN
+            DATEDIFF(o.auto_expire_date, o.date_activated)
+        ELSE
+            30
+    END as days_on_drugs,
+    do.dose,
+    du.name as dose_units,
+    do.quantity,
+    qu.name as quantity_units,
+    do.duration,
+    dur_units.name as duration_units,
+    do.duration_units as duration_units_concept_id,
+    fr.name as frequency,
+    rt.name as route,
+    o.order_number,
+    NULL as order_action,
+    o.urgency,
+    o.voided
+FROM orders o
+INNER JOIN drug_order do ON do.order_id = o.order_id
+INNER JOIN drug d ON d.drug_id = do.drug_inventory_id
+LEFT JOIN concept_name dur_units ON dur_units.concept_id = do.duration_units AND dur_units.concept_name_type = 'FULLY_SPECIFIED' AND dur_units.locale = 'en' AND dur_units.voided = 0
+LEFT JOIN concept_name du ON du.concept_id = do.dose_units AND du.concept_name_type = 'FULLY_SPECIFIED' AND du.locale = 'en' AND du.voided = 0
+LEFT JOIN concept_name qu ON qu.concept_id = do.quantity_units AND qu.concept_name_type = 'FULLY_SPECIFIED' AND qu.locale = 'en' AND qu.voided = 0
+LEFT JOIN concept_name fr ON fr.concept_id = do.frequency AND fr.concept_name_type = 'FULLY_SPECIFIED' AND fr.locale = 'en' AND fr.voided = 0
+LEFT JOIN concept_name rt ON rt.concept_id = do.route AND rt.concept_name_type = 'FULLY_SPECIFIED' AND rt.locale = 'en' AND rt.voided = 0
+WHERE FIND_IN_SET(o.concept_id, @arv_concepts) > 0
+  AND o.voided = 0;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_arv_orders_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_arv_orders_update;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_arv_orders_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_arv_orders_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_arv_orders_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Update ARV Orders with coverage period calculations
+-- This is handled by sp_mamba_populate_arv_orders_v2()
+CALL sp_mamba_populate_arv_orders_v2();
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_arv_orders
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_arv_orders;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_arv_orders()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_arv_orders', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_arv_orders', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ARV Orders Fact Table - HIV/AIDS ARV regimen orders with drug coverage periods
+
+-- Drop existing table if exists
+DROP TABLE IF EXISTS mamba_fact_arv_orders;
+
+-- Create ARV Orders Fact Table
+CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT NOT NULL COMMENT 'Patient ID',
+    order_id INT NOT NULL UNIQUE COMMENT 'Order ID from orders table',
+    encounter_id INT COMMENT 'Encounter ID when order was placed',
+
+    -- Regimen Information
+    regimen_concept_id INT NOT NULL COMMENT 'Concept ID of the ARV regimen prescribed',
+    regimen VARCHAR(255) COMMENT 'Regimen name from concept',
+    drug_inventory_id INT COMMENT 'Drug inventory ID from drug_order',
+    drug_name VARCHAR(255) COMMENT 'Drug name from drug table',
+
+    -- Timing Information
+    date_activated DATETIME COMMENT 'When the order was activated (coverage start)',
+    date_stopped DATETIME COMMENT 'When the order was stopped',
+    auto_expire_date DATETIME COMMENT 'When the prescription expires (system calc)',
+
+    -- Coverage Period (CALCULATED)
+    coverage_start_date DATE COMMENT 'When drug coverage starts',
+    coverage_end_date DATE COMMENT 'When drug coverage ends (date_activated + duration)',
+    days_on_drugs INT COMMENT 'Calculated days of drug coverage',
+
+    -- Dosing Information
+    dose DOUBLE COMMENT 'Dose amount',
+    dose_units VARCHAR(100) COMMENT 'Dose units',
+    quantity DOUBLE COMMENT 'Quantity dispensed',
+    quantity_units VARCHAR(100) COMMENT 'Quantity units',
+    duration INT COMMENT 'Duration as entered',
+    duration_units VARCHAR(100) COMMENT 'Duration units (Days, Weeks, Months, Years)',
+    duration_units_concept_id INT COMMENT 'Duration units concept ID',
+    frequency VARCHAR(100) COMMENT 'Dosing frequency',
+    route VARCHAR(100) COMMENT 'Administration route',
+
+    -- Order Metadata
+    order_number VARCHAR(50) COMMENT 'Order number',
+    order_action VARCHAR(50) COMMENT 'NEW, REVISE, DISCONTINUE',
+    urgency VARCHAR(50) COMMENT 'ROUTINE, STAT',
+    voided TINYINT DEFAULT 0 COMMENT 'Whether order is voided',
+
+    -- Timestamps
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    -- Indexes
+    INDEX idx_client_id (client_id),
+    INDEX idx_date_activated (date_activated),
+    INDEX idx_coverage_period (coverage_start_date, coverage_end_date),
+    INDEX idx_regimen_concept_id (regimen_concept_id),
+    INDEX idx_active_orders (client_id, coverage_start_date, coverage_end_date, voided)
+) COMMENT='HIV/AIDS ARV regimen orders with drug coverage periods';
+
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_arv_order
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_arv_order;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_patients_latest_arv_order()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_arv_order', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_arv_order', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ARV Summary Fact Table - Latest ARV status per patient
+
+DROP TABLE IF EXISTS mamba_fact_patients_latest_arv_order;
+
+CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_order (
+    client_id INT PRIMARY KEY COMMENT 'Patient ID',
+    order_id INT COMMENT 'Most recent order ID',
+
+    -- Current Regimen
+    current_regimen_concept_id INT COMMENT 'Current regimen concept ID',
+    current_regimen VARCHAR(255) COMMENT 'Current regimen name',
+    current_drug_inventory_id INT COMMENT 'Current drug inventory ID',
+    current_drug_name VARCHAR(255) COMMENT 'Current drug name',
+
+    -- Timing
+    date_activated DATETIME COMMENT 'Date order was activated',
+    date_stopped DATETIME COMMENT 'Date order was stopped',
+    auto_expire_date DATETIME COMMENT 'Date prescription expires',
+
+    -- Coverage Period
+    coverage_start_date DATE COMMENT 'Drug coverage start date',
+    coverage_end_date DATE COMMENT 'Drug coverage end date',
+    days_on_drugs INT COMMENT 'Days of drug coverage',
+
+    -- Dosing
+    dose DOUBLE,
+    dose_units VARCHAR(100),
+    quantity DOUBLE,
+    duration INT COMMENT 'Duration value from drug_order',
+
+    -- Active Status
+    is_active_on_art TINYINT DEFAULT 1 COMMENT 'Currently active on ART',
+    art_start_date DATETIME COMMENT 'First known ART start date (baseline)',
+
+    -- Timestamps
+    date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    INDEX idx_regimen_concept_id (current_regimen_concept_id),
+    INDEX idx_active_on_art (is_active_on_art),
+    INDEX idx_coverage_period (coverage_start_date, coverage_end_date)
+) COMMENT='Latest ARV order status per patient with drug coverage periods';
+
+-- Populate summary table with latest ARV order per patient
+INSERT INTO mamba_fact_patients_latest_arv_order (
+    client_id, order_id,
+    current_regimen_concept_id, current_regimen,
+    current_drug_inventory_id, current_drug_name,
+    date_activated, date_stopped, auto_expire_date,
+    coverage_start_date, coverage_end_date, days_on_drugs,
+    dose, dose_units, quantity, duration,
+    is_active_on_art, art_start_date
+)
+SELECT
+    ao.client_id,
+    ao.order_id,
+    ao.regimen_concept_id as current_regimen_concept_id,
+    ao.regimen as current_regimen,
+    ao.drug_inventory_id as current_drug_inventory_id,
+    ao.drug_name as current_drug_name,
+    ao.date_activated,
+    ao.date_stopped,
+    ao.auto_expire_date,
+    ao.coverage_start_date,
+    ao.coverage_end_date,
+    ao.days_on_drugs,
+    ao.dose,
+    ao.dose_units,
+    ao.quantity,
+    ao.duration,
+    CASE
+        WHEN ao.date_stopped IS NULL THEN 1
+        ELSE 0
+    END as is_active_on_art,
+    (SELECT MIN(date_activated) FROM mamba_fact_arv_orders WHERE client_id = ao.client_id) as art_start_date
+FROM mamba_fact_arv_orders ao
+WHERE ao.order_id = (
+    SELECT MAX(order_id)
+    FROM mamba_fact_arv_orders
+    WHERE client_id = ao.client_id
+);
+
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_arv_orders
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_arv_orders;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_data_processing_arv_orders()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_arv_orders', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_arv_orders', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ARV Orders ETL - Track ARV regimen prescriptions from orders table
+-- This ETL identifies patients on ART by checking for ARV regimen drug orders
+
+-- Create and populate ARV Orders fact table
+CALL sp_fact_arv_orders_create();
+CALL sp_fact_arv_orders_insert();
+
+-- Create and populate latest ARV order summary table
+CALL sp_fact_patients_latest_arv_order_create();
+CALL sp_fact_patients_latest_arv_order_insert();
+
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_dim_client_covid_create
 --
 
@@ -28750,6 +29479,283 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_regimen_change_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change_create;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_regimen_change_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_regimen_change_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_regimen_change_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CREATE TABLE IF NOT EXISTS mamba_fact_encounter_regimen_change
+(
+    id                                    INT AUTO_INCREMENT,
+    encounter_id                          INT          NULL,
+    client_id                             INT          NULL,
+    encounter_date                        DATE         NULL,
+
+    current_regimen                       VARCHAR(255) NULL,
+    current_regimen_line                  VARCHAR(255) NULL,
+    regimen_change_type                   VARCHAR(255) NULL,
+    new_regimen                           VARCHAR(255) NULL,
+    new_regimen_line                      VARCHAR(255) NULL,
+    reason_for_regimen_substitution       TEXT NULL,
+    reason_for_regimen_switch             TEXT NULL,
+    clinical_notes                        TEXT NULL,
+
+    PRIMARY KEY (id)
+)
+    CHARSET = UTF8;
+
+CREATE INDEX
+    mamba_fact_encounter_regimen_change_client_id_index ON mamba_fact_encounter_regimen_change (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_regimen_change_encounter_id_index ON mamba_fact_encounter_regimen_change (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_regimen_change_encounter_date_index ON mamba_fact_encounter_regimen_change (encounter_date);
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_regimen_change_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change_insert;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_regimen_change_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_regimen_change_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_regimen_change_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+INSERT INTO mamba_fact_encounter_regimen_change (encounter_id,
+                                                client_id,
+                                                encounter_date,
+                                                current_regimen,
+                                                current_regimen_line,
+                                                regimen_change_type,
+                                                new_regimen,
+                                                new_regimen_line,
+                                                reason_for_regimen_substitution,
+                                                reason_for_regimen_switch,
+                                                clinical_notes)
+SELECT a.encounter_id,
+       a.client_id,
+       a.encounter_datetime,
+       current_regimen,
+       current_regimen_line,
+       regimen_change_type,
+       new_regimen,
+       new_regimen_line,
+       reason_for_regimen_substitution,
+       reason_for_regimen_switch,
+       clinical_notes
+FROM mamba_flat_encounter_regimen_change a
+WHERE a.voided = 0;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_regimen_change_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change_update;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_regimen_change_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_regimen_change_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_regimen_change_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+UPDATE mamba_fact_encounter_regimen_change a
+         INNER JOIN mamba_flat_encounter_regimen_change b
+            ON a.encounter_id = b.encounter_id
+SET a.current_regimen = b.current_regimen,
+    a.current_regimen_line = b.current_regimen_line,
+    a.regimen_change_type = b.regimen_change_type,
+    a.new_regimen = b.new_regimen,
+    a.new_regimen_line = b.new_regimen_line,
+    a.reason_for_regimen_substitution = b.reason_for_regimen_substitution,
+    a.reason_for_regimen_switch = b.reason_for_regimen_switch,
+    a.clinical_notes = b.clinical_notes
+WHERE b.voided = 0;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_regimen_change
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_regimen_change()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_regimen_change', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_regimen_change', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change;
+
+DELIMITER //
+~
+CREATE PROCEDURE sp_fact_encounter_regimen_change()
+BEGIN
+
+    CALL sp_fact_encounter_regimen_change_create();
+    CALL sp_fact_encounter_regimen_change_insert();
+    CALL sp_fact_encounter_regimen_change_update();
+
+END //
+DELIMITER ;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_regimen_change_query
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change_query;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_regimen_change_query()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_regimen_change_query', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_regimen_change_query', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+SELECT *
+FROM mamba_fact_encounter_regimen_change
+WHERE client_id = :client_id
+  AND (:encounter_date IS NULL OR encounter_date = :encounter_date)
+ORDER BY encounter_date DESC;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_fact_transfer_in
 --
 
@@ -29143,6 +30149,319 @@ END;
 
 CALL sp_fact_transfer_in;
 CALL sp_fact_transfer_out;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vl_request_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request_create;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_vl_request_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vl_request_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vl_request_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CREATE TABLE IF NOT EXISTS mamba_fact_encounter_vl_request
+(
+    id                                    INT AUTO_INCREMENT,
+    encounter_id                          INT          NULL,
+    client_id                             INT          NULL,
+    encounter_date                        DATE         NULL,
+
+    indication_for_vl_testing             VARCHAR(255) NULL,
+    sample_collection_date                DATE NULL,
+    art_start_date                        DATE NULL,
+    current_who_clinical_stage            VARCHAR(255) NULL,
+    current_regimen_line                  VARCHAR(255) NULL,
+    current_regimen                       VARCHAR(255) NULL,
+    other_current_regimen                 VARCHAR(255) NULL,
+    pregnant_mother                       VARCHAR(255) NULL,
+    anc_number                            VARCHAR(50) NULL,
+    pnc_number                            VARCHAR(50) NULL,
+    breastfeeding_mother                 VARCHAR(255) NULL,
+    has_active_tb                         VARCHAR(255) NULL,
+    tb_treatment_phase                    VARCHAR(255) NULL,
+    arv_adherence                         VARCHAR(255) NULL,
+    dsdm_models                           VARCHAR(255) NULL,
+    viral_load_qualitative                VARCHAR(255) NULL,
+    viral_load_quantitative               INT NULL,
+
+    PRIMARY KEY (id)
+)
+    CHARSET = UTF8;
+
+CREATE INDEX
+    mamba_fact_encounter_vl_request_client_id_index ON mamba_fact_encounter_vl_request (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_vl_request_encounter_id_index ON mamba_fact_encounter_vl_request (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_vl_request_encounter_date_index ON mamba_fact_encounter_vl_request (encounter_date);
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vl_request_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request_insert;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_vl_request_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vl_request_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vl_request_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+INSERT INTO mamba_fact_encounter_vl_request (encounter_id,
+                                            client_id,
+                                            encounter_date,
+                                            indication_for_vl_testing,
+                                            sample_collection_date,
+                                            art_start_date,
+                                            current_who_clinical_stage,
+                                            current_regimen_line,
+                                            current_regimen,
+                                            other_current_regimen,
+                                            pregnant_mother,
+                                            anc_number,
+                                            pnc_number,
+                                            breastfeeding_mother,
+                                            has_active_tb,
+                                            tb_treatment_phase,
+                                            arv_adherence,
+                                            dsdm_models,
+                                            viral_load_qualitative,
+                                            viral_load_quantitative)
+SELECT a.encounter_id,
+       a.client_id,
+       a.encounter_datetime,
+       indication_for_vl_testing,
+       sample_collection_date,
+       art_start_date,
+       current_who_clinical_stage,
+       current_regimen_line,
+       current_regimen,
+       other_current_regimen,
+       pregnant_mother,
+       anc_number,
+       pnc_number,
+       breastfeeding_mother,
+       has_active_tb,
+       tb_treatment_phase,
+       arv_adherence,
+       dsdm_models,
+       viral_load_qualitative,
+       viral_load_quantitative
+FROM mamba_flat_encounter_vl_request a
+WHERE a.voided = 0;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vl_request_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request_update;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_vl_request_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vl_request_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vl_request_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+UPDATE mamba_fact_encounter_vl_request a
+         INNER JOIN mamba_flat_encounter_vl_request b
+            ON a.encounter_id = b.encounter_id
+SET a.indication_for_vl_testing = b.indication_for_vl_testing,
+    a.sample_collection_date = b.sample_collection_date,
+    a.art_start_date = b.art_start_date,
+    a.current_who_clinical_stage = b.current_who_clinical_stage,
+    a.current_regimen_line = b.current_regimen_line,
+    a.current_regimen = b.current_regimen,
+    a.other_current_regimen = b.other_current_regimen,
+    a.pregnant_mother = b.pregnant_mother,
+    a.anc_number = b.anc_number,
+    a.pnc_number = b.pnc_number,
+    a.breastfeeding_mother = b.breastfeeding_mother,
+    a.has_active_tb = b.has_active_tb,
+    a.tb_treatment_phase = b.tb_treatment_phase,
+    a.arv_adherence = b.arv_adherence,
+    a.dsdm_models = b.dsdm_models,
+    a.viral_load_qualitative = b.viral_load_qualitative,
+    a.viral_load_quantitative = b.viral_load_quantitative
+WHERE b.voided = 0;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vl_request
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_vl_request()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vl_request', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vl_request', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request;
+
+DELIMITER //
+~
+CREATE PROCEDURE sp_fact_encounter_vl_request()
+BEGIN
+
+    CALL sp_fact_encounter_vl_request_create();
+    CALL sp_fact_encounter_vl_request_insert();
+    CALL sp_fact_encounter_vl_request_update();
+
+END //
+DELIMITER ;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vl_request_query
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request_query;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_vl_request_query()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vl_request_query', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vl_request_query', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+SELECT *
+FROM mamba_fact_encounter_vl_request
+WHERE client_id = :client_id
+  AND (:encounter_date IS NULL OR encounter_date = :encounter_date)
+ORDER BY encounter_date DESC;
 -- $END
 END //
 

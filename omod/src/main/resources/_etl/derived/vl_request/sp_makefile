@@ -1,0 +1,5 @@
+facts/fact_vl_request/sp_fact_encounter_vl_request_create.sql
+facts/fact_vl_request/sp_fact_encounter_vl_request_insert.sql
+facts/fact_vl_request/sp_fact_encounter_vl_request_update.sql
+facts/fact_vl_request/sp_fact_encounter_vl_request.sql
+facts/fact_vl_request/sp_fact_encounter_vl_request_query.sql

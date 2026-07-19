@@ -30,3 +30,14 @@ hs_err_pid*
 /.project
 /.classpath
 .claude
+sql/*
+tmp/*
+reports-generic/*
+memory/*
+106aPlan/*
+org/*
+MEMORY.md
+IMPLEMENTATION_SUMMARY.md
+PROJECT_SUMMARY.md
+REPORT_BUILDER_INTEGRATION_ANALYSIS.md
+
