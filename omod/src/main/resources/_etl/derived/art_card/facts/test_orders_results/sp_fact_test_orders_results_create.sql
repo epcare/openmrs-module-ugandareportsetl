@@ -1,11 +1,12 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_test_orders_results
+CREATE TABLE mamba_fact_test_orders_results
 (
     id        INT AUTO_INCREMENT,
     test_orders_id INT NOT NULL,
     encounter_id INT NULL,
     encounter_datetime DATE NULL,
     client_id INT NULL,
+    patient_id INT NULL,
     test_concept_id  INT NOT NULL,
     test_parameter        VARCHAR(255) NULL,
     test_value        TEXT NULL,
@@ -15,6 +16,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_test_orders_results
 
 CREATE INDEX
     mamba_fact_test_orders_client_id_index ON mamba_fact_test_orders_results (client_id);
+
+CREATE INDEX
+    mamba_fact_test_orders_patient_id_index ON mamba_fact_test_orders_results (patient_id);
+
 CREATE INDEX
     mamba_fact_test_orders_order_id_index ON mamba_fact_test_orders_results (id);
 

@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS mamba_fact_patients_latest_arv_order;
 
 CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_order (
     client_id INT PRIMARY KEY COMMENT 'Patient ID',
+    patient_id INT NOT NULL COMMENT 'Patient ID (alias for client_id)',
     order_id INT COMMENT 'Most recent order ID',
 
     -- Current Regimen

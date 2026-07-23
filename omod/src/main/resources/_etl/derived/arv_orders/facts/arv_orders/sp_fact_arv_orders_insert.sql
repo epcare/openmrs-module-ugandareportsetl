@@ -1,11 +1,8 @@
 -- $BEGIN
--- Insert ARV Orders with coverage period calculations
--- Filter by ARV regimen concepts (answers to concept 90315 - CURRENT ARV REGIMEN)
-
 SET @arv_concepts = '630,794,90002,99001,99002,99003,99004,99005,99006,99007,99008,99009,99010,99011,99012,99013,99014,99015,99016,99017,99018,99019,99039,99040,99041,99042,99043,99044,99045,99046,99047,99048,99143,99144,99277,99282,99283,99284,99285,99286,99884,99885,99887,99888,163017,164976,164977,164978,164979,165780,165794,175325,175329';
 
 INSERT INTO mamba_fact_arv_orders (
-    client_id, order_id, encounter_id,
+    client_id, patient_id, order_id, encounter_id,
     regimen_concept_id, regimen,
     drug_inventory_id, drug_name,
     date_activated, date_stopped, auto_expire_date,
@@ -17,6 +14,7 @@ INSERT INTO mamba_fact_arv_orders (
 )
 SELECT DISTINCT
     o.patient_id as client_id,
+    o.patient_id as patient_id,
     o.order_id,
     o.encounter_id,
     o.concept_id as regimen_concept_id,

@@ -1,7 +1,7 @@
 -- $BEGIN
 UPDATE mamba_fact_encounter_regimen_change a
-         INNER JOIN mamba_flat_encounter_regimen_change b
-            ON a.encounter_id = b.encounter_id
+INNER JOIN mamba_flat_encounter_regimen_change b
+    ON a.encounter_id = b.encounter_id
 SET a.current_regimen = b.current_regimen,
     a.current_regimen_line = b.current_regimen_line,
     a.regimen_change_type = b.regimen_change_type,

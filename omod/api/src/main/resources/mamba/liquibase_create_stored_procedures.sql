@@ -22227,6 +22227,7 @@ CREATE TABLE mamba_fact_patients_latest_patient_demographics
 (
     id         INT AUTO_INCREMENT,
     patient_id INT NOT NULL,
+    client_id  INT NOT NULL,
     birthdate  DATE NULL,
     age        INT NULL,
     gender     VARCHAR(10) NULL,
@@ -22237,6 +22238,9 @@ CREATE TABLE mamba_fact_patients_latest_patient_demographics
 
 CREATE INDEX
     mamba_fact_patients_latest_patient_demos_patient_id_index ON mamba_fact_patients_latest_patient_demographics (patient_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_patient_demos_client_id_index ON mamba_fact_patients_latest_patient_demographics (client_id);
 
 -- $END
 END;
@@ -22276,11 +22280,13 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_patient_demographics(patient_id,
+                                                       client_id,
                                                        birthdate,
                                                        age,
                                                        gender,
                                                        dead)
 SELECT person_id,
+       person_id,
        birthdate,
        TIMESTAMPDIFF(YEAR, birthdate, NOW()) AS age,
        gender,

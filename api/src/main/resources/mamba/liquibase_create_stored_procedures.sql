@@ -14862,6 +14862,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_diagnosis
     diagnosis_id INT NOT NULL,
     encounter_id INT NOT NULL,
     patient_id INT NOT NULL,
+    client_id INT NOT NULL,
     condition_id INT NULL,
     certainty VARCHAR(255) NOT NULL,
     dx_rank INT NOT NULL,
@@ -14929,6 +14930,7 @@ INSERT INTO mamba_fact_encounter_diagnosis
     diagnosis_id,
     encounter_id,
     patient_id,
+    client_id,
     condition_id,
     certainty,
     dx_rank,
@@ -14951,41 +14953,68 @@ INSERT INTO mamba_fact_encounter_diagnosis
     form_namespace_and_path
 )
 SELECT
-    ed.diagnosis_id,
-    ed.encounter_id,
-    ed.patient_id,
-    ed.condition_id,
-    ed.certainty,
-    ed.dx_rank,
-    ed.diagnosis_coded,
-    ed.diagnosis_non_coded,
-    ed.diagnosis_coded_name,
+    new.diagnosis_id,
+    new.encounter_id,
+    new.patient_id,
+    new.client_id,
+    new.condition_id,
+    new.certainty,
+    new.dx_rank,
+    new.diagnosis_coded,
+    new.diagnosis_non_coded,
+    new.diagnosis_coded_name,
+    new.coded_diagnosis_name,
+    new.diagnosis_display,
+    new.diagnosis_name_locale,
+    new.diagnosis_name_type,
+    new.uuid,
+    new.creator,
+    new.date_created,
+    new.changed_by,
+    new.date_changed,
+    new.voided,
+    new.voided_by,
+    new.date_voided,
+    new.void_reason,
+    new.form_namespace_and_path
+FROM (
+    SELECT
+        ed.diagnosis_id,
+        ed.encounter_id,
+        ed.patient_id,
+        ed.patient_id as client_id,
+        ed.condition_id,
+        ed.certainty,
+        ed.dx_rank,
+        ed.diagnosis_coded,
+        ed.diagnosis_non_coded,
+        ed.diagnosis_coded_name,
 
-    COALESCE(cn_by_id.name, cn_pref.name, cn_any.name) AS coded_diagnosis_name,
-    COALESCE(ed.diagnosis_non_coded, cn_by_id.name, cn_pref.name, cn_any.name) AS diagnosis_display,
+        COALESCE(cn_by_id.name, cn_pref.name, cn_any.name) AS coded_diagnosis_name,
+        COALESCE(ed.diagnosis_non_coded, cn_by_id.name, cn_pref.name, cn_any.name) AS diagnosis_display,
 
-    COALESCE(cn_by_id.locale, cn_pref.locale, cn_any.locale) AS diagnosis_name_locale,
-    COALESCE(cn_by_id.concept_name_type, cn_pref.concept_name_type, cn_any.concept_name_type) AS diagnosis_name_type,
+        COALESCE(cn_by_id.locale, cn_pref.locale, cn_any.locale) AS diagnosis_name_locale,
+        COALESCE(cn_by_id.concept_name_type, cn_pref.concept_name_type, cn_any.concept_name_type) AS diagnosis_name_type,
 
-    ed.uuid,
-    ed.creator,
-    ed.date_created,
-    ed.changed_by,
-    ed.date_changed,
-    ed.voided,
-    ed.voided_by,
-    ed.date_voided,
-    ed.void_reason,
-    ed.form_namespace_and_path
-FROM conceptreview.encounter_diagnosis ed
+        ed.uuid,
+        ed.creator,
+        ed.date_created,
+        ed.changed_by,
+        ed.date_changed,
+        ed.voided,
+        ed.voided_by,
+        ed.date_voided,
+        ed.void_reason,
+        ed.form_namespace_and_path
+    FROM encounter_diagnosis ed
 
-LEFT JOIN conceptreview.concept_name cn_by_id
+    LEFT JOIN concept_name cn_by_id
        ON cn_by_id.concept_name_id = ed.diagnosis_coded_name
       AND cn_by_id.voided = 0
 
 LEFT JOIN (
     SELECT concept_id, name, locale, concept_name_type
-    FROM conceptreview.concept_name
+    FROM concept_name
     WHERE voided = 0
       AND locale = 'en'
       AND locale_preferred = 1
@@ -14994,10 +15023,10 @@ LEFT JOIN (
 
 LEFT JOIN (
     SELECT cn1.concept_id, cn1.name, cn1.locale, cn1.concept_name_type
-    FROM conceptreview.concept_name cn1
+    FROM concept_name cn1
     JOIN (
         SELECT concept_id, MIN(concept_name_id) AS min_id
-        FROM conceptreview.concept_name
+        FROM concept_name
         WHERE voided = 0
           AND locale = 'en'
         GROUP BY concept_id
@@ -15006,30 +15035,32 @@ LEFT JOIN (
      AND m.min_id = cn1.concept_name_id
 ) cn_any
        ON cn_any.concept_id = ed.diagnosis_coded
+) AS new
 
 ON DUPLICATE KEY UPDATE
-    encounter_id = VALUES(encounter_id),
-    patient_id = VALUES(patient_id),
-    condition_id = VALUES(condition_id),
-    certainty = VALUES(certainty),
-    dx_rank = VALUES(dx_rank),
-    diagnosis_coded = VALUES(diagnosis_coded),
-    diagnosis_non_coded = VALUES(diagnosis_non_coded),
-    diagnosis_coded_name = VALUES(diagnosis_coded_name),
-    coded_diagnosis_name = VALUES(coded_diagnosis_name),
-    diagnosis_display = VALUES(diagnosis_display),
-    diagnosis_name_locale = VALUES(diagnosis_name_locale),
-    diagnosis_name_type = VALUES(diagnosis_name_type),
-    uuid = VALUES(uuid),
-    creator = VALUES(creator),
-    date_created = VALUES(date_created),
-    changed_by = VALUES(changed_by),
-    date_changed = VALUES(date_changed),
-    voided = VALUES(voided),
-    voided_by = VALUES(voided_by),
-    date_voided = VALUES(date_voided),
-    void_reason = VALUES(void_reason),
-    form_namespace_and_path = VALUES(form_namespace_and_path);
+    encounter_id = new.encounter_id,
+    patient_id = new.patient_id,
+    client_id = new.client_id,
+    condition_id = new.condition_id,
+    certainty = new.certainty,
+    dx_rank = new.dx_rank,
+    diagnosis_coded = new.diagnosis_coded,
+    diagnosis_non_coded = new.diagnosis_non_coded,
+    diagnosis_coded_name = new.diagnosis_coded_name,
+    coded_diagnosis_name = new.coded_diagnosis_name,
+    diagnosis_display = new.diagnosis_display,
+    diagnosis_name_locale = new.diagnosis_name_locale,
+    diagnosis_name_type = new.diagnosis_name_type,
+    uuid = new.uuid,
+    creator = new.creator,
+    date_created = new.date_created,
+    changed_by = new.changed_by,
+    date_changed = new.date_changed,
+    voided = new.voided,
+    voided_by = new.voided_by,
+    date_voided = new.date_voided,
+    void_reason = new.void_reason,
+    form_namespace_and_path = new.form_namespace_and_path;
 -- $END
 END //
 
@@ -15070,21 +15101,22 @@ END;
 
 -- $BEGIN
 /*
+
   Update existing fact rows when the source encounter_diagnosis row changes (including voiding),
   and refresh the resolved concept name.
 */
 
 UPDATE mamba_fact_encounter_diagnosis f
-JOIN conceptreview.encounter_diagnosis ed
+JOIN encounter_diagnosis ed
   ON ed.diagnosis_id = f.diagnosis_id
 
-LEFT JOIN conceptreview.concept_name cn_by_id
+LEFT JOIN concept_name cn_by_id
        ON cn_by_id.concept_name_id = ed.diagnosis_coded_name
       AND cn_by_id.voided = 0
 
 LEFT JOIN (
     SELECT concept_id, name, locale, concept_name_type
-    FROM conceptreview.concept_name
+    FROM concept_name
     WHERE voided = 0
       AND locale = 'en'
       AND locale_preferred = 1
@@ -15093,10 +15125,10 @@ LEFT JOIN (
 
 LEFT JOIN (
     SELECT cn1.concept_id, cn1.name, cn1.locale, cn1.concept_name_type
-    FROM conceptreview.concept_name cn1
+    FROM concept_name cn1
     JOIN (
         SELECT concept_id, MIN(concept_name_id) AS min_id
-        FROM conceptreview.concept_name
+        FROM concept_name
         WHERE voided = 0
           AND locale = 'en'
         GROUP BY concept_id
@@ -15109,6 +15141,7 @@ LEFT JOIN (
 SET
     f.encounter_id = ed.encounter_id,
     f.patient_id = ed.patient_id,
+    f.client_id = ed.patient_id,
     f.condition_id = ed.condition_id,
     f.certainty = ed.certainty,
     f.dx_rank = ed.dx_rank,
@@ -15406,7 +15439,7 @@ END;
 
 -- $BEGIN
 
-CREATE TABLE IF NOT EXISTS mamba_obs_group
+CREATE TABLE mamba_obs_group
 (
     id                     INT          NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     obs_id                 INT          NOT NULL,
@@ -15418,6 +15451,8 @@ CREATE TABLE IF NOT EXISTS mamba_obs_group
     INDEX mamba_idx_obs_group_concept_name (obs_group_concept_name)
 )
     CHARSET = UTF8MB4;
+
+-- $END
 END //
 
 DELIMITER ;
@@ -15623,10 +15658,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_no_of_interruptions
+CREATE TABLE mamba_fact_patients_no_of_interruptions
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     encounter_date                          DATE NULL,
     return_date                             DATE NULL,
     days_interrupted                        INT NULL,
@@ -15636,6 +15672,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_no_of_interruptions
 
 CREATE INDEX
     mamba_fact_patients_no_of_interruptions_client_id_index ON mamba_fact_patients_no_of_interruptions (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_no_of_interruptions_patient_id_index ON mamba_fact_patients_no_of_interruptions (patient_id);
+
 CREATE INDEX
     mamba_fact_patients_no_of_interruptions_encounter_date_index ON mamba_fact_patients_no_of_interruptions (encounter_date);
 
@@ -15679,10 +15719,12 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_no_of_interruptions(client_id,
+                                                        patient_id,
                                                         encounter_date,
                                                         return_date,
                                                     days_interrupted)
 SELECT
+    client_id,
     client_id,
     encounter_date,
     return_visit_date,
@@ -15879,10 +15921,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_interruptions_details
+CREATE TABLE mamba_fact_patients_interruptions_details
 (
     id                               INT AUTO_INCREMENT,
     client_id                        INT          NOT NULL,
+    patient_id                       INT          NOT NULL,
     case_id                          VARCHAR(250) NOT NULL,
     art_enrollment_date              DATE NULL,
     days_since_initiation            INT NULL,
@@ -15904,6 +15947,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_interruptions_details
 
 CREATE INDEX
     mamba_fact_patients_interruptions_details_client_id_index ON mamba_fact_patients_interruptions_details (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_interruptions_details_patient_id_index ON mamba_fact_patients_interruptions_details (patient_id);
+
 CREATE INDEX
     mamba_fact_patients_interruptions_details_case_id_index ON mamba_fact_patients_interruptions_details (case_id);
 
@@ -15946,7 +15993,7 @@ BEGIN
 END;
 
 -- $BEGIN
-INSERT INTO mamba_fact_patients_interruptions_details(client_id, case_id, art_enrollment_date, days_since_initiation,
+INSERT INTO mamba_fact_patients_interruptions_details(client_id, patient_id, case_id, art_enrollment_date, days_since_initiation,
                                                       last_dispense_date, last_dispense_amount,
                                                       current_regimen_start_date, last_VL_result, VL_last_date,
                                                       last_dispense_description, all_interruptions,
@@ -15954,6 +16001,7 @@ INSERT INTO mamba_fact_patients_interruptions_details(client_id, case_id, art_en
                                                       last_encounter_interruption_date)
 
 SELECT person_id,
+       person_id,
        uuid                                                            AS case_id,
        baseline_regimen_start_date                                     as art_enrollment_date,
        TIMESTAMPDIFF(DAY,baseline_regimen_start_date, last_visit_date) as days_since_initiation,
@@ -16137,7 +16185,7 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_dim_agegroup
+CREATE TABLE mamba_dim_agegroup
 (
     id              INT         NOT NULL AUTO_INCREMENT,
     age             INT         NULL,
@@ -16243,11 +16291,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_anc_card
+CREATE TABLE mamba_fact_encounter_anc_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATETIME         NULL,
     cd4                            DOUBLE       NULL,
     where_                        TEXT         NULL,
@@ -16310,6 +16359,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_anc_card
 
 CREATE INDEX
     mamba_fact_encounter_anc_card_client_id_index ON mamba_fact_encounter_anc_card (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_anc_card_patient_id_index ON mamba_fact_encounter_anc_card (patient_id);
 
 CREATE INDEX
     mamba_fact_encounter_anc_encounter_id_index ON mamba_fact_encounter_anc_card (encounter_id);
@@ -16601,11 +16653,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_card
+CREATE TABLE mamba_fact_encounter_hiv_art_card
 (
     id                                   INT AUTO_INCREMENT,
     encounter_id                         INT NULL,
     client_id                            INT NULL,
+    patient_id                           INT NULL,
     encounter_date                       DATE NULL,
 
     hemoglobin                           CHAR(255) CHARACTER SET UTF8 NULL,
@@ -16795,6 +16848,9 @@ CREATE INDEX
     mamba_fact_encounter_hiv_art_encounter_id_index ON mamba_fact_encounter_hiv_art_card (encounter_id);
 CREATE INDEX
     mamba_fact_encounter_hiv_art_client_id_index ON mamba_fact_encounter_hiv_art_card (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_art_patient_id_index ON mamba_fact_encounter_hiv_art_card (patient_id);
 -- $END
 END //
 
@@ -17274,11 +17330,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_card
+CREATE TABLE mamba_fact_encounter_hiv_art_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT          NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATE         NULL,
 
     method_of_family_planning             VARCHAR(255) NULL,
@@ -17383,6 +17440,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_card
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_card_client_id_index ON mamba_fact_encounter_hiv_art_card (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_art_card_patient_id_index ON mamba_fact_encounter_hiv_art_card (patient_id);
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_card_encounter_id_index ON mamba_fact_encounter_hiv_art_card (encounter_id);
@@ -17759,11 +17819,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_summary
+CREATE TABLE mamba_fact_encounter_hiv_art_summary
 (
     id                                          INT AUTO_INCREMENT,
     encounter_id                                INT NULL,
     client_id                                   INT NULL,
+    patient_id                                  INT NULL,
     encounter_datetime                          DATE NULL,
     allergy                                     TEXT NULL,
     hepatitis_b_test_qualitative                VARCHAR(255) NULL,
@@ -17843,6 +17904,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_summary
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_summary_client_id_index ON mamba_fact_encounter_hiv_art_summary (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_art_summary_patient_id_index ON mamba_fact_encounter_hiv_art_summary (patient_id);
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_summary_encounter_id_index ON mamba_fact_encounter_hiv_art_summary (encounter_id);
@@ -18181,11 +18245,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_health_education
+CREATE TABLE mamba_fact_encounter_hiv_art_health_education
 (
     id                          INT AUTO_INCREMENT,
     encounter_id                INT NULL,
     client_id                   INT NULL,
+    patient_id                  INT NULL,
     encounter_datetime          DATE NULL,
     ovc_screening               VARCHAR(255)  DEFAULT NULL,
     other_linkages              VARCHAR(255)  DEFAULT NULL,
@@ -18220,6 +18285,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_health_education
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_health_education_client_id_index ON mamba_fact_encounter_hiv_art_health_education (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_art_health_education_patient_id_index ON mamba_fact_encounter_hiv_art_health_education (patient_id);
 
 CREATE INDEX
     mamba_fact_health_education_encounter_id_index ON mamba_fact_encounter_hiv_art_health_education (encounter_id);
@@ -18507,10 +18575,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_current_arv_regimen_start_date
+CREATE TABLE mamba_fact_current_arv_regimen_start_date
 (
     id                                    INT AUTO_INCREMENT,
     client_id                             INT NULL,
+    patient_id                            INT NULL,
     arv_regimen_start_date                 DATE  NULL,
 
     PRIMARY KEY (id)
@@ -18518,6 +18587,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_current_arv_regimen_start_date
 
 CREATE INDEX
     mamba_fact_current_arv_regimen_start_date_client_id_index ON mamba_fact_current_arv_regimen_start_date (client_id);
+
+CREATE INDEX
+    mamba_fact_current_arv_regimen_start_date_patient_id_index ON mamba_fact_current_arv_regimen_start_date (patient_id);
 
 -- $END
 END //
@@ -18705,10 +18777,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_adherence
+CREATE TABLE mamba_fact_patients_latest_adherence
 (
     id        INT AUTO_INCREMENT,
     client_id INT NOT NULL,
+    patient_id INT NOT NULL,
     adherence VARCHAR(250) NULL,
 
     PRIMARY KEY (id)
@@ -18716,6 +18789,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_adherence
 
 CREATE INDEX
     mamba_fact_patients_latest_adherence_client_id_index ON mamba_fact_patients_latest_adherence (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_adherence_patient_id_index ON mamba_fact_patients_latest_adherence (patient_id);
 
 -- $END
 END //
@@ -18757,8 +18833,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_adherence (client_id,
+                                                patient_id,
                                                 adherence)
-SELECT b.client_id, adherence_assessment_code
+SELECT b.client_id, b.client_id, adherence_assessment_code
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -18903,10 +18980,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_advanced_disease
+CREATE TABLE mamba_fact_patients_latest_advanced_disease
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     encounter_date                          DATE NULL,
     advanced_disease                        VARCHAR(100) NULL,
 
@@ -18915,6 +18993,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_advanced_disease
 
 CREATE INDEX
     mamba_fact_patients_latest_advanced_disease_client_id_index ON mamba_fact_patients_latest_advanced_disease (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_advanced_disease_patient_id_index ON mamba_fact_patients_latest_advanced_disease (patient_id);
 
 -- $END
 END //
@@ -18956,9 +19037,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_advanced_disease(client_id,
+                                                        patient_id,
                                                         encounter_date,
                                                         advanced_disease)
-SELECT b.client_id,encounter_date, advanced_disease_status
+SELECT b.client_id,b.client_id,encounter_date, advanced_disease_status
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -19104,10 +19186,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_days_dispensed
+CREATE TABLE mamba_fact_patients_latest_arv_days_dispensed
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     days         INT NULL,
 
@@ -19116,6 +19199,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_days_dispensed
 
 CREATE INDEX
     mamba_fact_patients_latest_arv_days_dispensed_client_id_index ON mamba_fact_patients_latest_arv_days_dispensed (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_arv_days_dispensed_patient_id_index ON mamba_fact_patients_latest_arv_days_dispensed (patient_id);
 
 -- $END
 END //
@@ -19157,9 +19243,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_arv_days_dispensed(client_id,
+                                                          patient_id,
                                                           encounter_date,
                                                           days)
-SELECT b.client_id,encounter_date, arv_regimen_days_dispensed
+SELECT b.client_id,b.client_id,encounter_date, arv_regimen_days_dispensed
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -19304,10 +19391,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_current_regimen
+CREATE TABLE mamba_fact_patients_latest_current_regimen
 (
     id              INT AUTO_INCREMENT,
     client_id       INT NOT NULL,
+    patient_id      INT NOT NULL,
     current_regimen VARCHAR(250) NULL,
 
     PRIMARY KEY (id)
@@ -19315,6 +19403,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_current_regimen
 
 CREATE INDEX
     mamba_fact_patients_latest_current_regimen_client_id_index ON mamba_fact_patients_latest_current_regimen (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_current_regimen_patient_id_index ON mamba_fact_patients_latest_current_regimen (patient_id);
 
 -- $END
 END //
@@ -19356,8 +19447,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_current_regimen (client_id,
+                                                patient_id,
                                                 current_regimen)
-SELECT b.client_id, current_arv_regimen
+SELECT b.client_id, b.client_id, current_arv_regimen
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -19502,10 +19594,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_family_planning
+CREATE TABLE mamba_fact_patients_latest_family_planning
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     status         VARCHAR(100) NULL,
 
@@ -19514,6 +19607,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_family_planning
 
 CREATE INDEX
     mamba_fact_patients_latest_family_planning_client_id_index ON mamba_fact_patients_latest_family_planning (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_family_planning_patient_id_index ON mamba_fact_patients_latest_family_planning (patient_id);
 
 -- $END
 END //
@@ -19555,9 +19651,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_family_planning(client_id,
+                                                       patient_id,
                                                        encounter_date,
                                                        status)
-SELECT b.client_id,encounter_date,
+SELECT b.client_id,b.client_id,encounter_date,
        IF(family_planning_status='NOT PREGNANT AND NOT ON FAMILY PLANNING','NOT ON FAMILY PLANNING',
            IF(family_planning_status='NOT PREGNANT AND ON FAMILY PLANNING','ON FAMILY PLANNING',family_planning_status)) AS family_planning_status
 FROM mamba_fact_encounter_hiv_art_card b
@@ -19705,10 +19802,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_hepatitis_b_test
+CREATE TABLE mamba_fact_patients_latest_hepatitis_b_test
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     result         VARCHAR(100) NULL,
 
@@ -19717,6 +19815,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_hepatitis_b_test
 
 CREATE INDEX
     mamba_fact_patients_latest_hepatitis_b_test_client_id_index ON mamba_fact_patients_latest_hepatitis_b_test (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_hepatitis_b_test_patient_id_index ON mamba_fact_patients_latest_hepatitis_b_test (patient_id);
 
 -- $END
 END //
@@ -19758,9 +19859,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_hepatitis_b_test(client_id,
+                                                        patient_id,
                                                         encounter_date,
                                                         result)
-SELECT b.client_id,encounter_date, hepatitis_b_test___qualitative
+SELECT b.client_id,b.client_id,encounter_date, hepatitis_b_test___qualitative
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -19906,10 +20008,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_viral_load
+CREATE TABLE mamba_fact_patients_latest_viral_load
 (
     id        INT AUTO_INCREMENT,
     client_id INT NOT NULL,
+    patient_id INT NOT NULL,
     encounter_date DATE NULL,
     hiv_viral_load_copies INT NULL,
     hiv_viral_collection_date DATE NULL,
@@ -19920,6 +20023,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_viral_load
 
 CREATE INDEX
     mamba_fact_patients_latest_viral_load_client_id_index ON mamba_fact_patients_latest_viral_load (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_viral_load_patient_id_index ON mamba_fact_patients_latest_viral_load (patient_id);
 
 -- $END
 END //
@@ -19961,11 +20067,12 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_viral_load (client_id,
+                                                patient_id,
                                                 encounter_date,
                                                    hiv_viral_load_copies,
                                                    hiv_viral_collection_date,
                                                    specimen_type)
-SELECT b.client_id,encounter_date, hiv_viral_load, hiv_viral_load_date, specimen_sources
+SELECT b.client_id, b.client_id, encounter_date, hiv_viral_load, hiv_viral_load_date, specimen_sources
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id,MAX(encounter_id) AS encounter_id
@@ -20110,10 +20217,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_decision_outcome
+CREATE TABLE mamba_fact_patients_latest_iac_decision_outcome
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     decision         TEXT NULL,
 
@@ -20122,6 +20230,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_decision_outcome
 
 CREATE INDEX
     mamba_fact_patients_latest_iac_decision_outcome_client_id_index ON mamba_fact_patients_latest_iac_decision_outcome (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_iac_decision_outcome_patient_id_index ON mamba_fact_patients_latest_iac_decision_outcome (patient_id);
 -- $END
 END //
 
@@ -20162,9 +20273,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_iac_decision_outcome(client_id,
+                                                            patient_id,
                                                             encounter_date,
                                                             decision)
-SELECT o.person_id, obs_datetime,cn.name
+SELECT o.person_id, o.person_id, obs_datetime,cn.name
 FROM obs o
          INNER JOIN encounter e ON o.encounter_id = e.encounter_id
          INNER JOIN encounter_type et ON e.encounter_type = et.encounter_type_id AND
@@ -20320,10 +20432,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_sessions
+CREATE TABLE mamba_fact_patients_latest_iac_sessions
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     sessions         INT NULL,
 
@@ -20332,6 +20445,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_sessions
 
 CREATE INDEX
     mamba_fact_patients_latest_iac_sessions_client_id_index ON mamba_fact_patients_latest_iac_sessions (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_iac_sessions_patient_id_index ON mamba_fact_patients_latest_iac_sessions (patient_id);
 
 -- $END
 END //
@@ -20373,9 +20489,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_iac_sessions(client_id,
+                                                    patient_id,
                                                     encounter_date,
                                                     sessions)
-SELECT obs.person_id,obs_datetime, COUNT(value_datetime) sessions
+SELECT obs.person_id,obs.person_id,obs_datetime, COUNT(value_datetime) sessions
 FROM obs
          INNER JOIN (SELECT person_id, MAX(DATE (value_datetime)) AS vldate
                      FROM obs
@@ -20526,10 +20643,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_children
+CREATE TABLE mamba_fact_patients_latest_index_tested_children
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     no                            INT NULL,
 
     PRIMARY KEY (id)
@@ -20537,6 +20655,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_children
 
 CREATE INDEX
     mamba_fact_patients_tested_children_client_id_index ON mamba_fact_patients_latest_index_tested_children (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_tested_children_patient_id_index ON mamba_fact_patients_latest_index_tested_children (patient_id);
 
 -- $END
 END //
@@ -20578,8 +20699,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_index_tested_children(client_id,
+                                                             patient_id,
                                                              no)
-SELECT age.person_id, COUNT(*) AS no
+SELECT age.person_id, age.person_id, COUNT(*) AS no
 FROM (SELECT family.person_id, obs_group_id
     FROM obs family
     INNER JOIN (SELECT o.person_id, obs_id
@@ -20738,10 +20860,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_children_status
+CREATE TABLE mamba_fact_patients_latest_index_tested_children_status
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     no                            INT NULL,
 
     PRIMARY KEY (id)
@@ -20749,6 +20872,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_children_stat
 
 CREATE INDEX
     mamba_patients_latest_children_status_client_id_index ON mamba_fact_patients_latest_index_tested_children_status (client_id);
+
+CREATE INDEX
+    mamba_patients_latest_children_status_patient_id_index ON mamba_fact_patients_latest_index_tested_children_status (patient_id);
 
 -- $END
 END //
@@ -20790,8 +20916,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_index_tested_children_status(client_id,
+                                                                    patient_id,
                                                                     no)
-SELECT age.person_id, COUNT(*) AS no
+SELECT age.person_id, age.person_id, COUNT(*) AS no
 FROM (SELECT family.person_id, obs_group_id
     FROM obs family
     INNER JOIN (SELECT o.person_id, obs_id
@@ -20958,10 +21085,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_partners
+CREATE TABLE mamba_fact_patients_latest_index_tested_partners
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     no                            INT NULL,
 
     PRIMARY KEY (id)
@@ -20969,6 +21097,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_partners
 
 CREATE INDEX
     mamba_fact_patients_latest_partners_client_id_index ON mamba_fact_patients_latest_index_tested_partners (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_partners_patient_id_index ON mamba_fact_patients_latest_index_tested_partners (patient_id);
 
 -- $END
 END //
@@ -21010,8 +21141,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_index_tested_partners(client_id,
+                                                             patient_id,
                                                              no)
-Select person_id, count(*) as no from obs  WHERE concept_id = 164352
+Select person_id, person_id, count(*) as no from obs  WHERE concept_id = 164352
                                              AND value_coded IN (90288, 165274) AND voided=0 GROUP BY person_id;
 -- $END
 END //
@@ -21151,10 +21283,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_partners_status
+CREATE TABLE mamba_fact_patients_latest_index_tested_partners_status
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     no                            INT NULL,
 
     PRIMARY KEY (id)
@@ -21162,6 +21295,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_index_tested_partners_stat
 
 CREATE INDEX
     mamba_patients_latest_partners_status_client_id_index ON mamba_fact_patients_latest_index_tested_partners_status (client_id);
+
+CREATE INDEX
+    mamba_patients_latest_partners_status_patient_id_index ON mamba_fact_patients_latest_index_tested_partners_status (patient_id);
 
 -- $END
 END //
@@ -21203,8 +21339,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_index_tested_partners_status(client_id,
+                                                                    patient_id,
                                                                     no)
-SELECT status.person_id, COUNT(*) AS no
+SELECT status.person_id, status.person_id, COUNT(*) AS no
 FROM (SELECT family.person_id, obs_group_id
     FROM obs family
     INNER JOIN (SELECT o.person_id, obs_id
@@ -21362,10 +21499,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_assesment
+CREATE TABLE mamba_fact_patients_latest_nutrition_assesment
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     status         VARCHAR(100) NULL,
 
@@ -21374,6 +21512,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_assesment
 
 CREATE INDEX
     mamba_fact_patients_latest_nutrition_assesment_client_id_index ON mamba_fact_patients_latest_nutrition_assesment (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_nutrition_assesment_patient_id_index ON mamba_fact_patients_latest_nutrition_assesment (patient_id);
 
 -- $END
 END //
@@ -21415,9 +21556,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_nutrition_assesment(client_id,
+                                                           patient_id,
                                                            encounter_date,
                                                            status)
-SELECT b.client_id,encounter_date, nutrition_assesment
+SELECT b.client_id,b.client_id,encounter_date, nutrition_assesment
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -21563,10 +21705,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_support
+CREATE TABLE mamba_fact_patients_latest_nutrition_support
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     support         VARCHAR(100) NULL,
 
@@ -21575,6 +21718,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_nutrition_support
 
 CREATE INDEX
     mamba_fact_patients_latest_nutrition_support_client_id_index ON mamba_fact_patients_latest_nutrition_support (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_nutrition_support_patient_id_index ON mamba_fact_patients_latest_nutrition_support (patient_id);
 
 -- $END
 END //
@@ -21616,9 +21762,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_nutrition_support(client_id,
+                                                         patient_id,
                                                          encounter_date,
                                                          support)
-SELECT b.client_id,encounter_date, nutrition_support_and_infant_feeding
+SELECT b.client_id,b.client_id,encounter_date, nutrition_support_and_infant_feeding
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -21764,10 +21911,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_regimen_line
+CREATE TABLE mamba_fact_patients_latest_regimen_line
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     regimen                             VARCHAR(80) NULL,
 
     PRIMARY KEY (id)
@@ -21775,6 +21923,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_regimen_line
 
 CREATE INDEX
     mamba_fact_patients_latest_regimen_line_client_id_index ON mamba_fact_patients_latest_regimen_line (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_regimen_line_patient_id_index ON mamba_fact_patients_latest_regimen_line (patient_id);
 
 -- $END
 END //
@@ -21816,8 +21967,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_regimen_line(client_id,
+                                                    patient_id,
                                                     regimen)
-SELECT DISTINCT pp.patient_id, program_workflow_state.concept_id AS line
+SELECT DISTINCT pp.patient_id, pp.patient_id, program_workflow_state.concept_id AS line
 FROM patient_state
          INNER JOIN program_workflow_state
                     ON patient_state.state = program_workflow_state.program_workflow_state_id
@@ -21966,10 +22118,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_return_date
+CREATE TABLE mamba_fact_patients_latest_return_date
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     return_date                             DATE NULL,
 
     PRIMARY KEY (id)
@@ -21977,6 +22130,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_return_date
 
 CREATE INDEX
     mamba_fact_patients_latest_return_date_client_id_index ON mamba_fact_patients_latest_return_date (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_return_date_patient_id_index ON mamba_fact_patients_latest_return_date (patient_id);
 
 -- $END
 END //
@@ -22018,8 +22174,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_return_date (client_id,
+                                                patient_id,
                                                 return_date)
-SELECT b.client_id, b.return_visit_date
+SELECT b.client_id, b.client_id, b.return_visit_date
 FROM mamba_fact_encounter_hiv_art_card b
          INNER JOIN (
     SELECT client_id, MAX(encounter_id) as encounter_id
@@ -22165,10 +22322,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_tb_status
+CREATE TABLE mamba_fact_patients_latest_tb_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     status         VARCHAR(100) NULL,
 
@@ -22177,6 +22335,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_tb_status
 
 CREATE INDEX
     mamba_fact_patients_latest_tb_status_client_id_index ON mamba_fact_patients_latest_tb_status (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_tb_status_patient_id_index ON mamba_fact_patients_latest_tb_status (patient_id);
 
 -- $END
 END //
@@ -22218,9 +22379,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_tb_status(client_id,
+                                                 patient_id,
                                                  encounter_date,
                                                  status)
-SELECT b.client_id,encounter_date, tuberculosis_status
+SELECT b.client_id,b.client_id,encounter_date, tuberculosis_status
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -22366,10 +22528,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_tpt_status
+CREATE TABLE mamba_fact_patients_latest_tpt_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     status         VARCHAR(100) NULL,
 
@@ -22378,6 +22541,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_tpt_status
 
 CREATE INDEX
     mamba_fact_patients_latest_tpt_status_client_id_index ON mamba_fact_patients_latest_tpt_status (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_tpt_status_patient_id_index ON mamba_fact_patients_latest_tpt_status (patient_id);
 
 -- $END
 END //
@@ -22419,9 +22585,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_tpt_status(client_id,
+                                                  patient_id,
                                                   encounter_date,
                                                   status)
-SELECT b.client_id,encounter_date, tpt_status
+SELECT b.client_id,b.client_id,encounter_date, tpt_status
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -22567,10 +22734,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_viral_load_ordered
+CREATE TABLE mamba_fact_patients_latest_viral_load_ordered
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     encounter_date                          DATE NULL,
     order_date                             DATE NULL,
 
@@ -22579,6 +22747,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_viral_load_ordered
 
 CREATE INDEX
     mamba_fact_patients_latest_viral_load_ordered_client_id_index ON mamba_fact_patients_latest_viral_load_ordered (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_viral_load_ordered_patient_id_index ON mamba_fact_patients_latest_viral_load_ordered (patient_id);
 
 -- $END
 END //
@@ -22620,8 +22791,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_viral_load_ordered (client_id,
+                                                patient_id,
                                                 encounter_date, order_date)
-SELECT b.client_id,encounter_date, hiv_viral_load_date
+SELECT b.client_id,b.client_id,encounter_date, hiv_viral_load_date
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -22768,10 +22940,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_vl_after_iac
+CREATE TABLE mamba_fact_patients_latest_vl_after_iac
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     results        VARCHAR(100) NULL,
 
@@ -22780,6 +22953,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_vl_after_iac
 
 CREATE INDEX
     mamba_fact_patients_latest_vl_after_iac_client_id_index ON mamba_fact_patients_latest_vl_after_iac (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_vl_after_iac_patient_id_index ON mamba_fact_patients_latest_vl_after_iac (patient_id);
 
 -- $END
 END //
@@ -22821,9 +22997,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_vl_after_iac(client_id,
+                                                    patient_id,
                                                     encounter_date,
                                                     results)
-SELECT o.person_id,obs_datetime, value_numeric
+SELECT o.person_id, o.person_id,obs_datetime, value_numeric
 FROM obs o
          INNER JOIN encounter e ON o.encounter_id = e.encounter_id
          INNER JOIN encounter_type et ON e.encounter_type = et.encounter_type_id AND
@@ -22977,10 +23154,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_who_stage
+CREATE TABLE mamba_fact_patients_latest_who_stage
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     stage         VARCHAR(100) NULL,
 
@@ -22989,6 +23167,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_who_stage
 
 CREATE INDEX
     mamba_fact_patients_latest_who_stage_client_id_index ON mamba_fact_patients_latest_who_stage (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_who_stage_patient_id_index ON mamba_fact_patients_latest_who_stage (patient_id);
 
 -- $END
 END //
@@ -23030,9 +23211,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_who_stage(client_id,
+                                                 patient_id,
                                                  encounter_date,
                                                  stage)
-SELECT b.client_id,encounter_date, who_hiv_clinical_stage
+SELECT b.client_id,b.client_id,encounter_date, who_hiv_clinical_stage
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id
@@ -23178,10 +23360,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_marital_status
+CREATE TABLE mamba_fact_patients_marital_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     marital_status VARCHAR(80) NULL,
 
     PRIMARY KEY (id)
@@ -23189,6 +23372,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_marital_status
 
 CREATE INDEX
     mamba_fact_patients_marital_status_client_id_index ON mamba_fact_patients_marital_status (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_marital_status_patient_id_index ON mamba_fact_patients_marital_status (patient_id);
 
 -- $END
 END //
@@ -23230,8 +23416,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_marital_status (client_id,
+                                                patient_id,
                                                 marital_status)
-SELECT person_id, mdcn.name
+SELECT person_id, person_id, mdcn.name
 FROM person_attribute pa
          INNER JOIN person_attribute_type pat
                     ON pa.person_attribute_type_id = pat.person_attribute_type_id
@@ -23378,10 +23565,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_nationality
+CREATE TABLE mamba_fact_patients_nationality
 (
     id                                      INT AUTO_INCREMENT,
     client_id                               INT NOT NULL,
+    patient_id                              INT NOT NULL,
     nationality                             VARCHAR(80) NULL,
 
     PRIMARY KEY (id)
@@ -23389,6 +23577,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_nationality
 
 CREATE INDEX
     mamba_fact_patients_nationality_client_id_index ON mamba_fact_patients_nationality (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_nationality_patient_id_index ON mamba_fact_patients_nationality (patient_id);
 
 -- $END
 END //
@@ -23430,8 +23621,9 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_nationality (client_id,
+                                                patient_id,
                                                 nationality)
-SELECT person_id, mdcn.name
+SELECT person_id, person_id, mdcn.name
 FROM person_attribute pa
          INNER JOIN person_attribute_type pat
                     ON pa.person_attribute_type_id = pat.person_attribute_type_id
@@ -23578,10 +23770,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_patient_demographics
+CREATE TABLE mamba_fact_patients_latest_patient_demographics
 (
     id         INT AUTO_INCREMENT,
     patient_id INT NOT NULL,
+    client_id  INT NOT NULL,
     birthdate  DATE NULL,
     age        INT NULL,
     gender     VARCHAR(10) NULL,
@@ -23592,6 +23785,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_patient_demographics
 
 CREATE INDEX
     mamba_fact_patients_latest_patient_demos_patient_id_index ON mamba_fact_patients_latest_patient_demographics (patient_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_patient_demos_client_id_index ON mamba_fact_patients_latest_patient_demographics (client_id);
 
 -- $END
 END //
@@ -23633,11 +23829,12 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_patient_demographics(patient_id,
+                                                            client_id,
                                                        birthdate,
                                                        age,
                                                        gender,
                                                        dead)
-SELECT person_id,
+SELECT person_id,person_id,
        birthdate,
        TIMESTAMPDIFF(YEAR, birthdate, NOW()) AS age,
        gender,
@@ -23781,10 +23978,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_art_patients
+CREATE TABLE mamba_fact_art_patients
 (
     id        INT AUTO_INCREMENT,
     client_id INT NULL,
+    patient_id INT NULL,
     birthdate DATE NULL,
     age       INT NULL,
     gender    VARCHAR(10) NULL,
@@ -23797,6 +23995,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_art_patients
 
 CREATE INDEX
     mamba_fact_art_patients_client_id_index ON mamba_fact_art_patients (client_id);
+
+CREATE INDEX
+    mamba_fact_art_patients_patient_id_index ON mamba_fact_art_patients (patient_id);
 
 -- $END
 END //
@@ -23985,10 +24186,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_audit_tool_art_patients
+CREATE TABLE mamba_fact_audit_tool_art_patients
 (
     id                                     INT AUTO_INCREMENT,
     client_id                              INT NOT NULL,
+    patient_id                             INT NOT NULL,
     identifier                             VARCHAR(80) NULL,
     nationality                            VARCHAR(80) NULL,
     marital_status                         VARCHAR(80) NULL,
@@ -24053,6 +24255,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_audit_tool_art_patients
 
 CREATE INDEX
     mamba_fact_audit_tool_art_patients_client_id_index ON mamba_fact_audit_tool_art_patients (client_id);
+
+CREATE INDEX
+    mamba_fact_audit_tool_art_patients_patient_id_index ON mamba_fact_audit_tool_art_patients (patient_id);
 
 -- $END
 END //
@@ -24576,10 +24781,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_active_in_care
+CREATE TABLE mamba_fact_active_in_care
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
+    patient_id           INT  NULL,
     latest_return_date   DATE NULL,
 
     days_left_to_be_lost INT  NULL,
@@ -24593,6 +24799,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_active_in_care
 
 CREATE INDEX
     mamba_fact_active_in_care_client_id_index ON mamba_fact_active_in_care (client_id);
+
+CREATE INDEX
+    mamba_fact_active_in_care_patient_id_index ON mamba_fact_active_in_care (patient_id);
 
 
 -- $END
@@ -24790,10 +24999,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_pregnancy_status
+CREATE TABLE mamba_fact_patients_latest_pregnancy_status
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     status         VARCHAR(100) NULL,
 
@@ -24802,6 +25012,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_pregnancy_status
 
 CREATE INDEX
     mamba_fact_patients_latest_pregnancy_status_client_id_index ON mamba_fact_patients_latest_pregnancy_status (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_pregnancy_status_patient_id_index ON mamba_fact_patients_latest_pregnancy_status (patient_id);
 
 -- $END
 END //
@@ -24843,9 +25056,10 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_pregnancy_status(client_id,
+                                                       patient_id,
                                                        encounter_date,
                                                        status)
-SELECT a.client_id,encounter_date,
+SELECT a.client_id,a.client_id,encounter_date,
        IF(pregnant='YES','Pregnant',
            IF(pregnant='NO','Not Pregnant Not BreastFeeding',pregnant)) AS family_planning_status
 FROM mamba_fact_encounter_hiv_art_card b
@@ -24993,10 +25207,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_eid_patients
+CREATE TABLE mamba_fact_eid_patients
 (
     id        INT AUTO_INCREMENT,
     client_id INT  NULL,
+    patient_id INT  NULL,
     EDD DATE DEFAULT NULL ,
     EID_NO VARCHAR(80) DEFAULT NULL ,
     EID_DOB DATE DEFAULT NULL ,
@@ -25034,6 +25249,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_eid_patients
 
 CREATE INDEX
     mamba_fact_eid_patients_client_id_index ON mamba_fact_eid_patients (client_id);
+
+CREATE INDEX
+    mamba_fact_eid_patients_patient_id_index ON mamba_fact_eid_patients (patient_id);
 
 CREATE INDEX
     mamba_fact_eid_patients_baby_id_index ON mamba_fact_eid_patients (BABY);
@@ -25589,10 +25807,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_medication_orders
+CREATE TABLE mamba_fact_medication_orders
 (
     id        INT AUTO_INCREMENT,
     client_id INT NULL,
+    patient_id INT NULL,
     order_id    INT NOT NULL,
     drug_concept_id  INT NOT NULL,
     drug        VARCHAR(255) NULL,
@@ -25612,6 +25831,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_medication_orders
 
 CREATE INDEX
     mamba_fact_medication_orders_client_id_index ON mamba_fact_medication_orders (client_id);
+
+CREATE INDEX
+    mamba_fact_medication_orders_patient_id_index ON mamba_fact_medication_orders (patient_id);
+
 CREATE INDEX
     mamba_fact_medication_orders_order_id_index ON mamba_fact_medication_orders (order_id);
 
@@ -25877,10 +26100,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_test_orders
+CREATE TABLE mamba_fact_test_orders
 (
     id        INT AUTO_INCREMENT,
     client_id INT NULL,
+    patient_id INT NULL,
     order_id    INT NOT NULL,
     test_concept_id  INT NOT NULL,
     test_name        VARCHAR(255) NULL,
@@ -25897,6 +26121,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_test_orders
 
 CREATE INDEX
     mamba_fact_test_orders_client_id_index ON mamba_fact_test_orders (client_id);
+
+CREATE INDEX
+    mamba_fact_test_orders_patient_id_index ON mamba_fact_test_orders (patient_id);
+
 CREATE INDEX
     mamba_fact_test_orders_order_id_index ON mamba_fact_test_orders (order_id);
 
@@ -26100,13 +26328,14 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_test_orders_results
+CREATE TABLE mamba_fact_test_orders_results
 (
     id        INT AUTO_INCREMENT,
     test_orders_id INT NOT NULL,
     encounter_id INT NULL,
     encounter_datetime DATE NULL,
     client_id INT NULL,
+    patient_id INT NULL,
     test_concept_id  INT NOT NULL,
     test_parameter        VARCHAR(255) NULL,
     test_value        TEXT NULL,
@@ -26116,6 +26345,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_test_orders_results
 
 CREATE INDEX
     mamba_fact_test_orders_client_id_index ON mamba_fact_test_orders_results (client_id);
+
+CREATE INDEX
+    mamba_fact_test_orders_patient_id_index ON mamba_fact_test_orders_results (patient_id);
+
 CREATE INDEX
     mamba_fact_test_orders_order_id_index ON mamba_fact_test_orders_results (id);
 
@@ -26406,12 +26639,10 @@ BEGIN
 END;
 
 -- $BEGIN
--- Create ARV Orders Fact Table
-DROP TABLE IF EXISTS mamba_fact_arv_orders;
-
-CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
+CREATE TABLE mamba_fact_arv_orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT NOT NULL COMMENT 'Patient ID',
+    patient_id INT NOT NULL COMMENT 'Patient ID (alias for client_id)',
     order_id INT NOT NULL UNIQUE COMMENT 'Order ID from orders table',
     encounter_id INT COMMENT 'Encounter ID when order was placed',
     regimen_concept_id INT NOT NULL COMMENT 'Concept ID of the ARV regimen prescribed',
@@ -26440,6 +26671,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_client_id (client_id),
+    INDEX idx_patient_id (patient_id),
     INDEX idx_date_activated (date_activated),
     INDEX idx_coverage_period (coverage_start_date, coverage_end_date),
     INDEX idx_regimen_concept_id (regimen_concept_id),
@@ -26484,13 +26716,10 @@ BEGIN
 END;
 
 -- $BEGIN
--- Insert ARV Orders with coverage period calculations
--- Filter by ARV regimen concepts (answers to concept 90315 - CURRENT ARV REGIMEN)
-
 SET @arv_concepts = '630,794,90002,99001,99002,99003,99004,99005,99006,99007,99008,99009,99010,99011,99012,99013,99014,99015,99016,99017,99018,99019,99039,99040,99041,99042,99043,99044,99045,99046,99047,99048,99143,99144,99277,99282,99283,99284,99285,99286,99884,99885,99887,99888,163017,164976,164977,164978,164979,165780,165794,175325,175329';
 
 INSERT INTO mamba_fact_arv_orders (
-    client_id, order_id, encounter_id,
+    client_id, patient_id, order_id, encounter_id,
     regimen_concept_id, regimen,
     drug_inventory_id, drug_name,
     date_activated, date_stopped, auto_expire_date,
@@ -26502,6 +26731,7 @@ INSERT INTO mamba_fact_arv_orders (
 )
 SELECT DISTINCT
     o.patient_id as client_id,
+    o.patient_id as patient_id,
     o.order_id,
     o.encounter_id,
     o.concept_id as regimen_concept_id,
@@ -26632,63 +26862,202 @@ BEGIN
 END;
 
 -- $BEGIN
--- ARV Orders Fact Table - HIV/AIDS ARV regimen orders with drug coverage periods
-
--- Drop existing table if exists
-DROP TABLE IF EXISTS mamba_fact_arv_orders;
-
--- Create ARV Orders Fact Table
-CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
+CREATE TABLE mamba_fact_arv_orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    client_id INT NOT NULL COMMENT 'Patient ID',
-    order_id INT NOT NULL UNIQUE COMMENT 'Order ID from orders table',
-    encounter_id INT COMMENT 'Encounter ID when order was placed',
-
-    -- Regimen Information
-    regimen_concept_id INT NOT NULL COMMENT 'Concept ID of the ARV regimen prescribed',
-    regimen VARCHAR(255) COMMENT 'Regimen name from concept',
-    drug_inventory_id INT COMMENT 'Drug inventory ID from drug_order',
-    drug_name VARCHAR(255) COMMENT 'Drug name from drug table',
-
-    -- Timing Information
-    date_activated DATETIME COMMENT 'When the order was activated (coverage start)',
-    date_stopped DATETIME COMMENT 'When the order was stopped',
-    auto_expire_date DATETIME COMMENT 'When the prescription expires (system calc)',
-
-    -- Coverage Period (CALCULATED)
-    coverage_start_date DATE COMMENT 'When drug coverage starts',
-    coverage_end_date DATE COMMENT 'When drug coverage ends (date_activated + duration)',
-    days_on_drugs INT COMMENT 'Calculated days of drug coverage',
-
-    -- Dosing Information
-    dose DOUBLE COMMENT 'Dose amount',
-    dose_units VARCHAR(100) COMMENT 'Dose units',
-    quantity DOUBLE COMMENT 'Quantity dispensed',
-    quantity_units VARCHAR(100) COMMENT 'Quantity units',
-    duration INT COMMENT 'Duration as entered',
-    duration_units VARCHAR(100) COMMENT 'Duration units (Days, Weeks, Months, Years)',
-    duration_units_concept_id INT COMMENT 'Duration units concept ID',
-    frequency VARCHAR(100) COMMENT 'Dosing frequency',
-    route VARCHAR(100) COMMENT 'Administration route',
-
-    -- Order Metadata
-    order_number VARCHAR(50) COMMENT 'Order number',
-    order_action VARCHAR(50) COMMENT 'NEW, REVISE, DISCONTINUE',
-    urgency VARCHAR(50) COMMENT 'ROUTINE, STAT',
-    voided TINYINT DEFAULT 0 COMMENT 'Whether order is voided',
-
-    -- Timestamps
+    client_id INT NOT NULL,
+    order_id INT NOT NULL UNIQUE,
+    encounter_id INT,
+    regimen_concept_id INT NOT NULL,
+    regimen VARCHAR(255),
+    drug_inventory_id INT,
+    drug_name VARCHAR(255),
+    date_activated DATETIME,
+    date_stopped DATETIME,
+    auto_expire_date DATETIME,
+    coverage_start_date DATE,
+    coverage_end_date DATE,
+    days_on_drugs INT,
+    dose DOUBLE,
+    dose_units VARCHAR(100),
+    quantity DOUBLE,
+    quantity_units VARCHAR(100),
+    duration INT,
+    duration_units VARCHAR(100),
+    duration_units_concept_id INT,
+    frequency VARCHAR(100),
+    route VARCHAR(100),
+    order_number VARCHAR(50),
+    order_action VARCHAR(50),
+    urgency VARCHAR(50),
+    voided TINYINT DEFAULT 0,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-    -- Indexes
     INDEX idx_client_id (client_id),
     INDEX idx_date_activated (date_activated),
     INDEX idx_coverage_period (coverage_start_date, coverage_end_date),
     INDEX idx_regimen_concept_id (regimen_concept_id),
     INDEX idx_active_orders (client_id, coverage_start_date, coverage_end_date, voided)
-) COMMENT='HIV/AIDS ARV regimen orders with drug coverage periods';
+);
+-- $END
+END //
 
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_arv_order_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_arv_order_create;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_patients_latest_arv_order_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_arv_order_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_arv_order_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Create ARV Summary Fact Table
+
+DROP TABLE IF EXISTS mamba_fact_patients_latest_arv_order;
+
+CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_order (
+    client_id INT PRIMARY KEY COMMENT 'Patient ID',
+    patient_id INT NOT NULL COMMENT 'Patient ID (alias for client_id)',
+    order_id INT COMMENT 'Most recent order ID',
+
+    -- Current Regimen
+    current_regimen_concept_id INT COMMENT 'Current regimen concept ID',
+    current_regimen VARCHAR(255) COMMENT 'Current regimen name',
+    current_drug_inventory_id INT COMMENT 'Current drug inventory ID',
+    current_drug_name VARCHAR(255) COMMENT 'Current drug name',
+
+    -- Timing
+    date_activated DATETIME COMMENT 'Date order was activated',
+    date_stopped DATETIME COMMENT 'Date order was stopped',
+    auto_expire_date DATETIME COMMENT 'Date prescription expires',
+
+    -- Coverage Period
+    coverage_start_date DATE COMMENT 'Drug coverage start date',
+    coverage_end_date DATE COMMENT 'Drug coverage end date',
+    days_on_drugs INT COMMENT 'Days of drug coverage',
+
+    -- Dosing
+    dose DOUBLE,
+    dose_units VARCHAR(100),
+    quantity DOUBLE,
+    duration INT COMMENT 'Duration value from drug_order',
+
+    -- Active Status
+    is_active_on_art TINYINT DEFAULT 1 COMMENT 'Currently active on ART',
+    art_start_date DATETIME COMMENT 'First known ART start date (baseline)',
+
+    -- Timestamps
+    date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    INDEX idx_regimen_concept_id (current_regimen_concept_id),
+    INDEX idx_active_on_art (is_active_on_art),
+    INDEX idx_coverage_period (coverage_start_date, coverage_end_date)
+) COMMENT='Latest ARV order status per patient with drug coverage periods';
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_arv_order_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_arv_order_insert;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_patients_latest_arv_order_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_arv_order_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_arv_order_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Populate ARV Summary Fact Table with latest ARV order per patient
+
+INSERT INTO mamba_fact_patients_latest_arv_order (
+    client_id, patient_id, order_id,
+    current_regimen_concept_id, current_regimen,
+    current_drug_inventory_id, current_drug_name,
+    date_activated, date_stopped, auto_expire_date,
+    coverage_start_date, coverage_end_date, days_on_drugs,
+    dose, dose_units, quantity, duration,
+    is_active_on_art, art_start_date
+)
+SELECT
+    ao.client_id,
+    ao.client_id,
+    ao.order_id,
+    ao.regimen_concept_id as current_regimen_concept_id,
+    ao.regimen as current_regimen,
+    ao.drug_inventory_id as current_drug_inventory_id,
+    ao.drug_name as current_drug_name,
+    ao.date_activated,
+    ao.date_stopped,
+    ao.auto_expire_date,
+    ao.coverage_start_date,
+    ao.coverage_end_date,
+    ao.days_on_drugs,
+    ao.dose,
+    ao.dose_units,
+    ao.quantity,
+    ao.duration,
+    CASE
+        WHEN ao.date_stopped IS NULL THEN 1
+        ELSE 0
+    END as is_active_on_art,
+    (SELECT MIN(date_activated) FROM mamba_fact_arv_orders WHERE client_id = ao.client_id) as art_start_date
+FROM mamba_fact_arv_orders ao
+WHERE ao.order_id = (
+    SELECT MAX(order_id)
+    FROM mamba_fact_arv_orders
+    WHERE client_id = ao.client_id
+);
 -- $END
 END //
 
@@ -26732,7 +27101,7 @@ END;
 
 DROP TABLE IF EXISTS mamba_fact_patients_latest_arv_order;
 
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_arv_order (
+CREATE TABLE mamba_fact_patients_latest_arv_order (
     client_id INT PRIMARY KEY COMMENT 'Patient ID',
     order_id INT COMMENT 'Most recent order ID',
 
@@ -26898,10 +27267,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS dim_client_covid
+CREATE TABLE dim_client_covid
 (
     id            INT auto_increment,
     client_id     INT           NULL,
+    patient_id    INT           NULL,
     date_of_birth DATE          NULL,
     ageattest     INT           NULL,
     sex           NVARCHAR(50)  NULL,
@@ -27090,6 +27460,7 @@ CREATE TABLE IF NOT EXISTS fact_encounter_covid
 (
     encounter_id                      INT           NULL,
     client_id                         INT           NULL,
+    patient_id                        INT           NULL,
     covid_test                        NVARCHAR(255) NULL,
     order_date                        DATE          NULL,
     result_date                       DATE          NULL,
@@ -27611,10 +27982,7 @@ CREATE PROCEDURE sp_mamba_seed_age_group()
 BEGIN
     DECLARE v_cat_id INT;
 
-    /* ------------------------------------------------------------------
-       1) Seed Age Categories
-       ------------------------------------------------------------------ */
-    INSERT INTO mamba_dim_age_category
+    INSERT INTO report_builder_dim_age_category
     (code, name, description, version, effective_from, is_active)
     SELECT * FROM (
                       SELECT 'MOH_105_OPD_DIAG',
@@ -27653,20 +28021,16 @@ BEGIN
                              'v1', CURDATE(), 1
                   ) src(code, name, description, version, effective_from, is_active)
     WHERE NOT EXISTS (
-        SELECT 1 FROM mamba_dim_age_category c WHERE c.code = src.code
+        SELECT 1 FROM report_builder_dim_age_category c WHERE c.code = src.code
     );
 
-    /* ------------------------------------------------------------------
-       2) MOH 105 OPD Diagnoses (ALIGN LABELS TO REPORT DESIGN TOKENS)
-          Expected: 0-28d, 29d-4y, 5-9, 10-19, 20+
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code = 'MOH_105_OPD_DIAG'
     LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'D0_28','0-28d',0,28,1,1
@@ -27676,51 +28040,25 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y20P','20+',7300,30000,5,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id = g.age_category_id AND e.code = g.code
         );
 
-        /* If groups already exist, ensure they are updated to the new standard */
-        UPDATE mamba_dim_age_group ag
-        SET
-            ag.label = CASE ag.code
-                           WHEN 'D0_28'  THEN '0-28d'
-                           WHEN 'D29_4Y' THEN '29d-4y'
-                           WHEN 'Y5_9'   THEN '5-9'
-                           WHEN 'Y10_19' THEN '10-19'
-                           WHEN 'Y20P'   THEN '20+'
-                           ELSE ag.label
-                END,
-            ag.min_age_days = CASE ag.code
-                                  WHEN 'Y10_19' THEN 3650
-                                  WHEN 'Y20P'   THEN 7300
-                                  ELSE ag.min_age_days
-                END,
-            ag.max_age_days = CASE ag.code
-                                  WHEN 'Y10_19' THEN 7299
-                                  ELSE ag.max_age_days
-                END,
-            ag.sort_order = CASE ag.code
-                                WHEN 'D0_28'  THEN 1
-                                WHEN 'D29_4Y' THEN 2
-                                WHEN 'Y5_9'   THEN 3
-                                WHEN 'Y10_19' THEN 4
-                                WHEN 'Y20P'   THEN 5
-                                ELSE ag.sort_order
-                END,
-            ag.is_active = 1
-        WHERE ag.age_category_id = v_cat_id;
+        UPDATE report_builder_dim_age_group
+        SET label = CASE code WHEN 'D0_28' THEN '0-28d' WHEN 'D29_4Y' THEN '29d-4y' WHEN 'Y5_9' THEN '5-9' WHEN 'Y10_19' THEN '10-19' WHEN 'Y20P' THEN '20+' ELSE label END,
+            min_age_days = CASE code WHEN 'Y10_19' THEN 3650 WHEN 'Y20P' THEN 7300 ELSE min_age_days END,
+            max_age_days = CASE code WHEN 'Y10_19' THEN 7299 ELSE max_age_days END,
+            sort_order = CASE code WHEN 'D0_28' THEN 1 WHEN 'D29_4Y' THEN 2 WHEN 'Y5_9' THEN 3 WHEN 'Y10_19' THEN 4 WHEN 'Y20P' THEN 5 ELSE sort_order END,
+            is_active = 1
+        WHERE age_category_id = v_cat_id;
     END IF;
 
-    /* ------------------------------------------------------------------
-       3) MOH 105 Nutrition
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='MOH_105_NUTRITION' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'M0_5','0–5 months',0, (6*30)-1, 1,1
@@ -27732,20 +28070,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y25P','25+ years', (25*365), 30000, 7,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       4) GBV
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='GBV' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'LT10','<10 yrs',0,(10*365)-1,1,1
@@ -27760,20 +28095,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,10,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       5) MOH MCH
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='MOH_MCH' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'LT15','<15 yrs',0,(15*365)-1,1,1
@@ -27783,20 +28115,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,5,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       6) Hepatitis
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='HEPATITIS' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'LT10','<10 yrs',0,(10*365)-1,1,1
@@ -27805,20 +28134,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y60P','60+ yrs',(60*365),30000,4,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       7) HTS
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='HTS' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'Y0_4','0–4 yrs',0,(5*365)-1,1,1
@@ -27832,20 +28158,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,9,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       8) SMC
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='SMC' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'Y0_4','0–4 yrs',0,(5*365)-1,1,1
@@ -27859,7 +28182,7 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,9,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
@@ -27945,11 +28268,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hts_card
+CREATE TABLE mamba_fact_encounter_hts_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATETIME         NULL,
     family_member_accompanying_patient    VARCHAR(255) NULL,
     other_specified_family_member         VARCHAR(255) NULL,
@@ -28014,6 +28338,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hts_card
 
 CREATE INDEX
     mamba_fact_encounter_hts_card_client_id_index ON mamba_fact_encounter_hts_card (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_card_patient_id_index ON mamba_fact_encounter_hts_card (patient_id);
 
 CREATE INDEX
     mamba_fact_encounter_hts_encounter_id_index ON mamba_fact_encounter_hts_card (encounter_id);
@@ -28286,11 +28613,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_non_suppressed_card
+CREATE TABLE mamba_fact_encounter_non_suppressed_card
 (
     id                                     INT AUTO_INCREMENT,
     encounter_id                           INT NULL,
     client_id                              INT NULL,
+    patient_id                             INT NULL,
     encounter_date                         DATE NULL,
 
     vl_qualitative                         VARCHAR(80) NULL,
@@ -28577,10 +28905,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_obs_group
+CREATE TABLE mamba_fact_non_suppressed_obs_group
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
+    patient_id           INT  NULL,
     encounter_id           INT NULL,
     obs_group_id            INT NULL,
     obs_datetime            DATETIME NULL,
@@ -28592,6 +28921,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_obs_group
 
 CREATE INDEX
     mamba_fact_non_suppressed_obs_group_client_id_index ON mamba_fact_non_suppressed_obs_group (client_id);
+
+CREATE INDEX
+    mamba_fact_non_suppressed_obs_group_patient_id_index ON mamba_fact_non_suppressed_obs_group (patient_id);
+
 CREATE INDEX
     mamba_fact_non_suppressed_obs_group_encounter_id_index ON mamba_fact_non_suppressed_obs_group (encounter_id);
 CREATE INDEX
@@ -28835,10 +29168,11 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_repeat_vl
+CREATE TABLE mamba_fact_non_suppressed_repeat_vl
 (
     id                   INT AUTO_INCREMENT,
     client_id            INT  NULL,
+    patient_id           INT  NULL,
     encounter_id           INT NULL,
     obs_group_id            INT NULL,
     obs_datetime            DATETIME NULL,
@@ -28857,6 +29191,10 @@ CREATE TABLE IF NOT EXISTS mamba_fact_non_suppressed_repeat_vl
 
 CREATE INDEX
     mamba_fact_non_suppressed_repeat_vl_client_id_index ON mamba_fact_non_suppressed_repeat_vl (client_id);
+
+CREATE INDEX
+    mamba_fact_non_suppressed_repeat_vl_patient_id_index ON mamba_fact_non_suppressed_repeat_vl (patient_id);
+
 CREATE INDEX
     mamba_fact_non_suppressed_repeat_vl_encounter_id_index ON mamba_fact_non_suppressed_repeat_vl (encounter_id);
 CREATE INDEX
@@ -29116,6 +29454,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_attended_visit
     id INT AUTO_INCREMENT,
     visit_id INT NOT NULL,
     client_id INT NOT NULL,
+    patient_id INT NOT NULL,
     visit_type_id INT NULL,
     visit_start_datetime DATETIME NOT NULL,
     visit_stop_datetime DATETIME NULL,
@@ -29123,7 +29462,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_attended_visit
     last_qualifying_encounter_datetime DATETIME NOT NULL,
 
     PRIMARY KEY (id),
-    UNIQUE KEY uq_mf_attended_visit_visit_id (visit_id)
+    UNIQUE KEY uq_mf_attended_visit_visit_id (visit_id),
+    INDEX idx_client_id (client_id),
+    INDEX idx_patient_id (patient_id)
 );
 -- $END
 END //
@@ -29168,6 +29509,7 @@ INSERT INTO mamba_fact_attended_visit
 (
   visit_id,
   client_id,
+  patient_id,
   visit_type_id,
   visit_start_datetime,
   visit_stop_datetime,
@@ -29175,37 +29517,49 @@ INSERT INTO mamba_fact_attended_visit
   last_qualifying_encounter_datetime
 )
 SELECT
-  v.visit_id,
-  v.patient_id,
-  v.visit_type_id,
-  v.date_started,
-  v.date_stopped,
-  MIN(e.encounter_datetime),
-  MAX(e.encounter_datetime)
-FROM conceptreview.visit v
-JOIN conceptreview.encounter e ON e.visit_id = v.visit_id
-JOIN conceptreview.encounter_type et ON et.encounter_type_id = e.encounter_type
-WHERE v.voided = 0
-  AND e.voided = 0
-  AND et.uuid NOT IN (
-    '5021b1a1-e7f6-44b4-ba02-da2f2bcf8718',
-    '181820aa-88c9-479b-9077-af92f5364329',
-    'e22e39fd-7db2-45e7-80f1-60fa0d5a4378',
-    '7b68d557-85ef-4fc8-b767-4fa4f5eb5c23',
-    '044daI6d-f80e-48fe-aba9-037f241905Pe',
-    '9fcfcc91-ad60-4d84-9710-11cc25258719',
-    'a9f11592-22e7-45fc-904d-dfe24cb1fc67',
-    'fa6f3ff5-b784-43fb-ab35-a08ab7dbf074',
-    '1458b726-4a62-4444-be97-bb3e08c73745'
-  )
-GROUP BY
-  v.visit_id,
-  v.patient_id,
-  v.visit_type_id,
-  v.date_started,
-  v.date_stopped
+  new.visit_id,
+  new.client_id,
+  new.patient_id,
+  new.visit_type_id,
+  new.visit_start_datetime,
+  new.visit_stop_datetime,
+  new.first_qualifying_encounter_datetime,
+  new.last_qualifying_encounter_datetime
+FROM (
+  SELECT
+    v.visit_id,
+    v.patient_id AS client_id,
+    v.patient_id,
+    v.visit_type_id,
+    v.date_started AS visit_start_datetime,
+    v.date_stopped AS visit_stop_datetime,
+    MIN(e.encounter_datetime) AS first_qualifying_encounter_datetime,
+    MAX(e.encounter_datetime) AS last_qualifying_encounter_datetime
+  FROM visit v
+  JOIN encounter e ON e.visit_id = v.visit_id
+  JOIN encounter_type et ON et.encounter_type_id = e.encounter_type
+  WHERE v.voided = 0
+    AND e.voided = 0
+    AND et.uuid NOT IN (
+      '5021b1a1-e7f6-44b4-ba02-da2f2bcf8718',
+      '181820aa-88c9-479b-9077-af42f5364329',
+      'e22e39fd-7db2-45e7-80f1-60fa0d5a4378',
+      '7b68d557-85ef-4fc8-b767-4fa4f5eb5c23',
+      '044daI6d-f80e-48fe-aba9-037f241905Pe',
+      '9fcfcc91-ad60-4d84-9710-11cc25258719',
+      'a9f11592-22e7-45fc-904d-dfe24cb1fc67',
+      'fa6f3ff5-b784-43fb-ab35-a08ab7dbf074',
+      '1458b726-4a62-4444-be97-bb3e08c73745'
+    )
+  GROUP BY
+    v.visit_id,
+    v.patient_id,
+    v.visit_type_id,
+    v.date_started,
+    v.date_stopped
+) AS new
 ON DUPLICATE KEY UPDATE
-  client_id = VALUES(client_id);
+  client_id = new.client_id;
 -- $END
 END //
 
@@ -29330,11 +29684,13 @@ CREATE TABLE IF NOT EXISTS mamba_fact_reattendance_monthly
 (
     id INT AUTO_INCREMENT,
     client_id INT NOT NULL,
+    patient_id INT NOT NULL,
     report_month DATE NOT NULL,
     attended_visit_count INT NOT NULL,
 
     PRIMARY KEY (id),
-    UNIQUE KEY uq_mf_reattendance_month (client_id, report_month)
+    UNIQUE KEY uq_mf_reattendance_month (client_id, report_month),
+    INDEX idx_patient_id (patient_id)
 );
 -- $END
 END //
@@ -29378,20 +29734,30 @@ END;
 INSERT INTO mamba_fact_reattendance_monthly
 (
   client_id,
+  patient_id,
   report_month,
   attended_visit_count
 )
 SELECT
-  av.client_id,
-  STR_TO_DATE(DATE_FORMAT(av.first_qualifying_encounter_datetime,'%Y-%m-01'),'%Y-%m-%d'),
-  COUNT(DISTINCT av.visit_id)
-FROM mamba_fact_attended_visit av
-GROUP BY
-  av.client_id,
-  STR_TO_DATE(DATE_FORMAT(av.first_qualifying_encounter_datetime,'%Y-%m-01'),'%Y-%m-%d')
-HAVING COUNT(DISTINCT av.visit_id) > 1
+  new.client_id,
+  new.patient_id,
+  new.report_month,
+  new.attended_visit_count
+FROM (
+  SELECT
+    av.client_id,
+    av.patient_id,
+    STR_TO_DATE(DATE_FORMAT(av.first_qualifying_encounter_datetime,'%Y-%m-01'),'%Y-%m-%d') AS report_month,
+    COUNT(DISTINCT av.visit_id) AS attended_visit_count
+  FROM mamba_fact_attended_visit av
+  GROUP BY
+    av.client_id,
+    av.patient_id,
+    STR_TO_DATE(DATE_FORMAT(av.first_qualifying_encounter_datetime,'%Y-%m-01'),'%Y-%m-%d')
+  HAVING COUNT(DISTINCT av.visit_id) > 1
+) AS new
 ON DUPLICATE KEY UPDATE
-  attended_visit_count = VALUES(attended_visit_count);
+  attended_visit_count = new.attended_visit_count;
 -- $END
 END //
 
@@ -29511,13 +29877,13 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_regimen_change
+CREATE TABLE mamba_fact_encounter_regimen_change
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT          NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATE         NULL,
-
     current_regimen                       VARCHAR(255) NULL,
     current_regimen_line                  VARCHAR(255) NULL,
     regimen_change_type                   VARCHAR(255) NULL,
@@ -29528,17 +29894,19 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_regimen_change
     clinical_notes                        TEXT NULL,
 
     PRIMARY KEY (id)
-)
-    CHARSET = UTF8;
+) CHARSET = UTF8;
 
-CREATE INDEX
-    mamba_fact_encounter_regimen_change_client_id_index ON mamba_fact_encounter_regimen_change (client_id);
+CREATE INDEX mamba_fact_encounter_regimen_change_client_id_index
+    ON mamba_fact_encounter_regimen_change (client_id);
 
-CREATE INDEX
-    mamba_fact_encounter_regimen_change_encounter_id_index ON mamba_fact_encounter_regimen_change (encounter_id);
+CREATE INDEX mamba_fact_encounter_regimen_change_patient_id_index
+    ON mamba_fact_encounter_regimen_change (patient_id);
 
-CREATE INDEX
-    mamba_fact_encounter_regimen_change_encounter_date_index ON mamba_fact_encounter_regimen_change (encounter_date);
+CREATE INDEX mamba_fact_encounter_regimen_change_encounter_id_index
+    ON mamba_fact_encounter_regimen_change (encounter_id);
+
+CREATE INDEX mamba_fact_encounter_regimen_change_encounter_date_index
+    ON mamba_fact_encounter_regimen_change (encounter_date);
 -- $END
 END //
 
@@ -29578,30 +29946,33 @@ BEGIN
 END;
 
 -- $BEGIN
-INSERT INTO mamba_fact_encounter_regimen_change (encounter_id,
-                                                client_id,
-                                                encounter_date,
-                                                current_regimen,
-                                                current_regimen_line,
-                                                regimen_change_type,
-                                                new_regimen,
-                                                new_regimen_line,
-                                                reason_for_regimen_substitution,
-                                                reason_for_regimen_switch,
-                                                clinical_notes)
-SELECT a.encounter_id,
-       a.client_id,
-       a.encounter_datetime,
-       current_regimen,
-       current_regimen_line,
-       regimen_change_type,
-       new_regimen,
-       new_regimen_line,
-       reason_for_regimen_substitution,
-       reason_for_regimen_switch,
-       clinical_notes
-FROM mamba_flat_encounter_regimen_change a
-WHERE a.voided = 0;
+INSERT INTO mamba_fact_encounter_regimen_change (
+    encounter_id,
+    client_id,
+    encounter_date,
+    current_regimen,
+    current_regimen_line,
+    regimen_change_type,
+    new_regimen,
+    new_regimen_line,
+    reason_for_regimen_substitution,
+    reason_for_regimen_switch,
+    clinical_notes
+)
+SELECT
+    encounter_id,
+    client_id,
+    encounter_datetime,
+    current_regimen,
+    current_regimen_line,
+    regimen_change_type,
+    new_regimen,
+    new_regimen_line,
+    reason_for_regimen_substitution,
+    reason_for_regimen_switch,
+    clinical_notes
+FROM mamba_flat_encounter_regimen_change
+WHERE voided = 0;
 -- $END
 END //
 
@@ -29642,8 +30013,8 @@ END;
 
 -- $BEGIN
 UPDATE mamba_fact_encounter_regimen_change a
-         INNER JOIN mamba_flat_encounter_regimen_change b
-            ON a.encounter_id = b.encounter_id
+INNER JOIN mamba_flat_encounter_regimen_change b
+    ON a.encounter_id = b.encounter_id
 SET a.current_regimen = b.current_regimen,
     a.current_regimen_line = b.current_regimen_line,
     a.regimen_change_type = b.regimen_change_type,
@@ -29692,19 +30063,9 @@ BEGIN
 END;
 
 -- $BEGIN
-DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change;
-
-DELIMITER //
-~
-CREATE PROCEDURE sp_fact_encounter_regimen_change()
-BEGIN
-
-    CALL sp_fact_encounter_regimen_change_create();
-    CALL sp_fact_encounter_regimen_change_insert();
-    CALL sp_fact_encounter_regimen_change_update();
-
-END //
-DELIMITER ;
+CALL sp_fact_encounter_regimen_change_create();
+CALL sp_fact_encounter_regimen_change_insert();
+CALL sp_fact_encounter_regimen_change_update();
 -- $END
 END //
 
@@ -29715,44 +30076,21 @@ DELIMITER ;
 -- sp_fact_encounter_regimen_change_query
 --
 
-DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change_query;
-
 DELIMITER //
 
+DROP PROCEDURE IF EXISTS sp_fact_encounter_regimen_change_query;
 ~
-CREATE PROCEDURE sp_fact_encounter_regimen_change_query()
+CREATE PROCEDURE sp_fact_encounter_regimen_change_query(IN p_client_id INT, IN p_encounter_date DATE)
 BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_regimen_change_query', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_fact_encounter_regimen_change_query', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-SELECT *
-FROM mamba_fact_encounter_regimen_change
-WHERE client_id = :client_id
-  AND (:encounter_date IS NULL OR encounter_date = :encounter_date)
-ORDER BY encounter_date DESC;
--- $END
+    SELECT *
+    FROM mamba_fact_encounter_regimen_change
+    WHERE (p_client_id IS NULL OR client_id = p_client_id)
+      AND (p_encounter_date IS NULL OR encounter_date = p_encounter_date)
+    ORDER BY encounter_date DESC;
 END //
 
 DELIMITER ;
+
 
         
 -- ---------------------------------------------------------------------------------------------
@@ -29834,6 +30172,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_in
 (
     id                       INT AUTO_INCREMENT,
     client_id                         INT           NULL,
+    patient_id                        INT           NULL,
     encounter_date                    DATE          NOT NULL,
     transfer_in_date                  DATE    NOT NULL,
 
@@ -29843,6 +30182,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_in
 
 CREATE INDEX
     mamba_fact_transfer_in_client_id_index ON mamba_fact_transfer_in (client_id);
+
+CREATE INDEX
+    mamba_fact_transfer_in_patient_id_index ON mamba_fact_transfer_in (patient_id);
 -- $END
 END //
 
@@ -30013,6 +30355,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_out
 (
     id                       INT AUTO_INCREMENT,
     client_id                         INT           NULL,
+    patient_id                        INT           NULL,
     encounter_date                    DATE          NOT NULL,
     transfer_out_date                  DATE    NOT NULL,
 
@@ -30022,6 +30365,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_out
 
 CREATE INDEX
     mamba_fact_transfer_out_client_id_index ON mamba_fact_transfer_out (client_id);
+
+CREATE INDEX
+    mamba_fact_transfer_out_patient_id_index ON mamba_fact_transfer_out (patient_id);
 -- $END
 END //
 
@@ -30188,11 +30534,12 @@ BEGIN
 END;
 
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_vl_request
+CREATE TABLE mamba_fact_encounter_vl_request
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT          NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATE         NULL,
 
     indication_for_vl_testing             VARCHAR(255) NULL,
@@ -30213,18 +30560,13 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_vl_request
     viral_load_qualitative                VARCHAR(255) NULL,
     viral_load_quantitative               INT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX mamba_fact_encounter_vl_request_client_id_index (client_id),
+    INDEX mamba_fact_encounter_vl_request_patient_id_index (patient_id),
+    INDEX mamba_fact_encounter_vl_request_encounter_id_index (encounter_id),
+    INDEX mamba_fact_encounter_vl_request_encounter_date_index (encounter_date)
 )
     CHARSET = UTF8;
-
-CREATE INDEX
-    mamba_fact_encounter_vl_request_client_id_index ON mamba_fact_encounter_vl_request (client_id);
-
-CREATE INDEX
-    mamba_fact_encounter_vl_request_encounter_id_index ON mamba_fact_encounter_vl_request (encounter_id);
-
-CREATE INDEX
-    mamba_fact_encounter_vl_request_encounter_date_index ON mamba_fact_encounter_vl_request (encounter_date);
 -- $END
 END //
 
@@ -30405,19 +30747,35 @@ BEGIN
 END;
 
 -- $BEGIN
-DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request;
-
-DELIMITER //
-~
-CREATE PROCEDURE sp_fact_encounter_vl_request()
-BEGIN
-
-    CALL sp_fact_encounter_vl_request_create();
-    CALL sp_fact_encounter_vl_request_insert();
-    CALL sp_fact_encounter_vl_request_update();
-
-END //
-DELIMITER ;
+CREATE TABLE mamba_fact_encounter_vl_request
+(
+    id                                    INT AUTO_INCREMENT,
+    encounter_id                          INT          NULL,
+    client_id                             INT          NULL,
+    encounter_date                        DATE         NULL,
+    indication_for_vl_testing             VARCHAR(255) NULL,
+    sample_collection_date                DATE NULL,
+    art_start_date                        DATE NULL,
+    current_who_clinical_stage            VARCHAR(255) NULL,
+    current_regimen_line                  VARCHAR(255) NULL,
+    current_regimen                       VARCHAR(255) NULL,
+    other_current_regimen                 VARCHAR(255) NULL,
+    pregnant_mother                       VARCHAR(255) NULL,
+    anc_number                            VARCHAR(50) NULL,
+    pnc_number                            VARCHAR(50) NULL,
+    breastfeeding_mother                 VARCHAR(255) NULL,
+    has_active_tb                         VARCHAR(255) NULL,
+    tb_treatment_phase                    VARCHAR(255) NULL,
+    arv_adherence                         VARCHAR(255) NULL,
+    dsdm_models                           VARCHAR(255) NULL,
+    viral_load_qualitative                VARCHAR(255) NULL,
+    viral_load_quantitative               INT NULL,
+    PRIMARY KEY (id),
+    INDEX mamba_fact_encounter_vl_request_client_id_index (client_id),
+    INDEX mamba_fact_encounter_vl_request_encounter_id_index (encounter_id),
+    INDEX mamba_fact_encounter_vl_request_encounter_date_index (encounter_date)
+)
+    CHARSET = UTF8;
 -- $END
 END //
 
@@ -30428,44 +30786,21 @@ DELIMITER ;
 -- sp_fact_encounter_vl_request_query
 --
 
-DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request_query;
-
 DELIMITER //
 
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vl_request_query;
 ~
-CREATE PROCEDURE sp_fact_encounter_vl_request_query()
+CREATE PROCEDURE sp_fact_encounter_vl_request_query(IN p_client_id INT, IN p_encounter_date DATE)
 BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vl_request_query', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_fact_encounter_vl_request_query', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-SELECT *
-FROM mamba_fact_encounter_vl_request
-WHERE client_id = :client_id
-  AND (:encounter_date IS NULL OR encounter_date = :encounter_date)
-ORDER BY encounter_date DESC;
--- $END
+    SELECT *
+    FROM mamba_fact_encounter_vl_request
+    WHERE (p_client_id IS NULL OR client_id = p_client_id)
+      AND (p_encounter_date IS NULL OR encounter_date = p_encounter_date)
+    ORDER BY encounter_date DESC;
 END //
 
 DELIMITER ;
+
 
 
 -- ---------------------------------------------------------------------------------------------

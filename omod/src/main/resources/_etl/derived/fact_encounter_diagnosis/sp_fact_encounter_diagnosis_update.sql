@@ -1,20 +1,21 @@
 -- $BEGIN
 /*
+
   Update existing fact rows when the source encounter_diagnosis row changes (including voiding),
   and refresh the resolved concept name.
 */
 
 UPDATE mamba_fact_encounter_diagnosis f
-JOIN conceptreview.encounter_diagnosis ed
+JOIN encounter_diagnosis ed
   ON ed.diagnosis_id = f.diagnosis_id
 
-LEFT JOIN conceptreview.concept_name cn_by_id
+LEFT JOIN concept_name cn_by_id
        ON cn_by_id.concept_name_id = ed.diagnosis_coded_name
       AND cn_by_id.voided = 0
 
 LEFT JOIN (
     SELECT concept_id, name, locale, concept_name_type
-    FROM conceptreview.concept_name
+    FROM concept_name
     WHERE voided = 0
       AND locale = 'en'
       AND locale_preferred = 1
@@ -23,10 +24,10 @@ LEFT JOIN (
 
 LEFT JOIN (
     SELECT cn1.concept_id, cn1.name, cn1.locale, cn1.concept_name_type
-    FROM conceptreview.concept_name cn1
+    FROM concept_name cn1
     JOIN (
         SELECT concept_id, MIN(concept_name_id) AS min_id
-        FROM conceptreview.concept_name
+        FROM concept_name
         WHERE voided = 0
           AND locale = 'en'
         GROUP BY concept_id
@@ -39,6 +40,7 @@ LEFT JOIN (
 SET
     f.encounter_id = ed.encounter_id,
     f.patient_id = ed.patient_id,
+    f.client_id = ed.patient_id,
     f.condition_id = ed.condition_id,
     f.certainty = ed.certainty,
     f.dx_rank = ed.dx_rank,

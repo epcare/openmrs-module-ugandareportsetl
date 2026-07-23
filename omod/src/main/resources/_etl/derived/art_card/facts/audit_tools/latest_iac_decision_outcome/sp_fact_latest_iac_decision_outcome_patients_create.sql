@@ -1,8 +1,9 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_decision_outcome
+CREATE TABLE mamba_fact_patients_latest_iac_decision_outcome
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     decision         TEXT NULL,
 
@@ -11,5 +12,8 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_iac_decision_outcome
 
 CREATE INDEX
     mamba_fact_patients_latest_iac_decision_outcome_client_id_index ON mamba_fact_patients_latest_iac_decision_outcome (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_iac_decision_outcome_patient_id_index ON mamba_fact_patients_latest_iac_decision_outcome (patient_id);
 -- $END
 

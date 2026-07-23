@@ -1,10 +1,11 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_patient_demographics(patient_id,
+                                                            client_id,
                                                        birthdate,
                                                        age,
                                                        gender,
                                                        dead)
-SELECT person_id,
+SELECT person_id,person_id,
        birthdate,
        TIMESTAMPDIFF(YEAR, birthdate, NOW()) AS age,
        gender,

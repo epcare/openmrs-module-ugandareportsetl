@@ -1,9 +1,10 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_vl_request
+CREATE TABLE mamba_fact_encounter_vl_request
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT          NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATE         NULL,
 
     indication_for_vl_testing             VARCHAR(255) NULL,
@@ -24,16 +25,11 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_vl_request
     viral_load_qualitative                VARCHAR(255) NULL,
     viral_load_quantitative               INT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX mamba_fact_encounter_vl_request_client_id_index (client_id),
+    INDEX mamba_fact_encounter_vl_request_patient_id_index (patient_id),
+    INDEX mamba_fact_encounter_vl_request_encounter_id_index (encounter_id),
+    INDEX mamba_fact_encounter_vl_request_encounter_date_index (encounter_date)
 )
     CHARSET = UTF8;
-
-CREATE INDEX
-    mamba_fact_encounter_vl_request_client_id_index ON mamba_fact_encounter_vl_request (client_id);
-
-CREATE INDEX
-    mamba_fact_encounter_vl_request_encounter_id_index ON mamba_fact_encounter_vl_request (encounter_id);
-
-CREATE INDEX
-    mamba_fact_encounter_vl_request_encounter_date_index ON mamba_fact_encounter_vl_request (encounter_date);
 -- $END

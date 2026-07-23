@@ -2,7 +2,7 @@
 -- Populate ARV Summary Fact Table with latest ARV order per patient
 
 INSERT INTO mamba_fact_patients_latest_arv_order (
-    client_id, order_id,
+    client_id, patient_id, order_id,
     current_regimen_concept_id, current_regimen,
     current_drug_inventory_id, current_drug_name,
     date_activated, date_stopped, auto_expire_date,
@@ -11,6 +11,7 @@ INSERT INTO mamba_fact_patients_latest_arv_order (
     is_active_on_art, art_start_date
 )
 SELECT
+    ao.client_id,
     ao.client_id,
     ao.order_id,
     ao.regimen_concept_id as current_regimen_concept_id,

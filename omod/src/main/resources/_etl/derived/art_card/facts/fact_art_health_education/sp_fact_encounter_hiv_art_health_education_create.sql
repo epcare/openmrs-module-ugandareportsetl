@@ -1,9 +1,10 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_health_education
+CREATE TABLE mamba_fact_encounter_hiv_art_health_education
 (
     id                          INT AUTO_INCREMENT,
     encounter_id                INT NULL,
     client_id                   INT NULL,
+    patient_id                  INT NULL,
     encounter_datetime          DATE NULL,
     ovc_screening               VARCHAR(255)  DEFAULT NULL,
     other_linkages              VARCHAR(255)  DEFAULT NULL,
@@ -38,6 +39,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_hiv_art_health_education
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_health_education_client_id_index ON mamba_fact_encounter_hiv_art_health_education (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_art_health_education_patient_id_index ON mamba_fact_encounter_hiv_art_health_education (patient_id);
 
 CREATE INDEX
     mamba_fact_health_education_encounter_id_index ON mamba_fact_encounter_hiv_art_health_education (encounter_id);

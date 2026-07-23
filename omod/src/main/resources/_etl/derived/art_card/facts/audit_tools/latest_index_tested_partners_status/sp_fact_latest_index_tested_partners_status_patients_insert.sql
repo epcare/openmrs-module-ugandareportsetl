@@ -1,7 +1,8 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_index_tested_partners_status(client_id,
+                                                                    patient_id,
                                                                     no)
-SELECT status.person_id, COUNT(*) AS no
+SELECT status.person_id, status.person_id, COUNT(*) AS no
 FROM (SELECT family.person_id, obs_group_id
     FROM obs family
     INNER JOIN (SELECT o.person_id, obs_id

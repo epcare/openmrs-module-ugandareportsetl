@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_diagnosis
     diagnosis_id INT NOT NULL,
     encounter_id INT NOT NULL,
     patient_id INT NOT NULL,
+    client_id INT NOT NULL,
     condition_id INT NULL,
     certainty VARCHAR(255) NOT NULL,
     dx_rank INT NOT NULL,

@@ -1,10 +1,8 @@
 -- $BEGIN
--- Create ARV Orders Fact Table
-DROP TABLE IF EXISTS mamba_fact_arv_orders;
-
-CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
+CREATE TABLE mamba_fact_arv_orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT NOT NULL COMMENT 'Patient ID',
+    patient_id INT NOT NULL COMMENT 'Patient ID (alias for client_id)',
     order_id INT NOT NULL UNIQUE COMMENT 'Order ID from orders table',
     encounter_id INT COMMENT 'Encounter ID when order was placed',
     regimen_concept_id INT NOT NULL COMMENT 'Concept ID of the ARV regimen prescribed',
@@ -33,6 +31,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_arv_orders (
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     date_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_client_id (client_id),
+    INDEX idx_patient_id (patient_id),
     INDEX idx_date_activated (date_activated),
     INDEX idx_coverage_period (coverage_start_date, coverage_end_date),
     INDEX idx_regimen_concept_id (regimen_concept_id),

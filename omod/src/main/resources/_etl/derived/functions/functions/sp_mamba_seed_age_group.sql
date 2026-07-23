@@ -5,10 +5,7 @@ CREATE PROCEDURE sp_mamba_seed_age_group()
 BEGIN
     DECLARE v_cat_id INT;
 
-    /* ------------------------------------------------------------------
-       1) Seed Age Categories
-       ------------------------------------------------------------------ */
-    INSERT INTO mamba_dim_age_category
+    INSERT INTO report_builder_dim_age_category
     (code, name, description, version, effective_from, is_active)
     SELECT * FROM (
                       SELECT 'MOH_105_OPD_DIAG',
@@ -47,20 +44,16 @@ BEGIN
                              'v1', CURDATE(), 1
                   ) src(code, name, description, version, effective_from, is_active)
     WHERE NOT EXISTS (
-        SELECT 1 FROM mamba_dim_age_category c WHERE c.code = src.code
+        SELECT 1 FROM report_builder_dim_age_category c WHERE c.code = src.code
     );
 
-    /* ------------------------------------------------------------------
-       2) MOH 105 OPD Diagnoses (ALIGN LABELS TO REPORT DESIGN TOKENS)
-          Expected: 0-28d, 29d-4y, 5-9, 10-19, 20+
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code = 'MOH_105_OPD_DIAG'
     LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'D0_28','0-28d',0,28,1,1
@@ -70,51 +63,25 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y20P','20+',7300,30000,5,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id = g.age_category_id AND e.code = g.code
         );
 
-        /* If groups already exist, ensure they are updated to the new standard */
-        UPDATE mamba_dim_age_group ag
-        SET
-            ag.label = CASE ag.code
-                           WHEN 'D0_28'  THEN '0-28d'
-                           WHEN 'D29_4Y' THEN '29d-4y'
-                           WHEN 'Y5_9'   THEN '5-9'
-                           WHEN 'Y10_19' THEN '10-19'
-                           WHEN 'Y20P'   THEN '20+'
-                           ELSE ag.label
-                END,
-            ag.min_age_days = CASE ag.code
-                                  WHEN 'Y10_19' THEN 3650
-                                  WHEN 'Y20P'   THEN 7300
-                                  ELSE ag.min_age_days
-                END,
-            ag.max_age_days = CASE ag.code
-                                  WHEN 'Y10_19' THEN 7299
-                                  ELSE ag.max_age_days
-                END,
-            ag.sort_order = CASE ag.code
-                                WHEN 'D0_28'  THEN 1
-                                WHEN 'D29_4Y' THEN 2
-                                WHEN 'Y5_9'   THEN 3
-                                WHEN 'Y10_19' THEN 4
-                                WHEN 'Y20P'   THEN 5
-                                ELSE ag.sort_order
-                END,
-            ag.is_active = 1
-        WHERE ag.age_category_id = v_cat_id;
+        UPDATE report_builder_dim_age_group
+        SET label = CASE code WHEN 'D0_28' THEN '0-28d' WHEN 'D29_4Y' THEN '29d-4y' WHEN 'Y5_9' THEN '5-9' WHEN 'Y10_19' THEN '10-19' WHEN 'Y20P' THEN '20+' ELSE label END,
+            min_age_days = CASE code WHEN 'Y10_19' THEN 3650 WHEN 'Y20P' THEN 7300 ELSE min_age_days END,
+            max_age_days = CASE code WHEN 'Y10_19' THEN 7299 ELSE max_age_days END,
+            sort_order = CASE code WHEN 'D0_28' THEN 1 WHEN 'D29_4Y' THEN 2 WHEN 'Y5_9' THEN 3 WHEN 'Y10_19' THEN 4 WHEN 'Y20P' THEN 5 ELSE sort_order END,
+            is_active = 1
+        WHERE age_category_id = v_cat_id;
     END IF;
 
-    /* ------------------------------------------------------------------
-       3) MOH 105 Nutrition
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='MOH_105_NUTRITION' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'M0_5','0–5 months',0, (6*30)-1, 1,1
@@ -126,20 +93,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y25P','25+ years', (25*365), 30000, 7,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       4) GBV
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='GBV' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'LT10','<10 yrs',0,(10*365)-1,1,1
@@ -154,20 +118,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,10,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       5) MOH MCH
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='MOH_MCH' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'LT15','<15 yrs',0,(15*365)-1,1,1
@@ -177,20 +138,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,5,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       6) Hepatitis
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='HEPATITIS' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'LT10','<10 yrs',0,(10*365)-1,1,1
@@ -199,20 +157,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y60P','60+ yrs',(60*365),30000,4,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       7) HTS
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='HTS' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'Y0_4','0–4 yrs',0,(5*365)-1,1,1
@@ -226,20 +181,17 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,9,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;
 
-    /* ------------------------------------------------------------------
-       8) SMC
-       ------------------------------------------------------------------ */
     SELECT age_category_id INTO v_cat_id
-    FROM mamba_dim_age_category
+    FROM report_builder_dim_age_category
     WHERE code='SMC' LIMIT 1;
 
     IF v_cat_id IS NOT NULL THEN
-        INSERT INTO mamba_dim_age_group
+        INSERT INTO report_builder_dim_age_group
         (age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         SELECT * FROM (
                           SELECT v_cat_id,'Y0_4','0–4 yrs',0,(5*365)-1,1,1
@@ -253,7 +205,7 @@ BEGIN
                           UNION ALL SELECT v_cat_id,'Y50P','50+ yrs',(50*365),30000,9,1
                       ) g(age_category_id, code, label, min_age_days, max_age_days, sort_order, is_active)
         WHERE NOT EXISTS (
-            SELECT 1 FROM mamba_dim_age_group e
+            SELECT 1 FROM report_builder_dim_age_group e
             WHERE e.age_category_id=g.age_category_id AND e.code=g.code
         );
     END IF;

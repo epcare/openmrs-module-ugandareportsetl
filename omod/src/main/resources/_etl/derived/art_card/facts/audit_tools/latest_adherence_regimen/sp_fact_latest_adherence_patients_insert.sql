@@ -1,7 +1,8 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_adherence (client_id,
+                                                patient_id,
                                                 adherence)
-SELECT b.client_id, adherence_assessment_code
+SELECT b.client_id, b.client_id, adherence_assessment_code
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id

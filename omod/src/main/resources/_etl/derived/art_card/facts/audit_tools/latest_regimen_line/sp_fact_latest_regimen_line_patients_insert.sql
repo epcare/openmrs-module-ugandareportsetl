@@ -1,7 +1,8 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_regimen_line(client_id,
+                                                    patient_id,
                                                     regimen)
-SELECT DISTINCT pp.patient_id, program_workflow_state.concept_id AS line
+SELECT DISTINCT pp.patient_id, pp.patient_id, program_workflow_state.concept_id AS line
 FROM patient_state
          INNER JOIN program_workflow_state
                     ON patient_state.state = program_workflow_state.program_workflow_state_id

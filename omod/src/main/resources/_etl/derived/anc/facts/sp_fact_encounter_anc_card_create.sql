@@ -1,9 +1,10 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_anc_card
+CREATE TABLE mamba_fact_encounter_anc_card
 (
     id                                    INT AUTO_INCREMENT,
     encounter_id                          INT NULL,
     client_id                             INT          NULL,
+    patient_id                            INT          NULL,
     encounter_date                        DATETIME         NULL,
     cd4                            DOUBLE       NULL,
     where_                        TEXT         NULL,
@@ -66,6 +67,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_encounter_anc_card
 
 CREATE INDEX
     mamba_fact_encounter_anc_card_client_id_index ON mamba_fact_encounter_anc_card (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_anc_card_patient_id_index ON mamba_fact_encounter_anc_card (patient_id);
 
 CREATE INDEX
     mamba_fact_encounter_anc_encounter_id_index ON mamba_fact_encounter_anc_card (encounter_id);

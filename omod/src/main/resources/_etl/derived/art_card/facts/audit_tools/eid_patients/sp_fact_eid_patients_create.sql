@@ -1,8 +1,9 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_eid_patients
+CREATE TABLE mamba_fact_eid_patients
 (
     id        INT AUTO_INCREMENT,
     client_id INT  NULL,
+    patient_id INT  NULL,
     EDD DATE DEFAULT NULL ,
     EID_NO VARCHAR(80) DEFAULT NULL ,
     EID_DOB DATE DEFAULT NULL ,
@@ -40,6 +41,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_eid_patients
 
 CREATE INDEX
     mamba_fact_eid_patients_client_id_index ON mamba_fact_eid_patients (client_id);
+
+CREATE INDEX
+    mamba_fact_eid_patients_patient_id_index ON mamba_fact_eid_patients (patient_id);
 
 CREATE INDEX
     mamba_fact_eid_patients_baby_id_index ON mamba_fact_eid_patients (BABY);

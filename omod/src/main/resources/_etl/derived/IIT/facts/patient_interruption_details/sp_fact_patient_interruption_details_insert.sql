@@ -1,5 +1,5 @@
 -- $BEGIN
-INSERT INTO mamba_fact_patients_interruptions_details(client_id, case_id, art_enrollment_date, days_since_initiation,
+INSERT INTO mamba_fact_patients_interruptions_details(client_id, patient_id, case_id, art_enrollment_date, days_since_initiation,
                                                       last_dispense_date, last_dispense_amount,
                                                       current_regimen_start_date, last_VL_result, VL_last_date,
                                                       last_dispense_description, all_interruptions,
@@ -7,6 +7,7 @@ INSERT INTO mamba_fact_patients_interruptions_details(client_id, case_id, art_en
                                                       last_encounter_interruption_date)
 
 SELECT person_id,
+       person_id,
        uuid                                                            AS case_id,
        baseline_regimen_start_date                                     as art_enrollment_date,
        TIMESTAMPDIFF(DAY,baseline_regimen_start_date, last_visit_date) as days_since_initiation,

@@ -1,8 +1,9 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_vl_after_iac(client_id,
+                                                    patient_id,
                                                     encounter_date,
                                                     results)
-SELECT o.person_id,obs_datetime, value_numeric
+SELECT o.person_id, o.person_id,obs_datetime, value_numeric
 FROM obs o
          INNER JOIN encounter e ON o.encounter_id = e.encounter_id
          INNER JOIN encounter_type et ON e.encounter_type = et.encounter_type_id AND
