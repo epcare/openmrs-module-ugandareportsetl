@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS fact_encounter_covid
 (
     encounter_id                      INT           NULL,
     client_id                         INT           NULL,
+    patient_id                        INT           NULL,
     covid_test                        NVARCHAR(255) NULL,
     order_date                        DATE          NULL,
     result_date                       DATE          NULL,

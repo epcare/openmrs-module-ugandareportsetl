@@ -1,0 +1,19 @@
+#############################################################################
+##################### ARV Orders ETL Fact Tables ###########################
+#############################################################################
+
+# ARV Orders fact table - Transactional ARV prescription history
+facts/arv_orders/sp_fact_arv_orders_create.sql
+facts/arv_orders/sp_fact_arv_orders_insert.sql
+facts/arv_orders/sp_fact_arv_orders_update.sql
+facts/arv_orders/sp_fact_arv_orders.sql
+
+# ARV Summary fact table - Latest ARV status per patient
+facts/arv_summary/sp_fact_patients_latest_arv_order_create.sql
+facts/arv_summary/sp_fact_patients_latest_arv_order_insert.sql
+facts/arv_summary/sp_fact_patients_latest_arv_order.sql
+
+#############################################################################
+##################### ARV Orders Processing ###############################
+#############################################################################
+sp_data_processing_arv_orders.sql

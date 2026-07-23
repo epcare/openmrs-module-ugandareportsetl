@@ -1,7 +1,8 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_viral_load_ordered (client_id,
+                                                patient_id,
                                                 encounter_date, order_date)
-SELECT b.client_id,encounter_date, hiv_viral_load_date
+SELECT b.client_id,b.client_id,encounter_date, hiv_viral_load_date
 FROM mamba_fact_encounter_hiv_art_card b
          JOIN
      (SELECT client_id, MAX(encounter_id) as encounter_id

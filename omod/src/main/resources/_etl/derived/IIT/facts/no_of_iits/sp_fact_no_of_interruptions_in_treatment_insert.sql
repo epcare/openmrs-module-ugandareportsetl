@@ -1,9 +1,11 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_no_of_interruptions(client_id,
+                                                        patient_id,
                                                         encounter_date,
                                                         return_date,
                                                     days_interrupted)
 SELECT
+    client_id,
     client_id,
     encounter_date,
     return_visit_date,

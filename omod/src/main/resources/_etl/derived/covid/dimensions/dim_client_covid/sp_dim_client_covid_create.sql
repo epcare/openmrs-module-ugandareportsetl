@@ -1,8 +1,9 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS dim_client_covid
+CREATE TABLE dim_client_covid
 (
     id            INT auto_increment,
     client_id     INT           NULL,
+    patient_id    INT           NULL,
     date_of_birth DATE          NULL,
     ageattest     INT           NULL,
     sex           NVARCHAR(50)  NULL,

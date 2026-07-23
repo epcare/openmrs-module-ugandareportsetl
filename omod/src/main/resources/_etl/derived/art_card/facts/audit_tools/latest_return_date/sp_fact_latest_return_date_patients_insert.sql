@@ -1,7 +1,8 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_return_date (client_id,
+                                                patient_id,
                                                 return_date)
-SELECT b.client_id, b.return_visit_date
+SELECT b.client_id, b.client_id, b.return_visit_date
 FROM mamba_fact_encounter_hiv_art_card b
          INNER JOIN (
     SELECT client_id, MAX(encounter_id) as encounter_id

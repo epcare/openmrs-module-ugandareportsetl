@@ -1,0 +1,25 @@
+{
+  "report_name": "Viral_Load_Request",
+  "flat_table_name": "mamba_flat_encounter_vl_request",
+  "encounter_type_uuid": "cbf01392-ca29-11e9-a32f-2a2ae2dbcce4",
+  "concepts_locale": "en",
+  "table_columns": {
+    "indication_for_vl_testing": "59f36196-3ebe-4fea-be92-6fc9551c3a11",
+    "sample_collection_date": "0b434cfa-b11c-4d14-aaa2-9aed6ca2da88",
+    "art_start_date": "ab505422-26d9-41f1-a079-c3d222000440",
+    "current_who_clinical_stage": "dcdff274-30ab-102d-86b0-7a5022ba4115",
+    "current_regimen_line": "80148344-ce80-42f7-9d4a-8c1935efe76e",
+    "current_regimen": "dd2b0b4d-30ab-102d-86b0-7a5022ba4115",
+    "other_current_regimen": "97c48198-3cf7-4892-a3e6-d61fb1125882",
+    "pregnant_mother": "dcda5179-30ab-102d-86b0-7a5022ba4115",
+    "anc_number": "c7231d96-34d8-4bf7-a509-c810f75e3329",
+    "pnc_number": "ef1f4c7a-2b90-4412-83bb-87ae8094ce4c",
+    "breastfeeding_mother": "9e5ac0a8-6041-4feb-8c07-fe522ef5f9ab",
+    "has_active_tb": "8c54d11f-e3f7-4146-b1e2-1667034c61b4",
+    "tb_treatment_phase": "159792AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "arv_adherence": "dce03b2f-30ab-102d-86b0-7a5022ba4115",
+    "dsdm_models": "1e755463-df07-4f18-bc67-9e5527bc252f",
+    "viral_load_qualitative": "dca12261-30ab-102d-86b0-7a5022ba4115",
+    "viral_load_quantitative": "dc8d83e3-30ab-102d-86b0-7a5022ba4115"
+  }
+}

@@ -1,8 +1,9 @@
 -- $BEGIN
 INSERT INTO mamba_fact_patients_latest_iac_sessions(client_id,
+                                                    patient_id,
                                                     encounter_date,
                                                     sessions)
-SELECT obs.person_id,obs_datetime, COUNT(value_datetime) sessions
+SELECT obs.person_id,obs.person_id,obs_datetime, COUNT(value_datetime) sessions
 FROM obs
          INNER JOIN (SELECT person_id, MAX(DATE (value_datetime)) AS vldate
                      FROM obs

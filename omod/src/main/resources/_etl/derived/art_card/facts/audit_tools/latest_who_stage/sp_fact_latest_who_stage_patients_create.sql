@@ -1,8 +1,9 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_who_stage
+CREATE TABLE mamba_fact_patients_latest_who_stage
 (
     id             INT AUTO_INCREMENT,
     client_id      INT NOT NULL,
+    patient_id     INT NOT NULL,
     encounter_date DATE NULL,
     stage         VARCHAR(100) NULL,
 
@@ -11,6 +12,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_patients_latest_who_stage
 
 CREATE INDEX
     mamba_fact_patients_latest_who_stage_client_id_index ON mamba_fact_patients_latest_who_stage (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_who_stage_patient_id_index ON mamba_fact_patients_latest_who_stage (patient_id);
 
 -- $END
 

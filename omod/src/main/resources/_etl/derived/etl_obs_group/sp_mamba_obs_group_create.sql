@@ -1,6 +1,6 @@
 -- $BEGIN
 
-CREATE TABLE IF NOT EXISTS mamba_obs_group
+CREATE TABLE mamba_obs_group
 (
     id                     INT          NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     obs_id                 INT          NOT NULL,
@@ -13,3 +13,4 @@ CREATE TABLE IF NOT EXISTS mamba_obs_group
 )
     CHARSET = UTF8MB4;
 
+-- $END

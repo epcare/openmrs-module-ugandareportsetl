@@ -30,3 +30,27 @@ hs_err_pid*
 /.project
 /.classpath
 .claude
+sql/*
+tmp/*
+reports-generic/*
+memory/*
+106aPlan/*
+org/*
+MEMORY.md
+IMPLEMENTATION_SUMMARY.md
+PROJECT_SUMMARY.md
+REPORT_BUILDER_INTEGRATION_ANALYSIS.md
+
+# Backup files
+*.bak
+*.bak2
+tmp_*
+
+# Cleanup scripts and backups
+cleanup_sql_files*.sh
+fix-drop-delimiters.sh
+run_cleanup*.sh
+test_cleanup.sh
+sql_cleanup_backup*/
+sql_cleanup_final*/
+

@@ -1,8 +1,9 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_audit_tool_art_patients
+CREATE TABLE mamba_fact_audit_tool_art_patients
 (
     id                                     INT AUTO_INCREMENT,
     client_id                              INT NOT NULL,
+    patient_id                             INT NOT NULL,
     identifier                             VARCHAR(80) NULL,
     nationality                            VARCHAR(80) NULL,
     marital_status                         VARCHAR(80) NULL,
@@ -67,6 +68,9 @@ CREATE TABLE IF NOT EXISTS mamba_fact_audit_tool_art_patients
 
 CREATE INDEX
     mamba_fact_audit_tool_art_patients_client_id_index ON mamba_fact_audit_tool_art_patients (client_id);
+
+CREATE INDEX
+    mamba_fact_audit_tool_art_patients_patient_id_index ON mamba_fact_audit_tool_art_patients (patient_id);
 
 -- $END
 

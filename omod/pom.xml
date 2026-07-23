@@ -50,6 +50,25 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<!-- Fix DROP FUNCTION/PROCEDURE delimiters in generated SQL files -->
+					<execution>
+						<id>fix-drop-delimiters</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>/bin/sh</executable>
+							<workingDirectory>${project.parent.basedir}</workingDirectory>
+							<arguments>
+								<argument>${project.parent.basedir}/fix-drop-delimiters.sh</argument>
+								<argument>${project.build.directory}/mamba-etl/_core/database/mysql/build/jdbc_create_stored_procedures.sql</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

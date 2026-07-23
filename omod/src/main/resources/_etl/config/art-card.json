@@ -98,6 +98,9 @@
     "covidVaccStatus": "50032cf9-d5e6-4b8d-8d7d-32906d6a1115",
     "covid_vaccination_date": "1410AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "reasons_for_next_appointment": "160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "client_represented": "51409d82-b2c0-11ed-afa1-0242ac120002",
+    "treatment_interruptions": "2bb2e360-263c-4167-8c68-87dab66dc0f6",
+    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6"
   }
 }

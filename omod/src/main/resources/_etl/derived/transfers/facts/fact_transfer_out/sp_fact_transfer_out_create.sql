@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_out
 (
     id                       INT AUTO_INCREMENT,
     client_id                         INT           NULL,
+    patient_id                        INT           NULL,
     encounter_date                    DATE          NOT NULL,
     transfer_out_date                  DATE    NOT NULL,
 
@@ -12,4 +13,7 @@ CREATE TABLE IF NOT EXISTS mamba_fact_transfer_out
 
 CREATE INDEX
     mamba_fact_transfer_out_client_id_index ON mamba_fact_transfer_out (client_id);
+
+CREATE INDEX
+    mamba_fact_transfer_out_patient_id_index ON mamba_fact_transfer_out (patient_id);
 -- $END

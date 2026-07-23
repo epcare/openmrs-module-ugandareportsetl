@@ -1,0 +1,17 @@
+{
+  "report_name": "ART_Regimen_Change",
+  "flat_table_name": "mamba_flat_encounter_regimen_change",
+  "encounter_type_uuid": "c11774c1-3b4a-4bdb-a847-6060895e006d",
+  "concepts_locale": "en",
+  "table_columns": {
+    "current_regimen": "107bef04-bf05-4f41-9260-b167c1108f7e",
+    "current_regimen_line": "80148344-ce80-42f7-9d4a-8c1935efe76e",
+    "regimen_change_type": "ca5a71aa-05f9-42a0-bf0d-65bcfd08036b",
+    "new_regimen": "dd2b0b4d-30ab-102d-86b0-7a5022ba4115",
+    "new_regimen_other": "97c48198-3cf7-4892-a3e6-d61fb1125882",
+    "new_regimen_line": "164515AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "reason_for_regimen_substitution": "dce0c977-30ab-102d-86b0-7a5022ba4115",
+    "reason_for_regimen_switch": "dce0cd97-30ab-102d-86b0-7a5022ba4115",
+    "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+}

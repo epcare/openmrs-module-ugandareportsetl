@@ -1,9 +1,10 @@
 -- $BEGIN
-CREATE TABLE IF NOT EXISTS mamba_fact_encounter_non_suppressed_card
+CREATE TABLE mamba_fact_encounter_non_suppressed_card
 (
     id                                     INT AUTO_INCREMENT,
     encounter_id                           INT NULL,
     client_id                              INT NULL,
+    patient_id                             INT NULL,
     encounter_date                         DATE NULL,
 
     vl_qualitative                         VARCHAR(80) NULL,
