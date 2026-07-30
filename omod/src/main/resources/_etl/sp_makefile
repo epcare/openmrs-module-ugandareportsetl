@@ -15,6 +15,7 @@ derived/hts/sp_data_processing_derived_hts.sql
 derived/anc/sp_data_processing_derived_anc.sql
 derived/regimen_change/sp_data_processing_derived_regimen_change.sql
 derived/vl_request/sp_data_processing_derived_vl_request.sql
+derived/vl_episode/sp_data_processing_derived_vl_episode.sql
 derived/opd_attendance/sp_data_processing_derived_opd_attendance.sql
 derived/transfers/sp_data_processing_derived_transfers.sql
 derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis.sql

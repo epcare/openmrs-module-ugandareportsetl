@@ -38,6 +38,39 @@ public class UgandaReportsETLDao {
 	}
 	
 	/**
+	 * Execute the Mamba ETL cleanup script - drops all procedures and tables
+	 */
+	public void executeMambaETLCleanup() {
+		// Read and execute the cleanup SQL script
+		org.springframework.core.io.Resource resource = new org.springframework.core.io.ClassPathResource(
+		        "_etl/sp_mamba_etl_cleanup.sql");
+		try {
+			java.io.InputStream is = resource.getInputStream();
+			java.util.Scanner scanner = new java.util.Scanner(is).useDelimiter("A");
+			String sql = scanner.next();
+			scanner.close();
+			
+			// Split by semicolon and execute each statement
+			String[] statements = sql.split(";");
+			for (String statement : statements) {
+				String trimmed = statement.trim();
+				if (!trimmed.isEmpty() && !trimmed.startsWith("--")) {
+					try {
+						getSession().createSQLQuery(trimmed).executeUpdate();
+					}
+					catch (Exception e) {
+						// Log but continue - some objects may not exist
+						System.out.println("Cleanup statement skipped: " + e.getMessage());
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Failed to execute Mamba ETL cleanup script", e);
+		}
+	}
+	
+	/**
 	 * Get current ETL progress information
 	 */
 	public ETLProgressInfo getETLProgress(String sql) {

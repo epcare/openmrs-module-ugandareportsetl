@@ -1,4 +1,5 @@
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_viral_load_ordered;
 CREATE TABLE mamba_fact_patients_latest_viral_load_ordered
 (
     id                                      INT AUTO_INCREMENT,

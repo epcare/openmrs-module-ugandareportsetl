@@ -1,4 +1,6 @@
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_card;
+
 CREATE TABLE mamba_fact_encounter_hiv_art_card
 (
     id                                    INT AUTO_INCREMENT,

@@ -37,12 +37,22 @@ public class SetupMambaETLTask extends AbstractTask {
 			
 			UgandaReportsETLService service = Context.getService(UgandaReportsETLService.class);
 			
+			// Step 0: Cleanup existing Mamba ETL objects
+			log.info("Step 0: Cleaning up existing Mamba ETL procedures and tables...");
+			try {
+				service.cleanupMambaETL();
+				log.info("Mamba ETL cleanup completed successfully");
+			}
+			catch (Exception e) {
+				log.warn("Mamba ETL cleanup failed - continuing with setup (this may cause issues)", e);
+			}
+			
 			// Step 1: Add MambaETL properties
-			log.info("Adding MambaETL properties...");
+			log.info("Step 1: Adding MambaETL properties...");
 			service.addMambaetlProperties();
 			
 			// Step 2: Setup Mamba ETL infrastructure
-			log.info("Setting up Mamba ETL infrastructure...");
+			log.info("Step 2: Setting up Mamba ETL infrastructure...");
 			try {
 				FlattenDatabaseService flattenDatabaseService = Context.getService(FlattenDatabaseService.class);
 				flattenDatabaseService.setupEtl();

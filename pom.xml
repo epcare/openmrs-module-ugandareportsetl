@@ -197,7 +197,7 @@
 								</configuration>
 							</execution>
 
-							<!-- Copy generated SQL files to external mamba-core configuration directory -->
+							<!-- Copy generated SQL files to module mamba resources directory -->
 							<execution>
 								<id>copy-to-mamba-config</id>
 								<phase>install</phase>
@@ -214,7 +214,7 @@
 											</includes>
 										</resource>
 									</resources>
-									<outputDirectory>/Users/lubwamasamuel/openmrs/stambrose/configuration/mambaetl/epcare</outputDirectory>
+									<outputDirectory>${project.parent.basedir}/api/src/main/resources/mamba</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
@@ -285,6 +285,41 @@
 									</arguments>
 								</configuration>
 							</execution>
+
+								<!-- Add fn_duration_to_days to api resources after copy -->
+								<execution>
+									<id>add-duration-function-to-api</id>
+									<phase>install</phase>
+									<goals>
+										<goal>exec</goal>
+									</goals>
+									<configuration>
+										<executable>/bin/sh</executable>
+										<workingDirectory>${project.parent.basedir}</workingDirectory>
+										<arguments>
+											<argument>${project.parent.basedir}/add-duration-function.sh</argument>
+											<argument>${project.parent.basedir}/api/src/main/resources/mamba/jdbc_create_stored_procedures.sql</argument>
+										</arguments>
+									</configuration>
+								</execution>
+
+								<!-- Fix delimiters in api resources SQL -->
+								<execution>
+									<id>fix-drop-delimiters-api</id>
+									<phase>install</phase>
+									<goals>
+										<goal>exec</goal>
+									</goals>
+									<configuration>
+										<executable>/bin/sh</executable>
+										<workingDirectory>${project.parent.basedir}</workingDirectory>
+										<arguments>
+											<argument>${project.parent.basedir}/fix-drop-delimiters.sh</argument>
+											<argument>${project.parent.basedir}/api/src/main/resources/mamba/jdbc_create_stored_procedures.sql</argument>
+										</arguments>
+									</configuration>
+								</execution>
+
 						</executions>
 					</plugin>
 			</plugins>

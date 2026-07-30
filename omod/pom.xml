@@ -52,6 +52,41 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>3.0.0</version>
 				<executions>
+						<!-- Add fn_duration_to_days function required by ARV Orders ETL -->
+						<execution>
+							<id>add-duration-function</id>
+							<phase>install</phase>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+							<configuration>
+								<executable>/bin/sh</executable>
+								<workingDirectory>${project.parent.basedir}</workingDirectory>
+								<arguments>
+									<argument>${project.parent.basedir}/add-duration-function.sh</argument>
+									<argument>${project.build.directory}/mamba-etl/_core/database/mysql/build/jdbc_create_stored_procedures.sql</argument>
+								</arguments>
+							</configuration>
+						</execution>
+
+						<!-- Fix delimiters in api resources SQL -->
+						<execution>
+							<id>fix-drop-delimiters-api</id>
+							<phase>install</phase>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+							<configuration>
+								<executable>/bin/sh</executable>
+								<workingDirectory>${project.parent.basedir}</workingDirectory>
+								<arguments>
+									<argument>${project.parent.basedir}/fix-drop-delimiters.sh</argument>
+									<argument>${project.parent.basedir}/api/src/main/resources/mamba/jdbc_create_stored_procedures.sql</argument>
+								</arguments>
+							</configuration>
+						</execution>
+
+
 					<!-- Fix DROP FUNCTION/PROCEDURE delimiters in generated SQL files -->
 					<execution>
 						<id>fix-drop-delimiters</id>
@@ -65,6 +100,65 @@
 							<arguments>
 								<argument>${project.parent.basedir}/fix-drop-delimiters.sh</argument>
 								<argument>${project.build.directory}/mamba-etl/_core/database/mysql/build/jdbc_create_stored_procedures.sql</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<!-- Make the compiler scripts executable -->
+					<execution>
+						<id>set-executable-permission</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>/bin/sh</executable>
+							<arguments>
+								<argument>-c</argument>
+								<argument>chmod -R +x ${project.build.directory}/mamba-etl/_core/compiler</argument>
+							</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Run the ETL compiler script -->
+					<execution>
+						<id>run-script</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>/bin/sh</executable>
+							<workingDirectory>${project.build.directory}/mamba-etl/_core/compiler/linux</workingDirectory>
+							<arguments>
+								<!-- The Engine compiler script -->
+								<argument>compile.sh</argument>
+
+								<!-- The source database (OpenMRS database) -->
+								<argument>-d</argument>
+								<argument>openmrs</argument>
+
+								<!-- The target or analysis Database where the ETL data is stored -->
+								<argument>-a</argument>
+								<argument>analysis_db</argument>
+
+								<!-- File with a list of all files with stored procedures -->
+								<argument>-s</argument>
+								<argument>../../database/mysql/sp_makefile</argument>
+
+								<!-- A JSON configuration path/folder for all config files for db flattening -->
+								<argument>-t</argument>
+								<argument>${project.build.directory}/mamba-etl/_etl/config</argument>
+
+								<!-- Database Vendor/Engine targeted in this ETL -->
+								<argument>-n</argument>
+								<argument>mysql</argument>
+
+								<!-- Set 1 to recompile/build the scripts else 0 - not to. If 1 - don't forget to change the liquibase changeset ID -->
+								<argument>-b</argument>
+								<argument>1</argument>
+
+								<argument/>
+								<argument/>
 							</arguments>
 						</configuration>
 					</execution>

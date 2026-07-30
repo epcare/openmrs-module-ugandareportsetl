@@ -49,6 +49,27 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 	}
 	
 	@Override
+	public void cleanupMambaETL() throws APIException {
+		try {
+			log.info("=== Starting Mamba ETL Cleanup ===");
+			log.info("This will drop all Mamba ETL procedures and tables");
+			
+			long startTime = System.currentTimeMillis();
+			
+			dao.executeMambaETLCleanup();
+			
+			long duration = System.currentTimeMillis() - startTime;
+			log.info("=== Mamba ETL Cleanup Completed Successfully ===");
+			log.info("Total Duration: " + (duration / 1000) + " seconds");
+			
+		}
+		catch (Exception e) {
+			log.error("Error cleaning up Mamba ETL", e);
+			throw new APIException("Error cleaning up Mamba ETL", e);
+		}
+	}
+	
+	@Override
 	public void addMambaetlProperties() throws APIException {
 		try {
 			log.info("Adding Mamba ETL properties...");

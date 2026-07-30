@@ -1,0 +1,25 @@
+# ============================================================================
+# Viral Load Episode ETL - Minimal Working Configuration
+# ============================================================================
+# NOTE: Full data warehouse schema (21 tables) is available in:
+# - VL_DATA_WAREHOUSE_README.md (documentation)
+# - config/01_create_schema.sql (reference, not auto-deployed)
+#
+# For production, use the minimal 4-table config that works with ETL:
+# 1. mamba_vl_concept_mapping
+# 2. mamba_vl_coded_value_mapping
+# 3. mamba_vl_rule_config
+# 4. mamba_vl_source_mapping
+# These are created manually via the seed config data script.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# MAIN FACT TABLE
+# ----------------------------------------------------------------------------
+facts/01_comprehensive_vl_episode.sql
+
+# ----------------------------------------------------------------------------
+# MAIN ETL PROCEDURES
+# ----------------------------------------------------------------------------
+03_sp_vl_episode_etl.sql
+sp_data_processing_derived_vl_episode.sql

@@ -38,11 +38,25 @@ public class UgandaReportsETLActivator extends BaseModuleActivator {
 		log.info("UgandaReportsETL module started - initializing...");
 		
 		try {
-			// Configure ETL properties
-			Context.getService(UgandaReportsETLService.class).addMambaetlProperties();
+			UgandaReportsETLService service = Context.getService(UgandaReportsETLService.class);
 			
-			// Setup Mamba ETL infrastructure
-			Context.getService(UgandaReportsETLService.class).setupMambaETL();
+			// Step 0: Cleanup existing Mamba ETL objects (for clean setup)
+			log.info("Step 0: Cleaning up existing Mamba ETL procedures and tables...");
+			try {
+				service.cleanupMambaETL();
+				log.info("Mamba ETL cleanup completed successfully");
+			}
+			catch (Exception e) {
+				log.warn("Mamba ETL cleanup failed - continuing with setup (this may cause issues)", e);
+			}
+			
+			// Step 1: Configure ETL properties
+			log.info("Step 1: Configuring ETL properties...");
+			service.addMambaetlProperties();
+			
+			// Step 2: Setup Mamba ETL infrastructure
+			log.info("Step 2: Setting up Mamba ETL infrastructure...");
+			service.setupMambaETL();
 			
 			log.info("UgandaReportsETL module started successfully");
 		}

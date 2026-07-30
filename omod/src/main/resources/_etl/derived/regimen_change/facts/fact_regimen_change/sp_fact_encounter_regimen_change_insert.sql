@@ -24,6 +24,5 @@ SELECT
     reason_for_regimen_substitution,
     reason_for_regimen_switch,
     clinical_notes
-FROM mamba_flat_encounter_regimen_change
-WHERE voided = 0;
+FROM mamba_flat_encounter_regimen_change;
 -- $END

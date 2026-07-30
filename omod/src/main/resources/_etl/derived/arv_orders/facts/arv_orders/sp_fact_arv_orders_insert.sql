@@ -42,14 +42,14 @@ SELECT DISTINCT
             30
     END as days_on_drugs,
     do.dose,
-    du.name as dose_units,
+    (SELECT name FROM concept_name WHERE concept_id = do.dose_units AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as dose_units,
     do.quantity,
-    qu.name as quantity_units,
+    (SELECT name FROM concept_name WHERE concept_id = do.quantity_units AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as quantity_units,
     do.duration,
-    dur_units.name as duration_units,
+    (SELECT name FROM concept_name WHERE concept_id = do.duration_units AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as duration_units,
     do.duration_units as duration_units_concept_id,
-    fr.name as frequency,
-    rt.name as route,
+    (SELECT name FROM concept_name WHERE concept_id = do.frequency AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as frequency,
+    (SELECT name FROM concept_name WHERE concept_id = do.route AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as route,
     o.order_number,
     NULL as order_action,
     o.urgency,
@@ -57,11 +57,6 @@ SELECT DISTINCT
 FROM orders o
 INNER JOIN drug_order do ON do.order_id = o.order_id
 INNER JOIN drug d ON d.drug_id = do.drug_inventory_id
-LEFT JOIN concept_name dur_units ON dur_units.concept_id = do.duration_units AND dur_units.concept_name_type = 'FULLY_SPECIFIED' AND dur_units.locale = 'en' AND dur_units.voided = 0
-LEFT JOIN concept_name du ON du.concept_id = do.dose_units AND du.concept_name_type = 'FULLY_SPECIFIED' AND du.locale = 'en' AND du.voided = 0
-LEFT JOIN concept_name qu ON qu.concept_id = do.quantity_units AND qu.concept_name_type = 'FULLY_SPECIFIED' AND qu.locale = 'en' AND qu.voided = 0
-LEFT JOIN concept_name fr ON fr.concept_id = do.frequency AND fr.concept_name_type = 'FULLY_SPECIFIED' AND fr.locale = 'en' AND fr.voided = 0
-LEFT JOIN concept_name rt ON rt.concept_id = do.route AND rt.concept_name_type = 'FULLY_SPECIFIED' AND rt.locale = 'en' AND rt.voided = 0
 WHERE FIND_IN_SET(o.concept_id, @arv_concepts) > 0
   AND o.voided = 0;
 -- $END

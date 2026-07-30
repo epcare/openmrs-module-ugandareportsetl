@@ -1,4 +1,5 @@
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_adherence;
 CREATE TABLE mamba_fact_patients_latest_adherence
 (
     id        INT AUTO_INCREMENT,

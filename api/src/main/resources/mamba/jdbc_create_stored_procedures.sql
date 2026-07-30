@@ -976,6 +976,7 @@ END;
 --
 
 DROP PROCEDURE IF EXISTS sp_mamba_system_drop_all_tables;
+~-~-
 
 
 -- CREATE PROCEDURE sp_mamba_system_drop_all_tables(IN database_name CHAR(255))
@@ -1565,6 +1566,7 @@ END;
 --
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_question_concepts_insert;
+~-~-
 
 
 -- SP inserts all concepts that are questions or have a concept_id value in the Obs table
@@ -1625,6 +1627,7 @@ END;
 --
 
 DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_answer_concepts_insert;
+~-~-
 
 
 -- Create a stored procedure to insert answer concepts into a flat table
@@ -14180,6 +14183,7 @@ CALL sp_fact_latest_index_tested_partners_status_patients;
 CALL sp_fact_latest_nutrition_assesment_patients;
 CALL sp_fact_latest_nutrition_support_patients;
 CALL sp_fact_latest_regimen_line_patients;
+CALL sp_fact_latest_regimen_patients;
 CALL sp_fact_latest_return_date_patients;
 CALL sp_fact_latest_tb_status_patients;
 CALL sp_fact_latest_tpt_status_patients;
@@ -14442,6 +14446,49 @@ CALL sp_fact_encounter_vl_request;
 -- $END
 END;
 ~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_vl_episode
+--
+
+-- ============================================================================
+-- Viral Load Episode Domain - Main Orchestration
+-- ============================================================================
+-- Updated: 2026-07-29
+-- Now uses the new comprehensive VL episode ETL (encounter-based structure)
+-- The old sp_fact_viral_load() used obs_group_id approach which doesn't match
+-- this database's structure where VL obs are linked by encounter_id + obs_datetime
+-- ============================================================================
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_vl_episode()
+BEGIN
+    -- Call the new comprehensive VL episode ETL
+    -- This creates mamba_fact_viral_load_episode table with full order-result matching
+    CALL sp_mamba_fact_vl_episode_etl();
+END;
+~-~-
+
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_vl_episode()
+BEGIN
+    -- Call the new comprehensive VL episode ETL
+    -- This creates mamba_fact_viral_load_episode table with full order-result matching
+    CALL sp_mamba_fact_vl_episode_etl();
+END;
+~-~-
+
+
+-- $END
 
 
         
@@ -15277,6 +15324,7 @@ END;
 --
 
 DROP PROCEDURE IF EXISTS sp_mamba_system_drop_fact_tables;
+~-~-
 
 
 -- CREATE PROCEDURE sp_mamba_system_drop_all_tables(IN database_name CHAR(255) CHARACTER SET UTF8MB4)
@@ -15348,6 +15396,7 @@ BEGIN
     CALL sp_data_processing_derived_vl_request();
     CALL sp_data_processing_derived_hts();
     CALL sp_data_processing_derived_anc();
+    CALL sp_data_processing_derived_vl_episode();
 
 END;
 ~-~-
@@ -17039,6 +17088,8 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_card;
+
 CREATE TABLE mamba_fact_encounter_hiv_art_card
 (
     id                                    INT AUTO_INCREMENT,
@@ -17198,6 +17249,7 @@ END;
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_hiv_art_card (encounter_id,
                                                client_id,
+                                               patient_id,
                                                encounter_date,
                                                method_of_family_planning,
                                                cd4,
@@ -17291,102 +17343,103 @@ INSERT INTO mamba_fact_encounter_hiv_art_card (encounter_id,
                                                covid_vaccination_date,
                                                reasons_for_next_appointment,
                                                clinical_notes )
-SELECT a.encounter_id,
-       a.client_id,
-       a.encounter_datetime,
-       method_of_family_planning,
-       cd4,
-       hiv_viral_load,
-       historical_drug_start_date,
-       historical_drug_stop_date,
-       medication_orders,
-       viral_load_qualitative,
-       hepatitis_b_test___qualitative,
-       duration_units,
-       return_visit_date,
-       cd4_count,
-       estimated_date_of_confinement,
-       pmtct,
-       pregnant,
-       scheduled_patient_visist,
-       who_hiv_clinical_stage,
-       name_of_location_transferred_to,
-       tuberculosis_status,
-       tuberculosis_treatment_start_date,
-       adherence_assessment_code,
-       reason_for_missing_arv_administration,
-       medication_or_other_side_effects,
-       family_planning_status,
-       symptom_diagnosis,
-       transfered_out_to_another_facility,
-       tuberculosis_treatment_stop_date,
-       current_arv_regimen,
-       art_duration,
-       current_art_duration,
-       mid_upper_arm_circumference_code,
-       district_tuberculosis_number,
-       other_medications_dispensed,
-       FLOOR(arv_regimen_days_dispensed),
-       ar_regimen_dose,
-       nutrition_support_and_infant_feeding,
-       other_side_effects,
-       other_reason_for_missing_arv,
-       current_regimen_other,
-       transfer_out_date,
-       cotrim_given,
-       syphilis_test_result_for_partner,
-       eid_visit_1_z_score,
-       medication_duration,
-       medication_prescribed_per_dose,
-       tuberculosis_polymerase,
-       specimen_sources,
-       estimated_gestational_age,
-       hiv_viral_load_date,
-       other_reason_for_appointment,
-       nutrition_assesment,
-       differentiated_service_delivery,
-       stable_in_dsdm,
-       tpt_start_date,
-       tpt_completion_date,
-       advanced_disease_status,
-       tpt_status,
-       rpr_test_results,
-       crag_test_results,
-       tb_lam_results,
-       cervical_cancer_screening,
-       intention_to_conceive,
-       tb_microscopy_results,
-       quantity_unit,
-       tpt_side_effects,
-       lab_number,
-       test,
-       test_result,
-       refill_point_code,
-       next_return_date_at_facility,
-       indication_for_viral_load_testing,
-       htn_status    ,
-       diabetes_mellitus_status,
-       anxiety_and_or_depression,
-       alcohol_and_substance_use_disorder,
-       oedema ,
-       inr_no,
-       pregnancy_status,
-       digital_health_messaging_registration ,
-       cacx_screening_visit_type         ,
-       cacx_screening_method,
-       cacx_screening_status,
-       cacx_treatment,
-       syphilis_status,
-       tb_regimen,
-       other_tpt_status,
-       hpvVacStatus,
-       interruption_reason,
-       hpv_vaccination_date,
-       covidVaccStatus,
-       covid_vaccination_date,
-       reasons_for_next_appointment,
-       clinical_notes
-FROM mamba_flat_encounter_art_card a inner join mamba_flat_encounter_art_card_1 b on a.encounter_id=b.encounter_id ;
+	SELECT a.encounter_id,
+	       a.client_id,
+	       a.client_id AS patient_id,
+	       a.encounter_datetime,
+	       method_of_family_planning,
+	       cd4,
+	       hiv_viral_load,
+	       historical_drug_start_date,
+	       historical_drug_stop_date,
+	       medication_orders,
+	       viral_load_qualitative,
+	       hepatitis_b_test___qualitative,
+	       duration_units,
+	       return_visit_date,
+	       cd4_count,
+	       estimated_date_of_confinement,
+	       pmtct,
+	       pregnant,
+	       scheduled_patient_visist,
+	       who_hiv_clinical_stage,
+	       name_of_location_transferred_to,
+	       tuberculosis_status,
+	       tuberculosis_treatment_start_date,
+	       adherence_assessment_code,
+	       reason_for_missing_arv_administration,
+	       medication_or_other_side_effects,
+	       family_planning_status,
+	       symptom_diagnosis,
+	       transfered_out_to_another_facility,
+	       tuberculosis_treatment_stop_date,
+	       current_arv_regimen,
+	       art_duration,
+	       current_art_duration,
+	       mid_upper_arm_circumference_code,
+	       district_tuberculosis_number,
+	       other_medications_dispensed,
+	       FLOOR(arv_regimen_days_dispensed),
+	       ar_regimen_dose,
+	       nutrition_support_and_infant_feeding,
+	       other_side_effects,
+	       other_reason_for_missing_arv,
+	       current_regimen_other,
+	       transfer_out_date,
+	       cotrim_given,
+	       syphilis_test_result_for_partner,
+	       eid_visit_1_z_score,
+	       medication_duration,
+	       medication_prescribed_per_dose,
+	       tuberculosis_polymerase,
+	       specimen_sources,
+	       estimated_gestational_age,
+	       hiv_viral_load_date,
+	       other_reason_for_appointment,
+	       nutrition_assesment,
+	       differentiated_service_delivery,
+	       stable_in_dsdm,
+	       tpt_start_date,
+	       tpt_completion_date,
+	       advanced_disease_status,
+	       tpt_status,
+	       rpr_test_results,
+	       crag_test_results,
+	       tb_lam_results,
+	       cervical_cancer_screening,
+	       intention_to_conceive,
+	       tb_microscopy_results,
+	       quantity_unit,
+	       tpt_side_effects,
+	       lab_number,
+	       test,
+	       test_result,
+	       refill_point_code,
+	       next_return_date_at_facility,
+	       indication_for_viral_load_testing,
+	       htn_status    ,
+	       diabetes_mellitus_status,
+	       anxiety_and_or_depression,
+	       alcohol_and_substance_use_disorder,
+	       oedema ,
+	       inr_no,
+	       pregnancy_status,
+	       digital_health_messaging_registration ,
+	       cacx_screening_visit_type         ,
+	       cacx_screening_method,
+	       cacx_screening_status,
+	       cacx_treatment,
+	       syphilis_status,
+	       tb_regimen,
+	       other_tpt_status,
+	       hpvVacStatus,
+	       interruption_reason,
+	       hpv_vaccination_date,
+	       covidVaccStatus,
+	       covid_vaccination_date,
+	       reasons_for_next_appointment,
+	       clinical_notes
+	FROM mamba_flat_encounter_art_card a inner join mamba_flat_encounter_art_card_1 b on a.encounter_id=b.encounter_id ;
 -- $END
 END;
 ~-~-
@@ -17523,6 +17576,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_summary;
 CREATE TABLE mamba_fact_encounter_hiv_art_summary
 (
     id                                          INT AUTO_INCREMENT,
@@ -17944,6 +17998,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_health_education;
 CREATE TABLE mamba_fact_encounter_hiv_art_health_education
 (
     id                          INT AUTO_INCREMENT,
@@ -18268,6 +18323,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_current_arv_regimen_start_date;
 CREATE TABLE mamba_fact_current_arv_regimen_start_date
 (
     id                                    INT AUTO_INCREMENT,
@@ -18465,6 +18521,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_adherence;
 CREATE TABLE mamba_fact_patients_latest_adherence
 (
     id        INT AUTO_INCREMENT,
@@ -18663,6 +18720,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_advanced_disease;
 CREATE TABLE mamba_fact_patients_latest_advanced_disease
 (
     id                                      INT AUTO_INCREMENT,
@@ -18864,6 +18922,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_arv_days_dispensed;
 CREATE TABLE mamba_fact_patients_latest_arv_days_dispensed
 (
     id             INT AUTO_INCREMENT,
@@ -19064,6 +19123,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_current_regimen;
 CREATE TABLE mamba_fact_patients_latest_current_regimen
 (
     id              INT AUTO_INCREMENT,
@@ -19262,6 +19322,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_family_planning;
 CREATE TABLE mamba_fact_patients_latest_family_planning
 (
     id             INT AUTO_INCREMENT,
@@ -19465,6 +19526,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_hepatitis_b_test;
 CREATE TABLE mamba_fact_patients_latest_hepatitis_b_test
 (
     id             INT AUTO_INCREMENT,
@@ -19666,6 +19728,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_viral_load;
 CREATE TABLE mamba_fact_patients_latest_viral_load
 (
     id        INT AUTO_INCREMENT,
@@ -19870,6 +19933,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_iac_decision_outcome;
 CREATE TABLE mamba_fact_patients_latest_iac_decision_outcome
 (
     id             INT AUTO_INCREMENT,
@@ -20080,6 +20144,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_iac_sessions;
 CREATE TABLE mamba_fact_patients_latest_iac_sessions
 (
     id             INT AUTO_INCREMENT,
@@ -20286,6 +20351,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_index_tested_children;
 CREATE TABLE mamba_fact_patients_latest_index_tested_children
 (
     id                                      INT AUTO_INCREMENT,
@@ -20498,6 +20564,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_index_tested_children_status;
 CREATE TABLE mamba_fact_patients_latest_index_tested_children_status
 (
     id                                      INT AUTO_INCREMENT,
@@ -20718,6 +20785,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_index_tested_partners;
 CREATE TABLE mamba_fact_patients_latest_index_tested_partners
 (
     id                                      INT AUTO_INCREMENT,
@@ -20911,6 +20979,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_index_tested_partners_status;
 CREATE TABLE mamba_fact_patients_latest_index_tested_partners_status
 (
     id                                      INT AUTO_INCREMENT,
@@ -21122,6 +21191,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_nutrition_assesment;
 CREATE TABLE mamba_fact_patients_latest_nutrition_assesment
 (
     id             INT AUTO_INCREMENT,
@@ -21323,6 +21393,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_nutrition_support;
 CREATE TABLE mamba_fact_patients_latest_nutrition_support
 (
     id             INT AUTO_INCREMENT,
@@ -21524,6 +21595,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_regimen_line;
 CREATE TABLE mamba_fact_patients_latest_regimen_line
 (
     id                                      INT AUTO_INCREMENT,
@@ -21654,6 +21726,489 @@ END;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_fact_latest_regimen_patients
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_patients;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_latest_regimen_patients()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_latest_regimen_patients', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_latest_regimen_patients', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_latest_regimen_patients_create();
+CALL sp_fact_latest_regimen_patients_insert();
+CALL sp_fact_latest_regimen_patients_update();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_latest_regimen_patients_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_patients_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_latest_regimen_patients_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_latest_regimen_patients_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_latest_regimen_patients_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_regimen;
+-- Stores resolved concept NAMES (joined via concept_name at ETL time) so that
+-- reporting never needs to join concept_name. Concept ids are deliberately not kept.
+-- Every obs-derived value is paired with its `*_obs_datetime` (when it was recorded).
+CREATE TABLE mamba_fact_patients_latest_regimen
+(
+    id                              INT AUTO_INCREMENT,
+    client_id                       INT NOT NULL,
+    patient_id                      INT NOT NULL,
+
+    -- Effective (best-available); falls back CURRENT -> BASELINE -> TRANSFER_IN
+    -- so that newly-enrolled patients (baseline only) still appear on the table.
+    effective_regimen               VARCHAR(255) NULL,
+    effective_regimen_obs_datetime  DATETIME     NULL,
+    effective_regimen_other         VARCHAR(255) NULL,
+    effective_regimen_source        VARCHAR(20)  NULL,
+
+    -- Current regimen: latest obs for concept 90315 (CURRENT ARV REGIMEN) from any
+    -- encounter type (ART Card visit, ART Regimen Change, VL Request, ANC, Summary, ...).
+    current_regimen                 VARCHAR(255) NULL,
+    current_regimen_obs_datetime    DATETIME     NULL,
+    current_regimen_other           VARCHAR(255) NULL,
+    current_regimen_other_obs_datetime DATETIME  NULL,
+    current_regimen_encounter_type  VARCHAR(100) NULL,
+    current_regimen_location_id     INT          NULL,
+
+    -- Baseline (initial) regimen: ART Card - Summary page, concept 99061
+    baseline_regimen                VARCHAR(255) NULL,
+    baseline_regimen_obs_datetime   DATETIME     NULL,
+    baseline_regimen_other          VARCHAR(255) NULL,
+    baseline_regimen_other_obs_datetime DATETIME NULL,
+
+    -- Transfer-in regimen: ART Card - Summary page, concept 99064
+    transfer_in_regimen             VARCHAR(255) NULL,
+    transfer_in_regimen_obs_datetime DATETIME   NULL,
+    transfer_in_regimen_other       VARCHAR(255) NULL,
+    transfer_in_regimen_other_obs_datetime DATETIME NULL,
+
+    -- Regimen line: latest obs (164515 / 164350) falling back to the open program
+    -- workflow state (concept 166214). obs_datetime comes from the obs, or from
+    -- patient_state.start_date when the line came from the program workflow.
+    regimen_line                    VARCHAR(100) NULL,
+    regimen_line_obs_datetime       DATETIME     NULL,
+    regimen_line_source             VARCHAR(20)  NULL,
+
+    -- ART start date (concept 99161 value_datetime) and when that obs was recorded.
+    art_start_date                  DATE         NULL,
+    art_start_obs_datetime          DATETIME     NULL,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8;
+
+CREATE INDEX
+    mamba_fact_patients_latest_regimen_client_id_index
+    ON mamba_fact_patients_latest_regimen (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_regimen_patient_id_index
+    ON mamba_fact_patients_latest_regimen (patient_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_regimen_effective_regimen_index
+    ON mamba_fact_patients_latest_regimen (effective_regimen);
+
+CREATE INDEX
+    mamba_fact_patients_latest_regimen_line_index
+    ON mamba_fact_patients_latest_regimen (regimen_line);
+
+CREATE INDEX
+    mamba_fact_patients_latest_regimen_source_index
+    ON mamba_fact_patients_latest_regimen (effective_regimen_source);
+
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_latest_regimen_patients_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_patients_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_latest_regimen_patients_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_latest_regimen_patients_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_latest_regimen_patients_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Latest regimen per patient, consolidating every source of regimen data. Each
+-- obs-derived value is paired with its obs_datetime (when it was recorded).
+--   * current regimen   : concept 90315 (coded) + 99126 (free-text "other")
+--   * baseline regimen  : concept 99061 (coded) + 99268 (free-text "other")  [ART Summary]
+--   * transfer-in       : concept 99064 (coded) + 99269 (free-text "other")  [ART Summary]
+--   * regimen line      : latest obs 164515/164350, falling back to the open
+--                         program-workflow state (concept 166214)
+--   * ART start date    : concept 99161
+-- "Latest" uses the established house idiom (MAX(obs_datetime) + GROUP BY person_id).
+-- Concept ids are not stored; names are resolved once at ETL time via concept_name.
+INSERT INTO mamba_fact_patients_latest_regimen (
+    client_id, patient_id,
+    effective_regimen, effective_regimen_obs_datetime, effective_regimen_other, effective_regimen_source,
+    current_regimen, current_regimen_obs_datetime, current_regimen_other, current_regimen_other_obs_datetime,
+    current_regimen_encounter_type, current_regimen_location_id,
+    baseline_regimen, baseline_regimen_obs_datetime, baseline_regimen_other, baseline_regimen_other_obs_datetime,
+    transfer_in_regimen, transfer_in_regimen_obs_datetime, transfer_in_regimen_other, transfer_in_regimen_other_obs_datetime,
+    regimen_line, regimen_line_obs_datetime, regimen_line_source,
+    art_start_date, art_start_obs_datetime
+)
+SELECT
+    cohort.client_id,
+    cohort.client_id,
+    COALESCE(cur.regimen, base.regimen, tin.regimen),
+    CASE
+        WHEN cur.regimen IS NOT NULL THEN cur.obs_datetime
+        WHEN base.regimen IS NOT NULL THEN base.obs_datetime
+        WHEN tin.regimen IS NOT NULL THEN tin.obs_datetime
+    END,
+    CASE
+        WHEN cur.regimen IS NOT NULL THEN curo.value_text
+        WHEN base.regimen IS NOT NULL THEN baseo.value_text
+        WHEN tin.regimen IS NOT NULL THEN tino.value_text
+    END,
+    CASE
+        WHEN cur.regimen IS NOT NULL THEN 'CURRENT'
+        WHEN base.regimen IS NOT NULL THEN 'BASELINE'
+        WHEN tin.regimen IS NOT NULL THEN 'TRANSFER_IN'
+    END,
+
+    cur.regimen, cur.obs_datetime, curo.value_text, curo.obs_datetime, cur.encounter_type, cur.location_id,
+    base.regimen, base.obs_datetime, baseo.value_text, baseo.obs_datetime,
+    tin.regimen, tin.obs_datetime, tino.value_text, tino.obs_datetime,
+    COALESCE(lineobs.line_name, progline.line_name),
+    COALESCE(lineobs.obs_datetime, CAST(progline.state_start AS DATETIME)),
+    CASE
+        WHEN lineobs.line_name IS NOT NULL THEN 'OBS'
+        WHEN progline.line_name IS NOT NULL THEN 'PROGRAM_WORKFLOW'
+    END,
+    artstart.art_start,
+    artstart.obs_datetime
+
+-- Driving set: one row per non-voided patient with any regimen obs (current/baseline/transfer-in)
+FROM (
+         SELECT DISTINCT o.person_id AS client_id
+         FROM obs o
+                  INNER JOIN patient p ON p.patient_id = o.person_id AND p.voided = 0
+         WHERE o.concept_id IN (90315, 99061, 99064)
+           AND o.voided = 0
+     ) cohort
+
+    -- Latest CURRENT regimen (90315), with source encounter type + location + recorded time
+    LEFT JOIN (
+        SELECT o.person_id, cn.name AS regimen, o.obs_datetime, o.location_id, et.name AS encounter_type
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 90315 AND voided = 0 AND value_coded IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+                 LEFT JOIN concept_name cn
+                           ON o.value_coded = cn.concept_id
+                               AND cn.concept_name_type = 'FULLY_SPECIFIED'
+                               AND cn.locale = 'en'
+                               AND cn.voided = 0
+                 LEFT JOIN encounter e ON o.encounter_id = e.encounter_id
+                 LEFT JOIN encounter_type et ON e.encounter_type = et.encounter_type_id
+        WHERE o.concept_id = 90315
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_coded IS NOT NULL
+        GROUP BY o.person_id
+    ) cur ON cohort.client_id = cur.person_id
+
+    -- Latest CURRENT regimen "other" free text (99126)
+    LEFT JOIN (
+        SELECT o.person_id, o.value_text, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 99126 AND voided = 0 AND value_text IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+        WHERE o.concept_id = 99126
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_text IS NOT NULL
+        GROUP BY o.person_id
+    ) curo ON cohort.client_id = curo.person_id
+
+    -- Latest BASELINE regimen (99061)
+    LEFT JOIN (
+        SELECT o.person_id, cn.name AS regimen, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 99061 AND voided = 0 AND value_coded IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+                 LEFT JOIN concept_name cn
+                           ON o.value_coded = cn.concept_id
+                               AND cn.concept_name_type = 'FULLY_SPECIFIED'
+                               AND cn.locale = 'en'
+                               AND cn.voided = 0
+        WHERE o.concept_id = 99061
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_coded IS NOT NULL
+        GROUP BY o.person_id
+    ) base ON cohort.client_id = base.person_id
+
+    -- Latest BASELINE regimen "other" free text (99268)
+    LEFT JOIN (
+        SELECT o.person_id, o.value_text, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 99268 AND voided = 0 AND value_text IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+        WHERE o.concept_id = 99268
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_text IS NOT NULL
+        GROUP BY o.person_id
+    ) baseo ON cohort.client_id = baseo.person_id
+
+    -- Latest TRANSFER-IN regimen (99064)
+    LEFT JOIN (
+        SELECT o.person_id, cn.name AS regimen, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 99064 AND voided = 0 AND value_coded IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+                 LEFT JOIN concept_name cn
+                           ON o.value_coded = cn.concept_id
+                               AND cn.concept_name_type = 'FULLY_SPECIFIED'
+                               AND cn.locale = 'en'
+                               AND cn.voided = 0
+        WHERE o.concept_id = 99064
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_coded IS NOT NULL
+        GROUP BY o.person_id
+    ) tin ON cohort.client_id = tin.person_id
+
+    -- Latest TRANSFER-IN regimen "other" free text (99269)
+    LEFT JOIN (
+        SELECT o.person_id, o.value_text, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 99269 AND voided = 0 AND value_text IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+        WHERE o.concept_id = 99269
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_text IS NOT NULL
+        GROUP BY o.person_id
+    ) tino ON cohort.client_id = tino.person_id
+
+    -- Latest regimen LINE from obs (164515 Current Regimen Line / 164350 Previous ARV Regimen line)
+    LEFT JOIN (
+        SELECT o.person_id, cn.name AS line_name, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id IN (164515, 164350) AND voided = 0 AND value_coded IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+                 LEFT JOIN concept_name cn
+                           ON o.value_coded = cn.concept_id
+                               AND cn.concept_name_type = 'FULLY_SPECIFIED'
+                               AND cn.locale = 'en'
+                               AND cn.voided = 0
+        WHERE o.concept_id IN (164515, 164350)
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_coded IS NOT NULL
+        GROUP BY o.person_id
+    ) lineobs ON cohort.client_id = lineobs.person_id
+
+    -- Regimen line from the OPEN program-workflow state (concept 166214) — fallback.
+    -- state_start (patient_state.start_date) is used as the "recorded" datetime.
+    LEFT JOIN (
+        SELECT pp.patient_id, cn.name AS line_name, ps.start_date AS state_start
+        FROM patient_state ps
+                 INNER JOIN patient_program pp
+                            ON ps.patient_program_id = pp.patient_program_id AND pp.voided = 0
+                 INNER JOIN program_workflow_state pws ON ps.state = pws.program_workflow_state_id
+                 INNER JOIN program_workflow pw ON pws.program_workflow_id = pw.program_workflow_id
+                 LEFT JOIN concept_name cn
+                           ON pws.concept_id = cn.concept_id
+                               AND cn.concept_name_type = 'FULLY_SPECIFIED'
+                               AND cn.locale = 'en'
+                               AND cn.voided = 0
+        WHERE pw.concept_id = 166214
+          AND ps.end_date IS NULL
+        GROUP BY pp.patient_id
+    ) progline ON cohort.client_id = progline.patient_id
+
+    -- ART start date (99161): value_datetime = when ART started; obs_datetime = when recorded
+    LEFT JOIN (
+        SELECT o.person_id, DATE(o.value_datetime) AS art_start, o.obs_datetime
+        FROM obs o
+                 INNER JOIN (
+            SELECT person_id, MAX(obs_datetime) latest_date
+            FROM obs
+            WHERE concept_id = 99161 AND voided = 0 AND value_datetime IS NOT NULL
+            GROUP BY person_id
+        ) a ON o.person_id = a.person_id
+        WHERE o.concept_id = 99161
+          AND o.obs_datetime = a.latest_date
+          AND o.voided = 0
+          AND o.value_datetime IS NOT NULL
+        GROUP BY o.person_id
+    ) artstart ON cohort.client_id = artstart.person_id;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_latest_regimen_patients_query
+--
+
+
+DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_patients_query;
+~-~-
+CREATE PROCEDURE sp_fact_latest_regimen_patients_query(IN p_client_id INT)
+BEGIN
+    SELECT *
+    FROM mamba_fact_patients_latest_regimen
+    WHERE (p_client_id IS NULL OR client_id = p_client_id)
+    ORDER BY client_id;
+END;
+~-~-
+
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_latest_regimen_patients_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_latest_regimen_patients_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_latest_regimen_patients_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_latest_regimen_patients_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_latest_regimen_patients_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_fact_latest_return_date_patients
 --
 
@@ -21726,6 +22281,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_return_date;
 CREATE TABLE mamba_fact_patients_latest_return_date
 (
     id                                      INT AUTO_INCREMENT,
@@ -21925,6 +22481,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_tb_status;
 CREATE TABLE mamba_fact_patients_latest_tb_status
 (
     id             INT AUTO_INCREMENT,
@@ -22126,6 +22683,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_tpt_status;
 CREATE TABLE mamba_fact_patients_latest_tpt_status
 (
     id             INT AUTO_INCREMENT,
@@ -22327,6 +22885,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_viral_load_ordered;
 CREATE TABLE mamba_fact_patients_latest_viral_load_ordered
 (
     id                                      INT AUTO_INCREMENT,
@@ -22528,6 +23087,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_vl_after_iac;
 CREATE TABLE mamba_fact_patients_latest_vl_after_iac
 (
     id             INT AUTO_INCREMENT,
@@ -22737,6 +23297,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_who_stage;
 CREATE TABLE mamba_fact_patients_latest_who_stage
 (
     id             INT AUTO_INCREMENT,
@@ -22938,6 +23499,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_marital_status;
 CREATE TABLE mamba_fact_patients_marital_status
 (
     id             INT AUTO_INCREMENT,
@@ -23138,6 +23700,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_nationality;
 CREATE TABLE mamba_fact_patients_nationality
 (
     id                                      INT AUTO_INCREMENT,
@@ -23338,6 +23901,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_patient_demographics;
 CREATE TABLE mamba_fact_patients_latest_patient_demographics
 (
     id         INT AUTO_INCREMENT,
@@ -23541,6 +24105,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_art_patients;
 CREATE TABLE mamba_fact_art_patients
 (
     id        INT AUTO_INCREMENT,
@@ -23601,15 +24166,16 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_art_patients(client_id,
+                                      patient_id,
                                       birthdate,
                                       age,
                                       gender,
                                       dead,
                                       age_group)
-SELECT DISTINCT e.client_id, birthdate, mdp.age, gender, dead, mda.datim_agegroup as age_group
-FROM (SELECT DISTINCT client_id from mamba_fact_encounter_hiv_art_card) e
-         INNER JOIN mamba_fact_patients_latest_patient_demographics mdp ON e.client_id = mdp.patient_id
-LEFT JOIN mamba_dim_agegroup mda on mda.age = mdp.age;
+	SELECT DISTINCT e.client_id, e.patient_id, birthdate, mdp.age, gender, dead, mda.datim_agegroup as age_group
+	FROM (SELECT DISTINCT client_id, patient_id FROM mamba_fact_encounter_hiv_art_card) e
+	         INNER JOIN mamba_fact_patients_latest_patient_demographics mdp ON e.client_id = mdp.patient_id
+	LEFT JOIN mamba_dim_agegroup mda on mda.age = mdp.age;
 -- $END
 END;
 ~-~-
@@ -23744,6 +24310,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_audit_tool_art_patients;
 CREATE TABLE mamba_fact_audit_tool_art_patients
 (
     id                                     INT AUTO_INCREMENT,
@@ -23856,6 +24423,7 @@ END;
 
 -- $BEGIN
 INSERT INTO mamba_fact_audit_tool_art_patients (client_id,
+                                                patient_id,
                                                 identifier,
                                                 nationality,
                                                 marital_status,
@@ -23915,6 +24483,7 @@ INSERT INTO mamba_fact_audit_tool_art_patients (client_id,
                                                 cd4_date,
                                                 cd4)
 SELECT cohort.client_id,
+       cohort.patient_id                                                    AS patient_id,
        identifiers.identifier                                               AS identifier,
        nationality,
        marital_status,
@@ -24334,6 +24903,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_active_in_care;
 CREATE TABLE mamba_fact_active_in_care
 (
     id                   INT AUTO_INCREMENT,
@@ -24547,6 +25117,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_patients_latest_pregnancy_status;
 CREATE TABLE mamba_fact_patients_latest_pregnancy_status
 (
     id             INT AUTO_INCREMENT,
@@ -24750,6 +25321,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_eid_patients;
 CREATE TABLE mamba_fact_eid_patients
 (
     id        INT AUTO_INCREMENT,
@@ -25346,6 +25918,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_medication_orders;
 CREATE TABLE mamba_fact_medication_orders
 (
     id        INT AUTO_INCREMENT,
@@ -25634,6 +26207,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_test_orders;
 CREATE TABLE mamba_fact_test_orders
 (
     id        INT AUTO_INCREMENT,
@@ -25858,6 +26432,7 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_test_orders_results;
 CREATE TABLE mamba_fact_test_orders_results
 (
     id        INT AUTO_INCREMENT,
@@ -26111,6 +26686,7 @@ CALL sp_fact_latest_index_tested_partners_status_patients;
 CALL sp_fact_latest_nutrition_assesment_patients;
 CALL sp_fact_latest_nutrition_support_patients;
 CALL sp_fact_latest_regimen_line_patients;
+CALL sp_fact_latest_regimen_patients;
 CALL sp_fact_latest_return_date_patients;
 CALL sp_fact_latest_tb_status_patients;
 CALL sp_fact_latest_tpt_status_patients;
@@ -26165,6 +26741,8 @@ BEGIN
 END;
 
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_arv_orders;
+
 CREATE TABLE mamba_fact_arv_orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT NOT NULL COMMENT 'Patient ID',
@@ -26284,14 +26862,14 @@ SELECT DISTINCT
             30
     END as days_on_drugs,
     do.dose,
-    du.name as dose_units,
+    (SELECT name FROM concept_name WHERE concept_id = do.dose_units AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as dose_units,
     do.quantity,
-    qu.name as quantity_units,
+    (SELECT name FROM concept_name WHERE concept_id = do.quantity_units AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as quantity_units,
     do.duration,
-    dur_units.name as duration_units,
+    (SELECT name FROM concept_name WHERE concept_id = do.duration_units AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as duration_units,
     do.duration_units as duration_units_concept_id,
-    fr.name as frequency,
-    rt.name as route,
+    (SELECT name FROM concept_name WHERE concept_id = do.frequency AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as frequency,
+    (SELECT name FROM concept_name WHERE concept_id = do.route AND concept_name_type = 'FULLY_SPECIFIED' AND locale = 'en' AND voided = 0 LIMIT 1) as route,
     o.order_number,
     NULL as order_action,
     o.urgency,
@@ -26299,11 +26877,6 @@ SELECT DISTINCT
 FROM orders o
 INNER JOIN drug_order do ON do.order_id = o.order_id
 INNER JOIN drug d ON d.drug_id = do.drug_inventory_id
-LEFT JOIN concept_name dur_units ON dur_units.concept_id = do.duration_units AND dur_units.concept_name_type = 'FULLY_SPECIFIED' AND dur_units.locale = 'en' AND dur_units.voided = 0
-LEFT JOIN concept_name du ON du.concept_id = do.dose_units AND du.concept_name_type = 'FULLY_SPECIFIED' AND du.locale = 'en' AND du.voided = 0
-LEFT JOIN concept_name qu ON qu.concept_id = do.quantity_units AND qu.concept_name_type = 'FULLY_SPECIFIED' AND qu.locale = 'en' AND qu.voided = 0
-LEFT JOIN concept_name fr ON fr.concept_id = do.frequency AND fr.concept_name_type = 'FULLY_SPECIFIED' AND fr.locale = 'en' AND fr.voided = 0
-LEFT JOIN concept_name rt ON rt.concept_id = do.route AND rt.concept_name_type = 'FULLY_SPECIFIED' AND rt.locale = 'en' AND rt.voided = 0
 WHERE FIND_IN_SET(o.concept_id, @arv_concepts) > 0
   AND o.voided = 0;
 -- $END
@@ -27807,7 +28380,7 @@ CREATE TABLE mamba_fact_encounter_hts_card
     consented_for_blood_drawn_for_testing VARCHAR(255) NULL,
     hiv_recency_result                    VARCHAR(255) NULL,
     hiv_recency_viral_load_results        VARCHAR(255) NULL,
-    hiv_recency_viral_load_qualitative DOUBLE NULL,
+    hiv_recency_viral_load_qualitative VARCHAR(255) NULL,
     hiv_recency_sample_id                 VARCHAR(255) NULL,
     hts_fingerprint_captured              VARCHAR(255) NULL,
     results_received_as_individual        VARCHAR(255) NULL,
@@ -27819,7 +28392,7 @@ CREATE TABLE mamba_fact_encounter_hts_card
     other_prevention_services             VARCHAR(255) NULL,
     has_client_been_linked_to_care        VARCHAR(255) NULL,
     name_of_location_transferred_to       VARCHAR(255) NULL,
-    serial_number     VARCHAR(100) NULL,
+    serial_number     VARCHAR(1000) NULL,
     client_at_risk_of_acquiring_hiv VARCHAR(255) NULL,
     risk_profile          VARCHAR(255) NULL,
     do_you_consent_for_an_hiv_test        VARCHAR(255) NULL,
@@ -29446,8 +30019,7 @@ SELECT
     reason_for_regimen_substitution,
     reason_for_regimen_switch,
     clinical_notes
-FROM mamba_flat_encounter_regimen_change
-WHERE voided = 0;
+FROM mamba_flat_encounter_regimen_change;
 -- $END
 END;
 ~-~-
@@ -29497,7 +30069,7 @@ SET a.current_regimen = b.current_regimen,
     a.reason_for_regimen_substitution = b.reason_for_regimen_substitution,
     a.reason_for_regimen_switch = b.reason_for_regimen_switch,
     a.clinical_notes = b.clinical_notes
-WHERE b.voided = 0;
+;
 -- $END
 END;
 ~-~-
@@ -29965,6 +30537,917 @@ END;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- 01_comprehensive_vl_episode
+--
+
+DROP PROCEDURE IF EXISTS 01_comprehensive_vl_episode;
+
+
+~-~-
+CREATE PROCEDURE 01_comprehensive_vl_episode()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('01_comprehensive_vl_episode', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('01_comprehensive_vl_episode', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================
+-- Comprehensive Viral Load Episode Table
+-- ============================================
+-- Purpose: Single reference table for all VL workflows
+-- Replaces: 35-table design with one consolidated table
+-- Supports: All HMIS 106A VL reporting requirements
+--
+-- Based on: Comprehensive VL ETL Planning Document
+-- Created: 2026-07-29
+-- ============================================
+
+-- Drop existing table if needed
+DROP TABLE IF EXISTS mamba_fact_viral_load_episode;
+
+-- Create the comprehensive VL episode table
+CREATE TABLE mamba_fact_viral_load_episode (
+    -- ============ IDENTIFIERS ============
+    episode_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    patient_uuid CHAR(38),
+
+    -- ============ ORDER INFORMATION ============
+    native_order_id INT,
+    native_order_uuid CHAR(38),
+    derived_order_key VARCHAR(100),  -- Format: LEGACY_OBS:{obs_id}
+    order_record_type ENUM('NATIVE_ORDER', 'DERIVED_LEGACY_ORDER', 'EXTERNAL_ORDER', 'NO_ORDER'),
+    order_source_workflow ENUM('LEGACY_ART_CARD', 'NEW_VL_REQUEST_FORM', 'UNKNOWN'),
+    order_date DATE,
+    order_date_source VARCHAR(50),
+    order_encounter_id INT,
+    ordering_provider_id INT,
+    order_status VARCHAR(50),
+    order_action VARCHAR(50),  -- NEW, REVISE, RENEW, DISCONTINUE
+    previous_order_id INT,
+    accession_number VARCHAR(100),
+    accession_number_normalized VARCHAR(100),
+
+    -- ============ SAMPLE INFORMATION ============
+    sample_collection_date DATE,
+    sample_collection_date_source VARCHAR(50),
+    sample_collection_date_conflict TINYINT(1) DEFAULT 0,
+    specimen_source VARCHAR(100),
+    specimen_type VARCHAR(100),
+    sample_dispatch_date DATE,
+    lab_receipt_date DATE,
+    sample_status VARCHAR(50),
+    rejection_reason TEXT,
+
+    -- ============ RESULT INFORMATION ============
+    result_encounter_id INT,
+    panel_obs_id INT,
+    viral_load_clinical_date DATE,
+    viral_load_date_source VARCHAR(50),
+    laboratory_result_date DATE,
+    return_to_facility_date DATE,
+    result_database_creation_date DATETIME,
+    result_encounter_datetime DATETIME,
+
+    -- Numeric Result
+    result_numeric_raw DOUBLE,
+    result_numeric DOUBLE,
+    result_modifier VARCHAR(10),  -- <, >, =
+    result_numeric_copies INT,
+    lower_detection_limit INT,
+
+    -- Qualitative Result
+    result_qualitative_raw VARCHAR(100),
+    result_qualitative VARCHAR(50),  -- TARGET_NOT_DETECTED, DETECTED, POOR_SAMPLE_QUALITY, INVALID
+    result_qualitative_concept_id INT,
+
+    -- Result Status
+    result_status VARCHAR(50),  -- VALID, INVALID, REJECTED, PENDING
+    is_valid_result TINYINT(1),
+
+    -- ============ SUPPRESSION INTERPRETATION ============
+    result_interpretation VARCHAR(50),  -- SUPPRESSED, UNSUPPRESSED, INVALID, UNKNOWN
+    suppression_threshold INT DEFAULT 1000,
+    is_suppressed TINYINT(1),
+    is_unsuppressed TINYINT(1),
+    is_high_viral_load TINYINT(1),
+    requires_repeat_test TINYINT(1),
+    requires_recollection TINYINT(1),
+    has_numeric_qualitative_conflict TINYINT(1) DEFAULT 0,
+
+    -- ============ CLINICAL CONTEXT (at time of order/sample) ============
+    -- ART Status
+    art_start_date DATE,
+    art_restart_date DATE,
+    transfer_in_date DATE,
+    days_on_art_at_order INT,
+    current_regimen_at_order VARCHAR(250),
+    current_regimen_line VARCHAR(100),
+    arv_adherence VARCHAR(50),
+
+    -- PMTCT Context
+    pregnancy_status ENUM('YES', 'NO', 'UNKNOWN'),
+    pregnancy_status_at_order VARCHAR(50),
+    breastfeeding_status ENUM('YES', 'NO', 'UNKNOWN'),
+    breastfeeding_status_at_order VARCHAR(50),
+    gestational_age_weeks INT,
+    delivery_date DATE,
+    is_pmtct_context TINYINT(1),
+    anc_number DOUBLE,
+    pnc_number VARCHAR(100),
+
+    -- TB Status
+    has_active_tb VARCHAR(50),
+    tb_treatment_phase VARCHAR(100),
+
+    -- WHO Stage
+    current_who_stage VARCHAR(100),
+
+    -- VL Indication
+    recorded_vl_indication VARCHAR(250),
+    calculated_vl_indication VARCHAR(250),  -- ROUTINE, FIRST_AFTER_ART_INIT, SUSPECTED_FAILURE, etc.
+
+    -- ============ TESTING MODEL ============
+    testing_model ENUM('CENTRAL_LAB', 'POINT_OF_CARE', 'OTHER_LAB', 'UNKNOWN'),
+    testing_model_source VARCHAR(100),
+    testing_model_confidence ENUM('HIGH', 'MEDIUM', 'LOW'),
+    is_testing_model_inferred TINYINT(1) DEFAULT 0,
+    performing_laboratory_name VARCHAR(250),
+
+    -- ============ ORDER-RESULT LINKAGE ============
+    linkage_method ENUM('DIRECT_ORDER_ID', 'ACCESSION_NUMBER', 'PATIENT_DATE', 'SAME_ENCOUNTER', 'UNMATCHED_RESULT', 'UNMATCHED_ORDER'),
+    linkage_confidence ENUM('HIGH', 'MEDIUM', 'LOW'),
+    linkage_score INT,
+    is_orphan_result TINYINT(1) DEFAULT 0,
+    is_order_without_result TINYINT(1) DEFAULT 0,
+
+    -- ============ TURNAROUND TIMES (days) ============
+    order_to_collection_days INT,
+    collection_to_dispatch_days INT,
+    dispatch_to_lab_receipt_days INT,
+    lab_processing_days INT,
+    result_to_facility_days INT,
+    facility_to_emr_entry_days INT,
+    collection_to_result_days INT,
+    collection_to_facility_days INT,
+    order_to_result_days INT,
+    documentation_delay_days INT,
+
+    -- ============ HIGH VL FOLLOW-UP ============
+    previous_unsuppressed_vl_date DATE,
+    high_vl_episode_number INT,
+    repeat_vl_due_date DATE,
+    repeat_vl_completed TINYINT(1),
+    repeat_vl_suppressed TINYINT(1),
+    persistent_unsuppressed TINYINT(1),
+
+    -- ============ DUE STATUS (snapshot) ============
+    next_expected_vl_date DATE,
+    is_due TINYINT(1),
+    is_overdue TINYINT(1),
+    days_until_due INT,
+    days_overdue INT,
+    due_reason VARCHAR(250),
+
+    -- ============ PIPELINE STATUS ============
+    pipeline_status ENUM(
+        'DUE_NOT_ORDERED',
+        'ORDERED_NOT_COLLECTED',
+        'COLLECTED_NOT_DISPATCHED',
+        'DISPATCHED_NOT_RECEIVED_AT_LAB',
+        'LAB_RECEIVED_RESULT_PENDING',
+        'RESULT_FINAL_NOT_RETURNED_TO_FACILITY',
+        'RETURNED_NOT_ENTERED_IN_EMR',
+        'RESULT_ENTERED',
+        'SAMPLE_REJECTED',
+        'ORDER_CANCELLED',
+        'ORDER_WITHOUT_RESULT',
+        'ORPHAN_RESULT',
+        'UNKNOWN'
+    ),
+
+    -- ============ LOCATION ============
+    encounter_id INT,
+    location_id INT,
+    encounter_datetime DATETIME,
+
+    -- ============ ETL METADATA ============
+    source_record_id INT,
+    source_uuid CHAR(38),
+    etl_rule_version VARCHAR(50),
+    etl_run_id INT,
+    etl_created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    etl_updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    -- ============ INDEXES ============
+    INDEX idx_patient_id (patient_id),
+    INDEX idx_location_id (location_id),
+    INDEX idx_order_date (order_date),
+    INDEX idx_sample_collection_date (sample_collection_date),
+    INDEX idx_vl_clinical_date (viral_load_clinical_date),
+    INDEX idx_native_order_id (native_order_id),
+    INDEX idx_accession_number (accession_number),
+    INDEX idx_linkage_method (linkage_method),
+    INDEX idx_testing_model (testing_model),
+    INDEX idx_pipeline_status (pipeline_status),
+    INDEX idx_is_suppressed (is_suppressed),
+    INDEX idx_is_orphan (is_orphan_result, is_order_without_result),
+    INDEX idx_location_order_date (location_id, order_date),
+    INDEX idx_location_sample_date (location_id, sample_collection_date),
+    INDEX idx_patient_vl_date (patient_id, viral_load_clinical_date),
+
+    -- Composite for due status queries
+    INDEX idx_due_status (location_id, is_due, is_overdue, next_expected_vl_date)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+COMMENT='Comprehensive viral load episode table - single source for all VL reporting';
+
+SELECT 'mamba_fact_viral_load_episode table created successfully' AS status;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- 03_sp_vl_episode_etl
+--
+
+-- ============================================
+-- Comprehensive VL Episode ETL Procedure
+-- ============================================
+-- Purpose: Populate mamba_fact_viral_load_episode from all VL sources
+-- Sources:
+--   1. Legacy ART card observations (99% of data)
+--   2. New HMIS VL request form with native orders (1% of data)
+--   3. Existing VL tables (mamba_flat_encounter_vl_request, etc.)
+--
+-- Key Features:
+--   - Extracts orders and results from both workflows
+--   - Matches orders to results using multiple methods
+--   - Builds comprehensive episodes
+--   - Calculates suppression status
+--   - Infers testing model
+--   - Tracks linkage confidence
+--   - Exposes data quality issues
+--
+-- Created: 2026-07-29
+-- ============================================
+
+DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_episode_etl;
+
+
+~-~-
+CREATE PROCEDURE sp_mamba_fact_vl_episode_etl()
+BEGIN
+    DECLARE start_time DATETIME DEFAULT NOW();
+    DECLARE episode_count INT;
+    DECLARE orphan_count INT;
+    DECLARE unmatched_order_count INT;
+
+    -- ============ STEP 1: Clear existing data ============
+    TRUNCATE TABLE mamba_fact_viral_load_episode;
+
+    -- ============ STEP 2: Extract native orders ============
+    INSERT INTO mamba_fact_viral_load_episode (
+        patient_id,
+        native_order_id,
+        native_order_uuid,
+        order_record_type,
+        order_source_workflow,
+        order_date,
+        order_date_source,
+        order_encounter_id,
+        ordering_provider_id,
+        accession_number,
+        accession_number_normalized,
+        sample_collection_date,
+        sample_collection_date_source,
+        specimen_source,
+        location_id,
+        encounter_id,
+        encounter_datetime,
+        pipeline_status,
+        is_order_without_result,
+        linkage_method,
+        linkage_confidence,
+        etl_created_at
+    )
+    SELECT DISTINCT
+        o.patient_id,
+        o.order_id,
+        o.uuid,
+        'NATIVE_ORDER',
+        'NEW_VL_REQUEST_FORM',
+        DATE(o.date_activated) AS order_date,
+        'order.date_activated',
+        o.encounter_id,
+        o.orderer,
+        UPPER(TRIM(o.accession_number)) AS accession_number,
+        UPPER(TRIM(REPLACE(REPLACE(o.accession_number, '-', ''), '/', ''))) AS accession_number_normalized,
+        DATE(o.scheduled_date) AS sample_collection_date,
+        'order.scheduled_date',
+        tos.specimen_source,
+        e.location_id,
+        o.encounter_id,
+        e.encounter_datetime,
+        'ORDERED_NOT_COLLECTED',
+        1 AS is_order_without_result,
+        'UNMATCHED_ORDER',
+        'HIGH',
+        NOW()
+    FROM orders o
+    INNER JOIN test_order tos ON o.order_id = tos.order_id
+    INNER JOIN patient p ON o.patient_id = p.patient_id
+    LEFT JOIN encounter e ON o.encounter_id = e.encounter_id
+    WHERE o.concept_id = 165412  -- Viral Load Test concept
+      AND o.voided = 0
+      AND (o.care_setting = 1 OR o.care_setting IS NULL)
+      AND o.date_activated IS NOT NULL;
+
+    -- ============ STEP 3: Extract legacy derived orders ============
+    INSERT INTO mamba_fact_viral_load_episode (
+        patient_id,
+        derived_order_key,
+        order_record_type,
+        order_source_workflow,
+        order_date,
+        order_date_source,
+        order_encounter_id,
+        accession_number,
+        location_id,
+        encounter_id,
+        encounter_datetime,
+        pipeline_status,
+        is_order_without_result,
+        linkage_method,
+        linkage_confidence,
+        etl_created_at
+    )
+    SELECT DISTINCT
+        obs_parent.person_id AS patient_id,
+        CONCAT('LEGACY_OBS:', obs_parent.obs_id) AS derived_order_key,
+        'DERIVED_LEGACY_ORDER',
+        'LEGACY_ART_CARD',
+        DATE(obs_parent.obs_datetime) AS order_date,
+        'obs.obs_datetime',
+        obs_parent.encounter_id,
+        obs_accession.value_text AS accession_number,
+        obs_parent.location_id,
+        obs_parent.encounter_id,
+        obs_parent.obs_datetime,
+        'ORDERED_NOT_COLLECTED',
+        1 AS is_order_without_result,
+        'UNMATCHED_ORDER',
+        'HIGH',
+        NOW()
+    FROM obs obs_parent
+    INNER JOIN obs obs_ordered ON obs_parent.person_id = obs_ordered.person_id
+        AND obs_parent.encounter_id = obs_ordered.encounter_id
+    INNER JOIN patient p ON obs_parent.person_id = p.patient_id
+    -- Legacy order detection: Tests Ordered (1271) -> Viral Load Test (165412)
+    LEFT JOIN obs obs_accession ON obs_parent.person_id = obs_accession.person_id
+        AND obs_accession.concept_id = 165845  -- Accession Number
+        AND obs_accession.voided = 0
+    WHERE obs_parent.concept_id = 165412  -- Viral Load Test panel
+      AND obs_ordered.concept_id = 1271   -- Tests Ordered
+      AND obs_ordered.value_coded = 165412  -- Answer: Viral Load Test
+      AND obs_parent.voided = 0
+      AND obs_ordered.voided = 0
+      AND obs_parent.obs_group_id IS NULL;  -- Parent panel, not child
+
+    -- ============ STEP 4: Extract VL results (encounter-based structure) ============
+    -- In this database, VL components are separate observations linked by encounter_id + obs_datetime
+    INSERT INTO mamba_fact_viral_load_episode (
+        patient_id,
+        panel_obs_id,
+        order_record_type,
+        result_encounter_id,
+        viral_load_clinical_date,
+        viral_load_date_source,
+        result_database_creation_date,
+        result_encounter_datetime,
+        sample_collection_date,
+        sample_collection_date_source,
+        result_numeric_raw,
+        result_numeric,
+        result_numeric_copies,
+        result_qualitative_raw,
+        result_qualitative_concept_id,
+        return_to_facility_date,
+        accession_number,
+        accession_number_normalized,
+        specimen_source,
+        location_id,
+        encounter_id,
+        encounter_datetime,
+        pipeline_status,
+        is_orphan_result,
+        linkage_method,
+        linkage_confidence,
+        result_status,
+        etl_created_at
+    )
+    SELECT DISTINCT
+        obs_numeric.person_id AS patient_id,
+        obs_numeric.obs_id AS panel_obs_id,
+        'NO_ORDER',
+        obs_numeric.encounter_id AS result_encounter_id,
+        COALESCE(
+            obs_vl_date.value_datetime,
+            DATE(obs_numeric.obs_datetime)
+        ) AS viral_load_clinical_date,
+        COALESCE(
+            IF(obs_vl_date.obs_id IS NOT NULL, 'obs_datetime', NULL),
+            'numeric_obs_datetime'
+        ) AS viral_load_date_source,
+        obs_numeric.date_created AS result_database_creation_date,
+        obs_numeric.obs_datetime AS result_encounter_datetime,
+        COALESCE(
+            obs_sample_date.value_datetime,
+            NULL
+        ) AS sample_collection_date,
+        COALESCE(
+            IF(obs_sample_date.obs_id IS NOT NULL, 'obs_datetime', NULL),
+            NULL
+        ) AS sample_collection_date_source,
+        obs_numeric.value_numeric AS result_numeric_raw,
+        obs_numeric.value_numeric AS result_numeric,
+        CAST(obs_numeric.value_numeric AS SIGNED) AS result_numeric_copies,
+        obs_qual_coded.short_name AS result_qualitative_raw,
+        obs_qual.value_coded AS result_qualitative_concept_id,
+        obs_return_date.value_datetime AS return_to_facility_date,
+        obs_accession.value_text AS accession_number,
+        UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))) AS accession_number_normalized,
+        obs_specimen.value_coded AS specimen_source,
+        obs_numeric.location_id,
+        obs_numeric.encounter_id,
+        obs_numeric.obs_datetime,
+        'ORPHAN_RESULT',
+        1 AS is_orphan_result,
+        'UNMATCHED_RESULT',
+        'MEDIUM',
+        'VALID',
+        NOW()
+    FROM obs obs_numeric
+    -- Start with numeric VL observations (concept 856)
+    -- Join to qualitative VL result (concept 1305) by encounter + person + datetime
+    LEFT JOIN obs obs_qual ON obs_numeric.person_id = obs_qual.person_id
+        AND obs_numeric.encounter_id = obs_qual.encounter_id
+        AND obs_qual.concept_id = 1305  -- VIRAL LOAD QUALITATIVE
+        AND obs_qual.voided = 0
+        AND (
+            obs_qual.obs_datetime = obs_numeric.obs_datetime OR
+            -- Allow slight time differences (within 1 minute)
+            ABS(TIMESTAMPDIFF(SECOND, obs_qual.obs_datetime, obs_numeric.obs_datetime)) <= 60
+        )
+    LEFT JOIN concept obs_qual_coded ON obs_qual.value_coded = obs_qual_coded.concept_id
+    -- Join to VL date (concept 163023) by encounter + person + datetime
+    LEFT JOIN obs obs_vl_date ON obs_numeric.person_id = obs_vl_date.person_id
+        AND obs_numeric.encounter_id = obs_vl_date.encounter_id
+        AND obs_vl_date.concept_id = 163023  -- HIV VIRAL LOAD DATE
+        AND obs_vl_date.value_datetime IS NOT NULL
+        AND obs_vl_date.voided = 0
+        AND (
+            obs_vl_date.obs_datetime = obs_numeric.obs_datetime OR
+            ABS(TIMESTAMPDIFF(SECOND, obs_vl_date.obs_datetime, obs_numeric.obs_datetime)) <= 60
+        )
+    -- Join to sample collection date (concept 163023) by encounter + person
+    LEFT JOIN obs obs_sample_date ON obs_numeric.person_id = obs_sample_date.person_id
+        AND obs_numeric.encounter_id = obs_sample_date.encounter_id
+        AND obs_sample_date.concept_id = 163023
+        AND obs_sample_date.value_datetime IS NOT NULL
+        AND obs_sample_date.voided = 0
+        AND obs_sample_date.obs_id != obs_vl_date.obs_id  -- Different from VL date
+        AND (
+            obs_sample_date.obs_datetime = obs_numeric.obs_datetime OR
+            ABS(TIMESTAMPDIFF(SECOND, obs_sample_date.obs_datetime, obs_numeric.obs_datetime)) <= 60
+        )
+    -- Join to return to facility date
+    LEFT JOIN obs obs_return_date ON obs_numeric.person_id = obs_return_date.person_id
+        AND obs_numeric.encounter_id = obs_return_date.encounter_id
+        AND obs_return_date.concept_id = 167944  -- DATE RESULT RECIEVED
+        AND obs_return_date.voided = 0
+        AND (
+            obs_return_date.obs_datetime = obs_numeric.obs_datetime OR
+            ABS(TIMESTAMPDIFF(SECOND, obs_return_date.obs_datetime, obs_numeric.obs_datetime)) <= 60
+        )
+    -- Join to accession number
+    LEFT JOIN obs obs_accession ON obs_numeric.person_id = obs_accession.person_id
+        AND obs_numeric.encounter_id = obs_accession.encounter_id
+        AND obs_accession.concept_id = 165845  -- Lab Number
+        AND obs_accession.voided = 0
+        AND (
+            obs_accession.obs_datetime = obs_numeric.obs_datetime OR
+            ABS(TIMESTAMPDIFF(SECOND, obs_accession.obs_datetime, obs_numeric.obs_datetime)) <= 60
+        )
+    -- Join to specimen source
+    LEFT JOIN obs obs_specimen ON obs_numeric.person_id = obs_specimen.person_id
+        AND obs_numeric.encounter_id = obs_specimen.encounter_id
+        AND obs_specimen.concept_id = 159959  -- SPECIMEN SITE
+        AND obs_specimen.voided = 0
+        AND (
+            obs_specimen.obs_datetime = obs_numeric.obs_datetime OR
+            ABS(TIMESTAMPDIFF(SECOND, obs_specimen.obs_datetime, obs_numeric.obs_datetime)) <= 60
+        )
+    WHERE obs_numeric.concept_id = 856  -- HIV VIRAL LOAD (numeric)
+      AND obs_numeric.voided = 0
+      AND obs_numeric.value_numeric IS NOT NULL;
+
+    -- ============ STEP 4b: Extract VL results with only qualitative values (no numeric) ============
+    INSERT INTO mamba_fact_viral_load_episode (
+        patient_id,
+        panel_obs_id,
+        order_record_type,
+        result_encounter_id,
+        viral_load_clinical_date,
+        viral_load_date_source,
+        result_database_creation_date,
+        result_encounter_datetime,
+        result_qualitative_raw,
+        result_qualitative_concept_id,
+        accession_number,
+        accession_number_normalized,
+        location_id,
+        encounter_id,
+        encounter_datetime,
+        pipeline_status,
+        is_orphan_result,
+        linkage_method,
+        linkage_confidence,
+        result_status,
+        etl_created_at
+    )
+    SELECT DISTINCT
+        obs_qual.person_id AS patient_id,
+        obs_qual.obs_id AS panel_obs_id,
+        'NO_ORDER',
+        obs_qual.encounter_id AS result_encounter_id,
+        COALESCE(
+            obs_vl_date.value_datetime,
+            DATE(obs_qual.obs_datetime)
+        ) AS viral_load_clinical_date,
+        COALESCE(
+            IF(obs_vl_date.obs_id IS NOT NULL, 'obs_datetime', NULL),
+            'qualitative_obs_datetime'
+        ) AS viral_load_date_source,
+        obs_qual.date_created AS result_database_creation_date,
+        obs_qual.obs_datetime AS result_encounter_datetime,
+        obs_qual_coded.short_name AS result_qualitative_raw,
+        obs_qual.value_coded AS result_qualitative_concept_id,
+        obs_accession.value_text AS accession_number,
+        UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))) AS accession_number_normalized,
+        obs_qual.location_id,
+        obs_qual.encounter_id,
+        obs_qual.obs_datetime,
+        'ORPHAN_RESULT',
+        1 AS is_orphan_result,
+        'UNMATCHED_RESULT',
+        'MEDIUM',
+        'VALID',
+        NOW()
+    FROM obs obs_qual
+    -- Join to VL date
+    LEFT JOIN obs obs_vl_date ON obs_qual.person_id = obs_vl_date.person_id
+        AND obs_qual.encounter_id = obs_vl_date.encounter_id
+        AND obs_vl_date.concept_id = 163023  -- HIV VIRAL LOAD DATE
+        AND obs_vl_date.value_datetime IS NOT NULL
+        AND obs_vl_date.voided = 0
+        AND (
+            obs_vl_date.obs_datetime = obs_qual.obs_datetime OR
+            ABS(TIMESTAMPDIFF(SECOND, obs_vl_date.obs_datetime, obs_qual.obs_datetime)) <= 60
+        )
+    -- Join to accession number
+    LEFT JOIN obs obs_accession ON obs_qual.person_id = obs_accession.person_id
+        AND obs_qual.encounter_id = obs_accession.encounter_id
+        AND obs_accession.concept_id = 165845  -- Lab Number
+        AND obs_accession.voided = 0
+    LEFT JOIN concept obs_qual_coded ON obs_qual.value_coded = obs_qual_coded.concept_id
+    -- Start with qualitative VL observations (concept 1305)
+    WHERE obs_qual.concept_id = 1305  -- VIRAL LOAD QUALITATIVE
+      AND obs_qual.voided = 0
+      AND obs_qual.value_coded IS NOT NULL
+      -- Exclude if already captured in numeric step (has corresponding numeric result)
+      AND NOT EXISTS (
+          SELECT 1 FROM obs obs_numeric
+          WHERE obs_numeric.person_id = obs_qual.person_id
+            AND obs_numeric.encounter_id = obs_qual.encounter_id
+            AND obs_numeric.concept_id = 856
+            AND obs_numeric.value_numeric IS NOT NULL
+            AND obs_numeric.voided = 0
+            AND (
+                obs_numeric.obs_datetime = obs_qual.obs_datetime OR
+                ABS(TIMESTAMPDIFF(SECOND, obs_numeric.obs_datetime, obs_qual.obs_datetime)) <= 60
+            )
+      );
+
+    -- ============ STEP 5: Match orders to results by accession number ============
+    -- Create temporary table for accession number matching
+    CREATE TEMPORARY TABLE temp_accession_match AS
+    SELECT
+        odr.patient_id,
+        UPPER(TRIM(REPLACE(REPLACE(odr.accession_number, '-', ''), '/', ''))) AS accession_norm,
+        odr.episode_id AS order_episode_id,
+        odr.native_order_id AS order_native_order_id,
+        res.episode_id AS result_episode_id
+    FROM mamba_fact_viral_load_episode odr
+    INNER JOIN mamba_fact_viral_load_episode res
+        ON odr.patient_id = res.patient_id
+        AND UPPER(TRIM(REPLACE(REPLACE(odr.accession_number, '-', ''), '/', ''))) =
+            UPPER(TRIM(REPLACE(REPLACE(res.accession_number, '-', ''), '/', '')))
+    WHERE odr.accession_number IS NOT NULL
+      AND odr.accession_number != ''
+      AND odr.is_order_without_result = 1
+      AND res.is_orphan_result = 1;
+
+    UPDATE mamba_fact_viral_load_episode ep
+    INNER JOIN temp_accession_match t ON ep.episode_id = t.result_episode_id
+    SET ep.native_order_id = t.order_native_order_id,
+        ep.linkage_method = 'ACCESSION_NUMBER',
+        ep.linkage_confidence = 'HIGH',
+        ep.pipeline_status = 'RESULT_ENTERED',
+        ep.is_orphan_result = 0;
+
+    -- Remove the now-matched orders
+    DELETE FROM mamba_fact_viral_load_episode
+    WHERE episode_id IN (SELECT order_episode_id FROM temp_accession_match);
+
+    DROP TEMPORARY TABLE temp_accession_match;
+
+    -- ============ STEP 6: Match orders to results by patient + date window ============
+    -- Create temporary table for patient+date matching
+    CREATE TEMPORARY TABLE temp_date_match AS
+    SELECT
+        odr.patient_id,
+        DATEDIFF(COALESCE(res.viral_load_clinical_date, res.sample_collection_date),
+                  odr.order_date) AS days_diff,
+        odr.episode_id AS order_episode_id,
+        odr.native_order_id AS order_native_order_id,
+        res.episode_id AS result_episode_id
+    FROM mamba_fact_viral_load_episode odr
+    INNER JOIN mamba_fact_viral_load_episode res
+        ON odr.patient_id = res.patient_id
+    WHERE odr.is_order_without_result = 1
+      AND res.is_orphan_result = 1
+      AND COALESCE(res.viral_load_clinical_date, res.sample_collection_date) IS NOT NULL
+      AND odr.order_date IS NOT NULL
+      AND DATEDIFF(COALESCE(res.viral_load_clinical_date, res.sample_collection_date), odr.order_date)
+          BETWEEN 0 AND (SELECT CAST(parameter_value AS UNSIGNED) FROM mamba_vl_rule_config
+                        WHERE rule_name = 'MATCHING_WINDOW' AND parameter_name = 'patient_date_match_days')
+      AND odr.episode_id = (
+          -- Get the closest unmatched order
+          SELECT closest.episode_id
+          FROM mamba_fact_viral_load_episode closest
+          WHERE closest.patient_id = odr.patient_id
+            AND closest.is_order_without_result = 1
+          ORDER BY ABS(DATEDIFF(COALESCE(res.viral_load_clinical_date, res.sample_collection_date),
+                                closest.order_date))
+          LIMIT 1
+      );
+
+    UPDATE mamba_fact_viral_load_episode ep
+    INNER JOIN temp_date_match t ON ep.episode_id = t.result_episode_id
+    SET ep.native_order_id = t.order_native_order_id,
+        ep.linkage_method = 'PATIENT_DATE',
+        ep.linkage_confidence = 'MEDIUM',
+        ep.pipeline_status = 'RESULT_ENTERED',
+        ep.is_orphan_result = 0,
+        ep.linkage_score = t.days_diff;
+
+    -- Remove the now-matched orders
+    DELETE FROM mamba_fact_viral_load_episode
+    WHERE episode_id IN (SELECT order_episode_id FROM temp_date_match);
+
+    DROP TEMPORARY TABLE temp_date_match;
+
+    -- ============ STEP 7: Calculate suppression status ============
+    UPDATE mamba_fact_viral_load_episode ep
+    SET ep.is_suppressed =
+        CASE
+            WHEN ep.result_qualitative_concept_id = 1306 THEN 1  -- Target Not Detected
+            WHEN ep.result_numeric IS NOT NULL AND ep.result_numeric < ep.suppression_threshold THEN 1
+            WHEN ep.result_qualitative_concept_id = 1301 AND ep.result_numeric IS NOT NULL
+                AND ep.result_numeric < ep.suppression_threshold THEN 1
+            WHEN ep.result_qualitative_concept_id IN (1306, 1304) THEN 1  -- TND or poor sample quality
+            ELSE 0
+        END,
+        ep.is_unsuppressed =
+        CASE
+            WHEN ep.result_status = 'INVALID' OR ep.result_qualitative_raw LIKE '%POOR SAMPLE%' THEN NULL
+            WHEN ep.result_numeric IS NOT NULL AND ep.result_numeric >= ep.suppression_threshold THEN 1
+            WHEN ep.result_qualitative_concept_id = 1301 AND ep.result_numeric IS NULL THEN 1  -- Detected without numeric
+            ELSE 0
+        END,
+        ep.is_high_viral_load =
+        CASE
+            WHEN ep.result_numeric >= 5000 THEN 1
+            WHEN ep.result_numeric >= ep.suppression_threshold THEN 1
+            WHEN ep.result_qualitative_concept_id = 1301 AND ep.result_numeric IS NULL THEN 1  -- Detected without numeric
+            ELSE 0
+        END,
+        ep.result_interpretation =
+        CASE
+            WHEN ep.result_status = 'INVALID' OR ep.result_qualitative_raw LIKE '%POOR SAMPLE%' THEN 'INVALID'
+            WHEN ep.result_qualitative_concept_id = 1306 THEN 'SUPPRESSED'
+            WHEN ep.result_qualitative_concept_id = 1304 THEN 'INVALID'  -- Poor Sample Quality
+            WHEN ep.result_numeric IS NOT NULL AND ep.result_numeric < ep.suppression_threshold THEN 'SUPPRESSED'
+            WHEN ep.result_numeric IS NOT NULL AND ep.result_numeric >= ep.suppression_threshold THEN 'UNSUPPRESSED'
+            WHEN ep.result_qualitative_concept_id = 1301 AND ep.result_numeric IS NULL THEN 'UNSUPPRESSED'
+            WHEN ep.result_qualitative_concept_id = 1306 THEN 'SUPPRESSED'
+            ELSE 'UNKNOWN'
+        END,
+        ep.requires_repeat_test =
+        CASE
+            WHEN ep.is_unsuppressed = 1 THEN 1
+            ELSE 0
+        END;
+
+    -- ============ STEP 8: Infer testing model ============
+    UPDATE mamba_fact_viral_load_episode ep
+    SET ep.testing_model =
+        CASE
+            -- Same-day sample and result suggests POC
+            WHEN DATEDIFF(ep.viral_load_clinical_date, ep.sample_collection_date) = 0
+                AND DATEDIFF(ep.viral_load_clinical_date, ep.return_to_facility_date) <= 1
+                THEN 'POINT_OF_CARE'
+            -- Otherwise assume Central Lab (CPHL)
+            ELSE 'CENTRAL_LAB'
+        END,
+        ep.testing_model_source = 'inferred_from_dates',
+        ep.is_testing_model_inferred = 1,
+        ep.testing_model_confidence = 'MEDIUM';
+
+    -- ============ STEP 9: Calculate turnaround times ============
+    UPDATE mamba_fact_viral_load_episode ep
+    SET ep.order_to_collection_days = DATEDIFF(ep.sample_collection_date, ep.order_date),
+        ep.collection_to_result_days = DATEDIFF(ep.viral_load_clinical_date, ep.sample_collection_date),
+        ep.result_to_facility_days = DATEDIFF(ep.return_to_facility_date, ep.viral_load_clinical_date),
+        ep.facility_to_emr_entry_days = DATEDIFF(ep.result_database_creation_date, ep.return_to_facility_date),
+        ep.collection_to_facility_days = DATEDIFF(ep.return_to_facility_date, ep.sample_collection_date),
+        ep.order_to_result_days = DATEDIFF(ep.viral_load_clinical_date, ep.order_date),
+        ep.documentation_delay_days = DATEDIFF(ep.result_database_creation_date, ep.viral_load_clinical_date);
+
+    -- ============ STEP 10: Calculate qualitative canonical values ============
+    UPDATE mamba_fact_viral_load_episode ep
+    LEFT JOIN mamba_vl_coded_value_mapping cm
+        ON ep.result_qualitative_concept_id = cm.answer_concept_id
+    SET ep.result_qualitative = cm.canonical_value;
+
+    -- Handle special cases
+    UPDATE mamba_fact_viral_load_episode
+    SET result_qualitative = 'TARGET_NOT_DETECTED'
+    WHERE result_qualitative_raw LIKE '%BDL%' OR result_qualitative_raw LIKE '%NOT DETECTED%';
+
+    UPDATE mamba_fact_viral_load_episode
+    SET result_qualitative = 'POOR_SAMPLE_QUALITY',
+        result_status = 'INVALID',
+        requires_recollection = 1
+    WHERE result_qualitative_raw LIKE '%POOR%' OR result_qualitative_raw LIKE '%REJECTED%';
+
+    -- ============ STEP 11: Get counts for summary ============
+    SELECT COUNT(*) INTO episode_count FROM mamba_fact_viral_load_episode;
+    SELECT COUNT(*) INTO orphan_count FROM mamba_fact_viral_load_episode WHERE is_orphan_result = 1;
+    SELECT COUNT(*) INTO unmatched_order_count FROM mamba_fact_viral_load_episode WHERE is_order_without_result = 1;
+
+    -- ============ SUMMARY ============
+    SELECT
+        'VL Episode ETL Completed' AS status,
+        NOW() AS completed_at,
+        TIMESTAMPDIFF(SECOND, start_time, NOW()) AS duration_seconds,
+        episode_count AS total_episodes,
+        orphan_count AS orphan_results,
+        unmatched_order_count AS unmatched_orders,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE is_suppressed = 1) AS suppressed_count,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE is_unsuppressed = 1) AS unsuppressed_count,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE testing_model = 'POINT_OF_CARE') AS poc_count,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'ACCESSION_NUMBER') AS accession_matched;
+
+END;
+~-~-
+
+
+-- ============ HELPER: Get Latest VL per Patient ============
+DROP PROCEDURE IF EXISTS sp_get_latest_vl_per_patient;
+
+
+~-~-
+CREATE PROCEDURE sp_get_latest_vl_per_patient(
+    IN p_location_id INT,
+    IN p_start_date DATE,
+    IN p_end_date DATE
+)
+BEGIN
+    SELECT
+        vl.patient_id,
+        vl.viral_load_clinical_date AS latest_vl_date,
+        vl.result_numeric AS latest_vl_result,
+        vl.result_qualitative AS latest_vl_qualitative,
+        vl.result_interpretation AS latest_interpretation,
+        vl.is_suppressed,
+        vl.is_unsuppressed,
+        vl.testing_model,
+        vl.days_since_latest_vl,
+        vl.next_expected_vl_date,
+        vl.is_due,
+        vl.is_overdue,
+        vl.due_reason
+    FROM mamba_fact_viral_load_episode vl
+    WHERE (p_location_id IS NULL OR vl.location_id = p_location_id)
+      AND (p_start_date IS NULL OR vl.viral_load_clinical_date >= p_start_date)
+      AND (p_end_date IS NULL OR vl.viral_load_clinical_date <= p_end_date)
+      AND vl.viral_load_clinical_date IS NOT NULL
+      AND vl.panel_obs_id IS NOT NULL  -- Has actual result
+    ORDER BY vl.patient_id, vl.viral_load_clinical_date DESC;
+END;
+~-~-
+
+
+-- ============ HELPER: Get Pipeline Status ============
+DROP PROCEDURE IF EXISTS sp_get_vl_pipeline_summary;
+
+
+~-~-
+CREATE PROCEDURE sp_get_vl_pipeline_summary(
+    IN p_location_id INT,
+    IN p_as_of_date DATE
+)
+BEGIN
+    SELECT
+        pipeline_status,
+        COUNT(*) AS count,
+        COUNT(DISTINCT patient_id) AS unique_patients
+    FROM mamba_fact_viral_load_episode
+    WHERE (p_location_id IS NULL OR location_id = p_location_id)
+      AND (p_as_of_date IS NULL OR order_date <= p_as_of_date)
+    GROUP BY pipeline_status
+    ORDER BY count DESC;
+END;
+~-~-
+
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_vl_episode
+--
+
+-- ============================================================================
+-- Viral Load Episode Domain - Main Orchestration
+-- ============================================================================
+-- Updated: 2026-07-29
+-- Now uses the new comprehensive VL episode ETL (encounter-based structure)
+-- The old sp_fact_viral_load() used obs_group_id approach which doesn't match
+-- this database's structure where VL obs are linked by encounter_id + obs_datetime
+-- ============================================================================
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_vl_episode()
+BEGIN
+    -- Call the new comprehensive VL episode ETL
+    -- This creates mamba_fact_viral_load_episode table with full order-result matching
+    CALL sp_mamba_fact_vl_episode_etl();
+END;
+~-~-
+
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_vl_episode()
+BEGIN
+    -- Call the new comprehensive VL episode ETL
+    -- This creates mamba_fact_viral_load_episode table with full order-result matching
+    CALL sp_mamba_fact_vl_episode_etl();
+END;
+~-~-
+
+
+-- $END
+
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_vl_request_create
 --
 
@@ -30305,3 +31788,37 @@ CREATE EVENT IF NOT EXISTS _mamba_etl_scheduler_event
 
  ~-~-
 
+
+-- ============================================================================
+-- Function: fn_duration_to_days (Added by Uganda Reports ETL)
+-- ============================================================================
+DROP FUNCTION IF EXISTS fn_duration_to_days;
+~-~-
+
+CREATE FUNCTION fn_duration_to_days(
+    duration_value INT,
+    duration_units_concept_id INT
+) RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE days INT;
+
+    IF duration_units_concept_id = 1072 THEN
+        SET days = duration_value;
+    ELSEIF duration_units_concept_id = 1073 THEN
+        SET days = duration_value * 7;
+    ELSEIF duration_units_concept_id = 1074 THEN
+        SET days = duration_value * 30;
+    ELSEIF duration_units_concept_id = 1734 THEN
+        SET days = duration_value * 365;
+    ELSEIF duration_units_concept_id = 1822 THEN
+        SET days = FLOOR(duration_value / 24);
+    ELSEIF duration_units_concept_id = 1733 THEN
+        SET days = FLOOR(duration_value / 1440);
+    ELSEIF duration_units_concept_id = 162583 THEN
+        SET days = FLOOR(duration_value / 86400);
+    ELSE
+        SET days = duration_value;
+    END IF;
+
+    RETURN days;
+END;

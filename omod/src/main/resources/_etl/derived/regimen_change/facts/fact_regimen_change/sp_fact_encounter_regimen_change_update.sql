@@ -10,5 +10,5 @@ SET a.current_regimen = b.current_regimen,
     a.reason_for_regimen_substitution = b.reason_for_regimen_substitution,
     a.reason_for_regimen_switch = b.reason_for_regimen_switch,
     a.clinical_notes = b.clinical_notes
-WHERE b.voided = 0;
+;
 -- $END

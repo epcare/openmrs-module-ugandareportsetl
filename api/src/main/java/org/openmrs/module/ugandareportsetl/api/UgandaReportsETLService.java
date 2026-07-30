@@ -39,6 +39,13 @@ public interface UgandaReportsETLService extends OpenmrsService {
 	void addMambaetlProperties() throws APIException;
 	
 	/**
+	 * Cleanup Mamba ETL - drops all procedures and tables for clean setup
+	 * 
+	 * @throws APIException
+	 */
+	void cleanupMambaETL() throws APIException;
+	
+	/**
 	 * Setup Mamba ETL infrastructure including creating necessary tables and procedures
 	 * 
 	 * @throws APIException

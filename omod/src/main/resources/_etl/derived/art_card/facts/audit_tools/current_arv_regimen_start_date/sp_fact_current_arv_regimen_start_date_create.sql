@@ -1,4 +1,5 @@
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_current_arv_regimen_start_date;
 CREATE TABLE mamba_fact_current_arv_regimen_start_date
 (
     id                                    INT AUTO_INCREMENT,

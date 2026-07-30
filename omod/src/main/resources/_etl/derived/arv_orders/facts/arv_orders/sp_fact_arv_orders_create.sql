@@ -1,4 +1,6 @@
 -- $BEGIN
+DROP TABLE IF EXISTS mamba_fact_arv_orders;
+
 CREATE TABLE mamba_fact_arv_orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT NOT NULL COMMENT 'Patient ID',

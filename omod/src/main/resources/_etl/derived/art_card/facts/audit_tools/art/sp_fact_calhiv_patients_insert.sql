@@ -1,5 +1,6 @@
 -- $BEGIN
 INSERT INTO mamba_fact_audit_tool_art_patients (client_id,
+                                                patient_id,
                                                 identifier,
                                                 nationality,
                                                 marital_status,
@@ -59,6 +60,7 @@ INSERT INTO mamba_fact_audit_tool_art_patients (client_id,
                                                 cd4_date,
                                                 cd4)
 SELECT cohort.client_id,
+       cohort.patient_id                                                    AS patient_id,
        identifiers.identifier                                               AS identifier,
        nationality,
        marital_status,

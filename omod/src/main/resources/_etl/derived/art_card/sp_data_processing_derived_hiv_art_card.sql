@@ -23,6 +23,7 @@ CALL sp_fact_latest_index_tested_partners_status_patients;
 CALL sp_fact_latest_nutrition_assesment_patients;
 CALL sp_fact_latest_nutrition_support_patients;
 CALL sp_fact_latest_regimen_line_patients;
+CALL sp_fact_latest_regimen_patients;
 CALL sp_fact_latest_return_date_patients;
 CALL sp_fact_latest_tb_status_patients;
 CALL sp_fact_latest_tpt_status_patients;
