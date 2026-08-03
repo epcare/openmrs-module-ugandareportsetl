@@ -64,7 +64,7 @@
 								<workingDirectory>${project.parent.basedir}</workingDirectory>
 								<arguments>
 									<argument>${project.parent.basedir}/add-duration-function.sh</argument>
-									<argument>${project.build.directory}/mamba-etl/_core/database/mysql/build/jdbc_create_stored_procedures.sql</argument>
+									<argument>${project.parent.basedir}/api/src/main/resources/mamba/jdbc_create_stored_procedures.sql</argument>
 								</arguments>
 							</configuration>
 						</execution>
@@ -99,7 +99,7 @@
 							<workingDirectory>${project.parent.basedir}</workingDirectory>
 							<arguments>
 								<argument>${project.parent.basedir}/fix-drop-delimiters.sh</argument>
-								<argument>${project.build.directory}/mamba-etl/_core/database/mysql/build/jdbc_create_stored_procedures.sql</argument>
+								<argument>${project.parent.basedir}/api/src/main/resources/mamba/jdbc_create_stored_procedures.sql</argument>
 							</arguments>
 						</configuration>
 					</execution>

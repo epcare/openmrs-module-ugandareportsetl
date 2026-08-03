@@ -1,36 +1,19 @@
+-- $BEGIN
 -- ============================================================================
 -- Viral Load Episode Domain - Main Orchestration
 -- ============================================================================
--- Updated: 2026-07-29
--- Now uses the new comprehensive VL episode ETL (encounter-based structure)
--- The old sp_fact_viral_load() used obs_group_id approach which doesn't match
--- this database's structure where VL obs are linked by encounter_id + obs_datetime
+-- Updated: 2026-07-30
+-- Now follows Mamba ETL pattern with proper SP structure
+-- Calls orchestrator which handles create/insert/update
 -- ============================================================================
 
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
+-- Step 1: Create config tables (if not exists)
+CALL sp_vl_config_create();
 
-DELIMITER //
+-- Step 2: Seed config data
+CALL sp_vl_config_seed();
 
-CREATE PROCEDURE sp_data_processing_derived_vl_episode()
-BEGIN
-    -- Call the new comprehensive VL episode ETL
-    -- This creates mamba_fact_viral_load_episode table with full order-result matching
-    CALL sp_mamba_fact_vl_episode_etl();
-END//
-
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
-
-DELIMITER //
-
-CREATE PROCEDURE sp_data_processing_derived_vl_episode()
-BEGIN
-    -- Call the new comprehensive VL episode ETL
-    -- This creates mamba_fact_viral_load_episode table with full order-result matching
-    CALL sp_mamba_fact_vl_episode_etl();
-END//
-
-DELIMITER ;
-
+-- Step 3: Call the VL episode fact table orchestrator
+-- This creates table, populates data, and handles updates
+CALL sp_mamba_fact_viral_load_episode();
 -- $END

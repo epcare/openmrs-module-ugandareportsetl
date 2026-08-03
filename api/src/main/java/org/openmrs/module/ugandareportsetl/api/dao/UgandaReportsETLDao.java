@@ -106,8 +106,8 @@ public class UgandaReportsETLDao {
 		        (java.util.Date) row[1], // start_time
 		        (java.util.Date) row[2], // end_time
 		        (java.util.Date) row[3], // next_schedule
-		        (Long) row[4], // execution_duration_seconds
-		        (Long) row[5], // missed_schedule_by_seconds
+		        row[4] != null ? ((java.math.BigInteger) row[4]).longValue() : null, // execution_duration_seconds
+		        row[5] != null ? ((java.math.BigInteger) row[5]).longValue() : null, // missed_schedule_by_seconds
 		        (String) row[6], // completion_status
 		        (String) row[7], // transaction_status
 		        (String) row[8] // success_or_error_message

@@ -1,0 +1,23 @@
+{
+  "report_name": "CACX_Screening_Encounter",
+  "flat_table_name": "mamba_flat_encounter_cacx_screening",
+  "encounter_type_uuid": "91725548-2d90-4b28-be6d-0509ba37bb0f",
+  "concepts_locale": "en",
+  "table_columns": {
+    "serial_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "reg_number": "934337b1-8e08-4977-97b5-fd15b12db8fd",
+    "referred_in": "0f0432a5-4695-4bb4-bc0b-1140e231b29d",
+    "entry_point": "164993AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "hiv_status": "dce0e886-30ab-102d-86b0-7a5022ba4115",
+    "art_status": "dca25616-30ab-102d-86b0-7a5022ba4115",
+    "ever_been_screened": "a174e888-9485-454b-90ce-4ed06a2fab1a",
+    "given_pre_test": "018dedaf-ff60-437f-a7ee-4708418d218b",
+    "menstruating_now": "4e7521ed-be97-430f-97dc-1ff34038bb3b",
+    "pregnant_now": "dcda5179-30ab-102d-86b0-7a5022ba4115",
+    "been_pregnant_last_three_months": "beffcc96-ac3c-4593-a3c5-9045cfbc532d",
+    "hysterectomy": "af1558b3-225a-42b9-a7df-5fe9af2f52c5",
+    "previously_on_cacx_treatment": "a1ae8c0c-127c-41e1-b734-31195be76e81",
+    "cacx_screening": "e3d1683f-b79b-41ba-b05c-f5963229ca7d",
+    "ready_to_receive_service": "0f84459d-fcb6-4be8-9c57-3ea86278befc"
+  }
+}

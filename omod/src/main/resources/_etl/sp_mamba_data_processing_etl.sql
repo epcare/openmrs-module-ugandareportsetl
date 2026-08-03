@@ -18,6 +18,8 @@ BEGIN
     CALL sp_data_processing_derived_vl_request();
     CALL sp_data_processing_derived_hts();
     CALL sp_data_processing_derived_anc();
+    CALL sp_data_processing_derived_cacx_screening();
+    CALL sp_data_processing_derived_cacx_treatment();
     CALL sp_data_processing_derived_vl_episode();
 
 END //

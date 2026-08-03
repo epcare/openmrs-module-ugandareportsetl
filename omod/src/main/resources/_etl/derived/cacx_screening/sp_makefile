@@ -1,0 +1,13 @@
+#############################################################################
+##################### CACX Screening Fact Encounter Table SPs  #####################
+#############################################################################
+facts/sp_fact_encounter_cacx_screening.sql
+facts/sp_fact_encounter_cacx_screening_create.sql
+facts/sp_fact_encounter_cacx_screening_insert.sql
+facts/sp_fact_encounter_cacx_screening_query.sql
+facts/sp_fact_encounter_cacx_screening_update.sql
+
+#############################################################################
+###### A single stored procedure that invokes (CALLs) the above SPs #########
+#############################################################################
+sp_data_processing_derived_cacx_screening.sql

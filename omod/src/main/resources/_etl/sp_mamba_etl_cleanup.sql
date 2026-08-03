@@ -29,6 +29,10 @@ DROP PROCEDURE IF EXISTS sp_data_processing_derived_transfers;
 
 -- Drop VL episode procedures
 DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_episode_etl;
+DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode;
+DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode_create;
+DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode_insert;
+DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode_update;
 DROP PROCEDURE IF EXISTS 01_comprehensive_vl_episode;
 DROP PROCEDURE IF EXISTS sp_get_latest_vl_per_patient;
 DROP PROCEDURE IF EXISTS sp_get_vl_pipeline_summary;
@@ -124,6 +128,8 @@ DROP TABLE IF EXISTS mamba_fact_transfer_out;
 
 -- Encounter fact tables
 DROP TABLE IF EXISTS mamba_fact_encounter_anc_card;
+DROP TABLE IF EXISTS mamba_fact_encounter_cacx_screening;
+DROP TABLE IF EXISTS mamba_fact_encounter_cacx_treatment;
 DROP TABLE IF EXISTS mamba_fact_encounter_diagnosis;
 DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_card;
 DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_health_education;
@@ -159,6 +165,8 @@ DROP TABLE IF EXISTS mamba_flat_encounter_tb_enrollment;
 DROP TABLE IF EXISTS mamba_flat_encounter_tb_followup;
 DROP TABLE IF EXISTS mamba_flat_encounter_tb_followup_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_vl_request;
+DROP TABLE IF EXISTS mamba_flat_encounter_cacx_screening;
+DROP TABLE IF EXISTS mamba_flat_encounter_cacx_treatment;
 
 -- ===== DIMENSION TABLES =====
 
@@ -192,8 +200,31 @@ DROP TABLE IF EXISTS mamba_stg_vl_panel_child;
 DROP TABLE IF EXISTS mamba_stg_vl_result_panel;
 DROP TABLE IF EXISTS mamba_stg_vl_clinical_context;
 
+-- ===== VL BRIDGE TABLES =====
+
+DROP TABLE IF EXISTS mamba_bridge_patient_vl_due_rule;
+DROP TABLE IF EXISTS mamba_bridge_vl_episode_source;
+
+-- ===== VL MART TABLES =====
+
+DROP TABLE IF EXISTS mamba_mart_patient_latest_vl;
+DROP TABLE IF EXISTS mamba_mart_patient_vl_due_status;
+DROP TABLE IF EXISTS mamba_mart_vl_data_quality;
+DROP TABLE IF EXISTS mamba_mart_vl_pipeline;
+DROP TABLE IF EXISTS mamba_mart_vl_suppression;
+DROP TABLE IF EXISTS mamba_mart_vl_turnaround_time;
+
+-- ===== VL CONFIG TABLES =====
+
+DROP TABLE IF EXISTS mamba_vl_facility_testing_capability;
+DROP TABLE IF EXISTS mamba_vl_rule_config;
+DROP TABLE IF EXISTS mamba_vl_rule_version;
+
 -- ===== ETL SYSTEM AND METADATA TABLES =====
 
+DROP TABLE IF EXISTS mamba_etl_run;
+DROP TABLE IF EXISTS mamba_etl_run_log;
+DROP TABLE IF EXISTS mamba_etl_watermark;
 DROP TABLE IF EXISTS mamba_concept_metadata;
 DROP TABLE IF EXISTS mamba_etl_incremental_columns_index_all;
 DROP TABLE IF EXISTS mamba_flat_table_config;
@@ -204,10 +235,8 @@ DROP TABLE IF EXISTS _mamba_etl_error_log;
 DROP TABLE IF EXISTS _mamba_etl_schedule;
 DROP TABLE IF EXISTS _mamba_etl_user_settings;
 
--- ===== DROP MAMBA-SPECIFIC FUNCTIONS =====
-
-DROP FUNCTION IF EXISTS fn_duration_to_days;
-DROP FUNCTION IF EXISTS fn_period_has_coverage;
+-- Note: Functions (fn_duration_to_days, fn_period_has_coverage) must be dropped manually
+-- if needed, as DROP FUNCTION cannot be executed from within stored procedures
 
 SET FOREIGN_KEY_CHECKS = 1;
 

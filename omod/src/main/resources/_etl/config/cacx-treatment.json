@@ -1,0 +1,33 @@
+{
+  "report_name": "CACX_Treatment_Encounter",
+  "flat_table_name": "mamba_flat_encounter_cacx_treatment",
+  "encounter_type_uuid": "6d647bd4-33d6-4d04-a04a-595d2159b456",
+  "concepts_locale": "en",
+  "table_columns": {
+    "visit_type": "d02f6dd8-9832-474d-8c6f-8e959794d814",
+    "other_visit_type": "e0ad4fb8-6b74-41b0-a7d0-d23909cfc3b4",
+    "hpv_test_done": "abb200c4-1d59-4237-b571-2bd9a795b915",
+    "hpv_result": "a498baf9-beba-484c-9e64-aefd3dfde107",
+    "via_done": "9079c62f-c3f7-43f4-bf71-98623c1f29ad",
+    "why_no_via": "4b1aca72-2797-4ce6-9f9e-5975d2ad0b48",
+    "via_procedure_screening_results": "6155ab75-5849-4130-ba07-0bb9da59f595",
+    "via_vat_procedure_results": "1ebb9ce8-8539-43d1-bc80-11963de6abc6",
+    "colposcopy_results": "d1f7612d-4b32-4e43-8ef3-19458ebef432",
+    "pap_smear_results": "dc8e17cc-30ab-102d-86b0-7a5022ba4115",
+    "histology_results": "5140e0e4-b2c0-11ed-afa1-0242ac120002",
+    "treatment_provided": "6f1baf4c-1cdd-44a5-a48e-909391ed05f2",
+    "other_treatment_provided": "5f539165-2ca5-4ac2-a68d-f9e7579531f7",
+    "timelines": "af89c8d2-ae47-4159-a352-f25fa8c3dd7b",
+    "reasons_for_postponing": "cbc740a1-e188-469b-8216-15546ba1cf54",
+    "other_reasons_for_postponing": "d71af53e-e0de-48e2-a11c-1622bf66d0b0",
+    "other_services": "b4c4bbe0-ac7e-4af8-9ddb-d8ed4566c314",
+    "other_treatment": "59560ede-43e2-4e56-a47e-0f876779f0e1",
+    "referred_out": "7b246acf-d518-4b51-828c-d69593f3d66b",
+    "reasons_for_referral": "71db5616-7abc-4bbd-bf58-98c056ebbdce",
+    "other_reasons_for_referral": "33538878-9736-48f9-9506-72fb412d5295",
+    "health_facility_referred_to": "f48dc58e-3755-4a5c-9525-9a649fd2a148",
+    "service_offered": "f0c8856d-7955-4f18-a9a4-cc4fcf7a363a",
+    "date_service_offered": "f9bb0beb-1639-4f2d-b68d-fcff7b5c90ee",
+    "comments": "1648e8a1-ed34-4318-87d8-735da453fb38"
+  }
+}

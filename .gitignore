@@ -30,16 +30,16 @@ hs_err_pid*
 /.project
 /.classpath
 .claude
-sql/*
-tmp/*
+roughwork/sql/*
+roughwork/tmp/*
 reports-generic/*
 memory/*
-106aPlan/*
+roughwork/106aPlan/*
 org/*
 MEMORY.md
-IMPLEMENTATION_SUMMARY.md
-PROJECT_SUMMARY.md
-REPORT_BUILDER_INTEGRATION_ANALYSIS.md
+roughwork/IMPLEMENTATION_SUMMARY.md
+roughwork/PROJECT_SUMMARY.md
+roughwork/urc/REPORT_BUILDER_INTEGRATION_ANALYSIS.md
 
 # Backup files
 *.bak

@@ -24,6 +24,8 @@ derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis_insert.sql
 derived/fact_encounter_diagnosis/sp_fact_encounter_diagnosis_update.sql
 
 derived/arv_orders/sp_data_processing_arv_orders.sql
+derived/cacx_treatment/sp_data_processing_derived_cacx_treatment.sql
+derived/cacx_screening/sp_data_processing_derived_cacx_screening.sql
 
 derived/z_obs/sp_mamba_z_encounter_obs_insert.sql
 

@@ -15,8 +15,6 @@
 --   162582: Number of occurrences
 -- ============================================================================
 
-DROP FUNCTION IF EXISTS fn_duration_to_days;
-
 DELIMITER //
 
 CREATE FUNCTION fn_duration_to_days(

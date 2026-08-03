@@ -1,19 +1,13 @@
 -- $BEGIN
--- ============================================
--- Comprehensive Viral Load Episode Table
--- ============================================
--- Purpose: Single reference table for all VL workflows
--- Replaces: 35-table design with one consolidated table
--- Supports: All HMIS 106A VL reporting requirements
---
--- Based on: Comprehensive VL ETL Planning Document
--- Created: 2026-07-29
--- ============================================
+-- ============================================================================
+ -- Viral Load Episode Fact Table - Create Script
+-- ============================================================================
+-- Purpose: Creates the mamba_fact_viral_load_episode table
+-- Note: This is raw SQL, not a stored procedure
+-- ============================================================================
 
--- Drop existing table if needed
 DROP TABLE IF EXISTS mamba_fact_viral_load_episode;
 
--- Create the comprehensive VL episode table
 CREATE TABLE mamba_fact_viral_load_episode (
     -- ============ IDENTIFIERS ============
     episode_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -185,30 +179,26 @@ CREATE TABLE mamba_fact_viral_load_episode (
     etl_rule_version VARCHAR(50),
     etl_run_id INT,
     etl_created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    etl_updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-    -- ============ INDEXES ============
-    INDEX idx_patient_id (patient_id),
-    INDEX idx_location_id (location_id),
-    INDEX idx_order_date (order_date),
-    INDEX idx_sample_collection_date (sample_collection_date),
-    INDEX idx_vl_clinical_date (viral_load_clinical_date),
-    INDEX idx_native_order_id (native_order_id),
-    INDEX idx_accession_number (accession_number),
-    INDEX idx_linkage_method (linkage_method),
-    INDEX idx_testing_model (testing_model),
-    INDEX idx_pipeline_status (pipeline_status),
-    INDEX idx_is_suppressed (is_suppressed),
-    INDEX idx_is_orphan (is_orphan_result, is_order_without_result),
-    INDEX idx_location_order_date (location_id, order_date),
-    INDEX idx_location_sample_date (location_id, sample_collection_date),
-    INDEX idx_patient_vl_date (patient_id, viral_load_clinical_date),
-
-    -- Composite for due status queries
-    INDEX idx_due_status (location_id, is_due, is_overdue, next_expected_vl_date)
-
+    etl_updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 COMMENT='Comprehensive viral load episode table - single source for all VL reporting';
 
-SELECT 'mamba_fact_viral_load_episode table created successfully' AS status;
+-- ============ INDEXES ============
+CREATE INDEX idx_patient_id ON mamba_fact_viral_load_episode (patient_id);
+CREATE INDEX idx_location_id ON mamba_fact_viral_load_episode (location_id);
+CREATE INDEX idx_order_date ON mamba_fact_viral_load_episode (order_date);
+CREATE INDEX idx_sample_collection_date ON mamba_fact_viral_load_episode (sample_collection_date);
+CREATE INDEX idx_vl_clinical_date ON mamba_fact_viral_load_episode (viral_load_clinical_date);
+CREATE INDEX idx_native_order_id ON mamba_fact_viral_load_episode (native_order_id);
+CREATE INDEX idx_accession_number ON mamba_fact_viral_load_episode (accession_number);
+CREATE INDEX idx_linkage_method ON mamba_fact_viral_load_episode (linkage_method);
+CREATE INDEX idx_testing_model ON mamba_fact_viral_load_episode (testing_model);
+CREATE INDEX idx_pipeline_status ON mamba_fact_viral_load_episode (pipeline_status);
+CREATE INDEX idx_is_suppressed ON mamba_fact_viral_load_episode (is_suppressed);
+CREATE INDEX idx_is_orphan ON mamba_fact_viral_load_episode (is_orphan_result, is_order_without_result);
+CREATE INDEX idx_location_order_date ON mamba_fact_viral_load_episode (location_id, order_date);
+CREATE INDEX idx_location_sample_date ON mamba_fact_viral_load_episode (location_id, sample_collection_date);
+CREATE INDEX idx_patient_vl_date ON mamba_fact_viral_load_episode (patient_id, viral_load_clinical_date);
+CREATE INDEX idx_due_status ON mamba_fact_viral_load_episode (location_id, is_due, is_overdue, next_expected_vl_date);
+
 -- $END

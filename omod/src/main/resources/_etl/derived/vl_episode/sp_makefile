@@ -1,25 +1,29 @@
 # ============================================================================
-# Viral Load Episode ETL - Minimal Working Configuration
+# Viral Load Episode ETL - Stored Procedure Makefile
 # ============================================================================
-# NOTE: Full data warehouse schema (21 tables) is available in:
-# - VL_DATA_WAREHOUSE_README.md (documentation)
-# - config/01_create_schema.sql (reference, not auto-deployed)
-#
-# For production, use the minimal 4-table config that works with ETL:
-# 1. mamba_vl_concept_mapping
-# 2. mamba_vl_coded_value_mapping
-# 3. mamba_vl_rule_config
-# 4. mamba_vl_source_mapping
-# These are created manually via the seed config data script.
+# Follows Mamba ETL pattern with proper create/insert/update SP structure
 # ============================================================================
 
 # ----------------------------------------------------------------------------
-# MAIN FACT TABLE
+# CONFIG TABLE CREATION (must run before fact table SPs)
 # ----------------------------------------------------------------------------
-facts/01_comprehensive_vl_episode.sql
+sp_vl_config_create.sql
+sp_vl_config_seed.sql
 
 # ----------------------------------------------------------------------------
-# MAIN ETL PROCEDURES
+# MAIN FACT TABLE SPs (create/insert/update/orchestrator)
+# ----------------------------------------------------------------------------
+facts/sp_mamba_fact_viral_load_episode_create.sql
+facts/sp_mamba_fact_viral_load_episode_insert.sql
+facts/sp_mamba_fact_viral_load_episode_update.sql
+facts/sp_mamba_fact_viral_load_episode.sql
+
+# ----------------------------------------------------------------------------
+# ETL LOGIC PROCEDURE (called by _insert SP)
 # ----------------------------------------------------------------------------
 03_sp_vl_episode_etl.sql
+
+# ----------------------------------------------------------------------------
+# MAIN DERIVED PROCESSING PROCEDURE
+# ----------------------------------------------------------------------------
 sp_data_processing_derived_vl_episode.sql
