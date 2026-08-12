@@ -1,6 +1,7 @@
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_cacx_screening (encounter_id,
                                                client_id,
+                                               patient_id,
                                                encounter_date,
                                                serial_number,
                                                reg_number,
@@ -19,6 +20,7 @@ INSERT INTO mamba_fact_encounter_cacx_screening (encounter_id,
                                                ready_to_receive_service)
 SELECT a.encounter_id,
        a.client_id,
+       a.client_id AS patient_id,
        a.encounter_datetime,
        serial_number,
        reg_number,

@@ -4230,70 +4230,63 @@ SET @report_data = '{"flat_report_metadata":[{
     "comments": "1648e8a1-ed34-4318-87d8-735da453fb38"
   }
 },{
-  "report_name": "HTS_Encounter",
-  "flat_table_name": "mamba_flat_encounter_hts_card",
+  "report_name": "HTS_Client_Card_v2",
+  "flat_table_name": "mamba_flat_encounter_hts_card_v2",
   "encounter_type_uuid": "264daIZd-f80e-48fe-nba9-P37f2W1905Pv",
+  "encounter_type_name": "HTC - Encounter",
   "concepts_locale": "en",
   "table_columns": {
-    "family_member_accompanying_patient": "dc911cc1-30ab-102d-86b0-7a5022ba4115",
-    "other_specified_family_member": "6cb349b1-9f45-4c96-84c7-9d7037c6a056",
-    "delivery_model": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
-    "counselling_approach": "ff820a28-1adf-4530-bf27-537bfa9ce0b2",
-    "hct_entry_point": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
-    "community_testing_point": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
-    "other_community_testing": "16820069-b4bf-4c47-9efc-408746e1636b",
-    "anc_visit_number": "c0b1b5f1-a692-49d1-9a69-ff901e07fa27",
-    "other_care_entry_point": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
-    "reason_for_testing": "2afe1128-c3f6-4b35-b119-d17b9b9958ed",
-    "reason_for_testing_other_specify": "8c628b5b-0045-40dc-a480-7e1518ffb256",
-    "special_category": "927563c5-cb91-4536-b23c-563a72d3f829",
-    "other_special_category": "eac4e9c2-a086-43fc-8d43-b5a4e02febb4",
-    "hiv_first_time_tester": "2766c090-c057-44f2-98f0-691b6d0336dc",
-    "previous_hiv_tests_date": "34c917f0-356b-40d0-b3d1-cf609517b5fc",
-    "months_since_first_hiv_aids_symptoms": "bf038497-df07-417d-9767-983e59983760",
-    "previous_hiv_test_results": "49ba801d-b6ff-47cd-8d29-e0ac8649cb7d",
-    "referring_health_facility": "a2397735-328f-432f-8c0d-d5c358516375",
-    "no_of_times_tested_in_last_12_months": "8037192e-8f0c-4af3-ad8d-ccd1dd6880ba",
-    "no_of_partners_in_the_last_12_months": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
-    "partner_tested_for_hiv": "adc0b1a1-39cf-412b-9ab0-28ec0f731220",
-    "partner_hiv_test_result": "ee802cf2-295b-4297-b53c-205f794294a5",
-    "pre_test_counseling_done": "193039f1-c378-4d81-bb72-653b66c69914",
-    "counselling_session_type": "b92b1777-4356-49b2-9c83-a799680dc7d4",
-    "current_hiv_test_result": "3d292447-d7df-417f-8a71-e53e869ec89d",
-    "hiv_syphilis_duo": "16091701-69b8-4bc7-82b3-b1726cf5a5df",
-    "consented_for_blood_drawn_for_testing": "0698a45b-771c-4d11-84ff-095598c8883c",
-    "hiv_recency_result": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "hiv_recency_viral_load_results": "5fd38584-21a7-4145-be4b-c126c5fb3d73",
-    "hiv_recency_viral_load_qualitative": "0787cd66-0816-46f1-ade4-eb75b166144e",
-    "hiv_recency_sample_id": "a0a6545b-8383-4235-a74f-417db2b580f3",
-    "hts_fingerprint_captured": "d7974eae-a0a0-4a0c-b5ed-f060af91665d",
-    "results_received_as_individual": "3437ae80-bcc5-41e2-887e-d56999a1b467",
-    "results_received_as_a_couple": "2aa9f0c1-3f7e-49cd-86ee-baac0d2d5f2d",
-    "couple_results": "94a5bd0a-b79d-421e-ab71-8e382eed100f",
-    "tb_suspect": "b80f04a4-1559-42fd-8923-f8a6d2456a04",
-    "presumptive_tb_case_referred": "c5da115d-f6a3-4d13-b182-c2e982a3a796",
-    "prevention_services_received": "73686a14-b55c-4b10-916d-fda2046b803f",
-    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
-    "has_client_been_linked_to_care": "3d620422-0641-412e-ab31-5e45b98bc459",
-    "name_of_location_transferred_to": "dce015bb-30ab-102d-86b0-7a5022ba4115",
     "serial_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "client_at_risk_of_acquiring_hiv": "fdd25ec0-5229-4f07-9afa-2a4c14107a53",
+    "accompanied_by": "dc911cc1-30ab-102d-86b0-7a5022ba4115",
+    "other_accompanied_by": "6cb349b1-9f45-4c96-84c7-9d7037c6a056",
+    "hts_delivery_model": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
+    "hts_approach": "ff820a28-1adf-4530-bf27-537bfa9ce0b2",
+    "entry_point_hf": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
+    "other_entry_point_hf": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+    "entry_point_community": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+    "other_entry_point_community": "16820069-b4bf-4c47-9efc-408746e1636b",
+    "reason_for_testing": "2afe1128-c3f6-4b35-b119-d17b9b9958ed",
+    "other_reason_for_testing": "8c628b5b-0045-40dc-a480-7e1518ffb256",
+    "first_hiv_test": "2766c090-c057-44f2-98f0-691b6d0336dc",
+    "last_hiv_visit_date": "34c917f0-356b-40d0-b3d1-cf609517b5fc",
+    "months_since_last_tested": "bf038497-df07-417d-9767-983e59983760",
+    "previous_test_result": "49ba801d-b6ff-47cd-8d29-e0ac8649cb7d",
+    "times_tested_last_12_months": "8037192e-8f0c-4af3-ad8d-ccd1dd6880ba",
+    "number_sexual_partners_12_months": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
+    "previous_test_location": "a2397735-328f-432f-8c0d-d5c358516375",
+    "partner_tested_before": "adc0b1a1-39cf-412b-9ab0-28ec0f731220",
+    "partner_test_result": "ee802cf2-295b-4297-b53c-205f794294a5",
+    "client_at_risk": "fdd25ec0-5229-4f07-9afa-2a4c14107a53",
     "risk_profile": "69885d35-8861-4d16-a2c8-04ca380948ce",
-    "do_you_consent_for_an_hiv_test": "a69e8d5b-4b44-4392-8a49-3eaf2abffe26",
+    "pre_test_counseling_done": "193039f1-c378-4d81-bb72-653b66c69914",
+    "counseled_as": "b92b1777-4356-49b2-9c83-a799680dc7d4",
+    "hiv_test_consent": "a69e8d5b-4b44-4392-8a49-3eaf2abffe26",
     "consent_date": "dec56d39-01bd-474e-9021-be00f92161b8",
-    "hiv_test_1_kit": "cbbc1d9a-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_1_kit_results": "cbbc1fb6-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_2_kit": "cbbc26fa-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_2_kit_results": "cbbc2394-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_3_kit": "5140ca0a-b2c0-11ed-afa1-0242ac120002",
-    "hiv_test_3_kit_results": "cbbc2556-a7e2-11ed-afa1-0242ac120002",
-    "sample_sent_to_reference_laboratory": "11316f54-0437-449c-b698-9e2dc48daa11",
-    "client_screened_for_tb": "81fa73db-eb74-4e1b-b259-be76658cbb10",
-    "art_no": "105ef9de-ad90-4c08-bcd5-ab48f74f6287",
+    "determine_result": "7803ffa8-c24f-41ec-89f8-821e2a71fda6",
+    "stat_pak_result": "85534e6a-22a1-433e-aa57-f358f1eb0a16",
+    "sd_bioline_result": "ad4760fe-9a58-4e60-b626-29d345b9a220",
+    "final_result": "37a5bf42-5b94-4ae7-8c46-9ebff55ef349",
+    "sample_sent_to_lab": "11316f54-0437-449c-b698-9e2dc48daa11",
+    "results_received_individual": "3437ae80-bcc5-41e2-887e-d56999a1b467",
+    "results_received_couple": "2aa9f0c1-3f7e-49cd-86ee-baac0d2d5f2d",
+    "couple_results": "94a5bd0a-b79d-421e-ab71-8e382eed100f",
+    "screened_for_tb": "81fa73db-eb74-4e1b-b259-be76658cbb10",
+    "presumptive_tb": "b80f04a4-1559-42fd-8923-f8a6d2456a04",
+    "tb_case_referred": "c5da115d-f6a3-4d13-b182-c2e982a3a796",
+    "linked_for_hiv_care": "c5512db4-e822-4b3a-b365-85b3f3c46b56",
+    "referral_facility_name": "dce015bb-30ab-102d-86b0-7a5022ba4115",
+    "art_number": "105ef9de-ad90-4c08-bcd5-ab48f74f6287",
+    "linked_prevention_services": "3d620422-0641-412e-ab31-5e45b98bc459",
+    "place_of_referral": "dce015bb-30ab-102d-86b0-7a5022ba4115",
     "received_prevention_services": "737dc257-643c-485a-974d-caf8b698e084",
-    "test_name": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
-    "test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-  }
+    "prevention_services": "73686a14-b55c-4b10-916d-fda2046b803f",
+    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+    "recency_test_name": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
+    "recency_test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "recency_blood_draw_consent": "0698a45b-771c-4d11-84ff-095598c8883c",
+    "recency_test_result": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+  },
+  "test_group_concept_uuid": "8eb0bd19-ca11-4be1-8e58-c59aa53aad83"
 },{
   "report_name": "ART_Regimen_Change",
   "flat_table_name": "mamba_flat_encounter_regimen_change",
@@ -5213,70 +5206,63 @@ SET @report_data = '{"flat_report_metadata":[{
     "comments": "1648e8a1-ed34-4318-87d8-735da453fb38"
   }
 },{
-  "report_name": "HTS_Encounter",
-  "flat_table_name": "mamba_flat_encounter_hts_card",
+  "report_name": "HTS_Client_Card_v2",
+  "flat_table_name": "mamba_flat_encounter_hts_card_v2",
   "encounter_type_uuid": "264daIZd-f80e-48fe-nba9-P37f2W1905Pv",
+  "encounter_type_name": "HTC - Encounter",
   "concepts_locale": "en",
   "table_columns": {
-    "family_member_accompanying_patient": "dc911cc1-30ab-102d-86b0-7a5022ba4115",
-    "other_specified_family_member": "6cb349b1-9f45-4c96-84c7-9d7037c6a056",
-    "delivery_model": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
-    "counselling_approach": "ff820a28-1adf-4530-bf27-537bfa9ce0b2",
-    "hct_entry_point": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
-    "community_testing_point": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
-    "other_community_testing": "16820069-b4bf-4c47-9efc-408746e1636b",
-    "anc_visit_number": "c0b1b5f1-a692-49d1-9a69-ff901e07fa27",
-    "other_care_entry_point": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
-    "reason_for_testing": "2afe1128-c3f6-4b35-b119-d17b9b9958ed",
-    "reason_for_testing_other_specify": "8c628b5b-0045-40dc-a480-7e1518ffb256",
-    "special_category": "927563c5-cb91-4536-b23c-563a72d3f829",
-    "other_special_category": "eac4e9c2-a086-43fc-8d43-b5a4e02febb4",
-    "hiv_first_time_tester": "2766c090-c057-44f2-98f0-691b6d0336dc",
-    "previous_hiv_tests_date": "34c917f0-356b-40d0-b3d1-cf609517b5fc",
-    "months_since_first_hiv_aids_symptoms": "bf038497-df07-417d-9767-983e59983760",
-    "previous_hiv_test_results": "49ba801d-b6ff-47cd-8d29-e0ac8649cb7d",
-    "referring_health_facility": "a2397735-328f-432f-8c0d-d5c358516375",
-    "no_of_times_tested_in_last_12_months": "8037192e-8f0c-4af3-ad8d-ccd1dd6880ba",
-    "no_of_partners_in_the_last_12_months": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
-    "partner_tested_for_hiv": "adc0b1a1-39cf-412b-9ab0-28ec0f731220",
-    "partner_hiv_test_result": "ee802cf2-295b-4297-b53c-205f794294a5",
-    "pre_test_counseling_done": "193039f1-c378-4d81-bb72-653b66c69914",
-    "counselling_session_type": "b92b1777-4356-49b2-9c83-a799680dc7d4",
-    "current_hiv_test_result": "3d292447-d7df-417f-8a71-e53e869ec89d",
-    "hiv_syphilis_duo": "16091701-69b8-4bc7-82b3-b1726cf5a5df",
-    "consented_for_blood_drawn_for_testing": "0698a45b-771c-4d11-84ff-095598c8883c",
-    "hiv_recency_result": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "hiv_recency_viral_load_results": "5fd38584-21a7-4145-be4b-c126c5fb3d73",
-    "hiv_recency_viral_load_qualitative": "0787cd66-0816-46f1-ade4-eb75b166144e",
-    "hiv_recency_sample_id": "a0a6545b-8383-4235-a74f-417db2b580f3",
-    "hts_fingerprint_captured": "d7974eae-a0a0-4a0c-b5ed-f060af91665d",
-    "results_received_as_individual": "3437ae80-bcc5-41e2-887e-d56999a1b467",
-    "results_received_as_a_couple": "2aa9f0c1-3f7e-49cd-86ee-baac0d2d5f2d",
-    "couple_results": "94a5bd0a-b79d-421e-ab71-8e382eed100f",
-    "tb_suspect": "b80f04a4-1559-42fd-8923-f8a6d2456a04",
-    "presumptive_tb_case_referred": "c5da115d-f6a3-4d13-b182-c2e982a3a796",
-    "prevention_services_received": "73686a14-b55c-4b10-916d-fda2046b803f",
-    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
-    "has_client_been_linked_to_care": "3d620422-0641-412e-ab31-5e45b98bc459",
-    "name_of_location_transferred_to": "dce015bb-30ab-102d-86b0-7a5022ba4115",
     "serial_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "client_at_risk_of_acquiring_hiv": "fdd25ec0-5229-4f07-9afa-2a4c14107a53",
+    "accompanied_by": "dc911cc1-30ab-102d-86b0-7a5022ba4115",
+    "other_accompanied_by": "6cb349b1-9f45-4c96-84c7-9d7037c6a056",
+    "hts_delivery_model": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
+    "hts_approach": "ff820a28-1adf-4530-bf27-537bfa9ce0b2",
+    "entry_point_hf": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
+    "other_entry_point_hf": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+    "entry_point_community": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+    "other_entry_point_community": "16820069-b4bf-4c47-9efc-408746e1636b",
+    "reason_for_testing": "2afe1128-c3f6-4b35-b119-d17b9b9958ed",
+    "other_reason_for_testing": "8c628b5b-0045-40dc-a480-7e1518ffb256",
+    "first_hiv_test": "2766c090-c057-44f2-98f0-691b6d0336dc",
+    "last_hiv_visit_date": "34c917f0-356b-40d0-b3d1-cf609517b5fc",
+    "months_since_last_tested": "bf038497-df07-417d-9767-983e59983760",
+    "previous_test_result": "49ba801d-b6ff-47cd-8d29-e0ac8649cb7d",
+    "times_tested_last_12_months": "8037192e-8f0c-4af3-ad8d-ccd1dd6880ba",
+    "number_sexual_partners_12_months": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
+    "previous_test_location": "a2397735-328f-432f-8c0d-d5c358516375",
+    "partner_tested_before": "adc0b1a1-39cf-412b-9ab0-28ec0f731220",
+    "partner_test_result": "ee802cf2-295b-4297-b53c-205f794294a5",
+    "client_at_risk": "fdd25ec0-5229-4f07-9afa-2a4c14107a53",
     "risk_profile": "69885d35-8861-4d16-a2c8-04ca380948ce",
-    "do_you_consent_for_an_hiv_test": "a69e8d5b-4b44-4392-8a49-3eaf2abffe26",
+    "pre_test_counseling_done": "193039f1-c378-4d81-bb72-653b66c69914",
+    "counseled_as": "b92b1777-4356-49b2-9c83-a799680dc7d4",
+    "hiv_test_consent": "a69e8d5b-4b44-4392-8a49-3eaf2abffe26",
     "consent_date": "dec56d39-01bd-474e-9021-be00f92161b8",
-    "hiv_test_1_kit": "cbbc1d9a-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_1_kit_results": "cbbc1fb6-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_2_kit": "cbbc26fa-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_2_kit_results": "cbbc2394-a7e2-11ed-afa1-0242ac120002",
-    "hiv_test_3_kit": "5140ca0a-b2c0-11ed-afa1-0242ac120002",
-    "hiv_test_3_kit_results": "cbbc2556-a7e2-11ed-afa1-0242ac120002",
-    "sample_sent_to_reference_laboratory": "11316f54-0437-449c-b698-9e2dc48daa11",
-    "client_screened_for_tb": "81fa73db-eb74-4e1b-b259-be76658cbb10",
-    "art_no": "105ef9de-ad90-4c08-bcd5-ab48f74f6287",
+    "determine_result": "7803ffa8-c24f-41ec-89f8-821e2a71fda6",
+    "stat_pak_result": "85534e6a-22a1-433e-aa57-f358f1eb0a16",
+    "sd_bioline_result": "ad4760fe-9a58-4e60-b626-29d345b9a220",
+    "final_result": "37a5bf42-5b94-4ae7-8c46-9ebff55ef349",
+    "sample_sent_to_lab": "11316f54-0437-449c-b698-9e2dc48daa11",
+    "results_received_individual": "3437ae80-bcc5-41e2-887e-d56999a1b467",
+    "results_received_couple": "2aa9f0c1-3f7e-49cd-86ee-baac0d2d5f2d",
+    "couple_results": "94a5bd0a-b79d-421e-ab71-8e382eed100f",
+    "screened_for_tb": "81fa73db-eb74-4e1b-b259-be76658cbb10",
+    "presumptive_tb": "b80f04a4-1559-42fd-8923-f8a6d2456a04",
+    "tb_case_referred": "c5da115d-f6a3-4d13-b182-c2e982a3a796",
+    "linked_for_hiv_care": "c5512db4-e822-4b3a-b365-85b3f3c46b56",
+    "referral_facility_name": "dce015bb-30ab-102d-86b0-7a5022ba4115",
+    "art_number": "105ef9de-ad90-4c08-bcd5-ab48f74f6287",
+    "linked_prevention_services": "3d620422-0641-412e-ab31-5e45b98bc459",
+    "place_of_referral": "dce015bb-30ab-102d-86b0-7a5022ba4115",
     "received_prevention_services": "737dc257-643c-485a-974d-caf8b698e084",
-    "test_name": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
-    "test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-  }
+    "prevention_services": "73686a14-b55c-4b10-916d-fda2046b803f",
+    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+    "recency_test_name": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
+    "recency_test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "recency_blood_draw_consent": "0698a45b-771c-4d11-84ff-095598c8883c",
+    "recency_test_result": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+  },
+  "test_group_concept_uuid": "8eb0bd19-ca11-4be1-8e58-c59aa53aad83"
 },{
   "report_name": "ART_Regimen_Change",
   "flat_table_name": "mamba_flat_encounter_regimen_change",
@@ -15594,7 +15580,7 @@ BEGIN
     CALL sp_data_processing_derived_IIT();
     CALL sp_data_processing_derived_regimen_change();
     CALL sp_data_processing_derived_vl_request();
-    CALL sp_data_processing_derived_hts();
+    CALL sp_data_processing_derived_hts_card_v2();
     CALL sp_data_processing_derived_anc();
     CALL sp_data_processing_derived_cacx_screening();
     CALL sp_data_processing_derived_cacx_treatment();
@@ -16378,6 +16364,7 @@ END;
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_anc_card (encounter_id,
                                            client_id,
+                                           patient_id,
                                            encounter_date,
                                            cd4,
                                            where_,
@@ -16436,6 +16423,7 @@ INSERT INTO mamba_fact_encounter_anc_card (encounter_id,
                                            no_of_micronutrient_supplements_pills )
 SELECT a.encounter_id,
        a.client_id,
+       a.client_id AS patient_id,
        a.encounter_datetime,
        cd4,
        where_,
@@ -27678,6 +27666,7 @@ END;
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_cacx_screening (encounter_id,
                                                client_id,
+                                               patient_id,
                                                encounter_date,
                                                serial_number,
                                                reg_number,
@@ -27696,6 +27685,7 @@ INSERT INTO mamba_fact_encounter_cacx_screening (encounter_id,
                                                ready_to_receive_service)
 SELECT a.encounter_id,
        a.client_id,
+       a.client_id AS patient_id,
        a.encounter_datetime,
        serial_number,
        reg_number,
@@ -27965,6 +27955,7 @@ END;
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_cacx_treatment (encounter_id,
                                                client_id,
+                                               patient_id,
                                                encounter_date,
                                                visit_type,
                                                other_visit_type,
@@ -27993,6 +27984,7 @@ INSERT INTO mamba_fact_encounter_cacx_treatment (encounter_id,
                                                comments)
 SELECT a.encounter_id,
        a.client_id,
+       a.client_id AS patient_id,
        a.encounter_datetime,
        visit_type,
        other_visit_type,
@@ -29249,6 +29241,7 @@ END;
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_hts_card (encounter_id,
                                            client_id,
+                                           patient_id,
                                            encounter_date,
                                            family_member_accompanying_patient, other_specified_family_member,
                                            delivery_model, counselling_approach, hct_entry_point,
@@ -29287,6 +29280,7 @@ INSERT INTO mamba_fact_encounter_hts_card (encounter_id,
                                            test_date )
 SELECT a.encounter_id,
     a.client_id,
+    a.client_id AS patient_id,
     a.encounter_datetime,
        family_member_accompanying_patient,
        other_specified_family_member,
@@ -29433,6 +29427,419 @@ END;
 -- $BEGIN
 CALL sp_fact_encounter_hts_card;
 
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_card_v2
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_card_v2()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_card_v2', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_card_v2', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_hts_card_v2_create();
+CALL sp_fact_encounter_hts_card_v2_insert();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_card_v2_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_card_v2_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_card_v2_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_card_v2_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CREATE TABLE mamba_fact_encounter_hts_card_v2
+(
+    id                                     INT AUTO_INCREMENT,
+    encounter_id                           INT NULL,
+    client_id                              INT          NULL,
+    patient_id                             INT          NULL,
+    encounter_date                         DATETIME         NULL,
+    serial_number                          TEXT         NULL,
+    accompanied_by                         VARCHAR(250) NULL,
+    other_accompanied_by                   VARCHAR(250) NULL,
+    hts_delivery_model                     VARCHAR(250) NULL,
+    hts_approach                           VARCHAR(250) NULL,
+    entry_point_hf                         VARCHAR(250) NULL,
+    other_entry_point_hf                   VARCHAR(250) NULL,
+    entry_point_community                  VARCHAR(250) NULL,
+    other_entry_point_community            VARCHAR(250) NULL,
+    reason_for_testing                     VARCHAR(250) NULL,
+    other_reason_for_testing               VARCHAR(250) NULL,
+    first_hiv_test                         VARCHAR(250) NULL,
+    last_hiv_visit_date                    DATE         NULL,
+    months_since_last_tested               VARCHAR(250) NULL,
+    previous_test_result                   VARCHAR(250) NULL,
+    times_tested_last_12_months           VARCHAR(250) NULL,
+    number_sexual_partners_12_months       VARCHAR(250) NULL,
+    previous_test_location                 VARCHAR(250) NULL,
+    partner_tested_before                  VARCHAR(250) NULL,
+    partner_test_result                    VARCHAR(250) NULL,
+    client_at_risk                         VARCHAR(250) NULL,
+    risk_profile                           VARCHAR(250) NULL,
+    pre_test_counseling_done               VARCHAR(250) NULL,
+    counseled_as                           VARCHAR(250) NULL,
+    hiv_test_consent                       VARCHAR(250) NULL,
+    consent_date                           DATE         NULL,
+    determine_result                       VARCHAR(250) NULL,
+    stat_pak_result                        VARCHAR(250) NULL,
+    sd_bioline_result                      VARCHAR(250) NULL,
+    final_result                           VARCHAR(250) NULL,
+    sample_sent_to_lab                     VARCHAR(250) NULL,
+    results_received_individual             VARCHAR(250) NULL,
+    results_received_couple                VARCHAR(250) NULL,
+    couple_results                         VARCHAR(250) NULL,
+    screened_for_tb                        VARCHAR(250) NULL,
+    presumptive_tb                         VARCHAR(250) NULL,
+    tb_case_referred                       VARCHAR(250) NULL,
+    linked_for_hiv_care                    VARCHAR(250) NULL,
+    referral_facility_name                 VARCHAR(250) NULL,
+    art_number                             VARCHAR(250) NULL,
+    linked_prevention_services             VARCHAR(250) NULL,
+    place_of_referral                      VARCHAR(250) NULL,
+    received_prevention_services            VARCHAR(250) NULL,
+    prevention_services                    VARCHAR(250) NULL,
+    other_prevention_services               VARCHAR(250) NULL,
+    recency_test_name                      VARCHAR(250) NULL,
+    recency_test_date                      DATE         NULL,
+    recency_blood_draw_consent             VARCHAR(250) NULL,
+    recency_test_result                    VARCHAR(250) NULL,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8;
+
+CREATE INDEX
+    mamba_fact_encounter_hts_card_v2_client_id_index ON mamba_fact_encounter_hts_card_v2 (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_card_v2_patient_id_index ON mamba_fact_encounter_hts_card_v2 (patient_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_card_v2_encounter_id_index ON mamba_fact_encounter_hts_card_v2 (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_card_v2_encounter_date_index ON mamba_fact_encounter_hts_card_v2 (encounter_date);
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_card_v2_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_card_v2_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_card_v2_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_card_v2_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+INSERT INTO mamba_fact_encounter_hts_card_v2 (encounter_id,
+                                              client_id,
+                                              patient_id,
+                                              encounter_date,
+                                              serial_number,
+                                              accompanied_by,
+                                              other_accompanied_by,
+                                              hts_delivery_model,
+                                              hts_approach,
+                                              entry_point_hf,
+                                              other_entry_point_hf,
+                                              entry_point_community,
+                                              other_entry_point_community,
+                                              reason_for_testing,
+                                              other_reason_for_testing,
+                                              first_hiv_test,
+                                              last_hiv_visit_date,
+                                              months_since_last_tested,
+                                              previous_test_result,
+                                              times_tested_last_12_months,
+                                              number_sexual_partners_12_months,
+                                              previous_test_location,
+                                              partner_tested_before,
+                                              partner_test_result,
+                                              client_at_risk,
+                                              risk_profile,
+                                              pre_test_counseling_done,
+                                              counseled_as,
+                                              hiv_test_consent,
+                                              consent_date,
+                                              determine_result,
+                                              stat_pak_result,
+                                              sd_bioline_result,
+                                              final_result,
+                                              sample_sent_to_lab,
+                                              results_received_individual,
+                                              results_received_couple,
+                                              couple_results,
+                                              screened_for_tb,
+                                              presumptive_tb,
+                                              tb_case_referred,
+                                              linked_for_hiv_care,
+                                              referral_facility_name,
+                                              art_number,
+                                              linked_prevention_services,
+                                              place_of_referral,
+                                              received_prevention_services,
+                                              prevention_services,
+                                              other_prevention_services,
+                                              recency_test_name,
+                                              recency_test_date,
+                                              recency_blood_draw_consent,
+                                              recency_test_result)
+SELECT a.encounter_id,
+       a.client_id,
+       a.client_id as patient_id,
+       a.encounter_datetime,
+       serial_number,
+       accompanied_by,
+       other_accompanied_by,
+       hts_delivery_model,
+       hts_approach,
+       entry_point_hf,
+       other_entry_point_hf,
+       entry_point_community,
+       other_entry_point_community,
+       reason_for_testing,
+       other_reason_for_testing,
+       first_hiv_test,
+       last_hiv_visit_date,
+       months_since_last_tested,
+       previous_test_result,
+       times_tested_last_12_months,
+       number_sexual_partners_12_months,
+       previous_test_location,
+       partner_tested_before,
+       partner_test_result,
+       client_at_risk,
+       risk_profile,
+       pre_test_counseling_done,
+       counseled_as,
+       hiv_test_consent,
+       consent_date,
+       determine_result,
+       stat_pak_result,
+       sd_bioline_result,
+       final_result,
+       sample_sent_to_lab,
+       results_received_individual,
+       results_received_couple,
+       couple_results,
+       screened_for_tb,
+       presumptive_tb,
+       tb_case_referred,
+       linked_for_hiv_care,
+       referral_facility_name,
+       art_number,
+       linked_prevention_services,
+       place_of_referral,
+       received_prevention_services,
+       prevention_services,
+       other_prevention_services,
+       recency_test_name,
+       recency_test_date,
+       recency_blood_draw_consent,
+       recency_test_result
+FROM mamba_flat_encounter_hts_card_v2 a;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_card_v2_query
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_query;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_card_v2_query()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_card_v2_query', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_card_v2_query', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Query procedures for HTS Card v2
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_card_v2_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_card_v2_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_card_v2_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_card_v2_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Update procedures for HTS Card v2
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_hts_card_v2
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_card_v2;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_hts_card_v2()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hts_card_v2', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_hts_card_v2', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Main procedure to process HTS Client Card v2 ETL
+CALL sp_fact_encounter_hts_card_v2_create();
+CALL sp_fact_encounter_hts_card_v2_insert();
 -- $END
 END;
 ~-~-

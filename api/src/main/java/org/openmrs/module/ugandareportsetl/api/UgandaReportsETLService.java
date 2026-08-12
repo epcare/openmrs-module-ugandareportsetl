@@ -17,6 +17,8 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * This service exposes the UgandaReportsETL module's core functionality. It is a Spring managed
  * bean which is configured in moduleApplicationContext.xml.
@@ -82,5 +84,30 @@ public interface UgandaReportsETLService extends OpenmrsService {
 	 * @return true if ETL is currently running, false otherwise
 	 */
 	boolean isETLRunning();
+	
+	/**
+	 * Get error log entries from the Mamba ETL error log table
+	 * 
+	 * @param limit number of recent error entries to return
+	 * @return List of recent error log entries
+	 * @throws APIException
+	 */
+	java.util.List<ETLErrorLog> getETLErrorLogs(int limit) throws APIException;
+	
+	/**
+	 * Get the most recent error log entry
+	 * 
+	 * @return The most recent error log entry, or null if no errors exist
+	 * @throws APIException
+	 */
+	ETLErrorLog getMostRecentErrorLog() throws APIException;
+	
+	/**
+	 * Get the current ETL settings from the user settings table
+	 * 
+	 * @return Current ETL settings, or null if not configured
+	 * @throws APIException
+	 */
+	ETLSettings getETLSettings() throws APIException;
 	
 }

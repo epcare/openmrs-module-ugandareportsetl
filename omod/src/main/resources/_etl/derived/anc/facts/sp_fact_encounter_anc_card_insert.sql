@@ -1,6 +1,7 @@
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_anc_card (encounter_id,
                                            client_id,
+                                           patient_id,
                                            encounter_date,
                                            cd4,
                                            where_,
@@ -59,6 +60,7 @@ INSERT INTO mamba_fact_encounter_anc_card (encounter_id,
                                            no_of_micronutrient_supplements_pills )
 SELECT a.encounter_id,
        a.client_id,
+       a.client_id AS patient_id,
        a.encounter_datetime,
        cd4,
        where_,

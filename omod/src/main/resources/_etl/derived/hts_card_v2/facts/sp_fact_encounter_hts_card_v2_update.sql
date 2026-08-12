@@ -1,0 +1,3 @@
+-- $BEGIN
+-- Update procedures for HTS Card v2
+-- $END

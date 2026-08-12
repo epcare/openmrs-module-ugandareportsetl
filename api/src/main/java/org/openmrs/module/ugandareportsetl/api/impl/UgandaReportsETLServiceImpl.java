@@ -20,7 +20,9 @@ import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.mambacore.api.FlattenDatabaseService;
+import org.openmrs.module.ugandareportsetl.api.ETLErrorLog;
 import org.openmrs.module.ugandareportsetl.api.ETLProgressInfo;
+import org.openmrs.module.ugandareportsetl.api.ETLSettings;
 import org.openmrs.module.ugandareportsetl.api.UgandaReportsETLService;
 import org.openmrs.module.ugandareportsetl.api.dao.UgandaReportsETLDao;
 import org.openmrs.util.OpenmrsUtil;
@@ -30,6 +32,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -342,5 +345,55 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 		
 		double progressPercent = Math.min(100.0, (elapsedSeconds * 100.0) / estimatedTotalSeconds);
 		return Math.round(progressPercent * 100) / 100.0; // Round to 2 decimal places
+	}
+	
+	@Override
+	public List<ETLErrorLog> getETLErrorLogs(int limit) throws APIException {
+		try {
+			log.info("Fetching ETL error log entries (limit: " + limit + ")...");
+			
+			String sql = "SELECT id, procedure_name, error_message, error_code, sql_state, error_time "
+			        + "FROM _mamba_etl_error_log " + "ORDER BY error_time DESC " + "LIMIT " + limit;
+			
+			return dao.getEtlErrorLogEntries(sql);
+		}
+		catch (Exception e) {
+			log.error("Error fetching ETL error logs", e);
+			throw new APIException("Error fetching ETL error logs", e);
+		}
+	}
+	
+	@Override
+	public ETLErrorLog getMostRecentErrorLog() throws APIException {
+		try {
+			log.info("Fetching most recent ETL error log entry...");
+			
+			String sql = "SELECT id, procedure_name, error_message, error_code, sql_state, error_time "
+			        + "FROM _mamba_etl_error_log " + "ORDER BY error_time DESC " + "LIMIT 1";
+			
+			return dao.getMostRecentErrorLogEntry(sql);
+		}
+		catch (Exception e) {
+			log.error("Error fetching most recent ETL error log", e);
+			throw new APIException("Error fetching most recent ETL error log", e);
+		}
+	}
+	
+	@Override
+	public ETLSettings getETLSettings() throws APIException {
+		try {
+			log.info("Fetching ETL settings...");
+			
+			String sql = "SELECT id, openmrs_database, etl_database, concepts_locale, "
+			        + "table_partition_number, incremental_mode_switch, automatic_flattening_mode_switch, "
+			        + "etl_interval_seconds, incremental_mode_switch_cascaded, last_etl_schedule_insert_id "
+			        + "FROM _mamba_etl_user_settings " + "ORDER BY id DESC " + "LIMIT 1";
+			
+			return dao.getEtlSettings(sql);
+		}
+		catch (Exception e) {
+			log.error("Error fetching ETL settings", e);
+			throw new APIException("Error fetching ETL settings", e);
+		}
 	}
 }

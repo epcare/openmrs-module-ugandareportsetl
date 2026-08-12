@@ -20,6 +20,7 @@ DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art_card;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_non_suppressed;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_IIT;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts;
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_card_v2;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_anc;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_regimen_change;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_request;
@@ -59,6 +60,13 @@ DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_create;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_insert;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_update;
+
+-- Drop hts_card_v2 procedures
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_query;
 
 -- ============================================================================
 -- DROP ALL TABLES (in dependency order - child tables first)
@@ -135,6 +143,7 @@ DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_card;
 DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_health_education;
 DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_summary;
 DROP TABLE IF EXISTS mamba_fact_encounter_hts_card;
+DROP TABLE IF EXISTS mamba_fact_encounter_hts_card_v2;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_card;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_obs_group;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_repeat_vl;
@@ -159,6 +168,7 @@ DROP TABLE IF EXISTS mamba_flat_encounter_art_summary_card;
 DROP TABLE IF EXISTS mamba_flat_encounter_art_summary_card_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card_1;
+DROP TABLE IF EXISTS mamba_flat_encounter_hts_card_v2;
 DROP TABLE IF EXISTS mamba_flat_encounter_non_suppressed;
 DROP TABLE IF EXISTS mamba_flat_encounter_regimen_change;
 DROP TABLE IF EXISTS mamba_flat_encounter_tb_enrollment;

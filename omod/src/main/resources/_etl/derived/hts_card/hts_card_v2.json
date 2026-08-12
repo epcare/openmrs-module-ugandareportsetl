@@ -1,0 +1,639 @@
+{
+  "table": "mamba_fact_encounter_hts_card_v2",
+  "description": "HTS (HIV Testing Services) Client Card - Updated for HMIS 105/HTS reporting - Version 2.0",
+  "encounterType": "264daIZd-f80e-48fe-nba9-P37f2W1905Pv",
+  "baseTable": "mamba_flat_encounter",
+  "indexColumn": "encounter_id",
+  "primaryKey": "encounter_id",
+  "columns": [
+    {
+      "name": "encounter_id",
+      "type": "INTEGER",
+      "description": "Foreign key to encounter table"
+    },
+    {
+      "name": "client_id",
+      "type": "INTEGER",
+      "description": "Patient identifier"
+    },
+    {
+      "name": "encounter_datetime",
+      "type": "DATETIME",
+      "description": "Date and time of HTS encounter"
+    },
+    {
+      "name": "location_id",
+      "type": "INTEGER",
+      "description": "Facility location where service was provided"
+    },
+    {
+      "name": "visit_id",
+      "type": "INTEGER",
+      "description": "Visit identifier"
+    },
+    {
+      "name": "serial_number",
+      "type": "VARCHAR(100)",
+      "concept": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "description": "Serial number for HTS visit"
+    },
+    {
+      "name": "accompanied_by",
+      "type": "VARCHAR(100)",
+      "concept": "dc911cc1-30ab-102d-86b0-7a5022ba4115",
+      "description": "Person who accompanied the client (for minors)"
+    },
+    {
+      "name": "other_accompanied_by",
+      "type": "VARCHAR(255)",
+      "concept": "6cb349b1-9f45-4c96-84c7-9d7037c6a056",
+      "description": "Other person accompanied by (specify)"
+    },
+    {
+      "name": "hts_delivery_model",
+      "type": "VARCHAR(50)",
+      "concept": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
+      "description": "HTS delivery model (Health Facility or Community)"
+    },
+    {
+      "name": "hts_approach",
+      "type": "VARCHAR(50)",
+      "concept": "ff820a28-1adf-4530-bf27-537bfa9ce0b2",
+      "description": "HTS approach (CICT/VC or PITC)"
+    },
+    {
+      "name": "entry_point_hf",
+      "type": "VARCHAR(100)",
+      "concept": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
+      "description": "Entry point for health facility testing"
+    },
+    {
+      "name": "other_entry_point_hf",
+      "type": "VARCHAR(255)",
+      "concept": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+      "description": "Other entry point for health facility testing (specify)"
+    },
+    {
+      "name": "entry_point_community",
+      "type": "VARCHAR(100)",
+      "concept": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+      "description": "Entry point for community testing"
+    },
+    {
+      "name": "other_entry_point_community",
+      "type": "VARCHAR(255)",
+      "concept": "16820069-b4bf-4c47-9efc-408746e1636b",
+      "description": "Other community entry point (specify)"
+    },
+    {
+      "name": "reason_for_testing",
+      "type": "VARCHAR(100)",
+      "concept": "2afe1128-c3f6-4b35-b119-d17b9b9958ed",
+      "description": "Reason for HIV testing"
+    },
+    {
+      "name": "other_reason_for_testing",
+      "type": "VARCHAR(255)",
+      "concept": "8c628b5b-0045-40dc-a480-7e1518ffb256",
+      "description": "Other reason for testing (specify)"
+    },
+    {
+      "name": "first_hiv_test",
+      "type": "VARCHAR(10)",
+      "concept": "2766c090-c057-44f2-98f0-691b6d0336dc",
+      "description": "Testing for HIV for the first time"
+    },
+    {
+      "name": "last_hiv_visit_date",
+      "type": "DATE",
+      "concept": "34c917f0-356b-40d0-b3d1-cf609517b5fc",
+      "description": "Date of last HIV visit"
+    },
+    {
+      "name": "months_since_last_tested",
+      "type": "INTEGER",
+      "concept": "bf038497-df07-417d-9767-983e59983760",
+      "description": "Number of months since last tested"
+    },
+    {
+      "name": "previous_test_result",
+      "type": "VARCHAR(50)",
+      "concept": "49ba801d-b6ff-47cd-8d29-e0ac8649cb7d",
+      "description": "Previous HIV test result"
+    },
+    {
+      "name": "times_tested_last_12_months",
+      "type": "INTEGER",
+      "concept": "8037192e-8f0c-4af3-ad8d-ccd1dd6880ba",
+      "description": "Number of times tested in last 12 months"
+    },
+    {
+      "name": "number_sexual_partners_12_months",
+      "type": "INTEGER",
+      "concept": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
+      "description": "Number of sexual partners in last 12 months"
+    },
+    {
+      "name": "previous_test_location",
+      "type": "VARCHAR(255)",
+      "concept": "a2397735-328f-432f-8c0d-d5c358516375",
+      "description": "Location of previous HIV test"
+    },
+    {
+      "name": "partner_tested_before",
+      "type": "VARCHAR(50)",
+      "concept": "adc0b1a1-39cf-412b-9ab0-28ec0f731220",
+      "description": "Spouse/Partner ever tested for HIV before"
+    },
+    {
+      "name": "partner_test_result",
+      "type": "VARCHAR(50)",
+      "concept": "ee802cf2-295b-4297-b53c-205f794294a5",
+      "description": "Recent partner HIV test result"
+    },
+    {
+      "name": "client_at_risk",
+      "type": "VARCHAR(10)",
+      "concept": "fdd25ec0-5229-4f07-9afa-2a4c14107a53",
+      "description": "Client at risk of acquiring HIV"
+    },
+    {
+      "name": "risk_profile",
+      "type": "VARCHAR(50)",
+      "concept": "69885d35-8861-4d16-a2c8-04ca380948ce",
+      "description": "Risk profile (Low, Moderate, High)"
+    },
+    {
+      "name": "pre_test_counseling_done",
+      "type": "VARCHAR(10)",
+      "concept": "193039f1-c378-4d81-bb72-653b66c69914",
+      "description": "Pre-test counseling done"
+    },
+    {
+      "name": "counseled_as",
+      "type": "VARCHAR(50)",
+      "concept": "b92b1777-4356-49b2-9c83-a799680dc7d4",
+      "description": "Counseling approach (Individual, Couple, Group)"
+    },
+    {
+      "name": "hiv_test_consent",
+      "type": "VARCHAR(10)",
+      "concept": "a69e8d5b-4b44-4392-8a49-3eaf2abffe26",
+      "description": "Client consent for HIV test"
+    },
+    {
+      "name": "consent_date",
+      "type": "DATE",
+      "concept": "dec56d39-01bd-474e-9021-be00f92161b8",
+      "description": "Date of HIV test consent"
+    },
+    {
+      "name": "determine_result",
+      "type": "VARCHAR(50)",
+      "concept": "7803ffa8-c24f-41ec-89f8-821e2a71fda6",
+      "description": "Determine HIV test kit result"
+    },
+    {
+      "name": "stat_pak_result",
+      "type": "VARCHAR(50)",
+      "concept": "85534e6a-22a1-433e-aa57-f358f1eb0a16",
+      "description": "Stat-Pak HIV test kit result"
+    },
+    {
+      "name": "sd_bioline_result",
+      "type": "VARCHAR(50)",
+      "concept": "ad4760fe-9a58-4e60-b626-29d3b9b9a220",
+      "description": "SD Bioline HIV test kit result"
+    },
+    {
+      "name": "final_result",
+      "type": "VARCHAR(50)",
+      "concept": "37a5bf42-5b94-4ae7-8c46-9ebff55ef349",
+      "description": "Final HIV test result"
+    },
+    {
+      "name": "sample_sent_to_lab",
+      "type": "VARCHAR(50)",
+      "concept": "11316f54-0437-449c-b698-9e2dc48daa11",
+      "description": "Sample sent to Reference Laboratory"
+    },
+    {
+      "name": "results_received_individual",
+      "type": "VARCHAR(10)",
+      "concept": "3437ae80-bcc5-41e2-887e-d56999a1b467",
+      "description": "Results received as individual"
+    },
+    {
+      "name": "results_received_couple",
+      "type": "VARCHAR(10)",
+      "concept": "2aa9f0c1-3f7e-49cd-86ee-baac0d2d5f2d",
+      "description": "Results received as a couple"
+    },
+    {
+      "name": "couple_results",
+      "type": "VARCHAR(50)",
+      "concept": "94a5bd0a-b79d-421e-ab71-8e382eed100f",
+      "description": "Couple test results (Discordant, Concordant Negative, Concordant Positive)"
+    },
+    {
+      "name": "screened_for_tb",
+      "type": "VARCHAR(10)",
+      "concept": "81fa73db-eb74-4e1b-b259-be76658cbb10",
+      "description": "Client screened for TB"
+    },
+    {
+      "name": "presumptive_tb",
+      "type": "VARCHAR(10)",
+      "concept": "b80f04a4-1559-42fd-8923-f8a6d2456a04",
+      "description": "Client has presumptive TB"
+    },
+    {
+      "name": "tb_case_referred",
+      "type": "VARCHAR(10)",
+      "concept": "c5da115d-f6a3-4d13-b182-c2e982a3a796",
+      "description": "Presumptive TB case referred for TB testing"
+    },
+    {
+      "name": "linked_for_hiv_care",
+      "type": "VARCHAR(10)",
+      "concept": "c5512db4-e822-4b3a-b365-85b3f3c46b56",
+      "description": "Client linked for HIV care"
+    },
+    {
+      "name": "referral_facility_name",
+      "type": "VARCHAR(255)",
+      "concept": "dce015bb-30ab-102d-86b0-7a5022ba4115",
+      "description": "Health facility name for referral"
+    },
+    {
+      "name": "art_number",
+      "type": "VARCHAR(100)",
+      "concept": "105ef9de-ad90-4c08-bcd5-ab48f74f6287",
+      "description": "ART number for linked clients"
+    },
+    {
+      "name": "linked_prevention_services",
+      "type": "VARCHAR(10)",
+      "concept": "3d620422-0641-412e-ab31-5e45b98bc459",
+      "description": "Client linked to prevention services"
+    },
+    {
+      "name": "place_of_referral",
+      "type": "VARCHAR(255)",
+      "concept": "dce015bb-30ab-102d-86b0-7a5022ba4115",
+      "description": "Place of referral"
+    },
+    {
+      "name": "received_prevention_services",
+      "type": "VARCHAR(10)",
+      "concept": "737dc257-643c-485a-974d-caf8b698e084",
+      "description": "Received prevention services"
+    },
+    {
+      "name": "prevention_services",
+      "type": "TEXT",
+      "concept": "73686a14-b55c-4b10-916d-fda2046b803f",
+      "description": "Prevention services received (multi-checkbox stored as JSON)"
+    },
+    {
+      "name": "other_prevention_services",
+      "type": "VARCHAR(255)",
+      "concept": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+      "description": "Other prevention services (specify)"
+    },
+    {
+      "name": "recency_test_name",
+      "type": "VARCHAR(255)",
+      "concept": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
+      "description": "Rapid test name for HIV recent infection"
+    },
+    {
+      "name": "recency_test_date",
+      "type": "DATE",
+      "concept": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "description": "Date of HIV recency test"
+    },
+    {
+      "name": "recency_blood_draw_consent",
+      "type": "VARCHAR(10)",
+      "concept": "0698a45b-771c-4d11-84ff-095598c8883c",
+      "description": "Consent for blood draw for recency testing"
+    },
+    {
+      "name": "recency_test_result",
+      "type": "VARCHAR(50)",
+      "concept": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "description": "HIV recency test result (Recent, Long-term, Inconclusive)"
+    },
+    {
+      "name": "test_done_by",
+      "type": "VARCHAR(255)",
+      "description": "Provider who performed the test"
+    },
+    {
+      "name": "date_created",
+      "type": "TIMESTAMP",
+      "description": "ETL record creation timestamp"
+    },
+    {
+      "name": "date_changed",
+      "type": "TIMESTAMP",
+      "description": "ETL record last update timestamp"
+    },
+    {
+      "name": "voided",
+      "type": "TINYINT",
+      "description": "Record void status"
+    }
+  ],
+  "indexes": [
+    {
+      "name": "idx_hts_v2_encounter",
+      "columns": ["encounter_id"],
+      "unique": true
+    },
+    {
+      "name": "idx_hts_v2_client",
+      "columns": ["client_id"]
+    },
+    {
+      "name": "idx_hts_v2_encounter_datetime",
+      "columns": ["encounter_datetime"]
+    },
+    {
+      "name": "idx_hts_v2_location",
+      "columns": ["location_id"]
+    },
+    {
+      "name": "idx_hts_v2_visit",
+      "columns": ["visit_id"]
+    },
+    {
+      "name": "idx_hts_v2_final_result",
+      "columns": ["final_result"]
+    },
+    {
+      "name": "idx_hts_v2_delivery_model",
+      "columns": ["hts_delivery_model"]
+    }
+  ],
+  "mappings": {
+    "encounter_id": "encounter_id",
+    "client_id": "patient_id",
+    "encounter_datetime": "encounter_datetime",
+    "location_id": "location_id",
+    "visit_id": "visit_id",
+    "serial_number": {
+      "source": "obs",
+      "concept": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "type": "value"
+    },
+    "accompanied_by": {
+      "source": "obs",
+      "concept": "dc911cc1-30ab-102d-86b0-7a5022ba4115",
+      "type": "value_code"
+    },
+    "other_accompanied_by": {
+      "source": "obs",
+      "concept": "6cb349b1-9f45-4c96-84c7-9d7037c6a056",
+      "type": "value"
+    },
+    "hts_delivery_model": {
+      "source": "obs",
+      "concept": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
+      "type": "value_code"
+    },
+    "hts_approach": {
+      "source": "obs",
+      "concept": "ff820a28-1adf-4530-bf27-537bfa9ce0b2",
+      "type": "value_code"
+    },
+    "entry_point_hf": {
+      "source": "obs",
+      "concept": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
+      "type": "value_code"
+    },
+    "other_entry_point_hf": {
+      "source": "obs",
+      "concept": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+      "type": "value"
+    },
+    "entry_point_community": {
+      "source": "obs",
+      "concept": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+      "type": "value_code"
+    },
+    "other_entry_point_community": {
+      "source": "obs",
+      "concept": "16820069-b4bf-4c47-9efc-408746e1636b",
+      "type": "value"
+    },
+    "reason_for_testing": {
+      "source": "obs",
+      "concept": "2afe1128-c3f6-4b35-b119-d17b9b9958ed",
+      "type": "value_code"
+    },
+    "other_reason_for_testing": {
+      "source": "obs",
+      "concept": "8c628b5b-0045-40dc-a480-7e1518ffb256",
+      "type": "value"
+    },
+    "first_hiv_test": {
+      "source": "obs",
+      "concept": "2766c090-c057-44f2-98f0-691b6d0336dc",
+      "type": "value_code"
+    },
+    "last_hiv_visit_date": {
+      "source": "obs",
+      "concept": "34c917f0-356b-40d0-b3d1-cf609517b5fc",
+      "type": "value"
+    },
+    "months_since_last_tested": {
+      "source": "obs",
+      "concept": "bf038497-df07-417d-9767-983e59983760",
+      "type": "value_numeric"
+    },
+    "previous_test_result": {
+      "source": "obs",
+      "concept": "49ba801d-b6ff-47cd-8d29-e0ac8649cb7d",
+      "type": "value_code"
+    },
+    "times_tested_last_12_months": {
+      "source": "obs",
+      "concept": "8037192e-8f0c-4af3-ad8d-ccd1dd6880ba",
+      "type": "value_numeric"
+    },
+    "number_sexual_partners_12_months": {
+      "source": "obs",
+      "concept": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
+      "type": "value_numeric"
+    },
+    "previous_test_location": {
+      "source": "obs",
+      "concept": "a2397735-328f-432f-8c0d-d5c358516375",
+      "type": "value"
+    },
+    "partner_tested_before": {
+      "source": "obs",
+      "concept": "adc0b1a1-39cf-412b-9ab0-28ec0f731220",
+      "type": "value_code"
+    },
+    "partner_test_result": {
+      "source": "obs",
+      "concept": "ee802cf2-295b-4297-b53c-205f794294a5",
+      "type": "value_code"
+    },
+    "client_at_risk": {
+      "source": "obs",
+      "concept": "fdd25ec0-5229-4f07-9afa-2a4c14107a53",
+      "type": "value_code"
+    },
+    "risk_profile": {
+      "source": "obs",
+      "concept": "69885d35-8861-4d16-a2c8-04ca380948ce",
+      "type": "value_code"
+    },
+    "pre_test_counseling_done": {
+      "source": "obs",
+      "concept": "193039f1-c378-4d81-bb72-653b66c69914",
+      "type": "value_code"
+    },
+    "counseled_as": {
+      "source": "obs",
+      "concept": "b92b1777-4356-49b2-9c83-a799680dc7d4",
+      "type": "value_code"
+    },
+    "hiv_test_consent": {
+      "source": "obs",
+      "concept": "a69e8d5b-4b44-4392-8a49-3eaf2abffe26",
+      "type": "value_code"
+    },
+    "consent_date": {
+      "source": "obs",
+      "concept": "dec56d39-01bd-474e-9021-be00f92161b8",
+      "type": "value"
+    },
+    "determine_result": {
+      "source": "obs",
+      "concept": "7803ffa8-c24f-41ec-89f8-821e2a71fda6",
+      "type": "value_code"
+    },
+    "stat_pak_result": {
+      "source": "obs",
+      "concept": "85534e6a-22a1-433e-aa57-f358f1eb0a16",
+      "type": "value_code"
+    },
+    "sd_bioline_result": {
+      "source": "obs",
+      "concept": "ad4760fe-9a58-4e60-b626-29d3b9b9a220",
+      "type": "value_code"
+    },
+    "final_result": {
+      "source": "obs",
+      "concept": "37a5bf42-5b94-4ae7-8c46-9ebff55ef349",
+      "type": "value_code"
+    },
+    "sample_sent_to_lab": {
+      "source": "obs",
+      "concept": "11316f54-0437-449c-b698-9e2dc48daa11",
+      "type": "value_code"
+    },
+    "results_received_individual": {
+      "source": "obs",
+      "concept": "3437ae80-bcc5-41e2-887e-d56999a1b467",
+      "type": "value_code"
+    },
+    "results_received_couple": {
+      "source": "obs",
+      "concept": "2aa9f0c1-3f7e-49cd-86ee-baac0d2d5f2d",
+      "type": "value_code"
+    },
+    "couple_results": {
+      "source": "obs",
+      "concept": "94a5bd0a-b79d-421e-ab71-8e382eed100f",
+      "type": "value_code"
+    },
+    "screened_for_tb": {
+      "source": "obs",
+      "concept": "81fa73db-eb74-4e1b-b259-be76658cbb10",
+      "type": "value_code"
+    },
+    "presumptive_tb": {
+      "source": "obs",
+      "concept": "b80f04a4-1559-42fd-8923-f8a6d2456a04",
+      "type": "value_code"
+    },
+    "tb_case_referred": {
+      "source": "obs",
+      "concept": "c5da115d-f6a3-4d13-b182-c2e982a3a796",
+      "type": "value_code"
+    },
+    "linked_for_hiv_care": {
+      "source": "obs",
+      "concept": "c5512db4-e822-4b3a-b365-85b3f3c46b56",
+      "type": "value_code"
+    },
+    "referral_facility_name": {
+      "source": "obs",
+      "concept": "dce015bb-30ab-102d-86b0-7a5022ba4115",
+      "type": "value"
+    },
+    "art_number": {
+      "source": "obs",
+      "concept": "105ef9de-ad90-4c08-bcd5-ab48f74f6287",
+      "type": "value"
+    },
+    "linked_prevention_services": {
+      "source": "obs",
+      "concept": "3d620422-0641-412e-ab31-5e45b98bc459",
+      "type": "value_code"
+    },
+    "place_of_referral": {
+      "source": "obs",
+      "concept": "dce015bb-30ab-102d-86b0-7a5022ba4115",
+      "type": "value"
+    },
+    "received_prevention_services": {
+      "source": "obs",
+      "concept": "737dc257-643c-485a-974d-caf8b698e084",
+      "type": "value_code"
+    },
+    "prevention_services": {
+      "source": "obs",
+      "concept": "73686a14-b55c-4b10-916d-fda2046b803f",
+      "type": "multi_select"
+    },
+    "other_prevention_services": {
+      "source": "obs",
+      "concept": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+      "type": "value"
+    },
+    "recency_test_name": {
+      "source": "obs",
+      "concept": "0cf86109-82ad-4fc0-9c23-40e04ba41594",
+      "type": "value"
+    },
+    "recency_test_date": {
+      "source": "obs",
+      "concept": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "type": "value"
+    },
+    "recency_blood_draw_consent": {
+      "source": "obs",
+      "concept": "0698a45b-771c-4d11-84ff-095598c8883c",
+      "type": "value_code"
+    },
+    "recency_test_result": {
+      "source": "obs",
+      "concept": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "type": "value_code"
+    },
+    "test_done_by": {
+      "source": "encounter_provider",
+      "type": "provider_name"
+    },
+    "date_created": "date_created",
+    "date_changed": "date_changed",
+    "voided": "voided"
+  }
+}

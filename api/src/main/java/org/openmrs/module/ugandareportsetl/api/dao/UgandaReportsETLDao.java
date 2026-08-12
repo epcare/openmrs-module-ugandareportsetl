@@ -16,7 +16,9 @@ package org.openmrs.module.ugandareportsetl.api.dao;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
+import org.openmrs.module.ugandareportsetl.api.ETLErrorLog;
 import org.openmrs.module.ugandareportsetl.api.ETLProgressInfo;
+import org.openmrs.module.ugandareportsetl.api.ETLSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -99,6 +101,47 @@ public class UgandaReportsETLDao {
 	}
 	
 	/**
+	 * Get error log entries from the Mamba ETL error log table
+	 */
+	@SuppressWarnings("unchecked")
+	public java.util.List<ETLErrorLog> getEtlErrorLogEntries(String sql) {
+		java.util.List<Object[]> results = getSession().createSQLQuery(sql).list();
+		java.util.List<ETLErrorLog> errorList = new java.util.ArrayList<>();
+
+		for (Object[] row : results) {
+			errorList.add(mapRowToErrorLog(row));
+		}
+
+		return errorList;
+	}
+	
+	/**
+	 * Get the most recent error log entry
+	 */
+	public ETLErrorLog getMostRecentErrorLogEntry(String sql) {
+		Object result = getSession().createSQLQuery(sql).uniqueResult();
+		if (result == null) {
+			return null;
+		}
+		
+		Object[] row = (Object[]) result;
+		return mapRowToErrorLog(row);
+	}
+	
+	/**
+	 * Get ETL settings from the user settings table
+	 */
+	public ETLSettings getEtlSettings(String sql) {
+		Object result = getSession().createSQLQuery(sql).uniqueResult();
+		if (result == null) {
+			return null;
+		}
+		
+		Object[] row = (Object[]) result;
+		return mapRowToSettings(row);
+	}
+	
+	/**
 	 * Map a database row to ETLProgressInfo
 	 */
 	private ETLProgressInfo mapRowToProgressInfo(Object[] row) {
@@ -111,6 +154,36 @@ public class UgandaReportsETLDao {
 		        (String) row[6], // completion_status
 		        (String) row[7], // transaction_status
 		        (String) row[8] // success_or_error_message
+		);
+	}
+	
+	/**
+	 * Map a database row to ETLErrorLog
+	 */
+	private ETLErrorLog mapRowToErrorLog(Object[] row) {
+		return new ETLErrorLog((Integer) row[0], // id
+		        (String) row[1], // procedure_name
+		        (String) row[2], // error_message
+		        (Integer) row[3], // error_code
+		        (String) row[4], // sql_state
+		        (java.util.Date) row[5] // error_time
+		);
+	}
+	
+	/**
+	 * Map a database row to ETLSettings
+	 */
+	private ETLSettings mapRowToSettings(Object[] row) {
+		return new ETLSettings((Integer) row[0], // id
+		        (String) row[1], // openmrs_database
+		        (String) row[2], // etl_database
+		        (String) row[3], // concepts_locale
+		        (Integer) row[4], // table_partition_number
+		        row[5] != null && ((Integer) row[5]) == 1, // incremental_mode_switch
+		        row[6] != null && ((Integer) row[6]) == 1, // automatic_flattening_mode_switch
+		        (Integer) row[7], // etl_interval_seconds
+		        row[8] != null && ((Integer) row[8]) == 1, // incremental_mode_switch_cascaded
+		        (Integer) row[9] // last_etl_schedule_insert_id
 		);
 	}
 }

@@ -1,6 +1,7 @@
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_cacx_treatment (encounter_id,
                                                client_id,
+                                               patient_id,
                                                encounter_date,
                                                visit_type,
                                                other_visit_type,
@@ -29,6 +30,7 @@ INSERT INTO mamba_fact_encounter_cacx_treatment (encounter_id,
                                                comments)
 SELECT a.encounter_id,
        a.client_id,
+       a.client_id AS patient_id,
        a.encounter_datetime,
        visit_type,
        other_visit_type,

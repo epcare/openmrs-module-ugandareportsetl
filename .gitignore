@@ -53,4 +53,8 @@ run_cleanup*.sh
 test_cleanup.sh
 sql_cleanup_backup*/
 sql_cleanup_final*/
+roughwork/*
+*.py
+*.backup
+sql/*
 

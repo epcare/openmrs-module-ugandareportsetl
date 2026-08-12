@@ -1,0 +1,3 @@
+-- $BEGIN
+-- Query procedures for HTS Card v2
+-- $END
