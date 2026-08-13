@@ -3,32 +3,83 @@
 -- ============================================================================
 -- Purpose: Drops all Mamba ETL procedures and tables for clean setup
 -- Usage: Run before Setup Mamba ETL to ensure clean state
--- Updated: 2026-07-29 - Added all mamba tables including dim and flat tables
+-- Updated: 2026-08-13 - Added HTS Contact Tracing, CACX procedures
 -- ============================================================================
 
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ============================================================================
--- DROP ALL PROCEDURES (in dependency order - child procedures first)
+-- DROP ALL PROCEDURES (organized by module in dependency order)
 -- ============================================================================
 
--- Drop main ETL procedures
+-- ===== MAIN ETL PROCEDURES =====
 DROP PROCEDURE IF EXISTS sp_mamba_data_processing_etl;
+
+-- ===== COVID MODULE =====
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_covid;
+
+-- ===== ART CARD MODULE =====
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art;
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_art_card;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_non_suppressed;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_IIT;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_card_v2;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_anc;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_regimen_change;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_request;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_opd_attendance;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_transfers;
 
--- Drop VL episode procedures
+-- ===== NON-SUPPRESSED MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_non_suppressed;
+
+-- ===== IIT MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_IIT;
+
+-- ===== HTS (LEGACY) MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts;
+
+-- ===== HTS CARD V2 MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_card_v2;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_query;
+
+-- ===== HTS CONTACT TRACING MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_contact_tracing;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_query;
+
+-- ===== ANC MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_anc;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_anc_card_query;
+
+-- ===== CACX SCREENING MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_cacx_screening;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_screening;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_screening_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_screening_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_screening_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_screening_query;
+
+-- ===== CACX TREATMENT MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_cacx_treatment;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_query;
+
+-- ===== REGIMEN CHANGE MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_regimen_change;
+
+-- ===== VL REQUEST MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_request;
+DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_request_etl;
+
+-- ===== VL EPISODE MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_episode;
 DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_episode_etl;
 DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode;
 DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode_create;
@@ -37,39 +88,34 @@ DROP PROCEDURE IF EXISTS sp_mamba_fact_viral_load_episode_update;
 DROP PROCEDURE IF EXISTS 01_comprehensive_vl_episode;
 DROP PROCEDURE IF EXISTS sp_get_latest_vl_per_patient;
 DROP PROCEDURE IF EXISTS sp_get_vl_pipeline_summary;
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_vl_request;
 
--- Drop VL request procedures
-DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_request_etl;
+-- ===== OPD ATTENDANCE MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_opd_attendance;
 
--- Drop ARV orders procedures
+-- ===== TRANSFERS MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_transfers;
+
+-- ===== ARV ORDERS MODULE =====
 DROP PROCEDURE IF EXISTS sp_data_processing_arv_orders;
 DROP PROCEDURE IF EXISTS sp_fact_arv_orders_insert;
 
--- Drop Z-obs procedures
+-- ===== Z-OBS MODULE =====
 DROP PROCEDURE IF EXISTS sp_mamba_z_encounter_obs_insert;
 
--- Drop ETL obs group procedures
+-- ===== ETL OBS GROUP MODULE =====
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group;
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_create;
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_insert;
 DROP PROCEDURE IF EXISTS sp_mamba_obs_group_update;
 
--- Drop fact_encounter_diagnosis procedures
+-- ===== ENCOUNTER DIAGNOSIS MODULE =====
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_create;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_insert;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_diagnosis_update;
 
--- Drop hts_card_v2 procedures
-DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2;
-DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_create;
-DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_insert;
-DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_update;
-DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_card_v2_query;
-
 -- ============================================================================
--- DROP ALL TABLES (in dependency order - child tables first)
+-- DROP ALL TABLES (organized by type in dependency order)
 -- ============================================================================
 
 -- ===== FACT TABLES =====
@@ -87,6 +133,9 @@ DROP TABLE IF EXISTS mamba_fact_arv_orders;
 -- Non-suppressed tables
 DROP TABLE IF EXISTS mamba_fact_non_suppressed_obs_group;
 DROP TABLE IF EXISTS mamba_fact_non_suppressed_repeat_vl;
+
+-- HTS Contact Tracing tables
+DROP TABLE IF EXISTS mamba_fact_encounter_hts_contact_tracing;
 
 -- Audit tool tables
 DROP TABLE IF EXISTS mamba_fact_audit_tool_art_patients;
@@ -169,6 +218,7 @@ DROP TABLE IF EXISTS mamba_flat_encounter_art_summary_card_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card_v2;
+DROP TABLE IF EXISTS mamba_flat_encounter_hts_contact_tracing;
 DROP TABLE IF EXISTS mamba_flat_encounter_non_suppressed;
 DROP TABLE IF EXISTS mamba_flat_encounter_regimen_change;
 DROP TABLE IF EXISTS mamba_flat_encounter_tb_enrollment;
@@ -245,9 +295,30 @@ DROP TABLE IF EXISTS _mamba_etl_error_log;
 DROP TABLE IF EXISTS _mamba_etl_schedule;
 DROP TABLE IF EXISTS _mamba_etl_user_settings;
 
--- Note: Functions (fn_duration_to_days, fn_period_has_coverage) must be dropped manually
--- if needed, as DROP FUNCTION cannot be executed from within stored procedures
+-- ============================================================================
+-- RESTORE FOREIGN KEY CHECKS
+-- ============================================================================
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- ============================================================================
+-- CLEANUP COMPLETE
+-- ============================================================================
+
 SELECT 'Mamba ETL cleanup completed successfully' AS status;
+
+-- ============================================================================
+-- NOTES
+-- ============================================================================
+--
+-- Functions must be dropped manually if needed:
+--   DROP FUNCTION IF EXISTS fn_duration_to_days;
+--   DROP FUNCTION IF EXISTS fn_period_has_coverage;
+--
+-- To view all Mamba tables after cleanup:
+--   SHOW TABLES LIKE 'mamba_%';
+--
+-- To view all Mamba procedures after cleanup:
+--   SHOW PROCEDURE STATUS WHERE Name LIKE 'sp_%' OR Name LIKE 'mamba_%';
+--
+-- ============================================================================

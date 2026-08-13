@@ -4288,6 +4288,62 @@ SET @report_data = '{"flat_report_metadata":[{
   },
   "test_group_concept_uuid": "8eb0bd19-ca11-4be1-8e58-c59aa53aad83"
 },{
+  "report_name": "HTS_Contact_Tracing",
+  "flat_table_name": "mamba_flat_encounter_hts_contact_tracing",
+  "encounter_type_uuid": "3849c43c-f14d-40ab-80d7-670cf251e525",
+  "encounter_type_name": "HTS Contact Tracing Encounter",
+  "concepts_locale": "en",
+  "table_columns": {
+    "hts_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "contact_tracing_category": "f629b7f1-de33-4287-a80c-f00af8754e10",
+    "contact_type": "51df656d-a2a6-43dc-a834-abc05521511b",
+    "reason_why_at_risk": "cd101fa1-0c62-4bc6-bb12-0c2cc24ac8ca",
+    "other_reason_why_at_risk": "4d89d682-9b5d-4f5b-872b-a0a0f7276009",
+    "entry_point_hf": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
+    "other_entry_point": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+    "entry_point_community": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+    "other_community_entry_point": "16820069-b4bf-4c47-9efc-408746e1636b",
+    "special_category": "927563c5-cb91-4536-b23c-563a72d3f829",
+    "other_special_category": "eac4e9c2-a086-43fc-8d43-b5a4e02febb4",
+    "number_sexual_partners": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
+    "number_biological_children": "e7ef42f2-a83d-11ed-afa1-0242ac120002",
+    "number_social_contact": "e421ccd7-6816-42a9-bd0e-b2ab8389376e",
+    "number_pwid_contact": "6378aa4a-39b0-4ec6-bb8a-75299171bdc2",
+    "attempt_made": "7faf2044-2590-470b-b257-8ca96829c084",
+    "index_counselled": "e986646c-501e-4f6f-9921-4fd936db9692",
+    "index_date_reached": "d7f97396-a1c2-46d5-9ef0-41f9f115136d",
+    "encounter_outcome": "8f00bb8d-e262-43a3-bb71-42f4dba6e37f",
+    "remarks": "1648e8a1-ed34-4318-87d8-735da453fb38",
+    "contact_name": "e0ad4fb8-6b74-41b0-a7d0-d23909cfc3b4",
+    "contact_number": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "contact_category": "d217f1ed-997d-42b6-b928-a1a9d4d756f2",
+    "other_contact_category": "77dfdf96-46e2-4410-8fb3-7d4797cf96a3",
+    "common_name": "96557634-22fb-469b-8574-ae7fb80cd6df",
+    "contact_age": "4be9eb4c-ee9a-4652-973e-3f6ac97ffcb2",
+    "contact_sex": "dce0e46e-30ab-102d-86b0-7a5022ba4115",
+    "contact_telephone": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "contact_alternative_telephone": "ac1da2d4-3555-4276-b402-46005b4bc6b9",
+    "contact_residential_place": "ab7aec05-632b-4e0f-97c3-5c30e6747acc",
+    "contact_notification_method": "65a87964-1946-46bf-8310-5a1183b13717",
+    "contact_violence_history": "5f078989-6c96-43c7-b790-5674088571ac",
+    "contact_encounter_date": "3c926066-d9b8-460b-9dc8-e18eb4fbc876",
+    "contact_reach_attempt": "642afc3b-2ac3-49f8-8418-4c9907e850ae",
+    "contact_encounter_means": "a4418367-97f0-40e2-aec1-f93c500d52f3",
+    "other_contact_encounter_means": "34c5f198-9134-4b31-bc69-b27442313a25",
+    "contact_encounter_outcome": "c3a62ca3-3810-4833-82b6-17f164b1ee09",
+    "other_contact_encounter_outcome": "583537a4-9876-4560-a66e-1a62ec672658",
+    "hiv_test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "hiv_test_results": "37a5bf42-5b94-4ae7-8c46-9ebff55ef349",
+    "case_closure_status": "28368a0c-9b46-4f21-8aff-6056d3578edd",
+    "other_case_closure_status": "f82c1618-93d6-4c58-a2c3-b4872cf144ad",
+    "contact_clinic_number": "b12f285a-0a26-44b5-83b3-e229bda74679",
+    "hiv_prevention_services": "73686a14-b55c-4b10-916d-fda2046b803f",
+    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+    "experienced_violence": "070445ca-847e-49b6-9424-e0c429a8971e",
+    "type_of_violence": "ad1aa7be-167e-41d2-9a4c-3d04f62a06d1",
+    "contact_care_comments": "161011AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+},{
   "report_name": "ART_Regimen_Change",
   "flat_table_name": "mamba_flat_encounter_regimen_change",
   "encounter_type_uuid": "c11774c1-3b4a-4bdb-a847-6060895e006d",
@@ -5263,6 +5319,62 @@ SET @report_data = '{"flat_report_metadata":[{
     "recency_test_result": "141520BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
   },
   "test_group_concept_uuid": "8eb0bd19-ca11-4be1-8e58-c59aa53aad83"
+},{
+  "report_name": "HTS_Contact_Tracing",
+  "flat_table_name": "mamba_flat_encounter_hts_contact_tracing",
+  "encounter_type_uuid": "3849c43c-f14d-40ab-80d7-670cf251e525",
+  "encounter_type_name": "HTS Contact Tracing Encounter",
+  "concepts_locale": "en",
+  "table_columns": {
+    "hts_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "contact_tracing_category": "f629b7f1-de33-4287-a80c-f00af8754e10",
+    "contact_type": "51df656d-a2a6-43dc-a834-abc05521511b",
+    "reason_why_at_risk": "cd101fa1-0c62-4bc6-bb12-0c2cc24ac8ca",
+    "other_reason_why_at_risk": "4d89d682-9b5d-4f5b-872b-a0a0f7276009",
+    "entry_point_hf": "720a1e85-ea1c-4f7b-a31e-cb896978df79",
+    "other_entry_point": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+    "entry_point_community": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+    "other_community_entry_point": "16820069-b4bf-4c47-9efc-408746e1636b",
+    "special_category": "927563c5-cb91-4536-b23c-563a72d3f829",
+    "other_special_category": "eac4e9c2-a086-43fc-8d43-b5a4e02febb4",
+    "number_sexual_partners": "f1a6ede9-052e-4707-9cd8-a77fdeb2a02b",
+    "number_biological_children": "e7ef42f2-a83d-11ed-afa1-0242ac120002",
+    "number_social_contact": "e421ccd7-6816-42a9-bd0e-b2ab8389376e",
+    "number_pwid_contact": "6378aa4a-39b0-4ec6-bb8a-75299171bdc2",
+    "attempt_made": "7faf2044-2590-470b-b257-8ca96829c084",
+    "index_counselled": "e986646c-501e-4f6f-9921-4fd936db9692",
+    "index_date_reached": "d7f97396-a1c2-46d5-9ef0-41f9f115136d",
+    "encounter_outcome": "8f00bb8d-e262-43a3-bb71-42f4dba6e37f",
+    "remarks": "1648e8a1-ed34-4318-87d8-735da453fb38",
+    "contact_name": "e0ad4fb8-6b74-41b0-a7d0-d23909cfc3b4",
+    "contact_number": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "contact_category": "d217f1ed-997d-42b6-b928-a1a9d4d756f2",
+    "other_contact_category": "77dfdf96-46e2-4410-8fb3-7d4797cf96a3",
+    "common_name": "96557634-22fb-469b-8574-ae7fb80cd6df",
+    "contact_age": "4be9eb4c-ee9a-4652-973e-3f6ac97ffcb2",
+    "contact_sex": "dce0e46e-30ab-102d-86b0-7a5022ba4115",
+    "contact_telephone": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "contact_alternative_telephone": "ac1da2d4-3555-4276-b402-46005b4bc6b9",
+    "contact_residential_place": "ab7aec05-632b-4e0f-97c3-5c30e6747acc",
+    "contact_notification_method": "65a87964-1946-46bf-8310-5a1183b13717",
+    "contact_violence_history": "5f078989-6c96-43c7-b790-5674088571ac",
+    "contact_encounter_date": "3c926066-d9b8-460b-9dc8-e18eb4fbc876",
+    "contact_reach_attempt": "642afc3b-2ac3-49f8-8418-4c9907e850ae",
+    "contact_encounter_means": "a4418367-97f0-40e2-aec1-f93c500d52f3",
+    "other_contact_encounter_means": "34c5f198-9134-4b31-bc69-b27442313a25",
+    "contact_encounter_outcome": "c3a62ca3-3810-4833-82b6-17f164b1ee09",
+    "other_contact_encounter_outcome": "583537a4-9876-4560-a66e-1a62ec672658",
+    "hiv_test_date": "164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "hiv_test_results": "37a5bf42-5b94-4ae7-8c46-9ebff55ef349",
+    "case_closure_status": "28368a0c-9b46-4f21-8aff-6056d3578edd",
+    "other_case_closure_status": "f82c1618-93d6-4c58-a2c3-b4872cf144ad",
+    "contact_clinic_number": "b12f285a-0a26-44b5-83b3-e229bda74679",
+    "hiv_prevention_services": "73686a14-b55c-4b10-916d-fda2046b803f",
+    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+    "experienced_violence": "070445ca-847e-49b6-9424-e0c429a8971e",
+    "type_of_violence": "ad1aa7be-167e-41d2-9a4c-3d04f62a06d1",
+    "contact_care_comments": "161011AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
 },{
   "report_name": "ART_Regimen_Change",
   "flat_table_name": "mamba_flat_encounter_regimen_change",
@@ -14386,14 +14498,14 @@ END;
 
         
 -- ---------------------------------------------------------------------------------------------
--- sp_data_processing_derived_hts
+-- sp_data_processing_derived_hts_card_v2
 --
 
-DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts;
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_card_v2;
 
 
 ~-~-
-CREATE PROCEDURE sp_data_processing_derived_hts()
+CREATE PROCEDURE sp_data_processing_derived_hts_card_v2()
 BEGIN
 
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -14404,21 +14516,63 @@ BEGIN
     @mysql_errno = MYSQL_ERRNO,
     @returned_sqlstate = RETURNED_SQLSTATE;
 
-    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hts', @message_text, @mysql_errno, @returned_sqlstate);
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hts_card_v2', @message_text, @mysql_errno, @returned_sqlstate);
 
     UPDATE _mamba_etl_schedule
     SET end_time                   = NOW(),
         completion_status          = 'ERROR',
         transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_data_processing_derived_hts', ', ', @mysql_errno, ', ', @message_text)
+        success_or_error_message   = CONCAT('sp_data_processing_derived_hts_card_v2', ', ', @mysql_errno, ', ', @message_text)
         WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
 
     RESIGNAL;
 END;
 
 -- $BEGIN
-CALL sp_fact_encounter_hts_card;
+-- Main procedure to process HTS Client Card v2 ETL
+CALL sp_fact_encounter_hts_card_v2_create();
+CALL sp_fact_encounter_hts_card_v2_insert();
+-- $END
+END;
+~-~-
 
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_hts_contact_tracing
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_contact_tracing;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_hts_contact_tracing()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hts_contact_tracing', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_hts_contact_tracing', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Main procedure to process HTS Contact Tracing ETL
+CALL sp_fact_encounter_hts_contact_tracing_create();
+CALL sp_fact_encounter_hts_contact_tracing_insert();
 -- $END
 END;
 ~-~-
@@ -15581,6 +15735,7 @@ BEGIN
     CALL sp_data_processing_derived_regimen_change();
     CALL sp_data_processing_derived_vl_request();
     CALL sp_data_processing_derived_hts_card_v2();
+    CALL sp_data_processing_derived_hts_contact_tracing();
     CALL sp_data_processing_derived_anc();
     CALL sp_data_processing_derived_cacx_screening();
     CALL sp_data_processing_derived_cacx_treatment();
@@ -29427,6 +29582,438 @@ END;
 -- $BEGIN
 CALL sp_fact_encounter_hts_card;
 
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_contact_tracing
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_contact_tracing()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_contact_tracing', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_contact_tracing', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_hts_contact_tracing_create();
+CALL sp_fact_encounter_hts_contact_tracing_insert();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_contact_tracing_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_contact_tracing_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_contact_tracing_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_contact_tracing_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- HTS Contact Tracing Fact Table - Create Script
+-- ============================================================================
+-- Purpose: Creates the mamba_fact_encounter_hts_contact_tracing table
+-- Note: This is raw SQL, not a stored procedure
+-- ============================================================================
+CREATE TABLE mamba_fact_encounter_hts_contact_tracing
+(
+    id                                     INT AUTO_INCREMENT,
+    encounter_id                           INT NULL,
+    client_id                              INT          NULL,
+    patient_id                             INT          NULL,
+    encounter_date                         DATETIME         NULL,
+    hts_number                             VARCHAR(250) NULL,
+    contact_tracing_category               VARCHAR(250) NULL,
+    contact_type                           VARCHAR(250) NULL,
+    reason_why_at_risk                     VARCHAR(250) NULL,
+    other_reason_why_at_risk               VARCHAR(250) NULL,
+    entry_point_hf                         VARCHAR(250) NULL,
+    other_entry_point_hf                   VARCHAR(250) NULL,
+    entry_point_community                  VARCHAR(250) NULL,
+    other_entry_point_community            VARCHAR(250) NULL,
+    special_category                       VARCHAR(250) NULL,
+    other_special_category                 VARCHAR(250) NULL,
+    number_sexual_partners                 VARCHAR(250) NULL,
+    number_biological_children              VARCHAR(250) NULL,
+    number_social_contact                  VARCHAR(250) NULL,
+    number_pwid_contact                    VARCHAR(250) NULL,
+    attempt_made                           VARCHAR(250) NULL,
+    index_counselled                       VARCHAR(250) NULL,
+    index_date_reached                     DATE         NULL,
+    encounter_outcome                      VARCHAR(250) NULL,
+    remarks                                VARCHAR(500) NULL,
+    contact_name                           VARCHAR(250) NULL,
+    contact_number                         VARCHAR(250) NULL,
+    contact_category                      VARCHAR(250) NULL,
+    other_contact_category                VARCHAR(250) NULL,
+    common_name                            VARCHAR(250) NULL,
+    contact_age                            VARCHAR(250) NULL,
+    contact_sex                            VARCHAR(250) NULL,
+    contact_telephone                      VARCHAR(250) NULL,
+    contact_alternative_telephone          VARCHAR(250) NULL,
+    contact_residential_place              VARCHAR(250) NULL,
+    contact_notification_method            VARCHAR(250) NULL,
+    contact_violence_history               VARCHAR(250) NULL,
+    contact_encounter_date                 DATE         NULL,
+    contact_reach_attempt                  VARCHAR(250) NULL,
+    contact_encounter_means                VARCHAR(250) NULL,
+    other_contact_encounter_means          VARCHAR(250) NULL,
+    contact_encounter_outcome              VARCHAR(250) NULL,
+    other_contact_encounter_outcome        VARCHAR(250) NULL,
+    hiv_test_date                          DATE         NULL,
+    hiv_test_results                       VARCHAR(250) NULL,
+    case_closure_status                    VARCHAR(250) NULL,
+    other_case_closure_status              VARCHAR(250) NULL,
+    contact_clinic_number                  VARCHAR(250) NULL,
+    hiv_prevention_services                VARCHAR(500) NULL,
+    other_prevention_services               VARCHAR(250) NULL,
+    experienced_violence                   VARCHAR(250) NULL,
+    type_of_violence                       VARCHAR(250) NULL,
+    contact_care_comments                  VARCHAR(500) NULL,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8;
+
+CREATE INDEX
+    mamba_fact_encounter_hts_contact_tracing_client_id_index ON mamba_fact_encounter_hts_contact_tracing (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_contact_tracing_patient_id_index ON mamba_fact_encounter_hts_contact_tracing (patient_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_contact_tracing_encounter_id_index ON mamba_fact_encounter_hts_contact_tracing (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_contact_tracing_encounter_date_index ON mamba_fact_encounter_hts_contact_tracing (encounter_date);
+
+CREATE INDEX
+    mamba_fact_encounter_hts_contact_tracing_contact_category_index ON mamba_fact_encounter_hts_contact_tracing (contact_tracing_category);
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_contact_tracing_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_contact_tracing_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_contact_tracing_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_contact_tracing_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- HTS Contact Tracing Fact Table - Insert Script
+-- ============================================================================
+-- Purpose: Inserts data from HTS Contact Tracing encounters into fact table
+-- Uses: mamba_flat_encounter_hts_contact_tracing (created by Mamba ETL)
+-- Note: Ensure flat table is regenerated with all columns before running:
+--       DROP TABLE mamba_flat_encounter_hts_contact_tracing;
+--       CALL sp_mamba_flat_encounter_table_create('mamba_flat_encounter_hts_contact_tracing');
+--       CALL sp_mamba_flat_encounter_table_insert('mamba_flat_encounter_hts_contact_tracing', NULL);
+-- ============================================================================
+INSERT INTO mamba_fact_encounter_hts_contact_tracing (
+    encounter_id,
+    client_id,
+    patient_id,
+    encounter_date,
+    hts_number,
+    contact_tracing_category,
+    contact_type,
+    reason_why_at_risk,
+    other_reason_why_at_risk,
+    entry_point_hf,
+    other_entry_point_hf,
+    entry_point_community,
+    other_entry_point_community,
+    special_category,
+    other_special_category,
+    number_sexual_partners,
+    number_biological_children,
+    number_social_contact,
+    number_pwid_contact,
+    attempt_made,
+    index_counselled,
+    index_date_reached,
+    encounter_outcome,
+    remarks,
+    contact_name,
+    contact_number,
+    contact_category,
+    other_contact_category,
+    common_name,
+    contact_age,
+    contact_sex,
+    contact_telephone,
+    contact_alternative_telephone,
+    contact_residential_place,
+    contact_notification_method,
+    contact_violence_history,
+    contact_encounter_date,
+    contact_reach_attempt,
+    contact_encounter_means,
+    other_contact_encounter_means,
+    contact_encounter_outcome,
+    other_contact_encounter_outcome,
+    hiv_test_date,
+    hiv_test_results,
+    case_closure_status,
+    other_case_closure_status,
+    contact_clinic_number,
+    hiv_prevention_services,
+    other_prevention_services,
+    experienced_violence,
+    type_of_violence,
+    contact_care_comments
+)
+SELECT
+    encounter_id,
+    client_id,
+    client_id AS patient_id,
+    encounter_datetime AS encounter_date,
+    hts_number,
+    contact_tracing_category,
+    contact_type,
+    reason_why_at_risk,
+    other_reason_why_at_risk,
+    entry_point_hf,
+    other_entry_point AS other_entry_point_hf,
+    entry_point_community,
+    other_community_entry_point AS other_entry_point_community,
+    special_category,
+    other_special_category,
+    CAST(number_sexual_partners AS CHAR) AS number_sexual_partners,
+    CAST(number_biological_children AS CHAR) AS number_biological_children,
+    CAST(number_social_contact AS CHAR) AS number_social_contact,
+    CAST(number_pwid_contact AS CHAR) AS number_pwid_contact,
+    attempt_made,
+    index_counselled,
+    index_date_reached,
+    encounter_outcome,
+    remarks,
+    contact_name,
+    contact_number,
+    contact_category,
+    other_contact_category,
+    common_name,
+    CAST(contact_age AS CHAR) AS contact_age,
+    contact_sex,
+    contact_telephone,
+    contact_alternative_telephone,
+    contact_residential_place,
+    contact_notification_method,
+    contact_violence_history,
+    contact_encounter_date,
+    contact_reach_attempt,
+    contact_encounter_means,
+    other_contact_encounter_means,
+    contact_encounter_outcome,
+    other_contact_encounter_outcome,
+    hiv_test_date,
+    hiv_test_results,
+    case_closure_status,
+    other_case_closure_status,
+    contact_clinic_number,
+    hiv_prevention_services,
+    other_prevention_services,
+    experienced_violence,
+    type_of_violence,
+    contact_care_comments
+FROM mamba_flat_encounter_hts_contact_tracing;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_contact_tracing_query
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_query;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_contact_tracing_query()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_contact_tracing_query', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_contact_tracing_query', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Query procedures for HTS Card v2
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hts_contact_tracing_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_hts_contact_tracing_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hts_contact_tracing_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hts_contact_tracing_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Update procedures for HTS Card v2
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_hts_contact_tracing
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hts_contact_tracing;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_hts_contact_tracing()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hts_contact_tracing', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_hts_contact_tracing', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Main procedure to process HTS Contact Tracing ETL
+CALL sp_fact_encounter_hts_contact_tracing_create();
+CALL sp_fact_encounter_hts_contact_tracing_insert();
 -- $END
 END;
 ~-~-
