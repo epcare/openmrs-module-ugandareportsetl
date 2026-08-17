@@ -4297,6 +4297,43 @@ SET @report_data = '{"flat_report_metadata":[{
     "comments": "1648e8a1-ed34-4318-87d8-735da453fb38"
   }
 },{
+  "report_name": "HIV_Self_Testing_Register",
+  "flat_table_name": "mamba_flat_encounter_hiv_self_testing",
+  "encounter_type_uuid": "b75fc5be-83a6-4771-afae-87d1b68af4f7",
+  "encounter_type_name": "HIV Self Testing Encounter",
+  "concepts_locale": "en",
+  "table_columns": {
+    "serial_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "special_category": "927563c5-cb91-4536-b23c-563a72d3f829",
+    "other_special_category": "eac4e9c2-a086-43fc-8d43-b5a4e02febb4",
+    "distribution_model": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
+    "hf_entry_point": "dcdfe3ce-30ab-102d-86b0-7a5022ba4115",
+    "other_hf_entry_point": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+    "community_entry_point": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+    "other_community_entry_point": "16820069-b4bf-4c47-9efc-408746e1636b",
+    "hiv_self_testing_approach": "7751edcc-02eb-4fed-abce-c05b89671556",
+    "batch_number": "8743b548-0046-4303-a9a8-cfc56e95739b",
+    "expiry_date": "1a89afa3-3608-43ad-978a-c6dc8fb4e4b3",
+    "test_kit_distributor": "cf564f75-432f-468a-9f28-5715e840ac4a",
+    "other_test_kit_distributor": "4f367698-c846-43c4-8e25-75c74b2bdd65",
+    "use_of_test_kit": "af17fe65-cb46-442e-866f-1d680c813d5c",
+    "other_use_of_test_kit": "5bd0e73c-a475-4b64-98c9-7a812cd74676",
+    "secondary_user_name": "c6df09da-6f53-4439-bb37-3350b861a695",
+    "secondary_user_age": "a8f957eb-28b0-4adc-827e-8f081ebb3580",
+    "secondary_user_sex": "dce0e46e-30ab-102d-86b0-7a5022ba4115",
+    "hivst_results": "01193606-25bb-4699-b712-0593a007f5ca",
+    "confirmatory_test_results": "3664bb3b-8261-4bca-af06-140f67f73adf",
+    "linked_to_hiv_prevention_services": "3d620422-0641-412e-ab31-5e45b98bc459",
+    "hiv_prevention_services": "73686a14-b55c-4b10-916d-fda2046b803f",
+    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+    "linked_to_hiv_care": "3d620422-0641-412e-ab31-5e45b98bc459",
+    "art_no": "85097a99-4126-4ad3-894e-25c1a7e91dee",
+    "facility_name": "dd252ff9-30ab-102d-86b0-7a5022ba4115",
+    "type_of_violence": "ad1aa7be-167e-41d2-9a4c-3d04f62a06d1",
+    "referred_to": "bec33d83-74cd-407c-a6df-68e21176319f",
+    "other_referral_location": "f48dc58e-3755-4a5c-9525-9a649fd2a148"
+  }
+},{
   "report_name": "HTS_Client_Card_v2",
   "flat_table_name": "mamba_flat_encounter_hts_card_v2",
   "encounter_type_uuid": "264daIZd-f80e-48fe-nba9-P37f2W1905Pv",
@@ -5333,6 +5370,43 @@ SET @report_data = '{"flat_report_metadata":[{
     "service_offered": "f0c8856d-7955-4f18-a9a4-cc4fcf7a363a",
     "date_service_offered": "f9bb0beb-1639-4f2d-b68d-fcff7b5c90ee",
     "comments": "1648e8a1-ed34-4318-87d8-735da453fb38"
+  }
+},{
+  "report_name": "HIV_Self_Testing_Register",
+  "flat_table_name": "mamba_flat_encounter_hiv_self_testing",
+  "encounter_type_uuid": "b75fc5be-83a6-4771-afae-87d1b68af4f7",
+  "encounter_type_name": "HIV Self Testing Encounter",
+  "concepts_locale": "en",
+  "table_columns": {
+    "serial_number": "1646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "special_category": "927563c5-cb91-4536-b23c-563a72d3f829",
+    "other_special_category": "eac4e9c2-a086-43fc-8d43-b5a4e02febb4",
+    "distribution_model": "46648b1d-b099-433b-8f9c-3815ff1e0a0f",
+    "hf_entry_point": "dcdfe3ce-30ab-102d-86b0-7a5022ba4115",
+    "other_hf_entry_point": "adf31c43-c9a0-4ab8-b53a-42097eb3d2b6",
+    "community_entry_point": "4f4e6d1d-4343-42cc-ba47-2319b8a84369",
+    "other_community_entry_point": "16820069-b4bf-4c47-9efc-408746e1636b",
+    "hiv_self_testing_approach": "7751edcc-02eb-4fed-abce-c05b89671556",
+    "batch_number": "8743b548-0046-4303-a9a8-cfc56e95739b",
+    "expiry_date": "1a89afa3-3608-43ad-978a-c6dc8fb4e4b3",
+    "test_kit_distributor": "cf564f75-432f-468a-9f28-5715e840ac4a",
+    "other_test_kit_distributor": "4f367698-c846-43c4-8e25-75c74b2bdd65",
+    "use_of_test_kit": "af17fe65-cb46-442e-866f-1d680c813d5c",
+    "other_use_of_test_kit": "5bd0e73c-a475-4b64-98c9-7a812cd74676",
+    "secondary_user_name": "c6df09da-6f53-4439-bb37-3350b861a695",
+    "secondary_user_age": "a8f957eb-28b0-4adc-827e-8f081ebb3580",
+    "secondary_user_sex": "dce0e46e-30ab-102d-86b0-7a5022ba4115",
+    "hivst_results": "01193606-25bb-4699-b712-0593a007f5ca",
+    "confirmatory_test_results": "3664bb3b-8261-4bca-af06-140f67f73adf",
+    "linked_to_hiv_prevention_services": "3d620422-0641-412e-ab31-5e45b98bc459",
+    "hiv_prevention_services": "73686a14-b55c-4b10-916d-fda2046b803f",
+    "other_prevention_services": "f3419b12-f6da-4aed-a001-e9f0bd078140",
+    "linked_to_hiv_care": "3d620422-0641-412e-ab31-5e45b98bc459",
+    "art_no": "85097a99-4126-4ad3-894e-25c1a7e91dee",
+    "facility_name": "dd252ff9-30ab-102d-86b0-7a5022ba4115",
+    "type_of_violence": "ad1aa7be-167e-41d2-9a4c-3d04f62a06d1",
+    "referred_to": "bec33d83-74cd-407c-a6df-68e21176319f",
+    "other_referral_location": "f48dc58e-3755-4a5c-9525-9a649fd2a148"
   }
 },{
   "report_name": "HTS_Client_Card_v2",
@@ -14828,6 +14902,48 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_hiv_self_testing
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_self_testing;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_data_processing_derived_hiv_self_testing()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hiv_self_testing', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_hiv_self_testing', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Main procedure to process HIV Self-Testing ETL
+CALL sp_fact_encounter_hiv_self_testing_create();
+CALL sp_fact_encounter_hiv_self_testing_insert();
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_data_processing_derived_anc
 --
 
@@ -16003,6 +16119,7 @@ BEGIN
     CALL sp_data_processing_derived_vl_request();
     CALL sp_data_processing_derived_hts_card_v2();
     CALL sp_data_processing_derived_hts_contact_tracing();
+    CALL sp_data_processing_derived_hiv_self_testing();
     CALL sp_data_processing_derived_anc();
     CALL sp_data_processing_derived_cacx_screening();
     CALL sp_data_processing_derived_cacx_treatment();
@@ -30961,6 +31078,402 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hiv_self_testing
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_hiv_self_testing()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hiv_self_testing', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hiv_self_testing', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_hiv_self_testing_create();
+CALL sp_fact_encounter_hiv_self_testing_insert();
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hiv_self_testing_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_create;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_hiv_self_testing_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hiv_self_testing_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hiv_self_testing_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- HIV Self-Testing Fact Table - Create Script
+-- ============================================================================
+-- Purpose: Creates the mamba_fact_encounter_hiv_self_testing table
+-- Note: This is raw SQL, not a stored procedure
+-- ============================================================================
+-- This table stores HIV Self-Testing (HIVST) kit distribution and results
+-- for HMIS 106A indicators HT05 (Facility) and HT06 (Community)
+-- ============================================================================
+
+CREATE TABLE mamba_fact_encounter_hiv_self_testing
+(
+    id                                     INT AUTO_INCREMENT,
+    encounter_id                           INT NULL,
+    client_id                              INT          NULL,
+    patient_id                             INT          NULL,
+    encounter_date                         DATETIME         NULL,
+    location_id                            INT          NULL,
+    serial_number                          VARCHAR(250) NULL,
+    special_category                       VARCHAR(250) NULL,
+    other_special_category                 VARCHAR(250) NULL,
+    distribution_model                     VARCHAR(250) NULL,
+    hf_entry_point                         VARCHAR(250) NULL,
+    other_hf_entry_point                   VARCHAR(250) NULL,
+    community_entry_point                  VARCHAR(250) NULL,
+    other_community_entry_point            VARCHAR(250) NULL,
+    hiv_self_testing_approach              VARCHAR(250) NULL,
+    batch_number                           VARCHAR(250) NULL,
+    expiry_date                            DATE         NULL,
+    test_kit_distributor                   VARCHAR(250) NULL,
+    other_test_kit_distributor             VARCHAR(250) NULL,
+    use_of_test_kit                        VARCHAR(250) NULL,
+    other_use_of_test_kit                  VARCHAR(250) NULL,
+    secondary_user_name                     VARCHAR(250) NULL,
+    secondary_user_age                     VARCHAR(50)  NULL,
+    secondary_user_sex                      VARCHAR(50)  NULL,
+    hivst_results                          VARCHAR(250) NULL,
+    confirmatory_test_results              VARCHAR(250) NULL,
+    linked_to_hiv_prevention_services     VARCHAR(50)  NULL,
+    hiv_prevention_services                VARCHAR(500) NULL,
+    other_prevention_services               VARCHAR(250) NULL,
+    linked_to_hiv_care                      VARCHAR(50)  NULL,
+    art_no                                 VARCHAR(250) NULL,
+    facility_name                          VARCHAR(250) NULL,
+    type_of_violence                       VARCHAR(250) NULL,
+    referred_to                            VARCHAR(250) NULL,
+    other_referral_location                VARCHAR(250) NULL,
+    voided                                 INT          DEFAULT 0,
+    date_created                           DATETIME     DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8;
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_client_id_index ON mamba_fact_encounter_hiv_self_testing (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_patient_id_index ON mamba_fact_encounter_hiv_self_testing (patient_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_encounter_id_index ON mamba_fact_encounter_hiv_self_testing (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_encounter_date_index ON mamba_fact_encounter_hiv_self_testing (encounter_date);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_location_id_index ON mamba_fact_encounter_hiv_self_testing (location_id);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_distribution_model_index ON mamba_fact_encounter_hiv_self_testing (distribution_model);
+
+CREATE INDEX
+    mamba_fact_encounter_hiv_self_testing_hivst_results_index ON mamba_fact_encounter_hiv_self_testing (hivst_results);
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hiv_self_testing_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_insert;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_hiv_self_testing_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hiv_self_testing_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hiv_self_testing_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- HIV Self-Testing Fact Table - Insert Script
+-- ============================================================================
+-- Purpose: Inserts data from HIV Self-Testing encounters into fact table
+-- Uses: mamba_flat_encounter_hiv_self_testing (created by Mamba ETL)
+-- Note: Ensure flat table is regenerated with all columns before running:
+--       DROP TABLE mamba_flat_encounter_hiv_self_testing;
+--       CALL sp_mamba_flat_encounter_table_create('mamba_flat_encounter_hiv_self_testing');
+--       CALL sp_mamba_flat_encounter_table_insert('mamba_flat_encounter_hiv_self_testing', 'b75fc5be-83a6-4771-afae-87d1b68af4f7');
+-- ============================================================================
+INSERT INTO mamba_fact_encounter_hiv_self_testing (
+    encounter_id,
+    client_id,
+    patient_id,
+    encounter_date,
+    location_id,
+    serial_number,
+    special_category,
+    other_special_category,
+    distribution_model,
+    hf_entry_point,
+    other_hf_entry_point,
+    community_entry_point,
+    other_community_entry_point,
+    hiv_self_testing_approach,
+    batch_number,
+    expiry_date,
+    test_kit_distributor,
+    other_test_kit_distributor,
+    use_of_test_kit,
+    other_use_of_test_kit,
+    secondary_user_name,
+    secondary_user_age,
+    secondary_user_sex,
+    hivst_results,
+    confirmatory_test_results,
+    linked_to_hiv_prevention_services,
+    hiv_prevention_services,
+    other_prevention_services,
+    linked_to_hiv_care,
+    art_no,
+    facility_name,
+    type_of_violence,
+    referred_to,
+    other_referral_location
+)
+SELECT
+    encounter_id,
+    client_id,
+    client_id AS patient_id,
+    encounter_datetime AS encounter_date,
+    location_id,
+    serial_number,
+    special_category,
+    other_special_category,
+    distribution_model,
+    hf_entry_point,
+    other_hf_entry_point,
+    community_entry_point,
+    other_community_entry_point,
+    hiv_self_testing_approach,
+    batch_number,
+    expiry_date,
+    test_kit_distributor,
+    other_test_kit_distributor,
+    use_of_test_kit,
+    other_use_of_test_kit,
+    secondary_user_name,
+    CAST(secondary_user_age AS CHAR) AS secondary_user_age,
+    secondary_user_sex,
+    hivst_results,
+    confirmatory_test_results,
+    linked_to_hiv_prevention_services,
+    hiv_prevention_services,
+    other_prevention_services,
+    linked_to_hiv_care,
+    art_no,
+    facility_name,
+    type_of_violence,
+    referred_to,
+    other_referral_location
+FROM mamba_flat_encounter_hiv_self_testing;
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hiv_self_testing_query
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_query;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_hiv_self_testing_query()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hiv_self_testing_query', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hiv_self_testing_query', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Query procedures for HIV Self-Testing
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_hiv_self_testing_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_update;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_fact_encounter_hiv_self_testing_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_hiv_self_testing_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_hiv_self_testing_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Update procedures for HIV Self-Testing
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_hiv_self_testing
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_self_testing;
+
+DELIMITER //
+
+~
+CREATE PROCEDURE sp_data_processing_derived_hiv_self_testing()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_hiv_self_testing', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_hiv_self_testing', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Main procedure to process HIV Self-Testing ETL
+CALL sp_fact_encounter_hiv_self_testing_create();
+CALL sp_fact_encounter_hiv_self_testing_insert();
+-- $END
+END //
+
+DELIMITER ;
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_fact_encounter_non_suppressed_card_create
 --
 
@@ -33544,20 +34057,38 @@ DELIMITER ;
 -- ============================================
 -- Purpose: Populate mamba_fact_viral_load_episode from all VL sources
 -- Sources:
---   1. Legacy ART card observations (99% of data)
---   2. New HMIS VL request form with native orders (1% of data)
---   3. Existing VL tables (mamba_flat_encounter_vl_request, etc.)
+--   1. Native orders with linked results (~11% of data)
+--   2. Legacy ART card observations (~89% of data)
 --
 -- Key Features:
---   - Extracts orders and results from both workflows
---   - Matches orders to results using multiple methods
+--   - Extracts results from obs and DIRECTLY joins to orders via obs.order_id
+--   - Handles both workflows: native (with order_id) and legacy/offered (without order_id)
+--   - Matches orphan results to orders using accession number and patient+date window
 --   - Builds comprehensive episodes
 --   - Calculates suppression status
 --   - Infers testing model
 --   - Tracks linkage confidence
 --   - Exposes data quality issues
 --
+-- Workflow Priority:
+--   1. DIRECT_ORDER_ID: obs with order_id → Direct join to orders (HIGH confidence, ~11%)
+--   2. ACCESSION_NUMBER: Match by accession number (HIGH confidence)
+--   3. PATIENT_DATE: Match by patient + date window (MEDIUM confidence, 30-day default)
+--   4. UNMATCHED: Orphan results without matching orders
+--
+-- Processing Steps:
+--   1. Clear existing data
+--   2. Extract native orders from orders table
+--   3. Extract legacy derived orders from obs (Tests Ordered concept)
+--   4. Extract results with direct obs.order_id linkage
+--   4b. Extract qualitative-only results with direct linkage
+--   4c. Remove duplicate order episodes (cleanup after direct linkage)
+--   5. Match remaining by accession number
+--   6. Match remaining by patient+date window
+--   7-11. Calculate derived fields (suppression, testing model, etc.)
+--
 -- Created: 2026-07-29
+-- Updated: 2026-08-14 - Added direct obs.order_id linkage and duplicate cleanup
 -- ============================================
 
 DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_episode_etl;
@@ -33683,12 +34214,24 @@ BEGIN
       AND obs_ordered.voided = 0
       AND obs_parent.obs_group_id IS NULL;  -- Parent panel, not child
 
-    -- ============ STEP 4: Extract VL results (encounter-based structure) ============
-    -- In this database, VL components are separate observations linked by encounter_id + obs_datetime
+    -- ============ STEP 4: Extract VL results with direct order linkage ============
+    -- Extracts VL results from obs and joins to orders table when obs.order_id exists
+    -- This handles both workflows:
+    --   1. Native orders: obs WITH order_id → Direct join to orders table (HIGH confidence)
+    --   2. Legacy/offered: obs WITHOUT order_id → Will use fallback matching later
     INSERT INTO mamba_fact_viral_load_episode (
         patient_id,
+        native_order_id,
+        native_order_uuid,
         panel_obs_id,
         order_record_type,
+        order_source_workflow,
+        order_date,
+        order_date_source,
+        order_encounter_id,
+        ordering_provider_id,
+        accession_number,
+        accession_number_normalized,
         result_encounter_id,
         viral_load_clinical_date,
         viral_load_date_source,
@@ -33702,8 +34245,6 @@ BEGIN
         result_qualitative_raw,
         result_qualitative_concept_id,
         return_to_facility_date,
-        accession_number,
-        accession_number_normalized,
         specimen_source,
         location_id,
         encounter_id,
@@ -33717,8 +34258,37 @@ BEGIN
     )
     SELECT DISTINCT
         obs_numeric.person_id AS patient_id,
+        ord.order_id AS native_order_id,
+        ord.uuid AS native_order_uuid,
         obs_numeric.obs_id AS panel_obs_id,
-        'NO_ORDER',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'NATIVE_ORDER'
+            ELSE 'NO_ORDER'
+        END AS order_record_type,
+        CASE
+            WHEN e.encounter_type = 15 THEN 'LEGACY_ART_CARD'
+            WHEN e.encounter_type IN (SELECT encounter_type_id FROM encounter_type WHERE uuid = 'cbf01392-ca29-11e9-a32f-2a2ae2dbcce4') THEN 'NEW_VL_REQUEST_FORM'
+            WHEN ord.order_id IS NOT NULL THEN 'NEW_VL_REQUEST_FORM'
+            ELSE 'UNKNOWN'
+        END AS order_source_workflow,
+        COALESCE(DATE(ord.date_activated), NULL) AS order_date,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'order.date_activated'
+            ELSE NULL
+        END AS order_date_source,
+        COALESCE(ord.encounter_id, NULL) AS order_encounter_id,
+        COALESCE(ord.orderer, NULL) AS ordering_provider_id,
+        -- Accession number: prioritize from orders table, then from obs
+        COALESCE(
+            UPPER(TRIM(ord.accession_number)),
+            UPPER(TRIM(obs_accession.value_text)),
+            NULL
+        ) AS accession_number,
+        COALESCE(
+            UPPER(TRIM(REPLACE(REPLACE(ord.accession_number, '-', ''), '/', ''))),
+            UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))),
+            NULL
+        ) AS accession_number_normalized,
         obs_numeric.encounter_id AS result_encounter_id,
         COALESCE(
             obs_vl_date.value_datetime,
@@ -33732,10 +34302,12 @@ BEGIN
         obs_numeric.obs_datetime AS result_encounter_datetime,
         COALESCE(
             obs_sample_date.value_datetime,
+            DATE(ord.scheduled_date),
             NULL
         ) AS sample_collection_date,
         COALESCE(
             IF(obs_sample_date.obs_id IS NOT NULL, 'obs_datetime', NULL),
+            IF(ord.scheduled_date IS NOT NULL, 'order.scheduled_date', NULL),
             NULL
         ) AS sample_collection_date_source,
         obs_numeric.value_numeric AS result_numeric_raw,
@@ -33744,19 +34316,33 @@ BEGIN
         obs_qual_coded.short_name AS result_qualitative_raw,
         obs_qual.value_coded AS result_qualitative_concept_id,
         obs_return_date.value_datetime AS return_to_facility_date,
-        obs_accession.value_text AS accession_number,
-        UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))) AS accession_number_normalized,
-        obs_specimen.value_coded AS specimen_source,
+        tos.specimen_source,
         obs_numeric.location_id,
         obs_numeric.encounter_id,
         obs_numeric.obs_datetime,
-        'ORPHAN_RESULT',
-        1 AS is_orphan_result,
-        'UNMATCHED_RESULT',
-        'MEDIUM',
-        'VALID',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'RESULT_ENTERED'
+            ELSE 'ORPHAN_RESULT'
+        END AS pipeline_status,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 0
+            ELSE 1
+        END AS is_orphan_result,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'DIRECT_ORDER_ID'
+            ELSE 'UNMATCHED_RESULT'
+        END AS linkage_method,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'HIGH'
+            ELSE 'MEDIUM'
+        END AS linkage_confidence,
+        'VALID' AS result_status,
         NOW()
     FROM obs obs_numeric
+    -- LEFT JOIN to orders table using obs.order_id (direct foreign key linkage)
+    LEFT JOIN orders ord ON obs_numeric.order_id = ord.order_id AND ord.voided = 0
+    LEFT JOIN test_order tos ON ord.order_id = tos.order_id
+    LEFT JOIN encounter e ON ord.encounter_id = e.encounter_id
     -- Start with numeric VL observations (concept 856)
     -- Join to qualitative VL result (concept 1305) by encounter + person + datetime
     LEFT JOIN obs obs_qual ON obs_numeric.person_id = obs_qual.person_id
@@ -33822,10 +34408,16 @@ BEGIN
       AND obs_numeric.value_numeric IS NOT NULL;
 
     -- ============ STEP 4b: Extract VL results with only qualitative values (no numeric) ============
+    -- Similar to STEP 4, handles qualitative-only results with direct order linkage
     INSERT INTO mamba_fact_viral_load_episode (
         patient_id,
+        native_order_id,
+        native_order_uuid,
         panel_obs_id,
         order_record_type,
+        order_source_workflow,
+        accession_number,
+        accession_number_normalized,
         result_encounter_id,
         viral_load_clinical_date,
         viral_load_date_source,
@@ -33833,8 +34425,6 @@ BEGIN
         result_encounter_datetime,
         result_qualitative_raw,
         result_qualitative_concept_id,
-        accession_number,
-        accession_number_normalized,
         location_id,
         encounter_id,
         encounter_datetime,
@@ -33847,8 +34437,30 @@ BEGIN
     )
     SELECT DISTINCT
         obs_qual.person_id AS patient_id,
+        ord.order_id AS native_order_id,
+        ord.uuid AS native_order_uuid,
         obs_qual.obs_id AS panel_obs_id,
-        'NO_ORDER',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'NATIVE_ORDER'
+            ELSE 'NO_ORDER'
+        END AS order_record_type,
+        CASE
+            WHEN e.encounter_type = 15 THEN 'LEGACY_ART_CARD'
+            WHEN e.encounter_type IN (SELECT encounter_type_id FROM encounter_type WHERE uuid = 'cbf01392-ca29-11e9-a32f-2a2ae2dbcce4') THEN 'NEW_VL_REQUEST_FORM'
+            WHEN ord.order_id IS NOT NULL THEN 'NEW_VL_REQUEST_FORM'
+            ELSE 'UNKNOWN'
+        END AS order_source_workflow,
+        -- Accession number: prioritize from orders table, then from obs
+        COALESCE(
+            UPPER(TRIM(ord.accession_number)),
+            UPPER(TRIM(obs_accession.value_text)),
+            NULL
+        ) AS accession_number,
+        COALESCE(
+            UPPER(TRIM(REPLACE(REPLACE(ord.accession_number, '-', ''), '/', ''))),
+            UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))),
+            NULL
+        ) AS accession_number_normalized,
         obs_qual.encounter_id AS result_encounter_id,
         COALESCE(
             obs_vl_date.value_datetime,
@@ -33862,18 +34474,31 @@ BEGIN
         obs_qual.obs_datetime AS result_encounter_datetime,
         obs_qual_coded.short_name AS result_qualitative_raw,
         obs_qual.value_coded AS result_qualitative_concept_id,
-        obs_accession.value_text AS accession_number,
-        UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))) AS accession_number_normalized,
         obs_qual.location_id,
         obs_qual.encounter_id,
         obs_qual.obs_datetime,
-        'ORPHAN_RESULT',
-        1 AS is_orphan_result,
-        'UNMATCHED_RESULT',
-        'MEDIUM',
-        'VALID',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'RESULT_ENTERED'
+            ELSE 'ORPHAN_RESULT'
+        END AS pipeline_status,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 0
+            ELSE 1
+        END AS is_orphan_result,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'DIRECT_ORDER_ID'
+            ELSE 'UNMATCHED_RESULT'
+        END AS linkage_method,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'HIGH'
+            ELSE 'MEDIUM'
+        END AS linkage_confidence,
+        'VALID' AS result_status,
         NOW()
     FROM obs obs_qual
+    -- LEFT JOIN to orders table using obs.order_id (direct foreign key linkage)
+    LEFT JOIN orders ord ON obs_qual.order_id = ord.order_id AND ord.voided = 0
+    LEFT JOIN encounter e ON ord.encounter_id = e.encounter_id
     -- Join to VL date
     LEFT JOIN obs obs_vl_date ON obs_qual.person_id = obs_vl_date.person_id
         AND obs_qual.encounter_id = obs_vl_date.encounter_id
@@ -33908,7 +34533,19 @@ BEGIN
             )
       );
 
+    -- ============ STEP 4c: Remove duplicate order episodes that were directly linked ============
+    -- After STEP 4 and 4b, we have both order episodes (from STEP 2) and result episodes
+    -- For results directly linked via obs.order_id, we need to remove the duplicate order episodes
+    DELETE odr FROM mamba_fact_viral_load_episode odr
+    INNER JOIN mamba_fact_viral_load_episode res
+        ON odr.native_order_id = res.native_order_id
+        AND odr.native_order_id IS NOT NULL
+    WHERE odr.is_order_without_result = 1
+      AND res.linkage_method = 'DIRECT_ORDER_ID'
+      AND odr.episode_id != res.episode_id;
+
     -- ============ STEP 5: Match orders to results by accession number ============
+    -- Only processes results that are NOT already directly linked via obs.order_id
     -- Create temporary table for accession number matching
     CREATE TEMPORARY TABLE temp_accession_match AS
     SELECT
@@ -33925,7 +34562,8 @@ BEGIN
     WHERE odr.accession_number IS NOT NULL
       AND odr.accession_number != ''
       AND odr.is_order_without_result = 1
-      AND res.is_orphan_result = 1;
+      AND res.is_orphan_result = 1
+      AND res.native_order_id IS NULL;  -- Skip already directly linked results
 
     UPDATE mamba_fact_viral_load_episode ep
     INNER JOIN temp_accession_match t ON ep.episode_id = t.result_episode_id
@@ -33942,6 +34580,7 @@ BEGIN
     DROP TEMPORARY TABLE temp_accession_match;
 
     -- ============ STEP 6: Match orders to results by patient + date window ============
+    -- Only processes results that are NOT already directly linked via obs.order_id
     -- Create temporary table for patient+date matching
     CREATE TEMPORARY TABLE temp_date_match AS
     SELECT
@@ -33956,6 +34595,7 @@ BEGIN
         ON odr.patient_id = res.patient_id
     WHERE odr.is_order_without_result = 1
       AND res.is_orphan_result = 1
+      AND res.native_order_id IS NULL  -- Skip already directly linked results
       AND COALESCE(res.viral_load_clinical_date, res.sample_collection_date) IS NOT NULL
       AND odr.order_date IS NOT NULL
       AND DATEDIFF(COALESCE(res.viral_load_clinical_date, res.sample_collection_date), odr.order_date)
@@ -34087,7 +34727,9 @@ BEGIN
         (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE is_suppressed = 1) AS suppressed_count,
         (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE is_unsuppressed = 1) AS unsuppressed_count,
         (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE testing_model = 'POINT_OF_CARE') AS poc_count,
-        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'ACCESSION_NUMBER') AS accession_matched;
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'DIRECT_ORDER_ID') AS direct_order_matched,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'ACCESSION_NUMBER') AS accession_matched,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'PATIENT_DATE') AS patient_date_matched;
 
 END//
 

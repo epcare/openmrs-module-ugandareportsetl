@@ -3,7 +3,7 @@
 -- ============================================================================
 -- Purpose: Drops all Mamba ETL procedures and tables for clean setup
 -- Usage: Run before Setup Mamba ETL to ensure clean state
--- Updated: 2026-08-13 - Added HTS Contact Tracing, CACX procedures
+-- Updated: 2026-08-14 - Added HTS Self Testing procedures and tables
 -- ============================================================================
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -46,6 +46,14 @@ DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_create;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_insert;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_update;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_hts_contact_tracing_query;
+
+-- ===== HTS SELF TESTING MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_hiv_self_testing;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_hiv_self_testing_query;
 
 -- ===== ANC MODULE =====
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_anc;
@@ -193,6 +201,7 @@ DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_health_education;
 DROP TABLE IF EXISTS mamba_fact_encounter_hiv_art_summary;
 DROP TABLE IF EXISTS mamba_fact_encounter_hts_card;
 DROP TABLE IF EXISTS mamba_fact_encounter_hts_card_v2;
+DROP TABLE IF EXISTS mamba_fact_encounter_hiv_self_testing;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_card;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_obs_group;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_repeat_vl;
@@ -218,6 +227,7 @@ DROP TABLE IF EXISTS mamba_flat_encounter_art_summary_card_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_card_v2;
+DROP TABLE IF EXISTS mamba_flat_encounter_hiv_self_testing;
 DROP TABLE IF EXISTS mamba_flat_encounter_hts_contact_tracing;
 DROP TABLE IF EXISTS mamba_flat_encounter_non_suppressed;
 DROP TABLE IF EXISTS mamba_flat_encounter_regimen_change;

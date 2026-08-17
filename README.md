@@ -1,50 +1,231 @@
-${moduleName}
-==========================
+# Uganda Reports ETL Module
 
-Description
------------
-This is a very basic module which can be used as a starting point in creating a new module.
+## Overview
 
-Building from Source
---------------------
-You will need to have Java 1.6+ and Maven 2.x+ installed.  Use the command 'mvn package' to 
-compile and package the module.  The .omod file will be in the omod/target folder.
+The Uganda Reports ETL Module is an OpenMRS module that implements HMIS 106A HIV Prevention, Care and Treatment Indicator Reporting. It provides ETL (Extract, Transform, Load) functionality using the Mamba ETL framework and integrates with Report Builder for generating standardized HIV indicators.
 
-Alternatively you can add the snippet provided in the [Creating Modules](https://wiki.openmrs.org/x/cAEr) page to your 
-omod/pom.xml and use the mvn command:
+**Key Features:**
+- HMIS 106A indicator reporting (7 sections, ~77 indicators)
+- Mamba ETL integration for data processing
+- Report Builder integration for indicator definition
+- REST API for ETL monitoring and status tracking
+- Automated ETL execution via scheduled tasks
 
-    mvn package -P deploy-web -D deploy.path="../../openmrs-1.8.x/webapp/src/main/webapp"
+---
 
-It will allow you to deploy any changes to your web 
-resources such as jsp or js files without re-installing the module. The deploy path says 
-where OpenMRS is deployed.
+## Documentation
 
-Running Spotless
-----------------
-This project uses Spotless for code formatting. Spotless is embedded in the build process, so when you run `mvn clean package`, Spotless will automatically format your code according to the project's style guidelines.
+| Document | Description |
+|----------|-------------|
+| **[REST API Documentation](docs/FRONTEND_API_DOCUMENTATION.md)** | Complete API reference for ETL monitoring endpoints |
+| **[HMIS 106A Indicator Creation Guide](docs/HMIS_106A_INDICATOR_CREATION_GUIDE.md)** | Guide for creating and configuring HMIS 106A indicators |
 
-If you want to run Spotless separately, you can use the following Maven commands:
+---
 
-To apply the formatting:
+## Quick Start
 
-    mvn spotless:apply
+### Installation
 
-This will automatically format your code according to the project's style guidelines. It's recommended to run this command before committing your changes.
+1. Build the module:
+```bash
+mvn clean install
+```
 
-To check if your code adheres to the style guidelines without making any changes, you can run:
+2. Upload the resulting `.omod` file via OpenMRS Administration > Manage Modules
 
-    mvn spotless:check
+Or, drop the `.omod` into the `~/.OpenMRS/modules` folder and restart OpenMRS.
 
-If this command reports any violations, you can then run `mvn spotless:apply` to fix them.
+### Initial Setup
 
-Remember, in most cases, you don't need to run these commands separately as Spotless will run automatically during the build process with `mvn clean package`.
+After installation, configure the ETL:
 
-Installation
-------------
-1. Build the module to produce the .omod file.
-2. Use the OpenMRS Administration > Manage Modules screen to upload and install the .omod file.
+1. Navigate to the module settings in OpenMRS
+2. Configure database connections (source OpenMRS database, target ETL database)
+3. Set ETL execution interval
+4. Run the initial ETL via the "Setup Mamba ETL" scheduled task
 
-If uploads are not allowed from the web (changable via a runtime property), you can drop the omod
-into the ~/.OpenMRS/modules folder.  (Where ~/.OpenMRS is assumed to be the Application 
-Data Directory that the running openmrs is currently using.)  After putting the file in there 
-simply restart OpenMRS/tomcat and the module will be loaded and started.
+---
+
+## REST API Endpoints
+
+The module provides REST endpoints for monitoring ETL processes.
+
+**Base URL:** `/ws/rest/v1/ugandareportsetl/etl`
+
+### Available Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /progress` | Get current ETL execution status |
+| `GET /recent?limit=N` | Get recent ETL execution history |
+| `GET /errors?limit=N` | Get ETL error log entries |
+| `GET /settings` | Get current ETL configuration |
+| `GET /status` | Check if ETL is running |
+
+**Example:**
+```javascript
+// Get current ETL progress
+fetch('/openmrs/ws/rest/v1/ugandareportsetl/etl/progress')
+  .then(r => r.json())
+  .then(data => console.log(data.progressPercentage + '% complete'));
+```
+
+See [REST API Documentation](docs/FRONTEND_API_DOCUMENTATION.md) for complete API reference including request/response formats and examples.
+
+---
+
+## HMIS 106A Indicators
+
+### Sections Covered
+
+| Section | Indicators | Status |
+|---------|-----------|--------|
+| **1A** HIV Care/ART Services | 52 | Partially implemented |
+| **1B** Cervical Cancer Services | 6 | Partially implemented |
+| **1C** ART Quarterly Cohort Analysis | 3 cohorts | Partially implemented |
+| **1D** TPT Completion | 2 | Partially implemented |
+| **1E** CrAg-Positive Cohort Monitoring | 3 | Partially implemented |
+| **1F** Post-Exposure Prophylaxis | 6 | Planned |
+| **1G** Pre-Exposure Prophylaxis | 5 | Planned |
+
+See [HMIS 106A Indicator Creation Guide](docs/HMIS_106A_INDICATOR_CREATION_GUIDE.md) for detailed indicator definitions and creation instructions.
+
+---
+
+## Architecture
+
+### ETL Framework (Mamba)
+
+The module uses Mamba ETL for data processing:
+
+- **Source Database:** OpenMRS production database
+- **Target Database:** Analysis/ETL database (separate schema)
+- **Processing:** Stored procedures for fact table generation
+- **Scheduling:** Automated via OpenMRS scheduled tasks
+
+### Report Builder Integration
+
+Indicators are defined through Report Builder themes:
+
+| Theme Code | Name | Source Table |
+|------------|------|--------------|
+| HC | HIV Care | `mamba_fact_encounter_hiv_art_card` |
+| CX | Cervical Cancer | `mamba_fact_encounter_hiv_art_card` |
+| TB | TB Services | `mamba_fact_encounter_hiv_art_card` |
+| NCD | NCD Integration | `mamba_fact_encounter_hiv_art_card` |
+| VL | Viral Load | `mamba_fact_patients_latest_viral_load` |
+| ART | ART Summary | `mamba_fact_encounter_hiv_art_summary` |
+
+---
+
+## Scheduled Tasks
+
+The module provides the following scheduled tasks:
+
+| Task | Description | Usage |
+|------|-------------|-------|
+| **Setup Mamba ETL** | Initializes and runs the ETL process | Run manually or on schedule |
+| **Run Analytics** | Executes analytics queries | Run on schedule for reports |
+
+---
+
+## Building from Source
+
+**Requirements:**
+- Java 1.8+
+- Maven 3.x+
+
+**Build Commands:**
+```bash
+# Clean build
+mvn clean install
+
+# Build and deploy to OpenMRS (if configured)
+mvn clean install -P deploy-web
+```
+
+The `.omod` file will be in `omod/target/` after building.
+
+---
+
+## Code Formatting
+
+This project uses Spotless for code formatting. Spotless runs automatically during the build process.
+
+To format code manually:
+```bash
+mvn spotless:apply
+```
+
+To check formatting:
+```bash
+mvn spotless:check
+```
+
+---
+
+## Database Configuration
+
+### Default Database Settings
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| Source Database | `openmrs` | OpenMRS production database |
+| Target Database | `analysis_db` | ETL data warehouse |
+| ETL Interval | 3600 seconds | How often ETL runs |
+
+### Database Access
+
+For testing and development, you may need direct database access:
+```bash
+mysql -u openmrs -popenmrs -D stambrose
+```
+
+---
+
+## Troubleshooting
+
+### ETL Not Running
+
+1. Check ETL status via API: `GET /ws/rest/v1/ugandareportsetl/etl/status`
+2. Review error logs: `GET /ws/rest/v1/ugandareportsetl/etl/errors`
+3. Verify database connectivity in module settings
+4. Check scheduled task configuration
+
+### Build Errors
+
+- **webservices.rest dependency not found:** Ensure `webservices.rest-omod-common` dependency is correctly configured in `omod/pom.xml`
+- **Compilation errors:** Run `mvn clean` and rebuild
+
+### Missing Indicators
+
+1. Verify ETL has completed successfully
+2. Check Report Builder theme configuration
+3. Ensure fact tables exist in target database
+4. Review indicator SQL definitions
+
+---
+
+## Contributing
+
+When contributing to this module:
+
+1. Follow the existing code style (enforced by Spotless)
+2. Add documentation for new indicators
+3. Update API docs if adding new endpoints
+4. Test ETL procedures before committing
+
+---
+
+## License
+
+This module is licensed under the Mozilla Public License v2.0. See LICENSE file for details.
+
+---
+
+## Support
+
+For issues or questions:
+- Check the [REST API Documentation](docs/FRONTEND_API_DOCUMENTATION.md) for API issues
+- Review the [HMIS 106A Indicator Creation Guide](docs/HMIS_106A_INDICATOR_CREATION_GUIDE.md) for indicator questions
+- Open an issue in the project repository

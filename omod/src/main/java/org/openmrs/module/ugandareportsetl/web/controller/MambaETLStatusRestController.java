@@ -14,29 +14,25 @@ import org.openmrs.module.ugandareportsetl.api.ETLErrorLog;
 import org.openmrs.module.ugandareportsetl.api.ETLProgressInfo;
 import org.openmrs.module.ugandareportsetl.api.ETLSettings;
 import org.openmrs.module.ugandareportsetl.api.UgandaReportsETLService;
+import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Spring MVC Controller for Mamba ETL Status REST endpoints.
+ * Spring REST Controller for Uganda Reports ETL monitoring.
  * <p>
- * Provides endpoints to monitor ETL process status, view error logs, and check ETL configuration.
- * <p>
- * Endpoints: - GET {REST_API_PATH}/etl/progress - Current ETL execution status - GET
- * {REST_API_PATH}/etl/recent - Recent ETL execution history - GET {REST_API_PATH}/etl/errors -
- * Error log entries - GET {REST_API_PATH}/etl/settings - Current ETL configuration
+ * Base URL: /ws/rest/v1/ugandareportsetl/etl
  */
-@Controller
-@RequestMapping("/rest/v1/mamba/etl")
+@RestController
+@RequestMapping(value = "/rest/" + RestConstants.VERSION_1 + "/ugandareportsetl/etl")
 public class MambaETLStatusRestController {
 	
 	private static final Logger log = LoggerFactory.getLogger(MambaETLStatusRestController.class);
@@ -57,7 +53,6 @@ public class MambaETLStatusRestController {
 	 * @return Map containing current ETL progress information
 	 */
 	@RequestMapping(value = "/progress", method = RequestMethod.GET)
-	@ResponseBody
 	public Map<String, Object> getETLProgress() {
 		try {
 			ETLProgressInfo progress = getService().getETLProgress();
@@ -95,7 +90,6 @@ public class MambaETLStatusRestController {
 	 * @return Map containing list of recent ETL executions
 	 */
 	@RequestMapping(value = "/recent", method = RequestMethod.GET)
-	@ResponseBody
 	public Map<String, Object> getRecentETLExecutions(
 			@RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit) {
 
@@ -134,7 +128,6 @@ public class MambaETLStatusRestController {
 	 * @return Map containing list of error log entries
 	 */
 	@RequestMapping(value = "/errors", method = RequestMethod.GET)
-	@ResponseBody
 	public Map<String, Object> getETLErrors(
 			@RequestParam(value = "limit", required = false, defaultValue = "50") Integer limit) {
 
@@ -184,7 +177,6 @@ public class MambaETLStatusRestController {
 	 * @return Map containing current ETL settings
 	 */
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
-	@ResponseBody
 	public Map<String, Object> getETLSettings() {
 		try {
 			ETLSettings settings = getService().getETLSettings();
@@ -216,7 +208,6 @@ public class MambaETLStatusRestController {
 	 * @return Map containing ETL running status
 	 */
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
-	@ResponseBody
 	public Map<String, Object> getETLStatus() {
 		try {
 			boolean isRunning = getService().isETLRunning();

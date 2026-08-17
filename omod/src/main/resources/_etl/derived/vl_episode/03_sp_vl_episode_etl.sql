@@ -3,20 +3,38 @@
 -- ============================================
 -- Purpose: Populate mamba_fact_viral_load_episode from all VL sources
 -- Sources:
---   1. Legacy ART card observations (99% of data)
---   2. New HMIS VL request form with native orders (1% of data)
---   3. Existing VL tables (mamba_flat_encounter_vl_request, etc.)
+--   1. Native orders with linked results (~11% of data)
+--   2. Legacy ART card observations (~89% of data)
 --
 -- Key Features:
---   - Extracts orders and results from both workflows
---   - Matches orders to results using multiple methods
+--   - Extracts results from obs and DIRECTLY joins to orders via obs.order_id
+--   - Handles both workflows: native (with order_id) and legacy/offered (without order_id)
+--   - Matches orphan results to orders using accession number and patient+date window
 --   - Builds comprehensive episodes
 --   - Calculates suppression status
 --   - Infers testing model
 --   - Tracks linkage confidence
 --   - Exposes data quality issues
 --
+-- Workflow Priority:
+--   1. DIRECT_ORDER_ID: obs with order_id → Direct join to orders (HIGH confidence, ~11%)
+--   2. ACCESSION_NUMBER: Match by accession number (HIGH confidence)
+--   3. PATIENT_DATE: Match by patient + date window (MEDIUM confidence, 30-day default)
+--   4. UNMATCHED: Orphan results without matching orders
+--
+-- Processing Steps:
+--   1. Clear existing data
+--   2. Extract native orders from orders table
+--   3. Extract legacy derived orders from obs (Tests Ordered concept)
+--   4. Extract results with direct obs.order_id linkage
+--   4b. Extract qualitative-only results with direct linkage
+--   4c. Remove duplicate order episodes (cleanup after direct linkage)
+--   5. Match remaining by accession number
+--   6. Match remaining by patient+date window
+--   7-11. Calculate derived fields (suppression, testing model, etc.)
+--
 -- Created: 2026-07-29
+-- Updated: 2026-08-14 - Added direct obs.order_id linkage and duplicate cleanup
 -- ============================================
 
 DROP PROCEDURE IF EXISTS sp_mamba_fact_vl_episode_etl;
@@ -141,12 +159,24 @@ BEGIN
       AND obs_ordered.voided = 0
       AND obs_parent.obs_group_id IS NULL;  -- Parent panel, not child
 
-    -- ============ STEP 4: Extract VL results (encounter-based structure) ============
-    -- In this database, VL components are separate observations linked by encounter_id + obs_datetime
+    -- ============ STEP 4: Extract VL results with direct order linkage ============
+    -- Extracts VL results from obs and joins to orders table when obs.order_id exists
+    -- This handles both workflows:
+    --   1. Native orders: obs WITH order_id → Direct join to orders table (HIGH confidence)
+    --   2. Legacy/offered: obs WITHOUT order_id → Will use fallback matching later
     INSERT INTO mamba_fact_viral_load_episode (
         patient_id,
+        native_order_id,
+        native_order_uuid,
         panel_obs_id,
         order_record_type,
+        order_source_workflow,
+        order_date,
+        order_date_source,
+        order_encounter_id,
+        ordering_provider_id,
+        accession_number,
+        accession_number_normalized,
         result_encounter_id,
         viral_load_clinical_date,
         viral_load_date_source,
@@ -160,8 +190,6 @@ BEGIN
         result_qualitative_raw,
         result_qualitative_concept_id,
         return_to_facility_date,
-        accession_number,
-        accession_number_normalized,
         specimen_source,
         location_id,
         encounter_id,
@@ -175,8 +203,37 @@ BEGIN
     )
     SELECT DISTINCT
         obs_numeric.person_id AS patient_id,
+        ord.order_id AS native_order_id,
+        ord.uuid AS native_order_uuid,
         obs_numeric.obs_id AS panel_obs_id,
-        'NO_ORDER',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'NATIVE_ORDER'
+            ELSE 'NO_ORDER'
+        END AS order_record_type,
+        CASE
+            WHEN e.encounter_type = 15 THEN 'LEGACY_ART_CARD'
+            WHEN e.encounter_type IN (SELECT encounter_type_id FROM encounter_type WHERE uuid = 'cbf01392-ca29-11e9-a32f-2a2ae2dbcce4') THEN 'NEW_VL_REQUEST_FORM'
+            WHEN ord.order_id IS NOT NULL THEN 'NEW_VL_REQUEST_FORM'
+            ELSE 'UNKNOWN'
+        END AS order_source_workflow,
+        COALESCE(DATE(ord.date_activated), NULL) AS order_date,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'order.date_activated'
+            ELSE NULL
+        END AS order_date_source,
+        COALESCE(ord.encounter_id, NULL) AS order_encounter_id,
+        COALESCE(ord.orderer, NULL) AS ordering_provider_id,
+        -- Accession number: prioritize from orders table, then from obs
+        COALESCE(
+            UPPER(TRIM(ord.accession_number)),
+            UPPER(TRIM(obs_accession.value_text)),
+            NULL
+        ) AS accession_number,
+        COALESCE(
+            UPPER(TRIM(REPLACE(REPLACE(ord.accession_number, '-', ''), '/', ''))),
+            UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))),
+            NULL
+        ) AS accession_number_normalized,
         obs_numeric.encounter_id AS result_encounter_id,
         COALESCE(
             obs_vl_date.value_datetime,
@@ -190,10 +247,12 @@ BEGIN
         obs_numeric.obs_datetime AS result_encounter_datetime,
         COALESCE(
             obs_sample_date.value_datetime,
+            DATE(ord.scheduled_date),
             NULL
         ) AS sample_collection_date,
         COALESCE(
             IF(obs_sample_date.obs_id IS NOT NULL, 'obs_datetime', NULL),
+            IF(ord.scheduled_date IS NOT NULL, 'order.scheduled_date', NULL),
             NULL
         ) AS sample_collection_date_source,
         obs_numeric.value_numeric AS result_numeric_raw,
@@ -202,19 +261,33 @@ BEGIN
         obs_qual_coded.short_name AS result_qualitative_raw,
         obs_qual.value_coded AS result_qualitative_concept_id,
         obs_return_date.value_datetime AS return_to_facility_date,
-        obs_accession.value_text AS accession_number,
-        UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))) AS accession_number_normalized,
-        obs_specimen.value_coded AS specimen_source,
+        tos.specimen_source,
         obs_numeric.location_id,
         obs_numeric.encounter_id,
         obs_numeric.obs_datetime,
-        'ORPHAN_RESULT',
-        1 AS is_orphan_result,
-        'UNMATCHED_RESULT',
-        'MEDIUM',
-        'VALID',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'RESULT_ENTERED'
+            ELSE 'ORPHAN_RESULT'
+        END AS pipeline_status,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 0
+            ELSE 1
+        END AS is_orphan_result,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'DIRECT_ORDER_ID'
+            ELSE 'UNMATCHED_RESULT'
+        END AS linkage_method,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'HIGH'
+            ELSE 'MEDIUM'
+        END AS linkage_confidence,
+        'VALID' AS result_status,
         NOW()
     FROM obs obs_numeric
+    -- LEFT JOIN to orders table using obs.order_id (direct foreign key linkage)
+    LEFT JOIN orders ord ON obs_numeric.order_id = ord.order_id AND ord.voided = 0
+    LEFT JOIN test_order tos ON ord.order_id = tos.order_id
+    LEFT JOIN encounter e ON ord.encounter_id = e.encounter_id
     -- Start with numeric VL observations (concept 856)
     -- Join to qualitative VL result (concept 1305) by encounter + person + datetime
     LEFT JOIN obs obs_qual ON obs_numeric.person_id = obs_qual.person_id
@@ -280,10 +353,16 @@ BEGIN
       AND obs_numeric.value_numeric IS NOT NULL;
 
     -- ============ STEP 4b: Extract VL results with only qualitative values (no numeric) ============
+    -- Similar to STEP 4, handles qualitative-only results with direct order linkage
     INSERT INTO mamba_fact_viral_load_episode (
         patient_id,
+        native_order_id,
+        native_order_uuid,
         panel_obs_id,
         order_record_type,
+        order_source_workflow,
+        accession_number,
+        accession_number_normalized,
         result_encounter_id,
         viral_load_clinical_date,
         viral_load_date_source,
@@ -291,8 +370,6 @@ BEGIN
         result_encounter_datetime,
         result_qualitative_raw,
         result_qualitative_concept_id,
-        accession_number,
-        accession_number_normalized,
         location_id,
         encounter_id,
         encounter_datetime,
@@ -305,8 +382,30 @@ BEGIN
     )
     SELECT DISTINCT
         obs_qual.person_id AS patient_id,
+        ord.order_id AS native_order_id,
+        ord.uuid AS native_order_uuid,
         obs_qual.obs_id AS panel_obs_id,
-        'NO_ORDER',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'NATIVE_ORDER'
+            ELSE 'NO_ORDER'
+        END AS order_record_type,
+        CASE
+            WHEN e.encounter_type = 15 THEN 'LEGACY_ART_CARD'
+            WHEN e.encounter_type IN (SELECT encounter_type_id FROM encounter_type WHERE uuid = 'cbf01392-ca29-11e9-a32f-2a2ae2dbcce4') THEN 'NEW_VL_REQUEST_FORM'
+            WHEN ord.order_id IS NOT NULL THEN 'NEW_VL_REQUEST_FORM'
+            ELSE 'UNKNOWN'
+        END AS order_source_workflow,
+        -- Accession number: prioritize from orders table, then from obs
+        COALESCE(
+            UPPER(TRIM(ord.accession_number)),
+            UPPER(TRIM(obs_accession.value_text)),
+            NULL
+        ) AS accession_number,
+        COALESCE(
+            UPPER(TRIM(REPLACE(REPLACE(ord.accession_number, '-', ''), '/', ''))),
+            UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))),
+            NULL
+        ) AS accession_number_normalized,
         obs_qual.encounter_id AS result_encounter_id,
         COALESCE(
             obs_vl_date.value_datetime,
@@ -320,18 +419,31 @@ BEGIN
         obs_qual.obs_datetime AS result_encounter_datetime,
         obs_qual_coded.short_name AS result_qualitative_raw,
         obs_qual.value_coded AS result_qualitative_concept_id,
-        obs_accession.value_text AS accession_number,
-        UPPER(TRIM(REPLACE(REPLACE(obs_accession.value_text, '-', ''), '/', ''))) AS accession_number_normalized,
         obs_qual.location_id,
         obs_qual.encounter_id,
         obs_qual.obs_datetime,
-        'ORPHAN_RESULT',
-        1 AS is_orphan_result,
-        'UNMATCHED_RESULT',
-        'MEDIUM',
-        'VALID',
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'RESULT_ENTERED'
+            ELSE 'ORPHAN_RESULT'
+        END AS pipeline_status,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 0
+            ELSE 1
+        END AS is_orphan_result,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'DIRECT_ORDER_ID'
+            ELSE 'UNMATCHED_RESULT'
+        END AS linkage_method,
+        CASE
+            WHEN ord.order_id IS NOT NULL THEN 'HIGH'
+            ELSE 'MEDIUM'
+        END AS linkage_confidence,
+        'VALID' AS result_status,
         NOW()
     FROM obs obs_qual
+    -- LEFT JOIN to orders table using obs.order_id (direct foreign key linkage)
+    LEFT JOIN orders ord ON obs_qual.order_id = ord.order_id AND ord.voided = 0
+    LEFT JOIN encounter e ON ord.encounter_id = e.encounter_id
     -- Join to VL date
     LEFT JOIN obs obs_vl_date ON obs_qual.person_id = obs_vl_date.person_id
         AND obs_qual.encounter_id = obs_vl_date.encounter_id
@@ -366,7 +478,19 @@ BEGIN
             )
       );
 
+    -- ============ STEP 4c: Remove duplicate order episodes that were directly linked ============
+    -- After STEP 4 and 4b, we have both order episodes (from STEP 2) and result episodes
+    -- For results directly linked via obs.order_id, we need to remove the duplicate order episodes
+    DELETE odr FROM mamba_fact_viral_load_episode odr
+    INNER JOIN mamba_fact_viral_load_episode res
+        ON odr.native_order_id = res.native_order_id
+        AND odr.native_order_id IS NOT NULL
+    WHERE odr.is_order_without_result = 1
+      AND res.linkage_method = 'DIRECT_ORDER_ID'
+      AND odr.episode_id != res.episode_id;
+
     -- ============ STEP 5: Match orders to results by accession number ============
+    -- Only processes results that are NOT already directly linked via obs.order_id
     -- Create temporary table for accession number matching
     CREATE TEMPORARY TABLE temp_accession_match AS
     SELECT
@@ -383,7 +507,8 @@ BEGIN
     WHERE odr.accession_number IS NOT NULL
       AND odr.accession_number != ''
       AND odr.is_order_without_result = 1
-      AND res.is_orphan_result = 1;
+      AND res.is_orphan_result = 1
+      AND res.native_order_id IS NULL;  -- Skip already directly linked results
 
     UPDATE mamba_fact_viral_load_episode ep
     INNER JOIN temp_accession_match t ON ep.episode_id = t.result_episode_id
@@ -400,6 +525,7 @@ BEGIN
     DROP TEMPORARY TABLE temp_accession_match;
 
     -- ============ STEP 6: Match orders to results by patient + date window ============
+    -- Only processes results that are NOT already directly linked via obs.order_id
     -- Create temporary table for patient+date matching
     CREATE TEMPORARY TABLE temp_date_match AS
     SELECT
@@ -414,6 +540,7 @@ BEGIN
         ON odr.patient_id = res.patient_id
     WHERE odr.is_order_without_result = 1
       AND res.is_orphan_result = 1
+      AND res.native_order_id IS NULL  -- Skip already directly linked results
       AND COALESCE(res.viral_load_clinical_date, res.sample_collection_date) IS NOT NULL
       AND odr.order_date IS NOT NULL
       AND DATEDIFF(COALESCE(res.viral_load_clinical_date, res.sample_collection_date), odr.order_date)
@@ -545,7 +672,9 @@ BEGIN
         (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE is_suppressed = 1) AS suppressed_count,
         (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE is_unsuppressed = 1) AS unsuppressed_count,
         (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE testing_model = 'POINT_OF_CARE') AS poc_count,
-        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'ACCESSION_NUMBER') AS accession_matched;
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'DIRECT_ORDER_ID') AS direct_order_matched,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'ACCESSION_NUMBER') AS accession_matched,
+        (SELECT COUNT(*) FROM mamba_fact_viral_load_episode WHERE linkage_method = 'PATIENT_DATE') AS patient_date_matched;
 
 END//
 

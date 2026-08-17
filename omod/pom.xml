@@ -29,12 +29,28 @@
 			<scope>provided</scope>
 			<classifier>tests</classifier>
 		</dependency>
+		<!-- OpenMRS REST Web Services dependency -->
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>webservices.rest-omod-common</artifactId>
+			<version>${webservices.restModuleVersion}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>${project.parent.artifactId}-${project.parent.version}</finalName>
 
 		<plugins>
+			<!-- Override Java version from parent pom -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.openmrs.maven.plugins</groupId>
 				<artifactId>maven-openmrs-plugin</artifactId>
