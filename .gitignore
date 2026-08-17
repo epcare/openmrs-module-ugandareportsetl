@@ -58,3 +58,8 @@ roughwork/*
 *.backup
 sql/*
 
+# Development documentation (not shipped with module)
+/docs/etl-derived/
+/docs/frontend/
+/.dev/
+

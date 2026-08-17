@@ -1,0 +1,517 @@
+{
+  "name": "CACx Screening Linelist",
+  "description": "Line list of women of childbearing age (15-49 years) screened for Cervical Cancer",
+  "report_type": "LINE_LIST",
+  "section": "1B",
+  "parameters": [
+    {
+      "name": "startDate",
+      "label": "Start Date",
+      "type": "DATE",
+      "required": true
+    },
+    {
+      "name": "endDate",
+      "label": "End Date",
+      "type": "DATE",
+      "required": true
+    }
+  ],
+  "baseCohortDefinition": {
+    "type": "SQL",
+    "name": "CACx Screened Women of Childbearing Age",
+    "config": {
+      "sql": "SELECT DISTINCT cs.client_id FROM mamba_fact_encounter_cacx_screening cs JOIN mamba_fact_patients_latest_patient_demographics pd ON pd.client_id = cs.client_id WHERE pd.gender = 'F' AND pd.age BETWEEN 15 AND 49 AND pd.dead = 0 AND cs.encounter_date BETWEEN :startDate AND :endDate"
+    }
+  },
+  "dataSetDefinitions": [
+    {
+      "name": "PATIENT_LIST",
+      "type": "PATIENT_DATA_SET",
+      "rowFilter": {
+        "type": "SQL",
+        "name": "CACx Screened Women of Childbearing Age",
+        "config": {
+          "sql": "SELECT DISTINCT cs.client_id FROM mamba_fact_encounter_cacx_screening cs JOIN mamba_fact_patients_latest_patient_demographics pd ON pd.client_id = cs.client_id WHERE pd.gender = 'F' AND pd.age BETWEEN 15 AND 49 AND pd.dead = 0 AND cs.encounter_date BETWEEN :startDate AND :endDate"
+        }
+      },
+      "columns": [
+        {
+          "name": "HIV Clinic No.",
+          "dataDefinition": {
+            "type": "IDENTIFIER",
+            "config": {
+              "identifierTypeUuid": "e1731641-30ab-102d-86b0-7a5022ba4115",
+              "preferred": true
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": true
+          },
+          "key": "hiv_clinic_no"
+        },
+        {
+          "name": "Full Name",
+          "dataDefinition": {
+            "type": "PERSON_NAME",
+            "config": {
+              "type": "FULL_NAME",
+              "preferred": true
+            }
+          },
+          "key": "full_name"
+        },
+        {
+          "name": "Gender",
+          "dataDefinition": {
+            "type": "PERSON_ATTRIBUTE",
+            "config": {
+              "type": "GENDER"
+            }
+          },
+          "key": "gender"
+        },
+        {
+          "name": "Birth Date",
+          "dataDefinition": {
+            "type": "PERSON_ATTRIBUTE",
+            "config": {
+              "type": "BIRTHDATE"
+            }
+          },
+          "key": "birth_date"
+        },
+        {
+          "name": "Age",
+          "dataDefinition": {
+            "type": "CALCULATION",
+            "config": {
+              "calculation": "AGE",
+              "onDate": ":startDate"
+            }
+          },
+          "key": "age"
+        },
+        {
+          "name": "Telephone Number",
+          "dataDefinition": {
+            "type": "PERSON_ATTRIBUTE",
+            "config": {
+              "attributeTypeUuid": "14d4f066-15f5-102d-96e4-000c29c2a5d7"
+            }
+          },
+          "key": "telephone_number"
+        },
+        {
+          "name": "District",
+          "dataDefinition": {
+            "type": "PERSON_ADDRESS",
+            "config": {
+              "type": "ADDRESS_FIELD",
+              "field": "countyDistrict"
+            }
+          },
+          "key": "district"
+        },
+        {
+          "name": "Village",
+          "dataDefinition": {
+            "type": "PERSON_ADDRESS",
+            "config": {
+              "type": "ADDRESS_FIELD",
+              "field": "address5"
+            }
+          },
+          "key": "village"
+        },
+        {
+          "name": "Screening Date",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.encounter_date FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "screening_date"
+        },
+        {
+          "name": "Serial Number",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.serial_number FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "serial_number"
+        },
+        {
+          "name": "HIV Status",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.hiv_status FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "hiv_status"
+        },
+        {
+          "name": "ART Status",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.art_status FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "art_status"
+        },
+        {
+          "name": "Ever Been Screened",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.ever_been_screened FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "ever_been_screened"
+        },
+        {
+          "name": "Pregnant Now",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.pregnant_now FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "pregnant_now"
+        },
+        {
+          "name": "Hysterectomy",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.hysterectomy FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "hysterectomy"
+        },
+        {
+          "name": "CACx Screening Done",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT cs.cacx_screening FROM mamba_fact_encounter_cacx_screening cs WHERE cs.client_id = :patientId AND cs.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY cs.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "cacx_screening"
+        },
+        {
+          "name": "HPV Test Done",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.hpv_test_done FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "hpv_test_done"
+        },
+        {
+          "name": "HPV Result",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.hpv_result FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "hpv_result"
+        },
+        {
+          "name": "VIA Done",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.via_done FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "via_done"
+        },
+        {
+          "name": "VIA Result",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.via_procedure_screening_results FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "via_result"
+        },
+        {
+          "name": "Treatment Provided",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.treatment_provided FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "treatment_provided"
+        },
+        {
+          "name": "Referred Out",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.referred_out FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "referred_out"
+        },
+        {
+          "name": "Facility Referred To",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT ct.health_facility_referred_to FROM mamba_fact_encounter_cacx_treatment ct WHERE ct.client_id = :patientId AND ct.encounter_date BETWEEN ':startDate' AND ':endDate' ORDER BY ct.encounter_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "key": "facility_referred_to"
+        }
+      ]
+    }
+  ],
+  "category": "d947663c-24e8-11f1-b92d-f69d311cf98f",
+  "reportType": "LINELIST",
+  "limit": 1000,
+  "_builder": {
+    "dataSources": [
+      {
+        "uuid": "person_attributes",
+        "name": "Person Attributes",
+        "type": "CORE",
+        "role": "REFERENCE"
+      },
+      {
+        "uuid": "patient_identifiers",
+        "name": "Patient Identifiers",
+        "type": "CORE",
+        "role": "REFERENCE"
+      },
+      {
+        "uuid": "person_name",
+        "name": "Person Names",
+        "type": "SQL",
+        "role": "SECONDARY",
+        "columns": {
+          "Full Name": {
+            "name": "Full Name",
+            "type": "TEXT",
+            "sourceTable": "person_name"
+          }
+        }
+      },
+      {
+        "uuid": "calculated",
+        "name": "Calculated Fields",
+        "type": "SQL",
+        "role": "SECONDARY",
+        "columns": {
+          "Age": {
+            "name": "Age",
+            "type": "CALCULATED",
+            "sourceTable": "calculated"
+          }
+        }
+      },
+      {
+        "uuid": "custom_sql",
+        "name": "Custom SQL",
+        "type": "SQL",
+        "role": "SECONDARY",
+        "columns": {
+          "Screening Date": {
+            "name": "Screening Date",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Serial Number": {
+            "name": "Serial Number",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "HIV Status": {
+            "name": "HIV Status",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "ART Status": {
+            "name": "ART Status",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Ever Been Screened": {
+            "name": "Ever Been Screened",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Pregnant Now": {
+            "name": "Pregnant Now",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Hysterectomy": {
+            "name": "Hysterectomy",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "CACx Screening Done": {
+            "name": "CACx Screening Done",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "HPV Test Done": {
+            "name": "HPV Test Done",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "HPV Result": {
+            "name": "HPV Result",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "VIA Done": {
+            "name": "VIA Done",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "VIA Result": {
+            "name": "VIA Result",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Treatment Provided": {
+            "name": "Treatment Provided",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Referred Out": {
+            "name": "Referred Out",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Facility Referred To": {
+            "name": "Facility Referred To",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          }
+        }
+      },
+      {
+        "uuid": "person_address",
+        "name": "Person Address",
+        "type": "SQL",
+        "role": "SECONDARY",
+        "columns": {
+          "District": {
+            "name": "District",
+            "type": "TEXT",
+            "sourceTable": "person_address"
+          },
+          "Village": {
+            "name": "Village",
+            "type": "TEXT",
+            "sourceTable": "person_address"
+          }
+        }
+      }
+    ],
+    "populationSources": [
+      {
+        "uuid": "cacx_screening",
+        "name": "CACx Screening",
+        "type": "SQL",
+        "joinType": "JOIN",
+        "enabled": true,
+        "order": 0
+      }
+    ],
+    "rowGrain": "PATIENT",
+    "templateId": "",
+    "buildMethod": "SQL_BASED",
+    "categoryUuid": "d947663c-24e8-11f1-b92d-f69d311cf98f"
+  }
+}

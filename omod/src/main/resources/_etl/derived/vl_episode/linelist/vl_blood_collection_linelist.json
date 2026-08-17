@@ -1,0 +1,476 @@
+{
+  "name": "VL Blood Collection Report",
+  "description": "Line list of viral load blood draws with collection status and result information",
+  "report_type": "LINE_LIST",
+  "section": "D16",
+  "parameters": [
+    {
+      "name": "startDate",
+      "label": "Start Date",
+      "type": "DATE",
+      "required": true
+    },
+    {
+      "name": "endDate",
+      "label": "End Date",
+      "type": "DATE",
+      "required": true
+    }
+  ],
+  "baseCohortDefinition": {
+    "type": "SQL",
+    "name": "VL Episode Patients",
+    "config": {
+      "sql": "SELECT DISTINCT vl.patient_id FROM mamba_fact_viral_load_episode vl WHERE vl.sample_collection_date BETWEEN :startDate AND :endDate    OR vl.order_date BETWEEN :startDate AND :endDate;"
+    }
+  },
+  "dataSetDefinitions": [
+    {
+      "name": "PATIENT_LIST",
+      "type": "PATIENT_DATA_SET",
+      "rowFilter": {
+        "type": "SQL",
+        "name": "VL Episode Patients",
+        "config": {
+          "sql": "SELECT DISTINCT vl.patient_id FROM mamba_fact_viral_load_episode vl WHERE vl.sample_collection_date BETWEEN :startDate AND :endDate    OR vl.order_date BETWEEN :startDate AND :endDate;"
+        }
+      },
+      "columns": [
+        {
+          "name": "HIV Clinic No.",
+          "dataDefinition": {
+            "type": "IDENTIFIER",
+            "config": {
+              "identifierTypeUuid": "e1731641-30ab-102d-86b0-7a5022ba4115",
+              "preferred": true
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": true
+          },
+          "_metadata": {
+            "id": "col-0",
+            "position": 0
+          },
+          "key": "hiv_clinic_no"
+        },
+        {
+          "name": "Full Name",
+          "dataDefinition": {
+            "type": "PERSON_NAME",
+            "config": {
+              "type": "FULL_NAME",
+              "preferred": true
+            }
+          },
+          "_metadata": {
+            "id": "col-1",
+            "position": 1
+          },
+          "key": "full_name"
+        },
+        {
+          "name": "Gender",
+          "dataDefinition": {
+            "type": "PERSON_ATTRIBUTE",
+            "config": {
+              "type": "GENDER"
+            }
+          },
+          "_metadata": {
+            "id": "col-2",
+            "position": 2
+          },
+          "key": "gender"
+        },
+        {
+          "name": "Age",
+          "dataDefinition": {
+            "type": "CALCULATION",
+            "config": {
+              "calculation": "AGE",
+              "onDate": ":startDate"
+            }
+          },
+          "_metadata": {
+            "id": "col-3",
+            "position": 3
+          },
+          "key": "age"
+        },
+        {
+          "name": "Order Date",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.order_date FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.order_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-4",
+            "position": 4
+          },
+          "key": "order_date"
+        },
+        {
+          "name": "Collection Date",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.sample_collection_date FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-5",
+            "position": 5
+          },
+          "key": "collection_date"
+        },
+        {
+          "name": "Accession Number",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.accession_number FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-6",
+            "position": 6
+          },
+          "key": "accession_number"
+        },
+        {
+          "name": "Status",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT CASE WHEN vl.result_status IS NOT NULL AND vl.result_status != 'PENDING' THEN 'Result Received' ELSE 'Pending' END FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-7",
+            "position": 7
+          },
+          "key": "status"
+        },
+        {
+          "name": "Pipeline Status",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.pipeline_status FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-8",
+            "position": 8
+          },
+          "key": "pipeline_status"
+        },
+        {
+          "name": "Result Date",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.viral_load_clinical_date FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-9",
+            "position": 9
+          },
+          "key": "result_date"
+        },
+        {
+          "name": "VL Value",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT CONCAT(COALESCE(vl.result_modifier, ''), ' ', vl.result_numeric) FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-10",
+            "position": 10
+          },
+          "key": "vl_value"
+        },
+        {
+          "name": "Result Qualitative",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.result_qualitative FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-11",
+            "position": 11
+          },
+          "key": "result_qualitative"
+        },
+        {
+          "name": "Suppression Status",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.result_interpretation FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-12",
+            "position": 12
+          },
+          "key": "suppression_status"
+        },
+        {
+          "name": "Current Regimen",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.current_regimen_at_order FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-13",
+            "position": 13
+          },
+          "key": "current_regimen"
+        },
+        {
+          "name": "Days on ART",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.days_on_art_at_order FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-14",
+            "position": 14
+          },
+          "key": "days_on_art"
+        },
+        {
+          "name": "VL Indication",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.recorded_vl_indication FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-15",
+            "position": 15
+          },
+          "key": "vl_indication"
+        },
+        {
+          "name": "Sample Rejection Reason",
+          "dataDefinition": {
+            "type": "SQL",
+            "config": {
+              "sql": "SELECT vl.rejection_reason FROM mamba_fact_viral_load_episode vl WHERE vl.patient_id = :patientId AND (vl.sample_collection_date BETWEEN ':startDate' AND ':endDate' OR vl.order_date BETWEEN ':startDate' AND ':endDate') ORDER BY vl.sample_collection_date DESC LIMIT 1"
+            }
+          },
+          "repeatResolution": {
+            "strategy": "LATEST",
+            "restrictToPeriod": false,
+            "ignoreVoided": false
+          },
+          "_metadata": {
+            "id": "col-16",
+            "position": 16
+          },
+          "key": "rejection_reason"
+        }
+      ]
+    }
+  ],
+  "category": "d947663c-24e8-11f1-b92d-f69d311cf98f",
+  "reportType": "LINELIST",
+  "limit": 1000,
+  "_builder": {
+    "dataSources": [
+      {
+        "uuid": "person_attributes",
+        "name": "Person Attributes",
+        "type": "CORE",
+        "role": "REFERENCE"
+      },
+      {
+        "uuid": "patient_identifiers",
+        "name": "Patient Identifiers",
+        "type": "CORE",
+        "role": "REFERENCE"
+      },
+      {
+        "uuid": "person_name",
+        "name": "Person Names",
+        "type": "SQL",
+        "role": "SECONDARY",
+        "columns": {
+          "Full Name": {
+            "name": "Full Name",
+            "type": "TEXT",
+            "sourceTable": "person_name"
+          }
+        }
+      },
+      {
+        "uuid": "calculated",
+        "name": "Calculated Fields",
+        "type": "SQL",
+        "role": "SECONDARY",
+        "columns": {
+          "Age": {
+            "name": "Age",
+            "type": "CALCULATED",
+            "sourceTable": "calculated"
+          }
+        }
+      },
+      {
+        "uuid": "custom_sql",
+        "name": "Custom SQL",
+        "type": "SQL",
+        "role": "PRIMARY",
+        "columns": {
+          "Order Date": {
+            "name": "Order Date",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Collection Date": {
+            "name": "Collection Date",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Accession Number": {
+            "name": "Accession Number",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Status": {
+            "name": "Status",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Pipeline Status": {
+            "name": "Pipeline Status",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Result Date": {
+            "name": "Result Date",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "VL Value": {
+            "name": "VL Value",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Result Qualitative": {
+            "name": "Result Qualitative",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Suppression Status": {
+            "name": "Suppression Status",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Current Regimen": {
+            "name": "Current Regimen",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Days on ART": {
+            "name": "Days on ART",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "VL Indication": {
+            "name": "VL Indication",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          },
+          "Sample Rejection Reason": {
+            "name": "Sample Rejection Reason",
+            "type": "SQL",
+            "sourceTable": "custom_sql"
+          }
+        }
+      }
+    ],
+    "populationSources": [],
+    "rowGrain": "PATIENT",
+    "templateId": "",
+    "buildMethod": "SQL_BUILDER",
+    "categoryUuid": "d947663c-24e8-11f1-b92d-f69d311cf98f"
+  }
+}
