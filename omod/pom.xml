@@ -102,6 +102,23 @@
 							</configuration>
 						</execution>
 
+						<!-- Retire obs-group child-table flatten calls (grouped obs consumed via z-pivot in the fact layer) -->
+						<execution>
+							<id>remove-obs-group-child-calls</id>
+							<phase>install</phase>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+							<configuration>
+								<executable>/bin/sh</executable>
+								<workingDirectory>${project.parent.basedir}</workingDirectory>
+								<arguments>
+									<argument>${project.parent.basedir}/remove-obs-group-child-calls.sh</argument>
+									<argument>${project.parent.basedir}/api/src/main/resources/mamba/jdbc_create_stored_procedures.sql</argument>
+								</arguments>
+							</configuration>
+						</execution>
+
 
 					<!-- Fix DROP FUNCTION/PROCEDURE delimiters in generated SQL files -->
 					<execution>

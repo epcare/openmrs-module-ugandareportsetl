@@ -15600,178 +15600,6 @@ DELIMITER ;
 
         
 -- ---------------------------------------------------------------------------------------------
--- sp_mamba_obs_group
---
-
-DROP PROCEDURE IF EXISTS sp_mamba_obs_group;
-
-DELIMITER //
-
-CREATE PROCEDURE sp_mamba_obs_group()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_mamba_obs_group', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_mamba_obs_group', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-
-CALL sp_mamba_obs_group_create();
-CALL sp_mamba_obs_group_insert();
-CALL sp_mamba_obs_group_update();
-
--- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
--- sp_mamba_obs_group_create
---
-
-DROP PROCEDURE IF EXISTS sp_mamba_obs_group_create;
-
-DELIMITER //
-
-CREATE PROCEDURE sp_mamba_obs_group_create()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_mamba_obs_group_create', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_mamba_obs_group_create', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-
-CREATE TABLE mamba_obs_group
-(
-    id                     INT          NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    obs_id                 INT          NOT NULL,
-    obs_group_concept_id   INT          NOT NULL,
-    obs_group_concept_name VARCHAR(255) NOT NULL, -- should be the concept name of the obs
-
-    INDEX mamba_idx_obs_id (obs_id),
-    INDEX mamba_idx_obs_group_concept_id (obs_group_concept_id),
-    INDEX mamba_idx_obs_group_concept_name (obs_group_concept_name)
-)
-    CHARSET = UTF8MB4;
-
--- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
--- sp_mamba_obs_group_insert
---
-
-DROP PROCEDURE IF EXISTS sp_mamba_obs_group_insert;
-
-DELIMITER //
-
-CREATE PROCEDURE sp_mamba_obs_group_insert()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_mamba_obs_group_insert', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_mamba_obs_group_insert', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
-CALL sp_fact_encounter_non_suppressed_card_update();
--- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
--- sp_mamba_obs_group_update
---
-
-DROP PROCEDURE IF EXISTS sp_mamba_obs_group_update;
-
-DELIMITER //
-
-CREATE PROCEDURE sp_mamba_obs_group_update()
-BEGIN
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    GET DIAGNOSTICS CONDITION 1
-
-    @message_text = MESSAGE_TEXT,
-    @mysql_errno = MYSQL_ERRNO,
-    @returned_sqlstate = RETURNED_SQLSTATE;
-
-    CALL sp_mamba_etl_error_log_insert('sp_mamba_obs_group_update', @message_text, @mysql_errno, @returned_sqlstate);
-
-    UPDATE _mamba_etl_schedule
-    SET end_time                   = NOW(),
-        completion_status          = 'ERROR',
-        transaction_status         = 'COMPLETED',
-        success_or_error_message   = CONCAT('sp_mamba_obs_group_update', ', ', @mysql_errno, ', ', @message_text)
-        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
-
-    RESIGNAL;
-END;
-
--- $BEGIN
--- $END
-END //
-
-DELIMITER ;
-
-        
--- ---------------------------------------------------------------------------------------------
 -- sp_mamba_system_drop_fact_tables
 --
 
@@ -30313,6 +30141,13 @@ BEGIN
 END;
 
 -- $BEGIN
+-- HTS screening results (determine/stat-pak/sd-bioline/final) are recorded as members of the
+-- test-order obs group (leader concept 199095), so the engine's flat pivot excludes them from
+-- the main flat table (obs_group_id IS NULL filter). Instead of per-group child tables, this
+-- insert pivots mamba_z_encounter_obs directly: z carries obs_group_id per member row and the
+-- resolved answer name in obs_value_text, and it is maintained on incremental runs, so results
+-- are as fresh as the last tick. Only the latest test group per encounter (MAX obs_group_id)
+-- is used; main-flat columns remain the fallback for any top-level results.
 INSERT INTO mamba_fact_encounter_hts_card_v2 (encounter_id,
                                               client_id,
                                               patient_id,
@@ -30368,7 +30203,7 @@ INSERT INTO mamba_fact_encounter_hts_card_v2 (encounter_id,
                                               recency_test_result)
 SELECT a.encounter_id,
        a.client_id,
-       a.client_id as patient_id,
+       a.client_id                                         AS patient_id,
        a.encounter_datetime,
        serial_number,
        accompanied_by,
@@ -30396,10 +30231,10 @@ SELECT a.encounter_id,
        counseled_as,
        hiv_test_consent,
        consent_date,
-       determine_result,
-       stat_pak_result,
-       sd_bioline_result,
-       final_result,
+       COALESCE(r.determine_result, a.determine_result)   AS determine_result,
+       COALESCE(r.stat_pak_result, a.stat_pak_result)     AS stat_pak_result,
+       COALESCE(r.sd_bioline_result, a.sd_bioline_result) AS sd_bioline_result,
+       COALESCE(r.final_result, a.final_result)           AS final_result,
        sample_sent_to_lab,
        results_received_individual,
        results_received_couple,
@@ -30419,7 +30254,25 @@ SELECT a.encounter_id,
        recency_test_date,
        recency_blood_draw_consent,
        recency_test_result
-FROM mamba_flat_encounter_hts_card_v2 a;
+FROM mamba_flat_encounter_hts_card_v2 a
+         LEFT JOIN (SELECT m.encounter_id,
+                           MAX(CASE WHEN m.obs_question_concept_id = 198941 THEN m.obs_value_text END) AS determine_result,  -- 7803ffa8-c24f-41ec-89f8-821e2a71fda6
+                           MAX(CASE WHEN m.obs_question_concept_id = 198942 THEN m.obs_value_text END) AS stat_pak_result,    -- 85534e6a-22a1-433e-aa57-f358f1eb0a16
+                           MAX(CASE WHEN m.obs_question_concept_id = 198943 THEN m.obs_value_text END) AS sd_bioline_result,  -- ad4760fe-9a58-4e60-b626-29d345b9a220
+                           MAX(CASE WHEN m.obs_question_concept_id = 199094 THEN m.obs_value_text END) AS final_result        -- 37a5bf42-5b94-4ae7-8c46-9ebff55ef349
+                    FROM mamba_z_encounter_obs m
+                             JOIN (SELECT encounter_id, MAX(obs_group_id) AS g -- latest test group per encounter
+                                   FROM mamba_z_encounter_obs
+                                   WHERE obs_group_id IS NOT NULL
+                                     AND voided = 0
+                                     AND obs_question_concept_id IN (198941, 198942, 198943, 199094)
+                                   GROUP BY encounter_id) latest
+                                  ON latest.encounter_id = m.encounter_id
+                                      AND latest.g = m.obs_group_id
+                    WHERE m.obs_group_id IS NOT NULL
+                      AND m.voided = 0
+                    GROUP BY m.encounter_id) r
+                   ON r.encounter_id = a.encounter_id;
 -- $END
 END //
 

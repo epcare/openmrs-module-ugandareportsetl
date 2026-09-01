@@ -329,7 +329,7 @@
 
     <properties>
         <openmrsPlatformVersion>2.8.7</openmrsPlatformVersion>
-        <mambaETLCoreVersion>2.0.1-SNAPSHOT</mambaETLCoreVersion>
+        <mambaETLCoreVersion>3.0.0-SNAPSHOT</mambaETLCoreVersion>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <webservices.restModuleVersion>2.28.0</webservices.restModuleVersion>

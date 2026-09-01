@@ -31,11 +31,6 @@ derived/cacx_screening/sp_data_processing_derived_cacx_screening.sql
 
 derived/z_obs/sp_mamba_z_encounter_obs_insert.sql
 
-derived/etl_obs_group/sp_mamba_obs_group.sql
-derived/etl_obs_group/sp_mamba_obs_group_create.sql
-derived/etl_obs_group/sp_mamba_obs_group_insert.sql
-derived/etl_obs_group/sp_mamba_obs_group_update.sql
-
 
 xf_system/sp_mamba_system_drop_fact_tables.sql
 #############################################################################

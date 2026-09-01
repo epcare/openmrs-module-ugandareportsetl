@@ -84,6 +84,16 @@ public class UgandaReportsETLDao {
 		Object[] row = (Object[]) result;
 		return mapRowToProgressInfo(row);
 	}
+
+	/**
+	 * Run a scalar COUNT(*) query, e.g. counting mamba_% tables in information_schema.
+	 *
+	 * @return the count, or 0 when the query yields nothing
+	 */
+	public int countTablesMatching(String sql) {
+		Object result = getSession().createSQLQuery(sql).uniqueResult();
+		return result instanceof Number ? ((Number) result).intValue() : 0;
+	}
 	
 	/**
 	 * Get recent ETL executions

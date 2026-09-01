@@ -15,7 +15,9 @@ package org.openmrs.module.ugandareportsetl.api.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
@@ -41,8 +43,23 @@ import java.util.Properties;
 public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements UgandaReportsETLService {
 	
 	protected final Log log = LogFactory.getLog(this.getClass());
-	
+
 	private UgandaReportsETLDao dao;
+
+	/**
+	 * Count of tables carrying the mamba_* naming pattern in the ETL database.
+	 */
+	private static final String COUNT_MAMBA_TABLES_SQL = "SELECT COUNT(*) FROM information_schema.tables "
+	        + "WHERE table_schema = DATABASE() AND table_name LIKE 'mamba\\_%'";
+
+	/**
+	 * Global property holding the expected number of mamba_* tables for a completed ETL cycle —
+	 * the denominator for table-based progress while a run is in progress. Learned automatically
+	 * whenever a poll finds the ETL at rest after a completed run, so it follows architecture
+	 * changes (e.g. retiring the obs-group child tables) and can be overridden manually in
+	 * Administration → Maintenance → Settings.
+	 */
+	private static final String GP_EXPECTED_MAMBA_TABLES = "ugandareportsetl.expectedMambaTables";
 	
 	/**
 	 * Injected in moduleApplicationContext.xml
@@ -255,18 +272,87 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 			        + "ORDER BY id DESC " + "LIMIT 1";
 			
 			ETLProgressInfo progress = dao.getETLProgress(sql);
-			
-			// Enhance with current stage information
+
+			// Measure progress by tables built vs expected: each ETL cycle creates its mamba_*
+			// tables progressively, so available/expected tracks real completion. The expected
+			// count is the at-rest count learned on idle polls, so it self-adjusts when the
+			// architecture changes the number of tables.
+			int availableTables = dao.countTablesMatching(COUNT_MAMBA_TABLES_SQL);
+
 			if (progress != null && progress.isRunning()) {
+				progress.setAvailableTables(availableTables);
 				progress.setCurrentStage(determineCurrentStage(progress));
-				progress.setProgressPercentage(calculateProgress(progress));
+				int expected = getExpectedTableCount();
+				if (expected > 0) {
+					progress.setExpectedTables(expected);
+					double pct = Math.min(100.0, availableTables * 100.0 / expected);
+					progress.setProgressPercentage(Math.round(pct * 100) / 100.0);
+				} else {
+					// Global property not learned yet (e.g. first run on a fresh install):
+					// fall back to the elapsed-time estimate.
+					progress.setProgressPercentage(calculateProgress(progress));
+				}
+			} else {
+				// At rest: reflect the settled counts, and learn them as the expectation for
+				// the next run once the current cycle has completed.
+				if (progress != null) {
+					progress.setAvailableTables(availableTables);
+					progress.setExpectedTables(availableTables);
+					if ("COMPLETED".equals(progress.getTransactionStatus())) {
+						updateExpectedTableCountIfChanged(availableTables);
+					}
+				}
 			}
-			
+
 			return progress;
 		}
 		catch (Exception e) {
 			log.error("Error fetching ETL progress", e);
 			throw new APIException("Error fetching ETL progress", e);
+		}
+	}
+
+	/**
+	 * @return the learned expected mamba_* table count from the global property, or 0 when unset
+	 *         or unreadable.
+	 */
+	private int getExpectedTableCount() {
+		try {
+			String value = Context.getAdministrationService().getGlobalProperty(GP_EXPECTED_MAMBA_TABLES);
+			return value != null && !value.trim().isEmpty() ? Integer.parseInt(value.trim()) : 0;
+		}
+		catch (Exception e) {
+			log.warn("Unable to read global property " + GP_EXPECTED_MAMBA_TABLES, e);
+			return 0;
+		}
+	}
+
+	/**
+	 * Persist the settled mamba_* table count as the expected count for the next cycle. Writes
+	 * only when the value actually changed, to avoid churn on every idle poll.
+	 */
+	private void updateExpectedTableCountIfChanged(int count) {
+		if (count <= 0) {
+			return;
+		}
+		try {
+			AdministrationService adminService = Context.getAdministrationService();
+			String current = adminService.getGlobalProperty(GP_EXPECTED_MAMBA_TABLES);
+			if (current != null && current.trim().equals(String.valueOf(count))) {
+				return;
+			}
+			GlobalProperty gp = adminService.getGlobalPropertyObject(GP_EXPECTED_MAMBA_TABLES);
+			if (gp == null) {
+				gp = new GlobalProperty(GP_EXPECTED_MAMBA_TABLES, String.valueOf(count),
+				        "Expected number of mamba_* tables when an ETL cycle completes. Learned automatically "
+				                + "after each completed run and used as the ETL progress denominator; can be overridden manually.");
+			}
+			gp.setPropertyValue(String.valueOf(count));
+			adminService.saveGlobalProperty(gp);
+			log.info("Learned expected mamba table count: " + count);
+		}
+		catch (Exception e) {
+			log.warn("Unable to persist expected mamba table count", e);
 		}
 	}
 	

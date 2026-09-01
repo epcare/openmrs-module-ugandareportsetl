@@ -40,6 +40,16 @@ public class ETLProgressInfo {
 	
 	private String currentStage;
 	
+	/**
+	 * Number of mamba_* tables currently present in the ETL database.
+	 */
+	private Integer availableTables;
+	
+	/**
+	 * Number of mamba_* tables expected when the ETL cycle completes (the at-rest count).
+	 */
+	private Integer expectedTables;
+	
 	public ETLProgressInfo() {
 	}
 	
@@ -143,6 +153,22 @@ public class ETLProgressInfo {
 	
 	public void setCurrentStage(String currentStage) {
 		this.currentStage = currentStage;
+	}
+	
+	public Integer getAvailableTables() {
+		return availableTables;
+	}
+	
+	public void setAvailableTables(Integer availableTables) {
+		this.availableTables = availableTables;
+	}
+	
+	public Integer getExpectedTables() {
+		return expectedTables;
+	}
+	
+	public void setExpectedTables(Integer expectedTables) {
+		this.expectedTables = expectedTables;
 	}
 	
 	/**
