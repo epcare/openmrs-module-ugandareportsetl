@@ -470,10 +470,19 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 		try {
 			log.info("Fetching ETL settings...");
 			
-			String sql = "SELECT id, openmrs_database, etl_database, concepts_locale, "
-			        + "table_partition_number, incremental_mode_switch, automatic_flattening_mode_switch, "
-			        + "etl_interval_seconds, incremental_mode_switch_cascaded, last_etl_schedule_insert_id "
-			        + "FROM _mamba_etl_user_settings " + "ORDER BY id DESC " + "LIMIT 1";
+			String sql = "SELECT id,\n" +
+					"       openmrs_database,\n" +
+					"       etl_database,\n" +
+					"       concepts_locale,\n" +
+					"       table_partition_number,\n" +
+					"       incremental_mode_switch,\n" +
+					"       automatic_flattening_mode_switch,\n" +
+					"       etl_interval_seconds,\n" +
+					"       incremental_mode_switch_cascaded,\n" +
+					"       last_etl_schedule_insert_id\n" +
+					"FROM _mamba_etl_user_settings\n" +
+					"ORDER BY id DESC\n" +
+					"LIMIT 1";
 			
 			return dao.getEtlSettings(sql);
 		}

@@ -188,12 +188,29 @@ public class UgandaReportsETLDao {
 		        (String) row[1], // openmrs_database
 		        (String) row[2], // etl_database
 		        (String) row[3], // concepts_locale
-		        (Integer) row[4], // table_partition_number
-		        row[5] != null && ((Integer) row[5]) == 1, // incremental_mode_switch
-		        row[6] != null && ((Integer) row[6]) == 1, // automatic_flattening_mode_switch
-		        (Integer) row[7], // etl_interval_seconds
-		        row[8] != null && ((Integer) row[8]) == 1, // incremental_mode_switch_cascaded
-		        (Integer) row[9] // last_etl_schedule_insert_id
+		        row[4] != null ? ((Number) row[4]).intValue() : null, // table_partition_number
+		        toBoolean(row[5]), // incremental_mode_switch
+		        toBoolean(row[6]), // automatic_flattening_mode_switch
+		        row[7] != null ? ((Number) row[7]).intValue() : null, // etl_interval_seconds
+		        toBoolean(row[8]), // incremental_mode_switch_cascaded
+		        row[9] != null ? ((Number) row[9]).intValue() : null // last_etl_schedule_insert_id
 		);
+	}
+
+	/**
+	 * Coerce a TINYINT(1) column value to boolean. Hibernate maps TINYINT(1) to
+	 * java.lang.Boolean while some drivers/queries return a Number — accept both.
+	 */
+	private static boolean toBoolean(Object value) {
+		if (value == null) {
+			return false;
+		}
+		if (value instanceof Boolean) {
+			return (Boolean) value;
+		}
+		if (value instanceof Number) {
+			return ((Number) value).intValue() == 1;
+		}
+		return Boolean.parseBoolean(value.toString());
 	}
 }
