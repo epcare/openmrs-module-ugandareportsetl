@@ -118,8 +118,8 @@ Current ETL configuration from `_mamba_etl_user_settings`.
   "isConfigured": true,
   "data": {
     "id": 1,
-    "openmrsDatabase": "bombo",
-    "etlDatabase": "bombo",
+    "openmrsDatabase": "openmrs",
+    "etlDatabase": "openmrs",
     "conceptsLocale": "en",
     "tablePartitionNumber": 49,
     "incrementalModeSwitch": true,
