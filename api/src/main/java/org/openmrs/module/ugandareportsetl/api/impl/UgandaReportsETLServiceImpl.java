@@ -213,7 +213,7 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 			log.info("Processing Mode: Incremental ETL (existing tables will be preserved and updated)");
 			
 			// Log that we're about to execute the stored procedure
-			log.info("Executing stored procedure: sp_mamba_data_processing_etl(1)");
+			log.info("Executing stored procedure: sp_mamba_data_processing_etl_scheduled(1)");
 			log.info("This process will:");
 			log.info("  1. Drop existing fact tables");
 			log.info("  2. Recreate fact tables");

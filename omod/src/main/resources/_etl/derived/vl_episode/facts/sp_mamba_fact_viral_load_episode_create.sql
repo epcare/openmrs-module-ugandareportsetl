@@ -55,7 +55,7 @@ CREATE TABLE mamba_fact_viral_load_episode (
     result_numeric_raw DOUBLE,
     result_numeric DOUBLE,
     result_modifier VARCHAR(10),  -- <, >, =
-    result_numeric_copies INT,
+    result_numeric_copies BIGINT,
     lower_detection_limit INT,
 
     -- Qualitative Result

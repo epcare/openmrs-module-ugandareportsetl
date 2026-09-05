@@ -53,9 +53,9 @@ SELECT
 
     -- Order date (from native order or derived from obs)
     COALESCE(
-        ord.date_activated,
+        DATE(ord.date_activated),
         -- Try to find legacy order from Tests Ordered
-        (SELECT order_obs.obs_datetime
+        (SELECT DATE(order_obs.obs_datetime)
          FROM obs order_obs
          WHERE order_obs.concept_id = 1271
          AND order_obs.value_coded = 165412
@@ -67,13 +67,13 @@ SELECT
     -- Sample collection date (try new form date, then legacy date)
     COALESCE(
         -- New form sample collection date
-        (SELECT child.value_datetime
+        (SELECT DATE(child.value_datetime)
          FROM obs child
          WHERE child.obs_group_id = o.obs_id
          AND child.concept_id = (SELECT concept_id FROM concept WHERE uuid = '0b434cfa-b11c-4d14-aaa2-9aed6ca2da88')
          LIMIT 1),
         -- Legacy VL taken date
-        (SELECT child.value_datetime
+        (SELECT DATE(child.value_datetime)
          FROM obs child
          WHERE child.obs_group_id = o.obs_id
          AND child.concept_id = 163023
@@ -81,10 +81,10 @@ SELECT
     ) AS sample_collection_date,
 
     -- VL clinical date (panel obs_datetime)
-    o.obs_datetime AS viral_load_date,
+    DATE(o.obs_datetime) AS viral_load_date,
 
     -- Return to facility date
-    (SELECT child.value_datetime
+    (SELECT DATE(child.value_datetime)
      FROM obs child
      WHERE child.obs_group_id = o.obs_id
      AND child.concept_id = (SELECT concept_id FROM concept WHERE uuid = '5b4037d6-a7e2-11ed-afa1-0242ac120002')

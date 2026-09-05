@@ -236,7 +236,7 @@ BEGIN
         ) AS accession_number_normalized,
         obs_numeric.encounter_id AS result_encounter_id,
         COALESCE(
-            obs_vl_date.value_datetime,
+            DATE(obs_vl_date.value_datetime),
             DATE(obs_numeric.obs_datetime)
         ) AS viral_load_clinical_date,
         COALESCE(
@@ -246,7 +246,7 @@ BEGIN
         obs_numeric.date_created AS result_database_creation_date,
         obs_numeric.obs_datetime AS result_encounter_datetime,
         COALESCE(
-            obs_sample_date.value_datetime,
+            DATE(obs_sample_date.value_datetime),
             DATE(ord.scheduled_date),
             NULL
         ) AS sample_collection_date,
@@ -260,7 +260,7 @@ BEGIN
         CAST(obs_numeric.value_numeric AS SIGNED) AS result_numeric_copies,
         obs_qual_coded.short_name AS result_qualitative_raw,
         obs_qual.value_coded AS result_qualitative_concept_id,
-        obs_return_date.value_datetime AS return_to_facility_date,
+        DATE(obs_return_date.value_datetime) AS return_to_facility_date,
         tos.specimen_source,
         obs_numeric.location_id,
         obs_numeric.encounter_id,
@@ -408,7 +408,7 @@ BEGIN
         ) AS accession_number_normalized,
         obs_qual.encounter_id AS result_encounter_id,
         COALESCE(
-            obs_vl_date.value_datetime,
+            DATE(obs_vl_date.value_datetime),
             DATE(obs_qual.obs_datetime)
         ) AS viral_load_clinical_date,
         COALESCE(

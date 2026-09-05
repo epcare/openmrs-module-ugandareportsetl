@@ -36,7 +36,9 @@ public class UgandaReportsETLDao {
 	 * Execute the Mamba ETL flattening script
 	 */
 	public void executeFlatteningScript() {
-		getSession().createSQLQuery("CALL sp_mamba_data_processing_etl(1)").executeUpdate();
+		// Run through the scheduled wrapper so the run gets a _mamba_etl_schedule row
+		// and last_etl_schedule_insert_id points at it (step error handlers rely on this)
+		getSession().createSQLQuery("CALL sp_mamba_data_processing_etl_scheduled(1)").executeUpdate();
 	}
 	
 	/**
