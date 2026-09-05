@@ -38,6 +38,23 @@
 		<name>Hexam Creation Consult</name>
 	</organization>
 
+	<!-- Overrides the parent pom's (maven-parent-openmrs-module) legacy
+	     http://mavenrepo.openmrs.org/nexus/... URLs, which now 301-redirect
+	     to JFrog - Maven deploy does not follow redirects on PUT.
+	     Snapshot id matches the setup-java server-id in deploy-snapshots.yml. -->
+	<distributionManagement>
+		<repository>
+			<id>openmrs-repo-modules</id>
+			<name>OpenMRS Artifactory Modules</name>
+			<url>https://openmrs.jfrog.io/artifactory/modules/</url>
+		</repository>
+		<snapshotRepository>
+			<id>openmrs-repo-snapshots</id>
+			<name>OpenMRS Artifactory Snapshots</name>
+			<url>https://openmrs.jfrog.io/artifactory/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<repositories>
 		<repository>
 			<id>openmrs-repo</id>
