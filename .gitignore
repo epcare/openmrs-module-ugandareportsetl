@@ -48,7 +48,6 @@ tmp_*
 
 # Cleanup scripts and backups
 cleanup_sql_files*.sh
-fix-drop-delimiters.sh
 run_cleanup*.sh
 test_cleanup.sh
 sql_cleanup_backup*/
