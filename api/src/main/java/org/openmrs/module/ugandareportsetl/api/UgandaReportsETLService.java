@@ -104,10 +104,30 @@ public interface UgandaReportsETLService extends OpenmrsService {
 	
 	/**
 	 * Get the current ETL settings from the user settings table
-	 * 
+	 *
 	 * @return Current ETL settings, or null if not configured
 	 * @throws APIException
 	 */
 	ETLSettings getETLSettings() throws APIException;
-	
+
+	/**
+	 * List all mamba_* tables in the ETL database with metadata (approximate row count, engine,
+	 * category).
+	 *
+	 * @return list of table descriptors, one map per table
+	 * @throws APIException
+	 */
+	java.util.List<java.util.Map<String, Object>> getEtlTables() throws APIException;
+
+	/**
+	 * Fetch a page of rows from a mamba_* table.
+	 *
+	 * @param tableName exact table name (must exist and match mamba_*)
+	 * @param limit page size (already clamped by the caller)
+	 * @param offset row offset (already clamped by the caller)
+	 * @return descriptor map: tableName, totalRows, limit, offset, orderBy, columns, rows
+	 * @throws APIException when the table is not an addressable mamba_* table
+	 */
+	java.util.Map<String, Object> getEtlTableData(String tableName, int limit, int offset) throws APIException;
+
 }

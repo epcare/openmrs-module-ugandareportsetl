@@ -491,4 +491,113 @@ public class UgandaReportsETLServiceImpl extends BaseOpenmrsService implements U
 			throw new APIException("Error fetching ETL settings", e);
 		}
 	}
+
+	/** Only these characters ever reach an identifier position in a navigator query. */
+	private static final String TABLE_NAME_PATTERN = "[A-Za-z0-9_]+";
+
+	@Override
+	public java.util.List<java.util.Map<String, Object>> getEtlTables() throws APIException {
+		try {
+			// TABLE_ROWS is the storage engine's estimate for InnoDB — treated as approximate.
+			String sql = "SELECT TABLE_NAME AS tableName, TABLE_ROWS AS tableRows, ENGINE AS engine, "
+			        + "CREATE_TIME AS createTime "
+			        + "FROM information_schema.tables "
+			        + "WHERE table_schema = DATABASE() AND table_name LIKE 'mamba\\_%' "
+			        + "ORDER BY TABLE_NAME";
+
+			java.util.List<java.util.Map<String, Object>> tables = dao.queryForMaps(sql);
+			for (java.util.Map<String, Object> table : tables) {
+				table.put("category", categorizeTable(String.valueOf(table.get("tableName"))));
+			}
+			return tables;
+		}
+		catch (Exception e) {
+			log.error("Error listing ETL tables", e);
+			throw new APIException("Error listing ETL tables", e);
+		}
+	}
+
+	@Override
+	public java.util.Map<String, Object> getEtlTableData(String tableName, int limit, int offset) throws APIException {
+		if (tableName == null || !tableName.matches(TABLE_NAME_PATTERN)) {
+			throw new APIException("Invalid table name");
+		}
+		try {
+			// Gate on information_schema: the name must be an existing mamba_* table in the
+			// current database. The bound parameter keeps the validation query itself clean.
+			int exists = dao.countWithParameter(
+			        "SELECT COUNT(*) FROM information_schema.tables "
+			                + "WHERE table_schema = DATABASE() AND table_name = ? "
+			                + "AND table_name LIKE 'mamba\\_%'",
+			        tableName);
+			if (exists == 0) {
+				throw new APIException("Table not found or not an addressable mamba_* table: " + tableName);
+			}
+
+			// Column metadata; the first PRIMARY KEY column (if any) anchors pagination.
+			java.util.List<java.util.Map<String, Object>> columns = dao.queryForMaps(
+			        "SELECT COLUMN_NAME AS name, DATA_TYPE AS dataType, COLUMN_KEY AS columnKey "
+			                + "FROM information_schema.columns "
+			                + "WHERE table_schema = DATABASE() AND table_name = '" + tableName + "' "
+			                + "ORDER BY ORDINAL_POSITION");
+
+			String orderBy = null;
+			for (java.util.Map<String, Object> column : columns) {
+				if ("PRI".equals(column.get("columnKey"))) {
+					orderBy = String.valueOf(column.get("name"));
+					break;
+				}
+			}
+			if (orderBy == null && !columns.isEmpty()) {
+				// No primary key: order by the first column so pages stay deterministic.
+				orderBy = String.valueOf(columns.get(0).get("name"));
+			}
+
+			int totalRows = dao.countTablesMatching(
+			        "SELECT COUNT(*) FROM `" + tableName + "`");
+
+			String rowsSql = "SELECT * FROM `" + tableName + "`";
+			if (orderBy != null) {
+				rowsSql += " ORDER BY `" + orderBy + "`";
+			}
+			rowsSql += " LIMIT " + Math.max(limit, 0) + " OFFSET " + Math.max(offset, 0);
+
+			java.util.Map<String, Object> result = new java.util.HashMap<>();
+			result.put("tableName", tableName);
+			result.put("totalRows", totalRows);
+			result.put("limit", limit);
+			result.put("offset", offset);
+			result.put("orderBy", orderBy);
+			result.put("columns", columns);
+			result.put("rows", dao.queryForMaps(rowsSql));
+			return result;
+		}
+		catch (APIException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			log.error("Error fetching data from ETL table " + tableName, e);
+			throw new APIException("Error fetching data from ETL table " + tableName, e);
+		}
+	}
+
+	/**
+	 * Bucket a mamba_* table by its role in the pipeline: DIMENSION, SOURCE (tall obs +
+	 * lineage), FLAT, FACT, or CONFIG for the engine's own tracking tables.
+	 */
+	private static String categorizeTable(String tableName) {
+		if (tableName.startsWith("mamba_dim_")) {
+			return "DIMENSION";
+		}
+		if (tableName.startsWith("mamba_z_") || tableName.equals("mamba_obs_group")) {
+			return "SOURCE";
+		}
+		if (tableName.startsWith("mamba_flat_encounter_")) {
+			return "FLAT";
+		}
+		if (tableName.startsWith("mamba_fact_")) {
+			return "FACT";
+		}
+		return "CONFIG";
+	}
 }

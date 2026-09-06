@@ -17,6 +17,7 @@ import org.openmrs.module.ugandareportsetl.api.UgandaReportsETLService;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -227,6 +228,75 @@ public class MambaETLStatusRestController {
 		} catch (Exception e) {
 			log.error("Error checking ETL status", e);
 			return buildErrorResponse("An internal error occurred while checking ETL status");
+		}
+	}
+
+	/**
+	 * List all mamba_* tables in the ETL database.
+	 * <p>
+	 * GET parameters: None. Row counts come from information_schema and are approximate for
+	 * InnoDB; fetch /etl/tables/{tableName}/data for the exact total of a single table.
+	 *
+	 * @return Map with the table list, each entry carrying tableName, tableRows, engine,
+	 *         createTime and a category (DIMENSION / SOURCE / FLAT / FACT / CONFIG)
+	 */
+	@RequestMapping(value = "/tables", method = RequestMethod.GET)
+	public Map<String, Object> getEtlTables() {
+		try {
+			List<Map<String, Object>> tables = getService().getEtlTables();
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("success", true);
+			response.put("count", tables.size());
+			response.put("approximateRowCounts", true);
+			response.put("results", tables);
+			return response;
+
+		} catch (Exception e) {
+			log.error("Error listing ETL tables", e);
+			return buildErrorResponse("An internal error occurred while listing ETL tables");
+		}
+	}
+
+	/**
+	 * Fetch a page of rows from one mamba_* table.
+	 * <p>
+	 * GET parameters: - limit (optional): page size, defaults to 50, capped at 500 - offset
+	 * (optional): row offset, defaults to 0
+	 * <p>
+	 * Rows are ordered by the table's primary key (or first column when no key exists) so pages
+	 * stay deterministic. Only existing mamba_* tables are addressable; anything else returns
+	 * { "success": false, "error": "..." }.
+	 *
+	 * @return Map with totalRows, pagination echo, column metadata and the rows
+	 */
+	@RequestMapping(value = "/tables/{tableName}/data", method = RequestMethod.GET)
+	public Map<String, Object> getEtlTableData(
+			@PathVariable("tableName") String tableName,
+			@RequestParam(value = "limit", required = false, defaultValue = "50") Integer limit,
+			@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset) {
+
+		try {
+			if (limit == null || limit < 1) {
+				return buildErrorResponse("limit must be >= 1");
+			}
+			if (limit > 500) {
+				limit = 500; // Cap page size
+			}
+			if (offset == null || offset < 0) {
+				return buildErrorResponse("offset must be >= 0");
+			}
+
+			Map<String, Object> data = getService().getEtlTableData(tableName, limit, offset);
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("success", true);
+			response.putAll(data);
+			return response;
+
+		} catch (Exception e) {
+			log.error("Error fetching data from ETL table " + tableName, e);
+			return buildErrorResponse(e.getMessage());
 		}
 	}
 	

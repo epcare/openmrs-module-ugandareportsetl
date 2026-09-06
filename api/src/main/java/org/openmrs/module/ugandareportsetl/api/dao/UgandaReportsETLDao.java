@@ -96,6 +96,28 @@ public class UgandaReportsETLDao {
 		Object result = getSession().createSQLQuery(sql).uniqueResult();
 		return result instanceof Number ? ((Number) result).intValue() : 0;
 	}
+
+	/**
+	 * Run a SELECT and return each row as a map keyed by column alias. Callers must fully
+	 * construct the SQL (identifiers validated, literals inlined).
+	 */
+	@SuppressWarnings("unchecked")
+	public java.util.List<java.util.Map<String, Object>> queryForMaps(String sql) {
+		return (java.util.List<java.util.Map<String, Object>>) getSession().createSQLQuery(sql)
+		        .setResultTransformer(org.hibernate.transform.AliasToEntityMapResultTransformer.INSTANCE)
+		        .list();
+	}
+
+	/**
+	 * Run a scalar query with a bound parameter and return an int, e.g. validating a table name
+	 * against information_schema.
+	 *
+	 * @return the count, or 0 when the query yields nothing
+	 */
+	public int countWithParameter(String sql, String parameterValue) {
+		Object result = getSession().createSQLQuery(sql).setParameter(0, parameterValue).uniqueResult();
+		return result instanceof Number ? ((Number) result).intValue() : 0;
+	}
 	
 	/**
 	 * Get recent ETL executions

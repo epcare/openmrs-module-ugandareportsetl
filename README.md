@@ -139,6 +139,47 @@ Lightweight running check.
 { "success": true, "isRunning": false, "message": "ETL process is not running", "lastExecution": { "...": "same shape as /etl/progress data" } }
 ```
 
+#### `GET /etl/tables`
+
+List every `mamba_*` table in the ETL database with metadata and a pipeline `category` (`DIMENSION`, `SOURCE` for the tall obs/lineage layer, `FLAT`, `FACT`, or `CONFIG` for the engine's tracking tables). Row counts come from `information_schema` and are **approximate** for InnoDB (`approximateRowCounts: true`); use the data endpoint for an exact `totalRows` of a single table.
+
+```json
+{
+  "success": true,
+  "count": 107,
+  "approximateRowCounts": true,
+  "results": [
+    { "tableName": "mamba_flat_encounter_hts_card_v2", "tableRows": 1648, "engine": "InnoDB", "createTime": "2026-08-28T00:10:03", "category": "FLAT" },
+    { "tableName": "mamba_z_encounter_obs", "tableRows": 1496471, "engine": "InnoDB", "createTime": "...", "category": "SOURCE" }
+  ]
+}
+```
+
+#### `GET /etl/tables/{tableName}/data?limit=&offset=`
+
+Paginated rows from one `mamba_*` table. `limit` defaults to `50` (capped at `500`, must be `≥ 1`); `offset` defaults to `0`. Rows are ordered by the table's primary key — or its first column when no key exists — so pages stay deterministic.
+
+Only **existing `mamba_*` tables in the ETL database are addressable**: names are regex-validated and resolved against `information_schema` before any SQL is built; anything else returns `{ "success": false, "error": "Table not found or not an addressable mamba_* table: ..." }`.
+
+```json
+{
+  "success": true,
+  "tableName": "mamba_flat_encounter_hts_card_v2",
+  "totalRows": 1667,
+  "limit": 50,
+  "offset": 0,
+  "orderBy": "encounter_id",
+  "columns": [ { "name": "encounter_id", "dataType": "int", "columnKey": "PRI" }, { "name": "final_result", "dataType": "varchar", "columnKey": "" } ],
+  "rows": [ { "encounter_id": 9111, "client_id": 597, "final_result": null } ]
+}
+```
+
+```bash
+# Page through the tall obs layer
+curl -u admin:password \
+  'http://localhost:8088/openmrs/ws/rest/v1/ugandareportsetl/etl/tables/mamba_z_encounter_obs/data?limit=100&offset=200'
+```
+
 ### Module Root — `UgandaReportsETLResourceController`
 
 Base URL: `/openmrs/ws/rest/v1/ugandareportsetl`
