@@ -4009,7 +4009,19 @@ SET @report_data = '{"flat_report_metadata":[{
     "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "client_represented": "51409d82-b2c0-11ed-afa1-0242ac120002",
     "treatment_interruptions": "2bb2e360-263c-4167-8c68-87dab66dc0f6",
-    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6"
+    "interruption_treatment_type": "3aaf3680-6240-4819-a704-e20a93841942",
+    "interruption_stop_lost": "65d1bdf6-e518-4400-9f61-b7f2b1e80169",
+    "interruption_stop_date": "ac98d431-8ebc-4397-8c78-78b0eee0ffe7",
+    "interruption_stop_reason": "89d3ee61-7c74-4537-b199-4026bd6a3f67",
+    "interruption_restart_date": "160738AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6",
+    "offending_agent": "24b52dcb-2809-4ed8-92bb-b212f394bf50",
+    "adr_grading": "f2547a99-21c9-4e86-99e8-b6c4dda36f42",
+    "adr_severity": "dce0d9c2-30ab-102d-86b0-7a5022ba4115",
+    "adr_action_taken": "14eb35a0-1454-47bb-90cf-bf6cf96340a8",
+    "adr_other_outcome": "05018034-4bf1-4025-8396-5c08e3690c10",
+    "adr_date_of_occurrence": "648995af-baf8-4954-a850-2ead8162a86b",
+    "outcome": "d0a568f1-fd17-4327-aba2-24619aa24273"
   }
 },{
   "report_name": "ART_Health_Education_card",
@@ -4046,7 +4058,10 @@ SET @report_data = '{"flat_report_metadata":[{
     "other_gmc_approach": "d0c7752d-edea-42df-a556-7bf5af44ffcf",
     "other_imf_approach": "503fdc10-293e-48cd-9380-408111d2dc5b",
     "linkages_and_referrals1": "325e4270-8b1f-447e-a591-b3daf13acea3",
-    "arrange": "5105a11e-5300-4295-9a46-3a6832d2b3dc"
+    "arrange": "5105a11e-5300-4295-9a46-3a6832d2b3dc",
+    "refill_point_code": "7a22cfcb-a272-4eff-968c-5e9467125a7b",
+    "general_cddp_group_name": "f9764a92-d2fa-4866-a7bf-b9a6fc98067a",
+    "cclad_group_name": "733139e4-c321-11e8-a355-529269fb1459"
   }
 },{
   "report_name": "non_suppressed_card",
@@ -4524,6 +4539,24 @@ SET @report_data = '{"flat_report_metadata":[{
     "reason_for_miss_classification": "881b4254-21be-4372-aa96-42453c941230",
     "action_taken_for_miss_classification": "6e936468-7c40-43fa-a515-137b53ed58d6",
     "tb_treatment_comments": "6965a8c4-7be5-47ee-a872-e158bd9545b1"
+  }
+},{
+  "report_name": "Vitals",
+  "flat_table_name": "mamba_flat_encounter_vitals",
+  "encounter_type_uuid": "67a71486-1a54-468f-ac3e-7091a9a79584",
+  "encounter_type_name": "Vitals",
+  "concepts_locale": "en",
+  "table_columns": {
+    "systolic_bp": "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "diastolic_bp": "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "pulse": "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "temperature_c": "5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "weight_kg": "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "height_cm": "5090AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "spo2": "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "respiratory_rate": "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "muac": "1343AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "general_patient_note": "165095AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   }
 },{
   "report_name": "Viral_Load_Request",
@@ -5078,7 +5111,19 @@ SET @report_data = '{"flat_report_metadata":[{
     "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "client_represented": "51409d82-b2c0-11ed-afa1-0242ac120002",
     "treatment_interruptions": "2bb2e360-263c-4167-8c68-87dab66dc0f6",
-    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6"
+    "interruption_treatment_type": "3aaf3680-6240-4819-a704-e20a93841942",
+    "interruption_stop_lost": "65d1bdf6-e518-4400-9f61-b7f2b1e80169",
+    "interruption_stop_date": "ac98d431-8ebc-4397-8c78-78b0eee0ffe7",
+    "interruption_stop_reason": "89d3ee61-7c74-4537-b199-4026bd6a3f67",
+    "interruption_restart_date": "160738AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6",
+    "offending_agent": "24b52dcb-2809-4ed8-92bb-b212f394bf50",
+    "adr_grading": "f2547a99-21c9-4e86-99e8-b6c4dda36f42",
+    "adr_severity": "dce0d9c2-30ab-102d-86b0-7a5022ba4115",
+    "adr_action_taken": "14eb35a0-1454-47bb-90cf-bf6cf96340a8",
+    "adr_other_outcome": "05018034-4bf1-4025-8396-5c08e3690c10",
+    "adr_date_of_occurrence": "648995af-baf8-4954-a850-2ead8162a86b",
+    "outcome": "d0a568f1-fd17-4327-aba2-24619aa24273"
   }
 },{
   "report_name": "ART_Health_Education_card",
@@ -5115,7 +5160,10 @@ SET @report_data = '{"flat_report_metadata":[{
     "other_gmc_approach": "d0c7752d-edea-42df-a556-7bf5af44ffcf",
     "other_imf_approach": "503fdc10-293e-48cd-9380-408111d2dc5b",
     "linkages_and_referrals1": "325e4270-8b1f-447e-a591-b3daf13acea3",
-    "arrange": "5105a11e-5300-4295-9a46-3a6832d2b3dc"
+    "arrange": "5105a11e-5300-4295-9a46-3a6832d2b3dc",
+    "refill_point_code": "7a22cfcb-a272-4eff-968c-5e9467125a7b",
+    "general_cddp_group_name": "f9764a92-d2fa-4866-a7bf-b9a6fc98067a",
+    "cclad_group_name": "733139e4-c321-11e8-a355-529269fb1459"
   }
 },{
   "report_name": "non_suppressed_card",
@@ -5593,6 +5641,24 @@ SET @report_data = '{"flat_report_metadata":[{
     "reason_for_miss_classification": "881b4254-21be-4372-aa96-42453c941230",
     "action_taken_for_miss_classification": "6e936468-7c40-43fa-a515-137b53ed58d6",
     "tb_treatment_comments": "6965a8c4-7be5-47ee-a872-e158bd9545b1"
+  }
+},{
+  "report_name": "Vitals",
+  "flat_table_name": "mamba_flat_encounter_vitals",
+  "encounter_type_uuid": "67a71486-1a54-468f-ac3e-7091a9a79584",
+  "encounter_type_name": "Vitals",
+  "concepts_locale": "en",
+  "table_columns": {
+    "systolic_bp": "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "diastolic_bp": "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "pulse": "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "temperature_c": "5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "weight_kg": "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "height_cm": "5090AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "spo2": "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "respiratory_rate": "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "muac": "1343AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "general_patient_note": "165095AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   }
 },{
   "report_name": "Viral_Load_Request",
@@ -14476,6 +14542,8 @@ CALL sp_fact_current_arv_regimen_start_date;
 CALL sp_fact_latest_pregnancy_status_patients;
 CALL sp_fact_calhiv_patients;
 CALL sp_fact_eid_patients;
+CALL sp_fact_encounter_treatment_interruptions;
+CALL sp_fact_encounter_adr_side_effects;
 
 
 -- $END
@@ -15433,6 +15501,49 @@ END;
 
         
 -- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_vitals
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vitals;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_vitals()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_vitals', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_vitals', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Vitals domain: per-encounter pivot first (all encounter types), then the
+-- per-patient latest snapshot, whose anchor reads the encounter fact built in
+-- the same run.
+CALL sp_fact_encounter_vitals();
+CALL sp_fact_patients_latest_vitals();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
 -- sp_data_processing_derived_cacx_screening
 --
 
@@ -15682,6 +15793,7 @@ BEGIN
     CALL sp_data_processing_derived_cacx_screening();
     CALL sp_data_processing_derived_cacx_treatment();
     CALL sp_data_processing_derived_vl_episode();
+    CALL sp_data_processing_derived_vitals();
 
 END;
 ~-~-
@@ -17552,7 +17664,24 @@ CREATE TABLE mamba_fact_encounter_hiv_art_card
     covidVaccStatus  VARCHAR(255) NULL,
     covid_vaccination_date DATE NULL,
     reasons_for_next_appointment VARCHAR(255) NULL,
+    client_represented VARCHAR(255) NULL,
+    outcome VARCHAR(255) NULL,
     clinical_notes TEXT,
+    -- Repeating-group rollups (multi-instance values '; '-joined, latest date
+    -- kept). Grouped obs never reach the flat pivot, so these are backfilled
+    -- by the insert's z-layer UPDATEs, not the flat pass-through.
+    interruption_treatment_type VARCHAR(500) NULL,
+    interruption_stop_lost VARCHAR(500) NULL,
+    interruption_stop_date DATE NULL,
+    interruption_stop_reason TEXT,
+    interruption_restart_date DATE NULL,
+    offending_agent VARCHAR(500) NULL,
+    adr_side_effects_selected VARCHAR(1000) NULL,
+    adr_grading VARCHAR(500) NULL,
+    adr_severity VARCHAR(500) NULL,
+    adr_action_taken VARCHAR(500) NULL,
+    adr_other_outcome VARCHAR(500) NULL,
+    adr_date_of_occurrence DATE NULL,
 
     PRIMARY KEY (id)
 )
@@ -17607,199 +17736,318 @@ BEGIN
 END;
 
 -- $BEGIN
-INSERT INTO mamba_fact_encounter_hiv_art_card (encounter_id,
-                                               client_id,
-                                               patient_id,
-                                               encounter_date,
-                                               method_of_family_planning,
-                                               cd4,
-                                               hiv_viral_load,
-                                               historical_drug_start_date,
-                                               historical_drug_stop_date,
-                                               medication_orders,
-                                               viral_load_qualitative,
-                                               hepatitis_b_test___qualitative,
-                                               duration_units,
-                                               return_visit_date,
-                                               cd4_count,
-                                               estimated_date_of_confinement,
-                                               pmtct,
-                                               pregnant,
-                                               scheduled_patient_visist,
-                                               who_hiv_clinical_stage,
-                                               name_of_location_transferred_to,
-                                               tuberculosis_status,
-                                               tuberculosis_treatment_start_date,
-                                               adherence_assessment_code,
-                                               reason_for_missing_arv_administration,
-                                               medication_or_other_side_effects,
-                                               family_planning_status,
-                                               symptom_diagnosis,
-                                               transfered_out_to_another_facility,
-                                               tuberculosis_treatment_stop_date,
-                                               current_arv_regimen,
-                                               art_duration,
-                                               current_art_duration,
-                                               mid_upper_arm_circumference_code,
-                                               district_tuberculosis_number,
-                                               other_medications_dispensed,
-                                               arv_regimen_days_dispensed,
-                                               ar_regimen_dose,
-                                               nutrition_support_and_infant_feeding,
-                                               other_side_effects,
-                                               other_reason_for_missing_arv,
-                                               current_regimen_other,
-                                               transfer_out_date,
-                                               cotrim_given,
-                                               syphilis_test_result_for_partner,
-                                               eid_visit_1_z_score,
-                                               medication_duration,
-                                               medication_prescribed_per_dose,
-                                               tuberculosis_polymerase,
-                                               specimen_sources,
-                                               estimated_gestational_age,
-                                               hiv_viral_load_date,
-                                               other_reason_for_appointment,
-                                               nutrition_assesment,
-                                               differentiated_service_delivery,
-                                               stable_in_dsdm,
-                                               tpt_start_date,
-                                               tpt_completion_date,
-                                               advanced_disease_status,
-                                               tpt_status,
-                                               rpr_test_results,
-                                               crag_test_results,
-                                               tb_lam_results,
-                                               cervical_cancer_screening,
-                                               intention_to_conceive,
-                                               tb_microscopy_results,
-                                               quantity_unit,
-                                               tpt_side_effects,
-                                               lab_number,
-                                               test,
-                                               test_result,
-                                               refill_point_code,
-                                               next_return_date_at_facility,
-                                               indication_for_viral_load_testing,
-                                               htn_status    ,
-                                               diabetes_mellitus_status,
-                                               anxiety_and_or_depression,
-                                               alcohol_and_substance_use_disorder,
-                                               oedema ,
-                                               inr_no,
-                                               pregnancy_status,
-                                               digital_health_messaging_registration ,
-                                               cacx_screening_visit_type         ,
-                                               cacx_screening_method,
-                                               cacx_screening_status,
-                                               cacx_treatment,
-                                               syphilis_status,
-                                               tb_regimen,
-                                               other_tpt_status,
-                                               hpvVacStatus,
-                                               interruption_reason,
-                                               hpv_vaccination_date,
-                                               covidVaccStatus,
-                                               covid_vaccination_date,
-                                               reasons_for_next_appointment,
-                                               clinical_notes )
-	SELECT a.encounter_id,
-	       a.client_id,
-	       a.client_id AS patient_id,
-	       a.encounter_datetime,
-	       method_of_family_planning,
-	       cd4,
-	       hiv_viral_load,
-	       historical_drug_start_date,
-	       historical_drug_stop_date,
-	       medication_orders,
-	       viral_load_qualitative,
-	       hepatitis_b_test___qualitative,
-	       duration_units,
-	       return_visit_date,
-	       cd4_count,
-	       estimated_date_of_confinement,
-	       pmtct,
-	       pregnant,
-	       scheduled_patient_visist,
-	       who_hiv_clinical_stage,
-	       name_of_location_transferred_to,
-	       tuberculosis_status,
-	       tuberculosis_treatment_start_date,
-	       adherence_assessment_code,
-	       reason_for_missing_arv_administration,
-	       medication_or_other_side_effects,
-	       family_planning_status,
-	       symptom_diagnosis,
-	       transfered_out_to_another_facility,
-	       tuberculosis_treatment_stop_date,
-	       current_arv_regimen,
-	       art_duration,
-	       current_art_duration,
-	       mid_upper_arm_circumference_code,
-	       district_tuberculosis_number,
-	       other_medications_dispensed,
-	       FLOOR(arv_regimen_days_dispensed),
-	       ar_regimen_dose,
-	       nutrition_support_and_infant_feeding,
-	       other_side_effects,
-	       other_reason_for_missing_arv,
-	       current_regimen_other,
-	       transfer_out_date,
-	       cotrim_given,
-	       syphilis_test_result_for_partner,
-	       eid_visit_1_z_score,
-	       medication_duration,
-	       medication_prescribed_per_dose,
-	       tuberculosis_polymerase,
-	       specimen_sources,
-	       estimated_gestational_age,
-	       hiv_viral_load_date,
-	       other_reason_for_appointment,
-	       nutrition_assesment,
-	       differentiated_service_delivery,
-	       stable_in_dsdm,
-	       tpt_start_date,
-	       tpt_completion_date,
-	       advanced_disease_status,
-	       tpt_status,
-	       rpr_test_results,
-	       crag_test_results,
-	       tb_lam_results,
-	       cervical_cancer_screening,
-	       intention_to_conceive,
-	       tb_microscopy_results,
-	       quantity_unit,
-	       tpt_side_effects,
-	       lab_number,
-	       test,
-	       test_result,
-	       refill_point_code,
-	       next_return_date_at_facility,
-	       indication_for_viral_load_testing,
-	       htn_status    ,
-	       diabetes_mellitus_status,
-	       anxiety_and_or_depression,
-	       alcohol_and_substance_use_disorder,
-	       oedema ,
-	       inr_no,
-	       pregnancy_status,
-	       digital_health_messaging_registration ,
-	       cacx_screening_visit_type         ,
-	       cacx_screening_method,
-	       cacx_screening_status,
-	       cacx_treatment,
-	       syphilis_status,
-	       tb_regimen,
-	       other_tpt_status,
-	       hpvVacStatus,
-	       interruption_reason,
-	       hpv_vaccination_date,
-	       covidVaccStatus,
-	       covid_vaccination_date,
-	       reasons_for_next_appointment,
-	       clinical_notes
-	FROM mamba_flat_encounter_art_card a inner join mamba_flat_encounter_art_card_1 b on a.encounter_id=b.encounter_id ;
+
+INSERT INTO mamba_fact_encounter_hiv_art_card (
+    encounter_id,
+    client_id,
+    patient_id,
+    encounter_date,
+    method_of_family_planning,
+    cd4,
+    hiv_viral_load,
+    historical_drug_start_date,
+    historical_drug_stop_date,
+    medication_orders,
+    viral_load_qualitative,
+    hepatitis_b_test___qualitative,
+    duration_units,
+    return_visit_date,
+    cd4_count,
+    estimated_date_of_confinement,
+    pmtct,
+    pregnant,
+    scheduled_patient_visist,
+    who_hiv_clinical_stage,
+    name_of_location_transferred_to,
+    tuberculosis_status,
+    tuberculosis_treatment_start_date,
+    adherence_assessment_code,
+    reason_for_missing_arv_administration,
+    medication_or_other_side_effects,
+    family_planning_status,
+    symptom_diagnosis,
+    transfered_out_to_another_facility,
+    tuberculosis_treatment_stop_date,
+    current_arv_regimen,
+    art_duration,
+    current_art_duration,
+    mid_upper_arm_circumference_code,
+    district_tuberculosis_number,
+    other_medications_dispensed,
+    arv_regimen_days_dispensed,
+    ar_regimen_dose,
+    nutrition_support_and_infant_feeding,
+    other_side_effects,
+    other_reason_for_missing_arv,
+    current_regimen_other,
+    transfer_out_date,
+    cotrim_given,
+    syphilis_test_result_for_partner,
+    eid_visit_1_z_score,
+    medication_duration,
+    medication_prescribed_per_dose,
+    tuberculosis_polymerase,
+    specimen_sources,
+    estimated_gestational_age,
+    hiv_viral_load_date,
+    other_reason_for_appointment,
+    nutrition_assesment,
+    differentiated_service_delivery,
+    stable_in_dsdm,
+    tpt_start_date,
+    tpt_completion_date,
+    advanced_disease_status,
+    tpt_status,
+    rpr_test_results,
+    crag_test_results,
+    tb_lam_results,
+    cervical_cancer_screening,
+    intention_to_conceive,
+    tb_microscopy_results,
+    quantity_unit,
+    tpt_side_effects,
+    lab_number,
+    test,
+    test_result,
+    refill_point_code,
+    next_return_date_at_facility,
+    indication_for_viral_load_testing,
+    htn_status,
+    diabetes_mellitus_status,
+    anxiety_and_or_depression,
+    alcohol_and_substance_use_disorder,
+    oedema,
+    inr_no,
+    pregnancy_status,
+    digital_health_messaging_registration,
+    cacx_screening_visit_type,
+    cacx_screening_method,
+    cacx_screening_status,
+    cacx_treatment,
+    syphilis_status,
+    tb_regimen,
+    other_tpt_status,
+    hpvVacStatus,
+    interruption_reason,
+    hpv_vaccination_date,
+    covidVaccStatus,
+    covid_vaccination_date,
+    reasons_for_next_appointment,
+    outcome,
+    clinical_notes,
+    client_represented,
+    anc_no,
+    lnmp,
+    other_reason_stopped_treatment
+)
+
+SELECT
+    encounters.encounter_id,
+
+    /* Core encounter identifiers */
+    COALESCE(a.client_id, b.client_id, c.client_id),
+    COALESCE(a.client_id, b.client_id, c.client_id) AS patient_id,
+    COALESCE(a.encounter_datetime, b.encounter_datetime, c.encounter_datetime) AS encounter_date,
+
+    /* ART-card data */
+    method_of_family_planning,
+    cd4,
+    hiv_viral_load,
+    historical_drug_start_date,
+    historical_drug_stop_date,
+    medication_orders,
+    viral_load_qualitative,
+    hepatitis_b_test___qualitative,
+    duration_units,
+    return_visit_date,
+    cd4_count,
+    estimated_date_of_confinement,
+    pmtct,
+    pregnant,
+    scheduled_patient_visist,
+    who_hiv_clinical_stage,
+    name_of_location_transferred_to,
+    tuberculosis_status,
+    tuberculosis_treatment_start_date,
+    adherence_assessment_code,
+    reason_for_missing_arv_administration,
+    medication_or_other_side_effects,
+    family_planning_status,
+    symptom_diagnosis,
+    transfered_out_to_another_facility,
+    tuberculosis_treatment_stop_date,
+    current_arv_regimen,
+    art_duration,
+    current_art_duration,
+    mid_upper_arm_circumference_code,
+    district_tuberculosis_number,
+    other_medications_dispensed,
+    FLOOR(arv_regimen_days_dispensed),
+    ar_regimen_dose,
+    nutrition_support_and_infant_feeding,
+    other_side_effects,
+    other_reason_for_missing_arv,
+    current_regimen_other,
+    transfer_out_date,
+    cotrim_given,
+    syphilis_test_result_for_partner,
+    eid_visit_1_z_score,
+    medication_duration,
+    medication_prescribed_per_dose,
+    tuberculosis_polymerase,
+    specimen_sources,
+    estimated_gestational_age,
+    hiv_viral_load_date,
+    other_reason_for_appointment,
+    nutrition_assesment,
+    differentiated_service_delivery,
+    stable_in_dsdm,
+    tpt_start_date,
+    tpt_completion_date,
+    advanced_disease_status,
+    tpt_status,
+    rpr_test_results,
+    crag_test_results,
+    tb_lam_results,
+    cervical_cancer_screening,
+    intention_to_conceive,
+    tb_microscopy_results,
+    quantity_unit,
+    tpt_side_effects,
+    lab_number,
+    test,
+    test_result,
+    refill_point_code,
+    next_return_date_at_facility,
+    indication_for_viral_load_testing,
+    htn_status,
+    diabetes_mellitus_status,
+    anxiety_and_or_depression,
+    alcohol_and_substance_use_disorder,
+    oedema,
+    inr_no,
+    pregnancy_status,
+    digital_health_messaging_registration,
+    cacx_screening_visit_type,
+    cacx_screening_method,
+    cacx_screening_status,
+    cacx_treatment,
+    syphilis_status,
+    tb_regimen,
+    other_tpt_status,
+    hpvVacStatus,
+    interruption_reason,
+    hpv_vaccination_date,
+    covidVaccStatus,
+    covid_vaccination_date,
+    reasons_for_next_appointment,
+    outcome,
+    clinical_notes,
+    client_represented,
+    `anc_no.`,
+    lnmp,
+    other_reason_stopped_treatment
+
+FROM (
+         /*
+          * Build the complete set of encounters first.
+          *
+          * UNION (rather than UNION ALL) guarantees one encounter_id
+          * in the driving dataset even if it occurs in all 3 fragments.
+          */
+         SELECT encounter_id
+         FROM mamba_flat_encounter_art_card
+
+         UNION
+
+         SELECT encounter_id
+         FROM mamba_flat_encounter_art_card_1
+
+         UNION
+
+         SELECT encounter_id
+         FROM mamba_flat_encounter_art_card_2
+     ) encounters
+
+         LEFT JOIN mamba_flat_encounter_art_card a
+                   ON a.encounter_id = encounters.encounter_id
+
+         LEFT JOIN mamba_flat_encounter_art_card_1 b
+                   ON b.encounter_id = encounters.encounter_id
+
+         LEFT JOIN mamba_flat_encounter_art_card_2 c
+                   ON c.encounter_id = encounters.encounter_id;
+
+
+-- ---------------------------------------------------------------------------
+-- Repeating-group rollups. Grouped obs are excluded from the flat pivot
+-- (obs_group_id IS NULL), so the pass-through above cannot fill these; pivot
+-- mamba_z_encounter_obs directly (z is refreshed before facts run, so no
+-- ordering dependency on the instance fact tables). One row per encounter
+-- here: multi-instance values are '; '-joined for strings, latest kept for
+-- dates. Per-instance detail remains in mamba_fact_encounter_treatment_
+-- interruptions / mamba_fact_encounter_adr_side_effects.
+SET SESSION group_concat_max_len = 20000;
+
+UPDATE mamba_fact_encounter_hiv_art_card f
+JOIN (
+    SELECT z.encounter_id,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '3aaf3680-6240-4819-a704-e20a93841942'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS interruption_treatment_type,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '65d1bdf6-e518-4400-9f61-b7f2b1e80169'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS interruption_stop_lost,
+           DATE(MAX(CASE WHEN z.obs_question_uuid = 'ac98d431-8ebc-4397-8c78-78b0eee0ffe7'
+               THEN z.obs_value_datetime END))                                 AS interruption_stop_date,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '89d3ee61-7c74-4537-b199-4026bd6a3f67'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS interruption_stop_reason,
+           DATE(MAX(CASE WHEN z.obs_question_uuid = '160738AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               THEN z.obs_value_datetime END))                                 AS interruption_restart_date
+    FROM mamba_z_encounter_obs z
+             INNER JOIN mamba_z_encounter_obs g
+                        ON g.obs_id = z.obs_group_id
+                            AND g.voided = 0
+                            AND g.obs_question_uuid = '2bb2e360-263c-4167-8c68-87dab66dc0f6'
+    WHERE z.voided = 0
+    GROUP BY z.encounter_id
+) t ON t.encounter_id = f.encounter_id
+SET f.interruption_treatment_type = t.interruption_treatment_type,
+    f.interruption_stop_lost      = t.interruption_stop_lost,
+    f.interruption_stop_date      = t.interruption_stop_date,
+    f.interruption_stop_reason    = t.interruption_stop_reason,
+    f.interruption_restart_date   = t.interruption_restart_date;
+
+UPDATE mamba_fact_encounter_hiv_art_card f
+JOIN (
+    SELECT z.encounter_id,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = 'dce05b7f-30ab-102d-86b0-7a5022ba4115'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS adr_side_effects_selection,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '24b52dcb-2809-4ed8-92bb-b212f394bf50'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS offending_agent,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = 'f2547a99-21c9-4e86-99e8-b6c4dda36f42'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS adr_grading,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = 'dce0d9c2-30ab-102d-86b0-7a5022ba4115'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS adr_severity,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '14eb35a0-1454-47bb-90cf-bf6cf96340a8'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS adr_action_taken,
+           GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '05018034-4bf1-4025-8396-5c08e3690c10'
+               THEN z.obs_value_text END SEPARATOR '; ')                       AS adr_other_outcome,
+           DATE(MAX(CASE WHEN z.obs_question_uuid = '648995af-baf8-4954-a850-2ead8162a86b'
+               THEN z.obs_value_datetime END))                                 AS adr_date_of_occurrence
+    FROM mamba_z_encounter_obs z
+             INNER JOIN mamba_z_encounter_obs g
+                        ON g.obs_id = z.obs_group_id
+                            AND g.voided = 0
+                            AND g.obs_question_uuid = 'b05f81ca-afa4-4c7d-af9c-4523947f5dd6'
+    WHERE z.voided = 0
+    GROUP BY z.encounter_id
+) a ON a.encounter_id = f.encounter_id
+SET f.adr_side_effects_selected = a.adr_side_effects_selection,
+    f.offending_agent    = a.offending_agent,
+    f.adr_grading        = a.adr_grading,
+    f.adr_severity       = a.adr_severity,
+    f.adr_action_taken   = a.adr_action_taken,
+    f.adr_other_outcome  = a.adr_other_outcome,
+    f.adr_date_of_occurrence = a.adr_date_of_occurrence;
 -- $END
 END;
 ~-~-
@@ -18073,6 +18321,7 @@ END;
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_hiv_art_summary (encounter_id,
                                                   client_id,
+                                                  patient_id,
                                                   encounter_datetime,
                                                   allergy,
                                                   hepatitis_b_test_qualitative,
@@ -18147,6 +18396,7 @@ INSERT INTO mamba_fact_encounter_hiv_art_summary (encounter_id,
                                                   relationship_to_index_clients,
                                                   other_relationship_to_index_client)
 SELECT a.encounter_id,
+       a.client_id,
        a.client_id,
        a.encounter_datetime,
        allergy,
@@ -18392,6 +18642,9 @@ CREATE TABLE mamba_fact_encounter_hiv_art_health_education
     other_imf_approach    VARCHAR(255)  DEFAULT NULL,
     linkages_and_referrals1    VARCHAR(255)  DEFAULT NULL,
     arrange   VARCHAR(255)  DEFAULT NULL,
+    refill_point_code VARCHAR(255)  DEFAULT NULL,
+    general_cddp_group_name VARCHAR(255)  DEFAULT NULL,
+    cclad_group_name VARCHAR(255)  DEFAULT NULL,
 
     PRIMARY KEY (id)
 ) CHARSET = UTF8;
@@ -18473,7 +18726,10 @@ INSERT INTO mamba_fact_encounter_hiv_art_health_education (encounter_id,
                                                            other_gmc_approach    ,
                                                            other_imf_approach    ,
                                                            linkages_and_referrals1   ,
-                                                           arrange   )
+                                                           arrange   ,
+                                                           refill_point_code   ,
+                                                           general_cddp_group_name   ,
+                                                           cclad_group_name   )
 SELECT encounter_id,
        client_id,
        encounter_datetime,
@@ -18502,7 +18758,10 @@ SELECT encounter_id,
        other_gmc_approach    ,
        other_imf_approach    ,
        linkages_and_referrals1   ,
-       arrange
+       arrange   ,
+       refill_point_code   ,
+       general_cddp_group_name   ,
+       cclad_group_name
 
 
 FROM mamba_flat_encounter_art_health_education;
@@ -26804,8 +27063,8 @@ CREATE TABLE mamba_fact_test_orders_results
     test_concept_id  INT NOT NULL,
     test_parameter        VARCHAR(255) NULL,
     test_value        TEXT NULL,
-
-        PRIMARY KEY (id)
+    test_value_concept_id INT NULL,
+    PRIMARY KEY (id)
 ) CHARSET = UTF8;
 
 CREATE INDEX
@@ -26859,84 +27118,178 @@ BEGIN
 END;
 
 -- $BEGIN
-INSERT INTO mamba_fact_test_orders_results(test_orders_id,
-                                          encounter_id,
-                                          encounter_datetime,
-                                          client_id,
-                                          test_concept_id,
-                                          test_parameter,
-                                          test_value)
-SELECT labtests.id                                                                         AS test_orders_id,
-       labtests.encounter_id,
-       encounter_datetime,
-       client_id,
-       labtests.concept_id                                                                 AS test_concept_id,
-       cn.name                                                                             AS test_parameter,
-       IF(cd.name = 'Numeric', value_numeric,
-          IF(cd.name = 'Date', DATE(value_datetime), IF(cd.name = 'Coded', cn1.name, ''))) AS value
-FROM (SELECT mfto.id,
+INSERT INTO mamba_fact_test_orders_results(
+    test_orders_id,
+    encounter_id,
+    encounter_datetime,
+    client_id,
+    test_concept_id,
+    test_parameter,
+    test_value,
+    test_value_concept_id
+)
+SELECT
+    labtests.id AS test_orders_id,
+    labtests.encounter_id,
+    labtests.encounter_datetime,
+    labtests.client_id,
+    labtests.concept_id AS test_concept_id,
+    cn.name AS test_parameter,
+
+    IF(
+            cd.name = 'Numeric',
+            o.value_numeric,
+            IF(
+                    cd.name = 'Date',
+                    DATE(o.value_datetime),
+                    IF(
+                            cd.name = 'Coded',
+                            cn1.name,
+                            ''
+                    )
+            )
+    ) AS test_value,
+
+    IF(
+            cd.name = 'Coded',
+            o.value_coded,
+            NULL
+    ) AS test_value_concept_id
+
+FROM (
+         SELECT
+             mfto.id,
              mfto.encounter_id,
              mfto.client_id,
              o.obs_id,
-             DATE(obs_datetime) as encounter_datetime,
-             o.concept_id
-      FROM mamba_fact_test_orders mfto
-               LEFT JOIN obs o
-                         ON mfto.test_concept_id = o.concept_id AND mfto.encounter_id = o.encounter_id
-               INNER JOIN concept c ON o.concept_id = c.concept_id
-               INNER JOIN concept_class cc ON c.class_id = cc.concept_class_id
-      WHERE cc.name = 'LabSet'
-        AND c.is_set = 1
-        AND o.voided = 0) labtests
-         LEFT JOIN obs o ON o.obs_group_id = labtests.obs_id
-         LEFT JOIN concept_name cn ON o.concept_id = cn.concept_id
-         INNER JOIN concept c ON o.concept_id = c.concept_id
-         INNER JOIN concept_datatype cd ON c.datatype_id = cd.concept_datatype_id
-         left join concept_name cn1 on o.value_coded = cn1.concept_id AND
-                                       IF(cn1.locale_preferred = 1, cn1.locale_preferred = 1,
-                                          cn1.concept_name_type = 'FULLY_SPECIFIED')
-WHERE IF(cn.locale_preferred = 1, cn.locale_preferred = 1, cn.concept_name_type = 'FULLY_SPECIFIED');
+             DATE(o.obs_datetime) AS encounter_datetime,
+     o.concept_id
+    FROM mamba_fact_test_orders mfto
+    LEFT JOIN obs o
+ON mfto.test_concept_id = o.concept_id
+    AND mfto.encounter_id = o.encounter_id
+    INNER JOIN concept c
+    ON o.concept_id = c.concept_id
+    INNER JOIN concept_class cc
+    ON c.class_id = cc.concept_class_id
+WHERE cc.name = 'LabSet'
+  AND c.is_set = 1
+  AND o.voided = 0
+    ) labtests
 
+    LEFT JOIN obs o
+ON o.obs_group_id = labtests.obs_id
 
-INSERT INTO mamba_fact_test_orders_results(test_orders_id,
-                                          encounter_id,
-                                          client_id,
-                                          test_concept_id,
-                                          test_parameter,
-                                          test_value)
-SELECT id                                                                                                    AS test_orders_id,
-       encounter_id,
-       client_id,
-       concept_id                                                                                            AS test_concept_id,
-       test_parameter,
-       IF(datatype = 'Numeric', value_numeric,
-          IF(datatype = 'Date', DATE(value_datetime), IF(datatype = 'Coded', coded_value_text, value_text))) AS value
-FROM (SELECT mfto.id,
+    LEFT JOIN concept_name cn
+    ON o.concept_id = cn.concept_id
+
+    INNER JOIN concept c
+    ON o.concept_id = c.concept_id
+
+    INNER JOIN concept_datatype cd
+    ON c.datatype_id = cd.concept_datatype_id
+
+    LEFT JOIN concept_name cn1
+    ON o.value_coded = cn1.concept_id
+    AND IF(
+    cn1.locale_preferred = 1,
+    cn1.locale_preferred = 1,
+    cn1.concept_name_type = 'FULLY_SPECIFIED'
+    )
+
+WHERE IF(
+    cn.locale_preferred = 1,
+    cn.locale_preferred = 1,
+    cn.concept_name_type = 'FULLY_SPECIFIED'
+    );
+
+INSERT INTO mamba_fact_test_orders_results(
+    test_orders_id,
+    encounter_id,
+    encounter_datetime,
+    client_id,
+    test_concept_id,
+    test_parameter,
+    test_value,
+    test_value_concept_id
+)
+SELECT
+    id AS test_orders_id,
+    encounter_id,
+    encounter_datetime,
+    client_id,
+    concept_id AS test_concept_id,
+    test_parameter,
+
+    IF(
+            datatype = 'Numeric',
+            value_numeric,
+            IF(
+                    datatype = 'Date',
+                    DATE(value_datetime),
+                    IF(
+                            datatype = 'Coded',
+                            coded_value_text,
+                            value_text
+                    )
+            )
+    ) AS test_value,
+
+    IF(
+            datatype = 'Coded',
+            value_coded,
+            NULL
+    ) AS test_value_concept_id
+
+FROM (
+         SELECT
+             mfto.id,
              mfto.encounter_id,
              mfto.client_id,
-             o.concept_id,
-             cn.name  AS test_parameter,
-             cd.name  AS datatype,
-             cn1.name AS coded_value_text,
-             value_numeric,
-             value_datetime,
-             value_text
+             DATE(o.obs_datetime) AS encounter_datetime,
+     o.concept_id,
+     cn.name AS test_parameter,
+     cd.name AS datatype,
+     cn1.name AS coded_value_text,
+     o.value_coded,
+     o.value_numeric,
+     o.value_datetime,
+     o.value_text
 
-      FROM mamba_fact_test_orders mfto
-               LEFT JOIN obs o
-                         ON mfto.test_concept_id = o.concept_id AND mfto.encounter_id = o.encounter_id
-               INNER JOIN concept c ON o.concept_id = c.concept_id
-               LEFT JOIN concept_name cn ON c.concept_id = cn.concept_id
-               INNER JOIN concept_datatype cd ON c.datatype_id = cd.concept_datatype_id
-               INNER JOIN concept_class cc ON c.class_id = cc.concept_class_id
-               LEFT JOIN concept_name cn1 ON o.value_coded = cn1.concept_id AND
-                                             IF(cn1.locale_preferred = 1, cn1.locale_preferred = 1,
-                                                cn1.concept_name_type = 'FULLY_SPECIFIED')
-      WHERE cc.name <> 'LabSet'
-        AND o.voided = 0
-        AND IF(cn.locale_preferred = 1, cn.locale_preferred = 1, cn.concept_name_type = 'FULLY_SPECIFIED')) labtests;
+    FROM mamba_fact_test_orders mfto
 
+    LEFT JOIN obs o
+ON mfto.test_concept_id = o.concept_id
+    AND mfto.encounter_id = o.encounter_id
 
+    INNER JOIN concept c
+    ON o.concept_id = c.concept_id
+
+    LEFT JOIN concept_name cn
+    ON c.concept_id = cn.concept_id
+
+    INNER JOIN concept_datatype cd
+    ON c.datatype_id = cd.concept_datatype_id
+
+    INNER JOIN concept_class cc
+    ON c.class_id = cc.concept_class_id
+
+    LEFT JOIN concept_name cn1
+    ON o.value_coded = cn1.concept_id
+    AND IF(
+    cn1.locale_preferred = 1,
+    cn1.locale_preferred = 1,
+    cn1.concept_name_type = 'FULLY_SPECIFIED'
+    )
+
+WHERE cc.name <> 'LabSet'
+  AND o.voided = 0
+  AND IF(
+    cn.locale_preferred = 1,
+    cn.locale_preferred = 1,
+    cn.concept_name_type = 'FULLY_SPECIFIED'
+    )
+    ) labtests;
 -- $END
 END;
 ~-~-
@@ -26984,6 +27337,559 @@ END;
 
 -- $BEGIN
 
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_treatment_interruptions
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_treatment_interruptions;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_treatment_interruptions()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_treatment_interruptions', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_treatment_interruptions', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_treatment_interruptions_create();
+CALL sp_fact_encounter_treatment_interruptions_insert();
+CALL sp_fact_encounter_treatment_interruptions_update();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_treatment_interruptions_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_treatment_interruptions_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_treatment_interruptions_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_treatment_interruptions_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_treatment_interruptions_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- Treatment Interruptions Fact Table - Create Script
+-- ============================================================================
+-- One row per ART/TPT/Fluconazole/TB treatment-interruption obs group instance
+-- (group leader concept 2bb2e360-263c-4167-8c68-87dab66dc0f6, "Interruptions"
+-- repeating group on the HMIS 003 Clinical Assessment page).
+--
+-- The engine's flat pivot filters obs_group_id IS NULL, so group members never
+-- land in mamba_flat_encounter_art_card. This fact pivots them from
+-- mamba_z_encounter_obs instead (see remove-obs-group-child-calls.sh).
+-- ============================================================================
+
+DROP TABLE IF EXISTS mamba_fact_encounter_treatment_interruptions;
+
+CREATE TABLE mamba_fact_encounter_treatment_interruptions
+(
+    id                         INT AUTO_INCREMENT,
+    client_id                  INT          NOT NULL,
+    patient_id                 INT          NOT NULL,
+    encounter_id               INT          NOT NULL,
+    encounter_date             DATE         NULL,
+    location_id                INT          NULL,
+    obs_group_id               INT          NOT NULL COMMENT 'obs_id of the group leader row; the instance key',
+    treatment_type             VARCHAR(250) NULL,
+    interruption_stop_lost     VARCHAR(250) NULL,
+    interruption_stop_date     DATE         NULL,
+    interruption_stop_reason   VARCHAR(500) NULL,
+    interruption_restart_date  DATE         NULL,
+    date_created               DATETIME     DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8MB4;
+
+CREATE INDEX
+    mamba_fact_encounter_trt_interruptions_client_id_index ON mamba_fact_encounter_treatment_interruptions (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_trt_interruptions_patient_id_index ON mamba_fact_encounter_treatment_interruptions (patient_id);
+
+CREATE INDEX
+    mamba_fact_encounter_trt_interruptions_encounter_id_index ON mamba_fact_encounter_treatment_interruptions (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_trt_interruptions_encounter_date_index ON mamba_fact_encounter_treatment_interruptions (encounter_date);
+
+CREATE INDEX
+    mamba_fact_encounter_trt_interruptions_obs_group_id_index ON mamba_fact_encounter_treatment_interruptions (obs_group_id);
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_treatment_interruptions_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_treatment_interruptions_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_treatment_interruptions_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_treatment_interruptions_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_treatment_interruptions_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- One row per treatment-interruption obs group instance. Children are pivoted
+-- from mamba_z_encounter_obs: member rows carry obs_group_id = the leader's
+-- obs_id, and joining z back to the leader row (obs_question_uuid = the group
+-- concept) scopes this to interruptions groups only. Concept UUIDs (not ids)
+-- keep this portable across environments. Coded answers arrive resolved in
+-- obs_value_text; date answers in obs_value_datetime are DATE()-wrapped per
+-- house rule (they carry times).
+SET SESSION group_concat_max_len = 20000;
+
+INSERT INTO mamba_fact_encounter_treatment_interruptions (client_id,
+                                                          patient_id,
+                                                          encounter_id,
+                                                          encounter_date,
+                                                          location_id,
+                                                          obs_group_id,
+                                                          treatment_type,
+                                                          interruption_stop_lost,
+                                                          interruption_stop_date,
+                                                          interruption_stop_reason,
+                                                          interruption_restart_date)
+SELECT z.person_id,
+       z.person_id                        AS patient_id,
+       z.encounter_id,
+       DATE(z.encounter_datetime)         AS encounter_date,
+       z.location_id,
+       z.obs_group_id,
+       GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = '3aaf3680-6240-4819-a704-e20a93841942'
+           THEN z.obs_value_text END SEPARATOR '; ')                       AS treatment_type,
+       MAX(CASE WHEN z.obs_question_uuid = '65d1bdf6-e518-4400-9f61-b7f2b1e80169'
+           THEN z.obs_value_text END)                                      AS interruption_stop_lost,
+       DATE(MAX(CASE WHEN z.obs_question_uuid = 'ac98d431-8ebc-4397-8c78-78b0eee0ffe7'
+           THEN z.obs_value_datetime END))                                 AS interruption_stop_date,
+       MAX(CASE WHEN z.obs_question_uuid = '89d3ee61-7c74-4537-b199-4026bd6a3f67'
+           THEN z.obs_value_text END)                                      AS interruption_stop_reason,
+       DATE(MAX(CASE WHEN z.obs_question_uuid = '160738AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+           THEN z.obs_value_datetime END))                                 AS interruption_restart_date
+FROM mamba_z_encounter_obs z
+         INNER JOIN mamba_z_encounter_obs g
+                    ON g.obs_id = z.obs_group_id
+                        AND g.voided = 0
+                        AND g.obs_question_uuid = '2bb2e360-263c-4167-8c68-87dab66dc0f6'
+WHERE z.voided = 0
+GROUP BY z.person_id, z.encounter_id, z.encounter_datetime, z.location_id, z.obs_group_id;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_treatment_interruptions_query
+--
+
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_treatment_interruptions_query;
+~-~-
+CREATE PROCEDURE sp_fact_encounter_treatment_interruptions_query(IN START_DATE
+                                                                 DATETIME, END_DATE DATETIME)
+BEGIN
+    SELECT *
+    FROM mamba_fact_encounter_treatment_interruptions
+    WHERE encounter_date >= START_DATE
+      AND encounter_date <= END_DATE;
+END;
+~-~-
+
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_treatment_interruptions_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_treatment_interruptions_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_treatment_interruptions_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_treatment_interruptions_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_treatment_interruptions_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Full refresh: create drops and recreates the table each run.
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_adr_side_effects
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_adr_side_effects;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_adr_side_effects()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_adr_side_effects', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_adr_side_effects', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_adr_side_effects_create();
+CALL sp_fact_encounter_adr_side_effects_insert();
+CALL sp_fact_encounter_adr_side_effects_update();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_adr_side_effects_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_adr_side_effects_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_adr_side_effects_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_adr_side_effects_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_adr_side_effects_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- ADR / Side Effects Fact Table - Create Script
+-- ============================================================================
+-- One row per ADR/side-effects obs group instance (group leader concept
+-- b05f81ca-afa4-4c7d-af9c-4523947f5dd6, "ADR/Side Effects" repeating group on
+-- the HMIS 003 Clinical Assessment page) - feeds HMIS 106A ADR01/ADR02.
+--
+-- The engine's flat pivot filters obs_group_id IS NULL, so group members never
+-- land in mamba_flat_encounter_art_card. This fact pivots them from
+-- mamba_z_encounter_obs instead (see remove-obs-group-child-calls.sh). Group
+-- scoping also disambiguates the shared concepts: dce05b7f ("Side effects"
+-- here vs "Diagnosis" top-level), d4f4c0e7 and d0a568f1.
+-- ============================================================================
+
+DROP TABLE IF EXISTS mamba_fact_encounter_adr_side_effects;
+
+CREATE TABLE mamba_fact_encounter_adr_side_effects
+(
+    id                  INT AUTO_INCREMENT,
+    client_id           INT           NOT NULL,
+    patient_id          INT           NOT NULL,
+    encounter_id        INT           NOT NULL,
+    encounter_date      DATE          NULL,
+    location_id         INT           NULL,
+    obs_group_id        INT           NOT NULL COMMENT 'obs_id of the group leader row; the instance key',
+    side_effects        VARCHAR(1000) NULL COMMENT 'multi-select; selected answers joined with ;',
+    other_side_effects  VARCHAR(500)  NULL,
+    offending_agent     VARCHAR(250)  NULL,
+    other_medication    VARCHAR(500)  NULL,
+    grading             VARCHAR(250)  NULL,
+    severity            VARCHAR(250)  NULL,
+    action_taken        VARCHAR(250)  NULL,
+    outcome             VARCHAR(250)  NULL,
+    other_outcome       VARCHAR(250)  NULL,
+    date_of_occurrence  DATE          NULL,
+    date_created        DATETIME      DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8MB4;
+
+CREATE INDEX
+    mamba_fact_encounter_adr_side_effects_client_id_index ON mamba_fact_encounter_adr_side_effects (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_adr_side_effects_patient_id_index ON mamba_fact_encounter_adr_side_effects (patient_id);
+
+CREATE INDEX
+    mamba_fact_encounter_adr_side_effects_encounter_id_index ON mamba_fact_encounter_adr_side_effects (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_adr_side_effects_encounter_date_index ON mamba_fact_encounter_adr_side_effects (encounter_date);
+
+CREATE INDEX
+    mamba_fact_encounter_adr_side_effects_obs_group_id_index ON mamba_fact_encounter_adr_side_effects (obs_group_id);
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_adr_side_effects_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_adr_side_effects_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_adr_side_effects_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_adr_side_effects_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_adr_side_effects_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- One row per ADR/side-effects obs group instance. Same pattern as the
+-- treatment-interruptions fact: children pivoted from mamba_z_encounter_obs
+-- and scoped by joining back to the group leader row, concept UUIDs for
+-- portability, obs_value_text for resolved coded labels, DATE() wraps on
+-- date answers. "Side effects" is a multiCheckbox (one obs row per selected
+-- answer) so it is GROUP_CONCAT'd; the rest are single-answer pivots.
+SET SESSION group_concat_max_len = 20000;
+
+INSERT INTO mamba_fact_encounter_adr_side_effects (client_id,
+                                                   patient_id,
+                                                   encounter_id,
+                                                   encounter_date,
+                                                   location_id,
+                                                   obs_group_id,
+                                                   side_effects,
+                                                   other_side_effects,
+                                                   offending_agent,
+                                                   other_medication,
+                                                   grading,
+                                                   severity,
+                                                   action_taken,
+                                                   outcome,
+                                                   other_outcome,
+                                                   date_of_occurrence)
+SELECT z.person_id,
+       z.person_id                        AS patient_id,
+       z.encounter_id,
+       DATE(z.encounter_datetime)         AS encounter_date,
+       z.location_id,
+       z.obs_group_id,
+       GROUP_CONCAT(DISTINCT CASE WHEN z.obs_question_uuid = 'dce05b7f-30ab-102d-86b0-7a5022ba4115'
+           THEN z.obs_value_text END SEPARATOR '; ')                       AS side_effects,
+       MAX(CASE WHEN z.obs_question_uuid = 'd4f4c0e7-06f5-4aa6-a218-17b1f97c5a44'
+           THEN z.obs_value_text END)                                      AS other_side_effects,
+       MAX(CASE WHEN z.obs_question_uuid = '24b52dcb-2809-4ed8-92bb-b212f394bf50'
+           THEN z.obs_value_text END)                                      AS offending_agent,
+       MAX(CASE WHEN z.obs_question_uuid = 'b04eaf95-77c9-456a-99fb-f668f58a9386'
+           THEN z.obs_value_text END)                                      AS other_medication,
+       MAX(CASE WHEN z.obs_question_uuid = 'f2547a99-21c9-4e86-99e8-b6c4dda36f42'
+           THEN z.obs_value_text END)                                      AS grading,
+       MAX(CASE WHEN z.obs_question_uuid = 'dce0d9c2-30ab-102d-86b0-7a5022ba4115'
+           THEN z.obs_value_text END)                                      AS severity,
+       MAX(CASE WHEN z.obs_question_uuid = '14eb35a0-1454-47bb-90cf-bf6cf96340a8'
+           THEN z.obs_value_text END)                                      AS action_taken,
+       MAX(CASE WHEN z.obs_question_uuid = 'd0a568f1-fd17-4327-aba2-24619aa24273'
+           THEN z.obs_value_text END)                                      AS outcome,
+       MAX(CASE WHEN z.obs_question_uuid = '05018034-4bf1-4025-8396-5c08e3690c10'
+           THEN z.obs_value_text END)                                      AS other_outcome,
+       DATE(MAX(CASE WHEN z.obs_question_uuid = '648995af-baf8-4954-a850-2ead8162a86b'
+           THEN z.obs_value_datetime END))                                 AS date_of_occurrence
+FROM mamba_z_encounter_obs z
+         INNER JOIN mamba_z_encounter_obs g
+                    ON g.obs_id = z.obs_group_id
+                        AND g.voided = 0
+                        AND g.obs_question_uuid = 'b05f81ca-afa4-4c7d-af9c-4523947f5dd6'
+WHERE z.voided = 0
+GROUP BY z.person_id, z.encounter_id, z.encounter_datetime, z.location_id, z.obs_group_id;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_adr_side_effects_query
+--
+
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_adr_side_effects_query;
+~-~-
+CREATE PROCEDURE sp_fact_encounter_adr_side_effects_query(IN START_DATE
+                                                          DATETIME, END_DATE DATETIME)
+BEGIN
+    SELECT *
+    FROM mamba_fact_encounter_adr_side_effects
+    WHERE encounter_date >= START_DATE
+      AND encounter_date <= END_DATE;
+END;
+~-~-
+
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_adr_side_effects_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_adr_side_effects_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_adr_side_effects_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_adr_side_effects_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_adr_side_effects_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Full refresh: create drops and recreates the table each run.
 -- $END
 END;
 ~-~-
@@ -27061,6 +27967,8 @@ CALL sp_fact_current_arv_regimen_start_date;
 CALL sp_fact_latest_pregnancy_status_patients;
 CALL sp_fact_calhiv_patients;
 CALL sp_fact_eid_patients;
+CALL sp_fact_encounter_treatment_interruptions;
+CALL sp_fact_encounter_adr_side_effects;
 
 
 -- $END
@@ -32740,6 +33648,861 @@ END;
 
 CALL sp_fact_transfer_in;
 CALL sp_fact_transfer_out;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vitals_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_vitals_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vitals_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vitals_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- Vitals Fact Table - Create Script
+-- ============================================================================
+-- Purpose: Creates the mamba_fact_encounter_vitals table
+-- Note: This is raw SQL, not a stored procedure
+-- ============================================================================
+-- One row per encounter carrying >= 1 vitals concept, across ALL encounter
+-- types (Vitals header widget, ART Card, ANC, PNC, ...). BMI is computed,
+-- never captured as obs (concept 1342 has no obs anywhere).
+-- ============================================================================
+
+DROP TABLE IF EXISTS mamba_fact_encounter_vitals;
+
+CREATE TABLE mamba_fact_encounter_vitals
+(
+    id                            INT AUTO_INCREMENT,
+    encounter_id                  INT          NULL,
+    client_id                     INT          NOT NULL,
+    patient_id                    INT          NOT NULL,
+    encounter_date                DATE         NULL,
+    location_id                   INT          NULL,
+    encounter_type_id             INT          NULL,
+    encounter_type                VARCHAR(100) NULL,
+    systolic_bp                   DOUBLE       NULL,
+    diastolic_bp                  DOUBLE       NULL,
+    pulse                         DOUBLE       NULL,
+    temperature_c                 DOUBLE       NULL,
+    weight_kg                     DOUBLE       NULL,
+    height_cm                     DOUBLE       NULL,
+    spo2                          DOUBLE       NULL,
+    respiratory_rate              DOUBLE       NULL,
+    muac                          DOUBLE       NULL,
+    general_patient_note          TEXT         NULL,
+    bmi                           DOUBLE       NULL,
+    voided                        INT          DEFAULT 0,
+    date_created                  DATETIME     DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8MB4;
+
+CREATE INDEX
+    mamba_fact_encounter_vitals_client_id_index ON mamba_fact_encounter_vitals (client_id);
+
+CREATE INDEX
+    mamba_fact_encounter_vitals_patient_id_index ON mamba_fact_encounter_vitals (patient_id);
+
+CREATE INDEX
+    mamba_fact_encounter_vitals_encounter_id_index ON mamba_fact_encounter_vitals (encounter_id);
+
+CREATE INDEX
+    mamba_fact_encounter_vitals_encounter_date_index ON mamba_fact_encounter_vitals (encounter_date);
+
+CREATE INDEX
+    mamba_fact_encounter_vitals_location_id_index ON mamba_fact_encounter_vitals (location_id);
+
+CREATE INDEX
+    mamba_fact_encounter_vitals_encounter_type_id_index ON mamba_fact_encounter_vitals (encounter_type_id);
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vitals_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_vitals_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vitals_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vitals_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- One row per encounter (ANY type) with >= 1 vitals concept. Reads raw obs +
+-- encounter (NOT the flat table) so ART Card / ANC / PNC vitals are covered.
+-- MAX(CASE ...) pivots and collapses duplicated obs of the same concept on one
+-- encounter to a single deterministic (max) value. BMI is computed in the
+-- outer SELECT because pivot aliases are not referenceable at the same SELECT
+-- level. Obs-group children are deliberately included (ART-card vitals often
+-- sit inside obs groups). DATE() wrap on encounter_datetime feeding the DATE
+-- column per house rule.
+INSERT INTO mamba_fact_encounter_vitals (
+    encounter_id, patient_id,client_id, encounter_date, location_id,
+    encounter_type_id, encounter_type,
+    systolic_bp, diastolic_bp, pulse, temperature_c,
+    weight_kg, height_cm, spo2, respiratory_rate, muac,
+    general_patient_note, bmi
+)
+SELECT
+    pv.encounter_id,
+    pv.patient_id,
+    pv.patient_id AS client_id,
+    pv.encounter_date,
+    pv.location_id,
+    pv.encounter_type_id,
+    pv.encounter_type,
+    pv.systolic_bp,
+    pv.diastolic_bp,
+    pv.pulse,
+    pv.temperature_c,
+    pv.weight_kg,
+    pv.height_cm,
+    pv.spo2,
+    pv.respiratory_rate,
+    pv.muac,
+    pv.general_patient_note,
+    CASE WHEN pv.weight_kg IS NOT NULL AND pv.height_cm IS NOT NULL AND pv.height_cm > 0
+         THEN ROUND(pv.weight_kg / ((pv.height_cm / 100) * (pv.height_cm / 100)), 1)
+    END AS bmi
+FROM (
+    SELECT
+        e.encounter_id,
+        e.patient_id AS client_id,
+        e.patient_id AS patient_id,
+        DATE(e.encounter_datetime) AS encounter_date,
+        e.location_id,
+        e.encounter_type AS encounter_type_id,
+        et.name AS encounter_type,
+        MAX(CASE WHEN o.concept_id = 5085  THEN o.value_numeric END) AS systolic_bp,
+        MAX(CASE WHEN o.concept_id = 5086  THEN o.value_numeric END) AS diastolic_bp,
+        MAX(CASE WHEN o.concept_id = 5087  THEN o.value_numeric END) AS pulse,
+        MAX(CASE WHEN o.concept_id = 5088  THEN o.value_numeric END) AS temperature_c,
+        MAX(CASE WHEN o.concept_id = 5089  THEN o.value_numeric END) AS weight_kg,
+        MAX(CASE WHEN o.concept_id = 5090  THEN o.value_numeric END) AS height_cm,
+        MAX(CASE WHEN o.concept_id = 5092  THEN o.value_numeric END) AS spo2,
+        MAX(CASE WHEN o.concept_id = 5242  THEN o.value_numeric END) AS respiratory_rate,
+        MAX(CASE WHEN o.concept_id = 1343  THEN o.value_numeric END) AS muac,
+        MAX(CASE WHEN o.concept_id = 165095 THEN o.value_text   END) AS general_patient_note
+    FROM encounter e
+             INNER JOIN obs o
+                        ON o.encounter_id = e.encounter_id
+                            AND o.voided = 0
+             INNER JOIN encounter_type et
+                        ON e.encounter_type = et.encounter_type_id
+    WHERE e.voided = 0
+      AND o.concept_id IN (5085, 5086, 5087, 5088, 5089, 5090, 5092, 5242, 1343, 165095)
+    GROUP BY e.encounter_id, e.patient_id, e.encounter_datetime, e.location_id,
+             e.encounter_type, et.name
+) pv;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vitals_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_vitals_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vitals_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vitals_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vitals
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_encounter_vitals()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_encounter_vitals', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_encounter_vitals', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_encounter_vitals_create();
+CALL sp_fact_encounter_vitals_insert();
+CALL sp_fact_encounter_vitals_update();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_encounter_vitals_query
+--
+
+
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_query;
+~-~-
+CREATE PROCEDURE sp_fact_encounter_vitals_query(IN START_DATE
+                                                DATETIME, END_DATE DATETIME)
+BEGIN
+    SELECT *
+    FROM mamba_fact_encounter_vitals vitals WHERE vitals.encounter_date >= START_DATE
+      AND vitals.encounter_date <= END_DATE;
+END;
+~-~-
+
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_vitals_create
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_create;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_patients_latest_vitals_create()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_vitals_create', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_vitals_create', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- ============================================================================
+-- Patients Latest Vitals Fact Table - Create Script
+-- ============================================================================
+-- Purpose: Creates the mamba_fact_patients_latest_vitals table
+-- Note: This is raw SQL, not a stored procedure
+-- ============================================================================
+-- One row per patient with their globally-latest value for each vitals
+-- concept, sourced from ALL encounter types. Every value is paired with the
+-- obs_datetime of the obs it came from (DATETIME - obs_datetime carries real
+-- times; do not DATE-truncate the companions). BMI is computed from the
+-- latest weight + latest height (never captured as obs).
+-- ============================================================================
+
+DROP TABLE IF EXISTS mamba_fact_patients_latest_vitals;
+
+CREATE TABLE mamba_fact_patients_latest_vitals
+(
+    id                                  INT AUTO_INCREMENT,
+    client_id                           INT          NOT NULL,
+    patient_id                          INT          NOT NULL,
+    systolic_bp                         DOUBLE       NULL,
+    systolic_bp_obs_datetime            DATETIME     NULL,
+    diastolic_bp                        DOUBLE       NULL,
+    diastolic_bp_obs_datetime           DATETIME     NULL,
+    pulse                               DOUBLE       NULL,
+    pulse_obs_datetime                  DATETIME     NULL,
+    temperature_c                       DOUBLE       NULL,
+    temperature_c_obs_datetime          DATETIME     NULL,
+    weight_kg                           DOUBLE       NULL,
+    weight_kg_obs_datetime              DATETIME     NULL,
+    height_cm                           DOUBLE       NULL,
+    height_cm_obs_datetime              DATETIME     NULL,
+    spo2                                DOUBLE       NULL,
+    spo2_obs_datetime                   DATETIME     NULL,
+    respiratory_rate                    DOUBLE       NULL,
+    respiratory_rate_obs_datetime       DATETIME     NULL,
+    muac                                DOUBLE       NULL,
+    muac_obs_datetime                   DATETIME     NULL,
+    general_patient_note                TEXT         NULL,
+    general_patient_note_obs_datetime   DATETIME     NULL,
+    bmi                                 DOUBLE       NULL,
+    bmi_obs_datetime                    DATETIME     NULL,
+    vitals_date                         DATE         NULL,
+    latest_vitals_encounter_id          INT          NULL,
+    latest_vitals_encounter_type        VARCHAR(100) NULL,
+    location_id                         INT          NULL,
+    voided                              INT          DEFAULT 0,
+    date_created                        DATETIME     DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+) CHARSET = UTF8MB4;
+
+CREATE INDEX
+    mamba_fact_patients_latest_vitals_client_id_index ON mamba_fact_patients_latest_vitals (client_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_vitals_patient_id_index ON mamba_fact_patients_latest_vitals (patient_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_vitals_vitals_date_index ON mamba_fact_patients_latest_vitals (vitals_date);
+
+CREATE INDEX
+    mamba_fact_patients_latest_vitals_latest_encounter_id_index ON mamba_fact_patients_latest_vitals (latest_vitals_encounter_id);
+
+CREATE INDEX
+    mamba_fact_patients_latest_vitals_location_id_index ON mamba_fact_patients_latest_vitals (location_id);
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_vitals_insert
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_insert;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_patients_latest_vitals_insert()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_vitals_insert', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_vitals_insert', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Per-patient globally-latest vitals across ALL encounter types. House idiom
+-- (cf. sp_fact_latest_regimen_patients_insert.sql): MAX(obs_datetime) per
+-- person + concept, with MAX(value_*) breaking exact-obs_datetime ties
+-- deterministically. Voided obs AND voided encounters are excluded at BOTH
+-- subquery levels. The anchor (vitals_date / latest_vitals_encounter_id /
+-- type / location) comes from the MAX(encounter_id) self-join on
+-- mamba_fact_encounter_vitals built earlier in this run
+-- (cf. sp_fact_latest_return_date_patients_insert.sql). BMI is computed from
+-- the latest weight + latest height, which may come from different encounters
+-- (bmi_obs_datetime = later of the two obs datetimes).
+INSERT INTO mamba_fact_patients_latest_vitals (
+    client_id, patient_id,
+    systolic_bp, systolic_bp_obs_datetime,
+    diastolic_bp, diastolic_bp_obs_datetime,
+    pulse, pulse_obs_datetime,
+    temperature_c, temperature_c_obs_datetime,
+    weight_kg, weight_kg_obs_datetime,
+    height_cm, height_cm_obs_datetime,
+    spo2, spo2_obs_datetime,
+    respiratory_rate, respiratory_rate_obs_datetime,
+    muac, muac_obs_datetime,
+    general_patient_note, general_patient_note_obs_datetime,
+    bmi, bmi_obs_datetime,
+    vitals_date, latest_vitals_encounter_id, latest_vitals_encounter_type, location_id
+)
+SELECT
+    cohort.client_id,
+    cohort.client_id AS patient_id,
+    sbp.systolic_bp,     sbp.obs_datetime,
+    dbp.diastolic_bp,    dbp.obs_datetime,
+    pls.pulse,           pls.obs_datetime,
+    tmp.temperature_c,   tmp.obs_datetime,
+    wt.weight_kg,        wt.obs_datetime,
+    ht.height_cm,        ht.obs_datetime,
+    ox.spo2,             ox.obs_datetime,
+    rr.respiratory_rate, rr.obs_datetime,
+    mu.muac,             mu.obs_datetime,
+    note.general_patient_note, note.obs_datetime,
+    CASE WHEN wt.weight_kg IS NOT NULL AND ht.height_cm IS NOT NULL AND ht.height_cm > 0
+         THEN ROUND(wt.weight_kg / ((ht.height_cm / 100) * (ht.height_cm / 100)), 1)
+    END AS bmi,
+    CASE WHEN wt.weight_kg IS NOT NULL AND ht.height_cm IS NOT NULL AND ht.height_cm > 0
+         THEN GREATEST(wt.obs_datetime, ht.obs_datetime)
+    END AS bmi_obs_datetime,
+    DATE(vx.encounter_date),
+    vx.encounter_id,
+    vx.encounter_type,
+    vx.location_id
+FROM (
+    SELECT DISTINCT o.person_id AS client_id
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN patient p ON p.patient_id = o.person_id AND p.voided = 0
+    WHERE o.concept_id IN (5085, 5086, 5087, 5088, 5089, 5090, 5092, 5242, 1343, 165095)
+      AND o.voided = 0
+) cohort
+
+-- Systolic blood pressure (5085)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS systolic_bp, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5085
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5085
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) sbp ON cohort.client_id = sbp.person_id
+
+-- Diastolic blood pressure (5086)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS diastolic_bp, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5086
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5086
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) dbp ON cohort.client_id = dbp.person_id
+
+-- Pulse (5087)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS pulse, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5087
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5087
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) pls ON cohort.client_id = pls.person_id
+
+-- Temperature (5088)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS temperature_c, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5088
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5088
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) tmp ON cohort.client_id = tmp.person_id
+
+-- Weight (5089)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS weight_kg, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5089
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5089
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) wt ON cohort.client_id = wt.person_id
+
+-- Height (5090)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS height_cm, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5090
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5090
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) ht ON cohort.client_id = ht.person_id
+
+-- Blood oxygen saturation / SpO2 (5092)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS spo2, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5092
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5092
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) ox ON cohort.client_id = ox.person_id
+
+-- Respiratory rate (5242)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS respiratory_rate, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 5242
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 5242
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) rr ON cohort.client_id = rr.person_id
+
+-- Mid-upper arm circumference (1343)
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_numeric) AS muac, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 1343
+          AND o2.voided = 0
+          AND o2.value_numeric IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 1343
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_numeric IS NOT NULL
+    GROUP BY o.person_id
+) mu ON cohort.client_id = mu.person_id
+
+-- General patient note (165095) - Text concept, value lives in value_text
+LEFT JOIN (
+    SELECT o.person_id, MAX(o.value_text) AS general_patient_note, MAX(o.obs_datetime) AS obs_datetime
+    FROM obs o
+             INNER JOIN encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0
+             INNER JOIN (
+        SELECT o2.person_id, MAX(o2.obs_datetime) AS latest_date
+        FROM obs o2
+                 INNER JOIN encounter e2 ON e2.encounter_id = o2.encounter_id AND e2.voided = 0
+        WHERE o2.concept_id = 165095
+          AND o2.voided = 0
+          AND o2.value_text IS NOT NULL
+        GROUP BY o2.person_id
+    ) a ON o.person_id = a.person_id
+    WHERE o.concept_id = 165095
+      AND o.obs_datetime = a.latest_date
+      AND o.voided = 0
+      AND o.value_text IS NOT NULL
+    GROUP BY o.person_id
+) note ON cohort.client_id = note.person_id
+
+-- Anchor: the patient's globally-latest vitals-bearing encounter (all types),
+-- from the encounter fact built earlier in this run.
+LEFT JOIN (
+    SELECT client_id, MAX(encounter_id) AS encounter_id
+    FROM mamba_fact_encounter_vitals
+    GROUP BY client_id
+) latest_enc ON cohort.client_id = latest_enc.client_id
+LEFT JOIN mamba_fact_encounter_vitals vx ON vx.encounter_id = latest_enc.encounter_id;
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_vitals_update
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_update;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_patients_latest_vitals_update()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_vitals_update', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_vitals_update', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_vitals
+--
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals;
+
+
+~-~-
+CREATE PROCEDURE sp_fact_patients_latest_vitals()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_fact_patients_latest_vitals', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_fact_patients_latest_vitals', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+CALL sp_fact_patients_latest_vitals_create();
+CALL sp_fact_patients_latest_vitals_insert();
+CALL sp_fact_patients_latest_vitals_update();
+-- $END
+END;
+~-~-
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_fact_patients_latest_vitals_query
+--
+
+
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_query;
+~-~-
+CREATE PROCEDURE sp_fact_patients_latest_vitals_query(IN START_DATE
+                                                      DATETIME, END_DATE DATETIME)
+BEGIN
+    SELECT *
+    FROM mamba_fact_patients_latest_vitals latest_vitals WHERE latest_vitals.vitals_date >= START_DATE
+      AND latest_vitals.vitals_date <= END_DATE;
+END;
+~-~-
+
+
+
+        
+-- ---------------------------------------------------------------------------------------------
+-- sp_data_processing_derived_vitals
+--
+
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vitals;
+
+
+~-~-
+CREATE PROCEDURE sp_data_processing_derived_vitals()
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    GET DIAGNOSTICS CONDITION 1
+
+    @message_text = MESSAGE_TEXT,
+    @mysql_errno = MYSQL_ERRNO,
+    @returned_sqlstate = RETURNED_SQLSTATE;
+
+    CALL sp_mamba_etl_error_log_insert('sp_data_processing_derived_vitals', @message_text, @mysql_errno, @returned_sqlstate);
+
+    UPDATE _mamba_etl_schedule
+    SET end_time                   = NOW(),
+        completion_status          = 'ERROR',
+        transaction_status         = 'COMPLETED',
+        success_or_error_message   = CONCAT('sp_data_processing_derived_vitals', ', ', @mysql_errno, ', ', @message_text)
+        WHERE id = (SELECT last_etl_schedule_insert_id FROM _mamba_etl_user_settings ORDER BY id DESC LIMIT 1);
+
+    RESIGNAL;
+END;
+
+-- $BEGIN
+-- Vitals domain: per-encounter pivot first (all encounter types), then the
+-- per-patient latest snapshot, whose anchor reads the encounter fact built in
+-- the same run.
+CALL sp_fact_encounter_vitals();
+CALL sp_fact_patients_latest_vitals();
 -- $END
 END;
 ~-~-

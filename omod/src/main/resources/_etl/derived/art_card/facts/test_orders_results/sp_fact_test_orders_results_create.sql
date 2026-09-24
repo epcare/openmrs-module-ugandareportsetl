@@ -11,8 +11,8 @@ CREATE TABLE mamba_fact_test_orders_results
     test_concept_id  INT NOT NULL,
     test_parameter        VARCHAR(255) NULL,
     test_value        TEXT NULL,
-
-        PRIMARY KEY (id)
+    test_value_concept_id INT NULL,
+    PRIMARY KEY (id)
 ) CHARSET = UTF8;
 
 CREATE INDEX

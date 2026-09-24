@@ -3,7 +3,7 @@
 -- ============================================================================
 -- Purpose: Drops all Mamba ETL procedures and tables for clean setup
 -- Usage: Run before Setup Mamba ETL to ensure clean state
--- Updated: 2026-08-14 - Added HTS Self Testing procedures and tables
+-- Updated: 2026-09-19 - Added Vitals procedures and tables
 -- ============================================================================
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -78,6 +78,19 @@ DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_create;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_insert;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_update;
 DROP PROCEDURE IF EXISTS sp_fact_encounter_cacx_treatment_query;
+
+-- ===== VITALS MODULE =====
+DROP PROCEDURE IF EXISTS sp_data_processing_derived_vitals;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_create;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_insert;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_update;
+DROP PROCEDURE IF EXISTS sp_fact_encounter_vitals_query;
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals;
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_create;
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_insert;
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_update;
+DROP PROCEDURE IF EXISTS sp_fact_patients_latest_vitals_query;
 
 -- ===== REGIMEN CHANGE MODULE =====
 DROP PROCEDURE IF EXISTS sp_data_processing_derived_regimen_change;
@@ -173,6 +186,7 @@ DROP TABLE IF EXISTS mamba_fact_patients_latest_tb_status;
 DROP TABLE IF EXISTS mamba_fact_patients_latest_tpt_status;
 DROP TABLE IF EXISTS mamba_fact_patients_latest_viral_load;
 DROP TABLE IF EXISTS mamba_fact_patients_latest_viral_load_ordered;
+DROP TABLE IF EXISTS mamba_fact_patients_latest_vitals;
 DROP TABLE IF EXISTS mamba_fact_patients_latest_vl_after_iac;
 DROP TABLE IF EXISTS mamba_fact_patients_latest_who_stage;
 DROP TABLE IF EXISTS mamba_fact_patients_latest_arv_order;
@@ -193,6 +207,7 @@ DROP TABLE IF EXISTS mamba_fact_transfer_out;
 
 -- Encounter fact tables
 DROP TABLE IF EXISTS mamba_fact_encounter_anc_card;
+DROP TABLE IF EXISTS mamba_fact_encounter_adr_side_effects;
 DROP TABLE IF EXISTS mamba_fact_encounter_cacx_screening;
 DROP TABLE IF EXISTS mamba_fact_encounter_cacx_treatment;
 DROP TABLE IF EXISTS mamba_fact_encounter_diagnosis;
@@ -206,7 +221,9 @@ DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_card;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_obs_group;
 DROP TABLE IF EXISTS mamba_fact_encounter_non_suppressed_repeat_vl;
 DROP TABLE IF EXISTS mamba_fact_encounter_regimen_change;
+DROP TABLE IF EXISTS mamba_fact_encounter_treatment_interruptions;
 DROP TABLE IF EXISTS mamba_fact_encounter_vl_request;
+DROP TABLE IF EXISTS mamba_fact_encounter_vitals;
 
 -- Other fact tables
 DROP TABLE IF EXISTS mamba_fact_attended_visit;
@@ -221,6 +238,7 @@ DROP TABLE IF EXISTS mamba_flat_encounter_anc_register;
 DROP TABLE IF EXISTS mamba_flat_encounter_anc_register_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_art_card;
 DROP TABLE IF EXISTS mamba_flat_encounter_art_card_1;
+DROP TABLE IF EXISTS mamba_flat_encounter_art_card_2;
 DROP TABLE IF EXISTS mamba_flat_encounter_art_health_education;
 DROP TABLE IF EXISTS mamba_flat_encounter_art_summary_card;
 DROP TABLE IF EXISTS mamba_flat_encounter_art_summary_card_1;
@@ -237,6 +255,7 @@ DROP TABLE IF EXISTS mamba_flat_encounter_tb_followup_1;
 DROP TABLE IF EXISTS mamba_flat_encounter_vl_request;
 DROP TABLE IF EXISTS mamba_flat_encounter_cacx_screening;
 DROP TABLE IF EXISTS mamba_flat_encounter_cacx_treatment;
+DROP TABLE IF EXISTS mamba_flat_encounter_vitals;
 
 -- ===== DIMENSION TABLES =====
 

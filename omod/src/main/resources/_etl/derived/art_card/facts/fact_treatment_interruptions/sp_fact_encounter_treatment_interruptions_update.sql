@@ -1,0 +1,3 @@
+-- $BEGIN
+-- Full refresh: create drops and recreates the table each run.
+-- $END

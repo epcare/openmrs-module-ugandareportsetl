@@ -1,0 +1,19 @@
+{
+  "report_name": "Vitals",
+  "flat_table_name": "mamba_flat_encounter_vitals",
+  "encounter_type_uuid": "67a71486-1a54-468f-ac3e-7091a9a79584",
+  "encounter_type_name": "Vitals",
+  "concepts_locale": "en",
+  "table_columns": {
+    "systolic_bp": "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "diastolic_bp": "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "pulse": "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "temperature_c": "5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "weight_kg": "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "height_cm": "5090AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "spo2": "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "respiratory_rate": "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "muac": "1343AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "general_patient_note": "165095AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+}

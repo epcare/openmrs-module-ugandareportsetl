@@ -260,6 +260,18 @@ facts/test_orders_results/sp_fact_test_orders_results_insert.sql
 facts/test_orders_results/sp_fact_test_orders_results_query.sql
 facts/test_orders_results/sp_fact_test_orders_results_update.sql
 
+facts/fact_treatment_interruptions/sp_fact_encounter_treatment_interruptions.sql
+facts/fact_treatment_interruptions/sp_fact_encounter_treatment_interruptions_create.sql
+facts/fact_treatment_interruptions/sp_fact_encounter_treatment_interruptions_insert.sql
+facts/fact_treatment_interruptions/sp_fact_encounter_treatment_interruptions_query.sql
+facts/fact_treatment_interruptions/sp_fact_encounter_treatment_interruptions_update.sql
+
+facts/fact_adr_side_effects/sp_fact_encounter_adr_side_effects.sql
+facts/fact_adr_side_effects/sp_fact_encounter_adr_side_effects_create.sql
+facts/fact_adr_side_effects/sp_fact_encounter_adr_side_effects_insert.sql
+facts/fact_adr_side_effects/sp_fact_encounter_adr_side_effects_query.sql
+facts/fact_adr_side_effects/sp_fact_encounter_adr_side_effects_update.sql
+
 #############################################################################
 ###### A single stored procedure that invokes (CALLs) the above SPs #########
 #############################################################################

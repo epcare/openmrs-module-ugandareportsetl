@@ -27,7 +27,10 @@ INSERT INTO mamba_fact_encounter_hiv_art_health_education (encounter_id,
                                                            other_gmc_approach    ,
                                                            other_imf_approach    ,
                                                            linkages_and_referrals1   ,
-                                                           arrange   )
+                                                           arrange   ,
+                                                           refill_point_code   ,
+                                                           general_cddp_group_name   ,
+                                                           cclad_group_name   )
 SELECT encounter_id,
        client_id,
        encounter_datetime,
@@ -56,7 +59,10 @@ SELECT encounter_id,
        other_gmc_approach    ,
        other_imf_approach    ,
        linkages_and_referrals1   ,
-       arrange
+       arrange   ,
+       refill_point_code   ,
+       general_cddp_group_name   ,
+       cclad_group_name
 
 
 FROM mamba_flat_encounter_art_health_education;

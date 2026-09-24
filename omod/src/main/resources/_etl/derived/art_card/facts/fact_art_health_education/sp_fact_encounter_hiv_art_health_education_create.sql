@@ -33,6 +33,9 @@ CREATE TABLE mamba_fact_encounter_hiv_art_health_education
     other_imf_approach    VARCHAR(255)  DEFAULT NULL,
     linkages_and_referrals1    VARCHAR(255)  DEFAULT NULL,
     arrange   VARCHAR(255)  DEFAULT NULL,
+    refill_point_code VARCHAR(255)  DEFAULT NULL,
+    general_cddp_group_name VARCHAR(255)  DEFAULT NULL,
+    cclad_group_name VARCHAR(255)  DEFAULT NULL,
 
     PRIMARY KEY (id)
 ) CHARSET = UTF8;

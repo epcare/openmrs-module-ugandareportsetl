@@ -1,0 +1,19 @@
+#############################################################################
+##################### Vitals Fact Table SPs #################################
+#############################################################################
+facts/encounter_vitals/sp_fact_encounter_vitals_create.sql
+facts/encounter_vitals/sp_fact_encounter_vitals_insert.sql
+facts/encounter_vitals/sp_fact_encounter_vitals_update.sql
+facts/encounter_vitals/sp_fact_encounter_vitals.sql
+facts/encounter_vitals/sp_fact_encounter_vitals_query.sql
+
+facts/patients_latest_vitals/sp_fact_patients_latest_vitals_create.sql
+facts/patients_latest_vitals/sp_fact_patients_latest_vitals_insert.sql
+facts/patients_latest_vitals/sp_fact_patients_latest_vitals_update.sql
+facts/patients_latest_vitals/sp_fact_patients_latest_vitals.sql
+facts/patients_latest_vitals/sp_fact_patients_latest_vitals_query.sql
+
+#############################################################################
+###### A single SP that CALLs all SPs inside the derived vitals folder ######
+#############################################################################
+sp_data_processing_derived_vitals.sql

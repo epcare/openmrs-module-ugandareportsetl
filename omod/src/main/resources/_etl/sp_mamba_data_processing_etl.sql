@@ -23,6 +23,7 @@ BEGIN
     CALL sp_data_processing_derived_cacx_screening();
     CALL sp_data_processing_derived_cacx_treatment();
     CALL sp_data_processing_derived_vl_episode();
+    CALL sp_data_processing_derived_vitals();
 
 END //
 

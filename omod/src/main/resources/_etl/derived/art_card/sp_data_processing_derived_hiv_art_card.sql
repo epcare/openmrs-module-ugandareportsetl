@@ -38,6 +38,8 @@ CALL sp_fact_current_arv_regimen_start_date;
 CALL sp_fact_latest_pregnancy_status_patients;
 CALL sp_fact_calhiv_patients;
 CALL sp_fact_eid_patients;
+CALL sp_fact_encounter_treatment_interruptions;
+CALL sp_fact_encounter_adr_side_effects;
 
 
 -- $END

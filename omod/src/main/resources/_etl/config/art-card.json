@@ -101,6 +101,18 @@
     "clinical_notes": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "client_represented": "51409d82-b2c0-11ed-afa1-0242ac120002",
     "treatment_interruptions": "2bb2e360-263c-4167-8c68-87dab66dc0f6",
-    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6"
+    "interruption_treatment_type": "3aaf3680-6240-4819-a704-e20a93841942",
+    "interruption_stop_lost": "65d1bdf6-e518-4400-9f61-b7f2b1e80169",
+    "interruption_stop_date": "ac98d431-8ebc-4397-8c78-78b0eee0ffe7",
+    "interruption_stop_reason": "89d3ee61-7c74-4537-b199-4026bd6a3f67",
+    "interruption_restart_date": "160738AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "adr_side_effects": "b05f81ca-afa4-4c7d-af9c-4523947f5dd6",
+    "offending_agent": "24b52dcb-2809-4ed8-92bb-b212f394bf50",
+    "adr_grading": "f2547a99-21c9-4e86-99e8-b6c4dda36f42",
+    "adr_severity": "dce0d9c2-30ab-102d-86b0-7a5022ba4115",
+    "adr_action_taken": "14eb35a0-1454-47bb-90cf-bf6cf96340a8",
+    "adr_other_outcome": "05018034-4bf1-4025-8396-5c08e3690c10",
+    "adr_date_of_occurrence": "648995af-baf8-4954-a850-2ead8162a86b",
+    "outcome": "d0a568f1-fd17-4327-aba2-24619aa24273"
   }
 }

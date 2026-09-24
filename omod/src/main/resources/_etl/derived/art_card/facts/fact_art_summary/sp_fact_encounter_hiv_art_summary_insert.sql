@@ -1,6 +1,7 @@
 -- $BEGIN
 INSERT INTO mamba_fact_encounter_hiv_art_summary (encounter_id,
                                                   client_id,
+                                                  patient_id,
                                                   encounter_datetime,
                                                   allergy,
                                                   hepatitis_b_test_qualitative,
@@ -75,6 +76,7 @@ INSERT INTO mamba_fact_encounter_hiv_art_summary (encounter_id,
                                                   relationship_to_index_clients,
                                                   other_relationship_to_index_client)
 SELECT a.encounter_id,
+       a.client_id,
        a.client_id,
        a.encounter_datetime,
        allergy,

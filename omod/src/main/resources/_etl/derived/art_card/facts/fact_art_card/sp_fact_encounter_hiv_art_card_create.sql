@@ -103,7 +103,24 @@ CREATE TABLE mamba_fact_encounter_hiv_art_card
     covidVaccStatus  VARCHAR(255) NULL,
     covid_vaccination_date DATE NULL,
     reasons_for_next_appointment VARCHAR(255) NULL,
+    client_represented VARCHAR(255) NULL,
+    outcome VARCHAR(255) NULL,
     clinical_notes TEXT,
+    -- Repeating-group rollups (multi-instance values '; '-joined, latest date
+    -- kept). Grouped obs never reach the flat pivot, so these are backfilled
+    -- by the insert's z-layer UPDATEs, not the flat pass-through.
+    interruption_treatment_type VARCHAR(500) NULL,
+    interruption_stop_lost VARCHAR(500) NULL,
+    interruption_stop_date DATE NULL,
+    interruption_stop_reason TEXT,
+    interruption_restart_date DATE NULL,
+    offending_agent VARCHAR(500) NULL,
+    adr_side_effects_selected VARCHAR(1000) NULL,
+    adr_grading VARCHAR(500) NULL,
+    adr_severity VARCHAR(500) NULL,
+    adr_action_taken VARCHAR(500) NULL,
+    adr_other_outcome VARCHAR(500) NULL,
+    adr_date_of_occurrence DATE NULL,
 
     PRIMARY KEY (id)
 )
