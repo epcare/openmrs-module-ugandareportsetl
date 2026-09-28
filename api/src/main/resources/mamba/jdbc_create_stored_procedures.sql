@@ -17698,6 +17698,34 @@ CREATE INDEX
 
 CREATE INDEX
     mamba_fact_encounter_hiv_art_card_encounter_date_index ON mamba_fact_encounter_hiv_art_card (encounter_date);
+
+-- Schema guard: fail loudly if this procedure ever drifts from the expected
+-- repeating-group columns (ADR + treatment interruption), instead of letting
+-- reports hit "Unknown column" later. Triggers the proc's own EXIT handler
+-- (error log + schedule marked ERROR), then resignals up the chain.
+SELECT COUNT(*) INTO @required_group_columns
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE()
+  AND TABLE_NAME = 'mamba_fact_encounter_hiv_art_card'
+  AND COLUMN_NAME IN (
+      'interruption_treatment_type',
+      'interruption_stop_lost',
+      'interruption_stop_date',
+      'interruption_stop_reason',
+      'interruption_restart_date',
+      'offending_agent',
+      'adr_side_effects_selected',
+      'adr_grading',
+      'adr_severity',
+      'adr_action_taken',
+      'adr_other_outcome',
+      'adr_date_of_occurrence'
+  );
+
+IF @required_group_columns <> 12 THEN
+    SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid mamba_fact_encounter_hiv_art_card schema: required repeating-group (ADR/interruption) columns are missing';
+END IF;
 -- $END
 END;
 ~-~-
